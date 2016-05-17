@@ -19,9 +19,9 @@
 
 @end
 
-static NSString *const _lightFontName = @"Bariol-Light";
-static NSString *const _thinFontName = @"Bariol-Thin";
-static NSString *const _regularFontName = @"Bariol-Regular";
-static NSString *const _boldFontName = @"Bariol-Bold";
+static NSString *const _lightFontName = @"Bariol_Light";
+static NSString *const _thinFontName = @"Bariol_Thin";
+static NSString *const _regularFontName = @"Bariol_Regular";
+static NSString *const _boldFontName = @"Bariol_Bold";
 
 static NSString *const _fontExtension = @"otf";

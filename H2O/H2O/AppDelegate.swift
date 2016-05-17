@@ -23,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        setPresets()
+        setGoal()
+        
         _user = User.loadUser()
         
         return true
@@ -50,6 +53,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+    }
+    
+    /**
+     Sets default preset values if none exist
+     */
+    private func setPresets() {
+        let presetWaterValuesString = "PresetWaterValues"
+        guard NSUserDefaults.standardUserDefaults().arrayForKey(presetWaterValuesString) != nil else {
+            let presets :[Float] = [8.0, 16.0, 23.0]
+            NSUserDefaults.standardUserDefaults().setObject(presets, forKey: presetWaterValuesString)
+            
+            return
+        }
+    }
+    
+    /**
+     Sets default goal value if none exists
+     */
+    private func setGoal() {
+        let goalValueString = "GoalValue"
+        guard NSUserDefaults.standardUserDefaults().floatForKey(goalValueString) != 0 else {
+            let goal :Float = 87.0
+            NSUserDefaults.standardUserDefaults().setFloat(goal, forKey: goalValueString)
+            
+            return
+        }
     }
     
     // MARK: - Class functions

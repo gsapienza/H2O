@@ -35,10 +35,15 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Bariol-Regular</string>
+		<string>Bariol-Thin</string>
+		<string>Bariol-Light</string>
+		<string>Bariol-Bold</string>
+	</array>
 </dict>
 </plist>

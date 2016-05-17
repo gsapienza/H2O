@@ -16,6 +16,10 @@ class MainViewController: UIViewController {
 
         /// Navigation bar to contain settings button
     @IBOutlet weak var _navigationBar: UINavigationBar!
+    @IBOutlet weak var _entryButton1: EntryButton!
+    @IBOutlet weak var _entryButton2: EntryButton!
+    @IBOutlet weak var _entryButton3: EntryButton!
+    @IBOutlet weak var _customEntryButton: CustomEntryButton!
     
     /**
      Sets status bar style for all view controllers
@@ -55,14 +59,17 @@ class MainViewController: UIViewController {
      Sets up 3 preset circles
      */
     private func setupPresetEntryCircles() {
+        let presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
         
+        _entryButton1._amount = presetWaterValues[0]
+        _entryButton2._amount = presetWaterValues[1]
+        _entryButton3._amount = presetWaterValues[2]
     }
     
     /**
      Sets up the custom entry dialog for custom water amounts
      */
     private func setupCustomEntryCircle() {
-        
     }
     
     //MARK: - Actions

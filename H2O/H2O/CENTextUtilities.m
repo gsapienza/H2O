@@ -35,30 +35,18 @@
 }
 
 + (void)loadMyCustomFont:(NSString *)name {
-    NSString *fontPath = [[CENTextUtilities frameworkBundle] pathForResource:name ofType:_fontExtension];
+    NSString *fontPath = [[NSBundle mainBundle] pathForResource:name ofType:_fontExtension];
     NSData *inData = [NSData dataWithContentsOfFile:fontPath];
     CFErrorRef error;
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)inData);
     CGFontRef font = CGFontCreateWithDataProvider(provider);
     if (! CTFontManagerRegisterGraphicsFont(font, &error)) {
         CFStringRef errorDescription = CFErrorCopyDescription(error);
-        //NSLog(@"Failed to load font: %@", errorDescription);
+        NSLog(@"Failed to load font: %@", errorDescription);
         CFRelease(errorDescription);
     }
     CFRelease(font);
     CFRelease(provider);
-}
-
-+ (NSBundle *)frameworkBundle {
-    static NSBundle* frameworkBundle = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        NSString *mainBundlePath = [[NSBundle mainBundle] resourcePath];
-        //NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:@"/Frameworks/CenifyKitObjectiveC.framework/"];
-        frameworkBundle = [NSBundle bundleWithPath:mainBundlePath];
-    });
-    
-    return frameworkBundle;
 }
 
 @end

@@ -8,8 +8,15 @@
 
 import UIKit
 
-class CustomEntryButton: UIView {
-    var _amount :Float = 0
-    var _delegate :EntryButtonDelegate?
-
+class CustomEntryButton: EntryButton {
+    override var _amount: Float {
+        set{}
+        get {
+            return super._amount
+        }
+    }
+    
+    override func onTap() {
+        
+    }
 }

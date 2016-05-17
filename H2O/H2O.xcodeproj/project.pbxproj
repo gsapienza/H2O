@@ -25,10 +25,16 @@
 		378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666F1CEAA190003418C2 /* DailyEntryDial.swift */; };
 		378566751CEAA27E003418C2 /* Bariol_Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566711CEAA27E003418C2 /* Bariol_Bold.otf */; };
 		378566761CEAA27E003418C2 /* Bariol_Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566721CEAA27E003418C2 /* Bariol_Light.otf */; };
-		378566771CEAA27E003418C2 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		378566781CEAA27E003418C2 /* Bariol_Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566741CEAA27E003418C2 /* Bariol_Thin.otf */; };
 		3785667B1CEAA29C003418C2 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3785667A1CEAA29C003418C2 /* CoreText.framework */; };
 		378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3785667F1CEAA2C1003418C2 /* CENTextUtilities.m */; };
+		37A182601CEB942E0055DA02 /* CENAudioToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */; };
+		37A182621CEB94A80055DA02 /* Pop_A.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37A182611CEB94A80055DA02 /* Pop_A.wav */; };
+		37A182641CEB96430055DA02 /* b1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37A182631CEB96430055DA02 /* b1.wav */; };
+		37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182651CEBC2190055DA02 /* SettingsViewController.swift */; };
+		37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
+		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
+		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +64,12 @@
 		3785667D1CEAA2C0003418C2 /* H2O-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "H2O-Bridging-Header.h"; sourceTree = "<group>"; };
 		3785667E1CEAA2C1003418C2 /* CENTextUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CENTextUtilities.h; sourceTree = "<group>"; };
 		3785667F1CEAA2C1003418C2 /* CENTextUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CENTextUtilities.m; sourceTree = "<group>"; };
+		37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CENAudioToolbox.swift; sourceTree = "<group>"; };
+		37A182611CEB94A80055DA02 /* Pop_A.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop_A.wav; sourceTree = "<group>"; };
+		37A182631CEB96430055DA02 /* b1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = b1.wav; sourceTree = "<group>"; };
+		37A182651CEBC2190055DA02 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +105,8 @@
 			children = (
 				375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
+				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
+				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Views */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
@@ -104,6 +118,8 @@
 		3785665A1CEA93BC003418C2 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				37A182611CEB94A80055DA02 /* Pop_A.wav */,
+				37A182631CEB96430055DA02 /* b1.wav */,
 				378566791CEAA281003418C2 /* Fonts */,
 				3785667D1CEAA2C0003418C2 /* H2O-Bridging-Header.h */,
 				3785667E1CEAA2C1003418C2 /* CENTextUtilities.h */,
@@ -123,6 +139,8 @@
 				3785666B1CEAA161003418C2 /* EntryButton.swift */,
 				3785666D1CEAA16C003418C2 /* CustomEntryButton.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
+				37A182651CEBC2190055DA02 /* SettingsViewController.swift */,
+				37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -219,10 +237,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A182641CEB96430055DA02 /* b1.wav in Resources */,
 				375F4FEC1CEA91A6009C14AE /* LaunchScreen.storyboard in Resources */,
 				378566761CEAA27E003418C2 /* Bariol_Light.otf in Resources */,
 				375F4FE91CEA91A6009C14AE /* Assets.xcassets in Resources */,
-				378566771CEAA27E003418C2 /* Bariol_Regular.otf in Resources */,
+				37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */,
+				37A182621CEB94A80055DA02 /* Pop_A.wav in Resources */,
 				375F4FE41CEA91A6009C14AE /* Main.storyboard in Resources */,
 				378566781CEAA27E003418C2 /* Bariol_Thin.otf in Resources */,
 				378566751CEAA27E003418C2 /* Bariol_Bold.otf in Resources */,
@@ -238,18 +258,22 @@
 			files = (
 				3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */,
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
+				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				378566671CEA9645003418C2 /* Day.swift in Sources */,
+				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
 				378566651CEA9645003418C2 /* User.swift in Sources */,
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
 				378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */,
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
+				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
 				378566661CEA9645003418C2 /* Day+CoreDataProperties.swift in Sources */,
 				3785666E1CEAA16C003418C2 /* CustomEntryButton.swift in Sources */,
+				37A182601CEB942E0055DA02 /* CENAudioToolbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
