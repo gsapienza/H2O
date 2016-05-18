@@ -33,6 +33,8 @@
 		37A182641CEB96430055DA02 /* b1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37A182631CEB96430055DA02 /* b1.wav */; };
 		37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182651CEBC2190055DA02 /* SettingsViewController.swift */; };
 		37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
+		37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */; };
+		37A1826C1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A1826B1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +71,8 @@
 		37A182631CEB96430055DA02 /* b1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = b1.wav; sourceTree = "<group>"; };
 		37A182651CEBC2190055DA02 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetValueChangerView.swift; sourceTree = "<group>"; };
+		37A1826B1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsPresetTableViewCell.swift; path = ../SettingsPresetTableViewCell.swift; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +145,8 @@
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
 				37A182651CEBC2190055DA02 /* SettingsViewController.swift */,
 				37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */,
+				37A1826B1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift */,
+				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -261,6 +267,7 @@
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
+				37A1826C1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				378566671CEA9645003418C2 /* Day.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
@@ -270,6 +277,7 @@
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
+				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
 				378566661CEA9645003418C2 /* Day+CoreDataProperties.swift in Sources */,
 				3785666E1CEAA16C003418C2 /* CustomEntryButton.swift in Sources */,

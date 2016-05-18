@@ -10,13 +10,9 @@ import UIKit
 
 class DailyEntryDial: UIView {
         /// Goal instance var, is loaded through NSUserDefaults and contains daily water goal
-    private var _goal :Float = 0
-    
-        /// Goal public property (readonly)
-    var goal :Float {
-        set{}
-        get {
-            return _goal
+    var _goal :Float = 0 {
+        didSet {
+          //  changeCurrentAmountOfWaterDrankToday(_currentAmountOfWaterDrankToday, animated: true)
         }
     }
     

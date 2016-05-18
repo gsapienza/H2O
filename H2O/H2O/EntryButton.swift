@@ -9,14 +9,14 @@
 import UIKit
 
 class EntryButton: UIButton {
-        /// <#Description#>
+        /// Amount that entry button will add to goal
     var _amount :Float = 0 {
         didSet {
             setTitle(String(Int(_amount)) + "ml", forState: .Normal)
         }
     }
         /// EntryButtonDelegate Protocol delegate
-    var _delegate :EntryButtonDelegate?
+    var _delegate :EntryButtonProtocol?
     
         /// What to do when the button is highlighted. Simply changes the button background color. The text is changed on highlight in the setupAmountLabelFunction
     override var highlighted: Bool {

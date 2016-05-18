@@ -119,7 +119,7 @@
                                         <barButtonItem key="rightBarButtonItem" image="SettingsBarButtonItem" id="szC-YZ-NzQ">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
-                                                <segue destination="zBE-q2-6Kx" kind="presentation" id="cf8-nl-e7Z"/>
+                                                <action selector="onSettingsBarButton:" destination="BYZ-38-t0r" id="Jbd-vI-DM6"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -172,6 +172,7 @@
                     </view>
                     <connections>
                         <outlet property="_customEntryButton" destination="iEf-Hb-nAI" id="Nq8-PH-cdV"/>
+                        <outlet property="_dailyEntryDial" destination="I6X-Es-J7b" id="PMy-oK-y2n"/>
                         <outlet property="_entryButton1" destination="WyK-Wa-Gte" id="3Q7-Qx-pAb"/>
                         <outlet property="_entryButton2" destination="vaH-5j-lxw" id="qOi-sF-d8e"/>
                         <outlet property="_entryButton3" destination="vNo-5S-rta" id="Yjh-qg-z5e"/>
@@ -219,7 +220,7 @@
         <!--Navigation Controller-->
         <scene sceneID="6sn-tx-Gp4">
             <objects>
-                <navigationController storyboardIdentifier="SettingsViewController" id="zBE-q2-6Kx" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zBE-q2-6Kx" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qbc-Hf-Md0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -297,7 +298,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle=" " id="UhM-in-g3W">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="BCl-gm-687" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="BCl-gm-687" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BCl-gm-687" id="JZ6-iL-Fpb">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -308,21 +309,21 @@
                             </tableViewSection>
                             <tableViewSection headerTitle=" " id="guA-FE-QyB">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="hfp-W2-g8A" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="hfp-W2-g8A" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hfp-W2-g8A" id="hVB-nQ-HFU">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="HCo-8B-0SZ" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="HCo-8B-0SZ" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HCo-8B-0SZ" id="ABW-dy-RmU">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="56O-H1-UyO" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="56O-H1-UyO" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="56O-H1-UyO" id="n5A-8x-Xu7">
                                             <autoresizingMask key="autoresizingMask"/>

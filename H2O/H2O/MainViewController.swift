@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EntryButtonDelegate {
+protocol EntryButtonProtocol {
     func entryButtonTapped(amount :Float)
 }
 
@@ -21,6 +21,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var _entryButton3: EntryButton!
     @IBOutlet weak var _customEntryButton: CustomEntryButton!
     
+    @IBOutlet weak var _dailyEntryDial: DailyEntryDial!
     /**
      Sets status bar style for all view controllers
      
@@ -42,7 +43,6 @@ class MainViewController: UIViewController {
         
         setupNavigationBar()
         setupPresetEntryCircles()
-        setupCustomEntryCircle()
     }
 
     /**
@@ -66,12 +66,6 @@ class MainViewController: UIViewController {
         _entryButton3._amount = presetWaterValues[2]
     }
     
-    /**
-     Sets up the custom entry dialog for custom water amounts
-     */
-    private func setupCustomEntryCircle() {
-    }
-    
     //MARK: - Actions
     
     /**
@@ -82,10 +76,20 @@ class MainViewController: UIViewController {
     private func addWaterToToday(amount :Float) {
         
     }
+    
+    @IBAction func onSettingsBarButton(sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let navigationViewController = (storyboard.instantiateViewControllerWithIdentifier("SettingsViewController") as! UINavigationController)
+        
+        let settingsViewController = navigationViewController.viewControllers.first as! SettingsViewController
+        settingsViewController._delegate = self
+        
+        self.presentViewController(navigationViewController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - EntryButtonDelegate
-extension MainViewController :EntryButtonDelegate {
+extension MainViewController :EntryButtonProtocol {
     
     /**
      When an entry button is tapped and a new amount of water is added to today
@@ -94,6 +98,35 @@ extension MainViewController :EntryButtonDelegate {
      */
     func entryButtonTapped(amount: Float) {
         addWaterToToday(amount)
+    }
+}
+
+// MARK: - SettingsViewControllerProtocol
+extension MainViewController :SettingsViewControllerProtocol {
+    /**
+     Called when the goal value has been updated
+     
+     - parameter newValue: New goal set
+     */
+    func goalUpdated(newValue: Float) {
+        _dailyEntryDial._goal = newValue
+    }
+    
+    /**
+     When one of the presets values has been updated
+     
+     - parameter presetSize: Size of preset to update
+     - parameter newValue:     New Value for preset
+     */
+    func presetUpdated(presetSize: PresetSize, newValue: Float) {
+        switch presetSize {
+        case .Small:
+            _entryButton1._amount = newValue
+        case .Medium:
+            _entryButton2._amount = newValue
+        case .Large:
+            _entryButton3._amount = newValue
+        }
     }
 }
 

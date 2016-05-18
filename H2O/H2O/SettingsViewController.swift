@@ -8,24 +8,49 @@
 
 import UIKit
 
+enum PresetSize {
+    case Small
+    case Medium
+    case Large
+}
+
+protocol SettingsViewControllerProtocol {
+    /**
+     Called when the goal has been updated in the settings
+     
+     - parameter newValue: New goal value
+     */
+    func goalUpdated(newValue :Float)
+    
+    /**
+     Called when one of the presets has been updated in the settings
+     
+     - parameter presetSize: Preset size to update
+     - parameter newValue:     New preset value
+     */
+    func presetUpdated(presetSize :PresetSize, newValue :Float)
+}
+
 class SettingsViewController: UITableViewController {
         /// HealthKit static cell
     @IBOutlet weak var _healthKitCell: SettingsTableViewCell!
     
         /// Goal static cell
-    @IBOutlet weak var _goalCell: SettingsTableViewCell!
+    @IBOutlet weak var _goalCell: SettingsPresetTableViewCell!
     
         /// Small preset static cell
-    @IBOutlet weak var _presetCell1: SettingsTableViewCell!
+    @IBOutlet weak var _presetCell1: SettingsPresetTableViewCell!
     
         /// Medium preset static cell
-    @IBOutlet weak var _presetCell2: SettingsTableViewCell!
+    @IBOutlet weak var _presetCell2: SettingsPresetTableViewCell!
     
         /// Large preset static cell
-    @IBOutlet weak var _presetCell3: SettingsTableViewCell!
+    @IBOutlet weak var _presetCell3: SettingsPresetTableViewCell!
     
         /// HealthKit toggle Control
     @IBOutlet weak var _healthKitSwitch: UISwitch!
+    
+    var _delegate :SettingsViewControllerProtocol?
     
     //MARK: - View Setup
     
@@ -70,16 +95,27 @@ class SettingsViewController: UITableViewController {
         //Goal cell config
         _goalCell._imageView.image = UIImage(named: "GoalCellImage")
         _goalCell._textLabel.text = "Goal"
-
+        
+        let goal = NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
+        _goalCell._presetValueChangerView._presetValueTextField.text = String(Int(goal))
+        _goalCell._delegate = self
+        
         //Preset cells config
+        let presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
         _presetCell1._imageView.image = UIImage(named: "SmallPresetImage")
         _presetCell1._textLabel.text = "Small Preset"
+        _presetCell1._presetValueChangerView._presetValueTextField.text = String(Int(presetWaterValues[0]))
+        _presetCell1._delegate = self
 
         _presetCell2._imageView.image = UIImage(named: "MediumPresetImage")
         _presetCell2._textLabel.text = "Medium Preset"
+        _presetCell2._presetValueChangerView._presetValueTextField.text = String(Int(presetWaterValues[1]))
+        _presetCell2._delegate = self
 
         _presetCell3._imageView.image = UIImage(named: "LargePresetImage")
         _presetCell3._textLabel.text = "Large Preset"
+        _presetCell3._presetValueChangerView._presetValueTextField.text = String(Int(presetWaterValues[2]))
+        _presetCell3._delegate = self
     }
     
     //MARK: - Table View Overrides
@@ -101,6 +137,49 @@ class SettingsViewController: UITableViewController {
      */
     func onCloseButton() {
         dismissViewControllerAnimated(true) {
+        }
+    }
+}
+
+// MARK: - SettingsPresetTableViewCellProtocol
+extension SettingsViewController :SettingsPresetTableViewCellProtocol {
+    /**
+     A preset value has been changed within a settings cell
+     
+     - parameter settingsPresetTableViewCell: Which cell made the change
+     - parameter newValue:                    New value for the preset
+     */
+    func presetValueDidChange(settingsPresetTableViewCell: SettingsPresetTableViewCell, newValue :Float) {
+        /**
+         Sets the array in NSUserDefaults when modifiying one of the values
+         
+         - parameter array: Array to place in the PresetWaterValues spot in NSUserDefaults
+         */
+        func setArrayPreset(array :[Float]) {
+            NSUserDefaults.standardUserDefaults().setObject(array, forKey: "PresetWaterValues")
+        }
+        
+        var presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float] //Existing preset water values
+
+        switch settingsPresetTableViewCell {
+        case _goalCell:
+            NSUserDefaults.standardUserDefaults().setFloat(newValue, forKey: "GoalValue")
+            _delegate?.goalUpdated(newValue) //Update goal in main view
+        case _presetCell1:
+            presetWaterValues[0] = newValue
+            setArrayPreset(presetWaterValues) //Update NSUserDefaults
+            _delegate?.presetUpdated(.Small, newValue: newValue) //Update preset in main view
+        case _presetCell2:
+            presetWaterValues[1] = newValue
+            setArrayPreset(presetWaterValues) //Update NSUserDefaults
+            _delegate?.presetUpdated(.Medium, newValue: newValue) //Update preset in main view
+        case _presetCell3:
+            presetWaterValues[2] = newValue
+            setArrayPreset(presetWaterValues) //Update NSUserDefaults
+            _delegate?.presetUpdated(.Large, newValue: newValue) //Update preset in mainview
+            return
+        default:
+            break
         }
     }
 }
