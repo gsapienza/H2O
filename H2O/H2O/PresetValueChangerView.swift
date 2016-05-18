@@ -27,6 +27,9 @@ class PresetValueChangerView: UIView {
         /// Delegate to update when a new value is declared
     var _delegate :PresetValueChangerViewProtocol?
     
+        /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
+    var _previousValue = String()
+    
     /**
      Permanent transparent background
      */
@@ -115,7 +118,15 @@ class PresetValueChangerView: UIView {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension PresetValueChangerView :UITextFieldDelegate {
+    /**
+     When the text field begins editing this saves its value so that if the user leaves it empty, the text field text will be replaced by its old value
+     */
+    func textFieldDidBeginEditing(textField: UITextField) {
+        _previousValue = textField.text!
+    }
+    
     /**
      Determines whether editing should be allowed. Limitations are that only digits may be entered with a max of 3 digits
     
@@ -140,6 +151,10 @@ extension PresetValueChangerView :UITextFieldDelegate {
      When the preset text field is done editing call its delegate to tell it that the value did change
     */
     func textFieldDidEndEditing(textField: UITextField) {
+        if textField.text?.characters.count == 0 { //If the preset text field is empty
+            textField.text = _previousValue //Replace it with its previous value
+        }
+        
         _delegate?.valueDidChange(Float(_presetValueTextField.text!)!)
     }
 }
