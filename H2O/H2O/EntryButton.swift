@@ -12,7 +12,7 @@ class EntryButton: UIButton {
         /// Amount that entry button will add to goal
     var _amount :Float = 0 {
         didSet {
-            setTitle(String(Int(_amount)) + "ml", forState: .Normal)
+            setTitle(String(Int(_amount)) + Constants.standardUnit.rawValue, forState: .Normal)
         }
     }
         /// EntryButtonDelegate Protocol delegate
@@ -89,7 +89,7 @@ class EntryButton: UIButton {
      Action on tap. Plays audio and animates the button tapped. Calls a delegate method to inform the delegate that the button was tapped
      */
     internal func onTap() {
-        CENAudioToolbox.standardAudioToolbox.playAudio("b1", fileExtension: "wav", repeatEnabled: false)
+        CENAudioToolbox.standardAudioToolbox.playAudio("Pop_A", fileExtension: "wav", repeatEnabled: false)
         
         UIView.animateWithDuration(0.1, delay: 0, options: .AllowUserInteraction, animations: { 
             self.transform = CGAffineTransformMakeScale(0.8, 0.8)

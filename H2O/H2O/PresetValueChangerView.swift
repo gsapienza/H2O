@@ -59,7 +59,7 @@ class PresetValueChangerView: UIView {
         
         _unitLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let unit :NSString = "ml"
+        let unit :NSString = Constants.standardUnit.rawValue
         let font = StandardFonts.regularFont(18)
         
         let textSize = unit.sizeWithAttributes([NSFontAttributeName : font]) //Gets size of text based on font and string
@@ -92,6 +92,7 @@ class PresetValueChangerView: UIView {
         _presetValueTextField.textAlignment = .Right
         _presetValueTextField.keyboardType = .NumberPad
         _presetValueTextField.keyboardAppearance = .Dark
+        _presetValueTextField.tintColor = StandardColors.waterColor
         _presetValueTextField.delegate = self
         
         //Keyboard toolbar

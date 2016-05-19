@@ -9,19 +9,44 @@
 import UIKit
 
 protocol EntryButtonProtocol {
+    /**
+     When an entry is made by tapping one of the preset buttons
+     
+     - parameter amount: Amount set in the preset
+     */
     func entryButtonTapped(amount :Float)
+    
+    /**
+     When the custom entry button is tapped
+     
+     - parameter customButton: Button that was tapped
+     */
+    func customEntryButtonTapped(customButton :EntryButton)
 }
 
 class MainViewController: UIViewController {
 
         /// Navigation bar to contain settings button
     @IBOutlet weak var _navigationBar: UINavigationBar!
+    
+        /// First Entry Button
     @IBOutlet weak var _entryButton1: EntryButton!
+    
+        /// Second entry button
     @IBOutlet weak var _entryButton2: EntryButton!
+    
+        /// Third entry button
     @IBOutlet weak var _entryButton3: EntryButton!
+    
+        /// Custom value entry button
     @IBOutlet weak var _customEntryButton: CustomEntryButton!
     
+        /// Daily entry amount with dial to represent progress towards goal
     @IBOutlet weak var _dailyEntryDial: DailyEntryDial!
+    
+        /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
+    var _customEntryView = CustomEntryView()
+
     /**
      Sets status bar style for all view controllers
      
@@ -40,6 +65,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
     
         view.backgroundColor = StandardColors.backgroundColor
+        _customEntryView = CustomEntryView(frame: view.bounds)
         
         setupNavigationBar()
         setupPresetEntryCircles()
@@ -62,8 +88,15 @@ class MainViewController: UIViewController {
         let presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
         
         _entryButton1._amount = presetWaterValues[0]
+        _entryButton1._delegate = self
+        
         _entryButton2._amount = presetWaterValues[1]
+        _entryButton2._delegate = self
+
         _entryButton3._amount = presetWaterValues[2]
+        _entryButton3._delegate = self
+        
+        _customEntryButton._delegate = self
     }
     
     //MARK: - Actions
@@ -77,6 +110,11 @@ class MainViewController: UIViewController {
         
     }
     
+    /**
+     Settings bar button was tapped
+     
+     - parameter sender: Settings bar button
+     */
     @IBAction func onSettingsBarButton(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let navigationViewController = (storyboard.instantiateViewControllerWithIdentifier("SettingsViewController") as! UINavigationController)
@@ -86,11 +124,74 @@ class MainViewController: UIViewController {
         
         self.presentViewController(navigationViewController, animated: true, completion: nil)
     }
+    
+    /**
+     When the cancel bar button is tapped when the custom entry view is present
+     */
+    func onCancelCustomEntryBarButton() {
+        CENAudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
+        
+        _customEntryView.morphToStartingPath { (Bool) in //Make the entry circle look like the custom button outline again
+            self._customEntryView.removeFromSuperview()
+            
+            //Setup Settings bar button
+            
+            let navigationItem = UINavigationItem()
+            
+            let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .Plain, target: self, action: #selector(MainViewController.onSettingsBarButton(_:)))
+            settingsBarButtonItem.tintColor = UIColor.whiteColor()
+            
+            navigationItem.rightBarButtonItem = settingsBarButtonItem
+            
+            self._navigationBar.items = [navigationItem]
+        }
+        
+        toggleViewControllerViews(false) //Show all views on screen
+    }
+    
+    func onDoneCustomEntryBarButton() {
+        
+    }
+    
+    /**
+     Toggles all views on screen with a fancy animation
+     
+     - parameter hide: Should the views be hiddden
+     */
+    private func toggleViewControllerViews(hide :Bool) {
+        //Original values
+        var scale = CGAffineTransformMakeScale(1, 1)
+        var alpha :CGFloat = 1
+        
+        if hide { //If you want to hide them instead
+            scale = CGAffineTransformMakeScale(0.00001, 0.00001)
+            alpha = 0
+        }
+        
+        //Animations happen here
+        UIView.animateWithDuration(0.25, delay: 0, options: .CurveEaseIn, animations: {
+            self._entryButton1.transform = scale
+            self._entryButton1.alpha = alpha
+            
+            self._entryButton2.transform = scale
+            self._entryButton2.alpha = alpha
+
+            self._entryButton3.transform = scale
+            self._entryButton3.alpha = alpha
+
+            self._customEntryButton.transform = scale
+            self._customEntryButton.alpha = alpha
+
+            self._dailyEntryDial.transform = scale
+            self._dailyEntryDial.alpha = alpha
+            
+        }) { (Bool) in
+        }
+    }
 }
 
 // MARK: - EntryButtonDelegate
 extension MainViewController :EntryButtonProtocol {
-    
     /**
      When an entry button is tapped and a new amount of water is added to today
      
@@ -98,6 +199,37 @@ extension MainViewController :EntryButtonProtocol {
      */
     func entryButtonTapped(amount: Float) {
         addWaterToToday(amount)
+    }
+    
+    /**
+     When the custom entry button is tapped. Creates a new entry view
+     
+     - parameter customButton: Button that was tapped
+     */
+    func customEntryButtonTapped(customButton :EntryButton) {
+        view.addSubview(_customEntryView)
+        
+        _customEntryView.setupStartingPathInFrame(customButton.frame, cornerRadius :customButton.layer.cornerRadius) //Setup the custom button looking path
+        
+        _customEntryView.morphToEndingPath(_dailyEntryDial.frame, cornerRadius :_dailyEntryDial.frame.width / 2) //Animate the custom button looking path to the circle where input happens. Circle frame is based on the dailyEntryDialFrame
+        
+        toggleViewControllerViews(true) //Hide all other views on screen
+        
+        //Navigation bar setup for controlling custom entry
+        
+        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
+        
+        cancelBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal) //Cancel button view properties
+        
+        let doneBarButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
+        
+        doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal) //Done button view properties
+        
+        let navigationItem = UINavigationItem()
+        navigationItem.leftBarButtonItem = cancelBarButton
+        navigationItem.rightBarButtonItem = doneBarButton
+        
+        _navigationBar.items = [navigationItem]
     }
 }
 

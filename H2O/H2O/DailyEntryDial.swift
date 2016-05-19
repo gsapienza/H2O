@@ -120,7 +120,7 @@ class DailyEntryDial: UIView {
         
         _currentAmountOfWaterDrankTodayLabel.font = StandardFonts.regularFont(80)
         _currentAmountOfWaterDrankTodayLabel.textColor = UIColor.whiteColor()
-        _currentAmountOfWaterDrankTodayLabel.text = String(0) + "ml"
+        _currentAmountOfWaterDrankTodayLabel.text = String(0) + Constants.standardUnit.rawValue
         _currentAmountOfWaterDrankTodayLabel.textAlignment = .Center
     }
     
@@ -133,7 +133,7 @@ class DailyEntryDial: UIView {
      - parameter animated: Should the dial gauge animate on change
      */
     func changeCurrentAmountOfWaterDrankToday(newValue :Float, animated :Bool) {
-        _currentAmountOfWaterDrankTodayLabel.text = String(Int(newValue)) + "ml"
+        _currentAmountOfWaterDrankTodayLabel.text = String(Int(newValue)) + Constants.standardUnit.rawValue
         _currentAmountOfWaterDrankToday = newValue
         
         var animationTime = 0.0
