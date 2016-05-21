@@ -31,7 +31,7 @@ class CustomEntryView: UIView {
     let _lineWidth :CGFloat = 0.5
     
         /// Standard animation time for all animations in this view
-    let _animationDuration = 0.2
+    let _animationDuration = 0.25
     
         /// Custom button path
     var _customButtonShapePath :UIBezierPath {
@@ -303,7 +303,7 @@ class CustomEntryView: UIView {
      - parameter completionHandler: When the animation is complete
      */
     private func animateViewContainerToFinish(completionHandler: (Bool) -> Void) {
-        UIView.animateWithDuration(0.15, animations: {
+        UIView.animateWithDuration(_animationDuration, animations: {
             self._viewContainer.frame = self._endingFrame //Frame at ending point
             
             self._unitLabel.transform = CGAffineTransformIdentity
@@ -327,7 +327,7 @@ class CustomEntryView: UIView {
         let scaleAmount :CGFloat = 0.0001
         _amountTextField.resignFirstResponder()
 
-        UIView.animateWithDuration(0.15, animations: {
+        UIView.animateWithDuration(_animationDuration, animations: {
             self._viewContainer.frame = self._startingFrame //Frame at starting custom button point
             
             self._unitLabel.transform = CGAffineTransformMakeScale(scaleAmount, scaleAmount)

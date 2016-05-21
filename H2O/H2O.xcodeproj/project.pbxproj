@@ -34,7 +34,6 @@
 		37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182651CEBC2190055DA02 /* SettingsViewController.swift */; };
 		37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
 		37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */; };
-		37A1826C1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A1826B1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift */; };
 		37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
@@ -42,6 +41,7 @@
 		37E0D6FE1CEF66A7004ABFAF /* H2OTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */; };
 		37E0D7061CEF66FA004ABFAF /* DateEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */; };
 		37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */; };
+		37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -89,7 +89,6 @@
 		37A182651CEBC2190055DA02 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetValueChangerView.swift; sourceTree = "<group>"; };
-		37A1826B1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsPresetTableViewCell.swift; path = ../SettingsPresetTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEntryView.swift; sourceTree = "<group>"; };
 		37E0D6EE1CED2D95004ABFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		37E0D6F01CEE2649004ABFAF /* Alert Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Alert Error.wav"; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 		37E0D6FF1CEF66A7004ABFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEntryTests.swift; sourceTree = "<group>"; };
 		37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateExtension.swift; path = H2OTests/NSDateExtension.swift; sourceTree = SOURCE_ROOT; };
+		37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresetTableViewCell.swift; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,7 +223,7 @@
 			children = (
 				37A182651CEBC2190055DA02 /* SettingsViewController.swift */,
 				37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */,
-				37A1826B1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift */,
+				37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */,
 				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
 			);
 			name = Settings;
@@ -376,7 +376,6 @@
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
-				37A1826C1CEBF7400055DA02 /* SettingsPresetTableViewCell.swift in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				378566671CEA9645003418C2 /* Day.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
@@ -384,6 +383,7 @@
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
 				378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */,
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
+				37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */,
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
