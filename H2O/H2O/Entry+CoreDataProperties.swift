@@ -17,6 +17,6 @@ extension Entry {
     @NSManaged var id: String?
     @NSManaged var date: NSDate?
     @NSManaged var amount: NSNumber?
-    @NSManaged var day: Day?
+    @NSManaged var user: User?
 
 }

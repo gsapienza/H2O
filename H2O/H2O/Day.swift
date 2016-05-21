@@ -12,7 +12,7 @@ import CoreData
 
 class Day: NSManagedObject {
 
-    class func createNewDay() -> Day {
+    class func createNewDay(date :NSDate) -> Day {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
         
         let entity = NSEntityDescription.entityForName("Day", inManagedObjectContext:managedContext)
@@ -20,7 +20,7 @@ class Day: NSManagedObject {
         let day = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext) as! Day
         
         day.id = NSUUID().UUIDString
-        day.date = NSDate()
+        day.date = date
         
         do {
             try managedContext.save()

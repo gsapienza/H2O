@@ -52,10 +52,10 @@ class User: NSManagedObject {
         return user
     }
 
-    func addNewDay() {
+    /*func addNewDay(date :NSDate) {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
 
-        let day = Day.createNewDay()
+        let day = Day.createNewDay(date)
         
         let days = mutableSetValueForKey("days")
         days.addObject(day)
@@ -65,4 +65,61 @@ class User: NSManagedObject {
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }
-    }}
+    }
+    
+    /**
+     Creates new dates in core database until the current date
+     */
+    func createDaysToDate() {
+        if days?.count != 0 { //Are there any days present
+            let sortedDates = days!.sort({ $0.date.compare($1.date) == .OrderedAscending }) as! [Day] //Sort current dates with the lastest being last
+            
+            let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian) //Calendar type
+
+            var lastDay = sortedDates.last?.date //The latest date
+            var lastDayComponents = calendar?.components([.Day, .Month, .Year], fromDate: lastDay!) //Components from the latest date
+            
+            let today = NSDate().dateForCurrentTimeZone() //Todays date
+            let todayComponents = calendar?.components([.Day, .Month, .Year], fromDate: today) //Components from todays date
+            
+            while true { //While the dates havent been caught up to today
+                if lastDayComponents?.month < todayComponents?.month || lastDayComponents?.day < todayComponents?.day || lastDayComponents?.year < todayComponents?.year { //If the current month is greater than the last month or the day is greater than the latest day or the year is greater than ther current year
+                    
+                    let nextDate = getNextDay(lastDay!) //Get the next day from the latest entry
+                    
+                    lastDay = nextDate //Last date is now the new date
+                    lastDayComponents = calendar?.components([.Day, .Month, .Year], fromDate: nextDate) //New last day components
+                    
+                    if lastDayComponents?.day == 20 {
+                        print("")
+                    }
+                    
+                    addNewDay(nextDate) //Add the new date to the data base
+                } else {
+                    break
+                }
+            }
+        } else { //If there are no days            
+            addNewDay(NSDate().dateForCurrentTimeZone()) //New date for today
+        }
+    }
+    
+    /**
+     Computes the next NSDate from a passed NSDate
+     
+     - parameter fromDate: NSDate which you want the next date for
+     
+     - returns: The next date
+     */
+    func getNextDay(fromDate :NSDate) -> NSDate {
+        let dayComponent = NSDateComponents()
+        
+        dayComponent.day = 1 //Only 1 day ahead
+        
+        let calendar = NSCalendar.currentCalendar()
+        
+        let nextDate = calendar.dateByAddingComponents(dayComponent, toDate: fromDate, options: .MatchNextTime) //Computes the next date
+        
+        return nextDate!
+    }*/
+}

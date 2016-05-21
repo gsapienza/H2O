@@ -39,9 +39,22 @@
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
 		37E0D6F31CEE26E9004ABFAF /* b4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F21CEE26E9004ABFAF /* b4.wav */; };
+		37E0D6FE1CEF66A7004ABFAF /* H2OTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */; };
+		37E0D7061CEF66FA004ABFAF /* DateEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */; };
+		37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		37E0D7001CEF66A7004ABFAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 375F4FD31CEA91A6009C14AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 375F4FDA1CEA91A6009C14AE;
+			remoteInfo = H2O;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		375F4FDB1CEA91A6009C14AE /* H2O.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H2O.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +94,11 @@
 		37E0D6EE1CED2D95004ABFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		37E0D6F01CEE2649004ABFAF /* Alert Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Alert Error.wav"; sourceTree = "<group>"; };
 		37E0D6F21CEE26E9004ABFAF /* b4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = b4.wav; sourceTree = "<group>"; };
+		37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = H2OTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H2OTests.swift; sourceTree = "<group>"; };
+		37E0D6FF1CEF66A7004ABFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEntryTests.swift; sourceTree = "<group>"; };
+		37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateExtension.swift; path = H2OTests/NSDateExtension.swift; sourceTree = SOURCE_ROOT; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +111,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		37E0D6F81CEF66A7004ABFAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -100,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				375F4FDD1CEA91A6009C14AE /* H2O */,
+				37E0D6FC1CEF66A7004ABFAF /* H2OTests */,
 				375F4FDC1CEA91A6009C14AE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				375F4FDB1CEA91A6009C14AE /* H2O.app */,
+				37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,9 +147,11 @@
 				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
 				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
 				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
+				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Views */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
+				37E0D71E1CEFF0DF004ABFAF /* Shelved */,
 				3785667C1CEAA2A4003418C2 /* Frameworks */,
 			);
 			path = H2O;
@@ -164,8 +193,6 @@
 				375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */,
 				3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */,
 				3785665F1CEA9645003418C2 /* User.swift */,
-				378566601CEA9645003418C2 /* Day+CoreDataProperties.swift */,
-				378566611CEA9645003418C2 /* Day.swift */,
 				378566621CEA9645003418C2 /* Entry+CoreDataProperties.swift */,
 				378566631CEA9645003418C2 /* Entry.swift */,
 			);
@@ -212,6 +239,25 @@
 			name = "Entry Buttons";
 			sourceTree = "<group>";
 		};
+		37E0D6FC1CEF66A7004ABFAF /* H2OTests */ = {
+			isa = PBXGroup;
+			children = (
+				37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */,
+				37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */,
+				37E0D6FF1CEF66A7004ABFAF /* Info.plist */,
+			);
+			path = H2OTests;
+			sourceTree = "<group>";
+		};
+		37E0D71E1CEFF0DF004ABFAF /* Shelved */ = {
+			isa = PBXGroup;
+			children = (
+				378566601CEA9645003418C2 /* Day+CoreDataProperties.swift */,
+				378566611CEA9645003418C2 /* Day.swift */,
+			);
+			name = Shelved;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -232,6 +278,24 @@
 			productReference = 375F4FDB1CEA91A6009C14AE /* H2O.app */;
 			productType = "com.apple.product-type.application";
 		};
+		37E0D6FA1CEF66A7004ABFAF /* H2OTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37E0D7021CEF66A7004ABFAF /* Build configuration list for PBXNativeTarget "H2OTests" */;
+			buildPhases = (
+				37E0D6F71CEF66A7004ABFAF /* Sources */,
+				37E0D6F81CEF66A7004ABFAF /* Frameworks */,
+				37E0D6F91CEF66A7004ABFAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				37E0D7011CEF66A7004ABFAF /* PBXTargetDependency */,
+			);
+			name = H2OTests;
+			productName = H2OTests;
+			productReference = 37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -245,6 +309,10 @@
 					375F4FDA1CEA91A6009C14AE = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = G898DU57KC;
+					};
+					37E0D6FA1CEF66A7004ABFAF = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 375F4FDA1CEA91A6009C14AE;
 					};
 				};
 			};
@@ -262,6 +330,7 @@
 			projectRoot = "";
 			targets = (
 				375F4FDA1CEA91A6009C14AE /* H2O */,
+				37E0D6FA1CEF66A7004ABFAF /* H2OTests */,
 			);
 		};
 /* End PBXProject section */
@@ -285,6 +354,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		37E0D6F91CEF66A7004ABFAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -296,6 +372,7 @@
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
+				37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */,
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
@@ -317,7 +394,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		37E0D6F71CEF66A7004ABFAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37E0D7061CEF66FA004ABFAF /* DateEntryTests.swift in Sources */,
+				37E0D6FE1CEF66A7004ABFAF /* H2OTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		37E0D7011CEF66A7004ABFAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 375F4FDA1CEA91A6009C14AE /* H2O */;
+			targetProxy = 37E0D7001CEF66A7004ABFAF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		375F4FE21CEA91A6009C14AE /* Main.storyboard */ = {
@@ -429,6 +523,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = H2O/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O;
@@ -446,12 +541,37 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = H2O/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "H2O/H2O-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		37E0D7031CEF66A7004ABFAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = H2OTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2OTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/H2O.app/H2O";
+			};
+			name = Debug;
+		};
+		37E0D7041CEF66A7004ABFAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = H2OTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2OTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/H2O.app/H2O";
 			};
 			name = Release;
 		};
@@ -475,6 +595,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		37E0D7021CEF66A7004ABFAF /* Build configuration list for PBXNativeTarget "H2OTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37E0D7031CEF66A7004ABFAF /* Debug */,
+				37E0D7041CEF66A7004ABFAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

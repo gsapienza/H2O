@@ -24,8 +24,17 @@ class CustomEntryView: UIView {
         /// Frame for the final circle outling
     var _endingFrame = CGRect()
     
+        /// Layer for the blue droplet that appears after the circle path transforms into the droplet path
+    let _dropletShapeLayer = CAShapeLayer()
+    
+        /// Standard outline width for shapes
+    let _lineWidth :CGFloat = 0.5
+    
+        /// Standard animation time for all animations in this view
+    let _animationDuration = 0.2
+    
         /// Custom button path
-    var _startingMorphingShapePath :UIBezierPath {
+    var _customButtonShapePath :UIBezierPath {
         set{}
         get {
             let rectanglePath = UIBezierPath(roundedRect: CGRect(x: _startingFrame.origin.x, y: _startingFrame.origin.y, width: floor(_startingFrame.width * 1.00000 + 0.5) - floor(_startingFrame.width * 0.00000 + 0.5), height: floor(_startingFrame.height * 1.00000 + 0.5) - floor(_startingFrame.height * 0.00000 + 0.5)), cornerRadius: _startingCornerRadius)
@@ -35,12 +44,44 @@ class CustomEntryView: UIView {
     }
     
         /// Circle outline path
-    var _endingMorphingShapePath :UIBezierPath {
+    var _circleShapePath :UIBezierPath {
         set{}
         get {
             let ovalPath = UIBezierPath(roundedRect: CGRect(x: _endingFrame.origin.x, y: _endingFrame.origin.y, width: floor(_endingFrame.width * 1.00000 + 0.5) - floor(_endingFrame.width * 0.00000 + 0.5), height: floor(_endingFrame.height * 1.00000 + 0.5) - floor(_endingFrame.height * 0.00000 + 0.5)), cornerRadius: _endingCornerRadius)
             
             return ovalPath
+        }
+    }
+    
+    var _startingDropletMorphingShapePath :UIBezierPath {
+        set{}
+        get {
+            let startDropletPath = UIBezierPath()
+            startDropletPath.moveToPoint(CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height))
+            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.78114 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.22484 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height))
+            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.77516 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.78114 * _endingFrame.height))
+            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.18923 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.75817 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height))
+            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.24183 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.18855 * _endingFrame.height))
+            startDropletPath.closePath()
+            startDropletPath.usesEvenOddFillRule = true
+            
+            return startDropletPath
+        }
+    }
+    
+    var _endingDropletMorphingShapePath :UIBezierPath {
+        set{}
+        get {
+            let endDropletPath = UIBezierPath()
+            endDropletPath.moveToPoint(CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height))
+            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.73319 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.38764 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height))
+            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.61236 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.73319 * _endingFrame.height))
+            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.50741 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height))
+            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.50715 * _endingFrame.height))
+            endDropletPath.closePath()
+            endDropletPath.usesEvenOddFillRule = true
+            
+            return endDropletPath
         }
     }
     
@@ -65,6 +106,15 @@ class CustomEntryView: UIView {
     }
     
     /**
+     Cleanup when this view is removed from the superview
+     */
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        
+        _dropletShapeLayer.removeFromSuperlayer()
+    }
+    
+    /**
      Function to set up all of the original paths positioning over the custom button. Sets up appearance as well such as the line width and colors. Also places the view container.
      
      - parameter frame:        Frame of custom button
@@ -74,9 +124,9 @@ class CustomEntryView: UIView {
         _startingFrame = frame
         _startingCornerRadius = cornerRadius
         
-        _morphingShape.path = _startingMorphingShapePath.CGPath
+        _morphingShape.path = _customButtonShapePath.CGPath
 
-        _morphingShape.lineWidth = 0.5
+        _morphingShape.lineWidth = _lineWidth
         _morphingShape.strokeColor = UIColor.whiteColor().CGColor
         _morphingShape.fillColor = UIColor.clearColor().CGColor
         
@@ -145,7 +195,7 @@ class CustomEntryView: UIView {
      - parameter endFrame:     Frame of the final circle
      - parameter cornerRadius: Corner radius of the circle
      */
-    func morphToEndingPath(endFrame :CGRect, cornerRadius :CGFloat) {
+    func morphToCirclePath(endFrame :CGRect, cornerRadius :CGFloat) {
         //Set the ivars
         _endingFrame = endFrame
         _endingCornerRadius = cornerRadius
@@ -154,7 +204,7 @@ class CustomEntryView: UIView {
         
         //Delay here for asthetic purposes only. Will work fine without it
         AppDelegate.delay(delay) {
-            self._morphingShape.path = self._endingMorphingShapePath.CGPath //Set the path before animating
+            self._morphingShape.path = self._circleShapePath.CGPath //Set the path before animating
             
             self.animateViewContainerToFinish({ (Bool) in //Animates the view container to be visble to the user
             })
@@ -162,9 +212,9 @@ class CustomEntryView: UIView {
         
         //Morph path animation
         let morphAnimation = CABasicAnimation(keyPath: "path")
-        morphAnimation.fromValue = _startingMorphingShapePath.CGPath
-        morphAnimation.toValue = _endingMorphingShapePath.CGPath
-        morphAnimation.duration = 0.2
+        morphAnimation.fromValue = _customButtonShapePath.CGPath
+        morphAnimation.toValue = _circleShapePath.CGPath
+        morphAnimation.duration = _animationDuration
         morphAnimation.beginTime = CACurrentMediaTime() + delay //Accounts for delay above
         morphAnimation.removedOnCompletion = false
         
@@ -172,12 +222,12 @@ class CustomEntryView: UIView {
     }
     
     /**
-     Animation to morph the final outline circle back into a custom button shape
+     Animation to morph the outline circle back into a custom button shape
      
-     - parameter completionHandler: Completion of animation
+     - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
      */
-    func morphToStartingPath(completionHandler: (Bool) -> Void) {
-        self._morphingShape.path = _startingMorphingShapePath.CGPath //Set path back to starting point
+    func morphToCustomButtonPath(completionHandler: (Bool) -> Void) {
+        self._morphingShape.path = _customButtonShapePath.CGPath //Set path back to starting point
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
             completionHandler(true) //Informs the caller that this animation is complete
@@ -186,12 +236,63 @@ class CustomEntryView: UIView {
         
         //Morph path animation
         let morphAnimation = CABasicAnimation(keyPath: "path")
-        morphAnimation.fromValue = _endingMorphingShapePath.CGPath
-        morphAnimation.toValue = _startingMorphingShapePath.CGPath
-        morphAnimation.duration = 0.2
+        morphAnimation.fromValue = _circleShapePath.CGPath
+        morphAnimation.toValue = _customButtonShapePath.CGPath
+        morphAnimation.duration = _animationDuration
         morphAnimation.removedOnCompletion = false
         
         _morphingShape.addAnimation(morphAnimation, forKey: "path")
+    }
+    
+    /**
+     Morphs circle into droplet
+     
+     - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
+     */
+    func morphToDropletPath(completionHandler: (Bool) -> Void) {
+        self._morphingShape.path = _endingDropletMorphingShapePath.CGPath //Set path to droplet
+        
+        animateViewContainerToStart { (Bool) in //Animate the view container back
+            completionHandler(true) //Informs the caller that this animation is complete
+            self._amountTextField.text = "" //Sets the entry text to blank
+        }
+        
+        //Morph path animation
+        let morphAnimation = CABasicAnimation(keyPath: "path")
+        morphAnimation.fromValue = _startingDropletMorphingShapePath.CGPath
+        morphAnimation.toValue = _endingDropletMorphingShapePath.CGPath
+        morphAnimation.duration = _animationDuration
+        morphAnimation.removedOnCompletion = false
+        
+        _morphingShape.addAnimation(morphAnimation, forKey: "path")
+        
+        
+        
+        //Setup for droplet layer to fade in after morph is made to show a blue droplet
+        
+        _dropletShapeLayer.path = _endingDropletMorphingShapePath.CGPath //Droplet path
+        
+        _dropletShapeLayer.fillColor = StandardColors.waterColor.CGColor
+        _dropletShapeLayer.strokeColor = UIColor.whiteColor().CGColor
+        _dropletShapeLayer.lineWidth = _lineWidth
+        _dropletShapeLayer.opacity = 0
+        
+        layer.addSublayer(_dropletShapeLayer)
+        
+        //Delay to set the opacity so the morph animation could finish before seeing the blue droplet
+        AppDelegate.delay(_animationDuration) {
+            self._dropletShapeLayer.opacity = 1
+        }
+        
+        //Blue droplet alpha animation
+        let dropletOpacityAnimation = CABasicAnimation(keyPath: "opacity")
+        dropletOpacityAnimation.fromValue = 0
+        dropletOpacityAnimation.toValue = 1
+        dropletOpacityAnimation.duration = _animationDuration
+        dropletOpacityAnimation.beginTime = CACurrentMediaTime() + _animationDuration
+        dropletOpacityAnimation.removedOnCompletion = false
+        
+        _dropletShapeLayer.addAnimation(dropletOpacityAnimation, forKey: "opacity")
     }
     
     //MARK: - View Container Animations
@@ -277,7 +378,7 @@ extension CustomEntryView :UITextFieldDelegate {
                 let amountToMoveCharacters = sizeOfCharacter.width / 2 //Amount to move text field and unit label
                 
                 //Shifts the text field and unit label if three numbers are entered
-                UIView.animateWithDuration(0.2, animations: { 
+                UIView.animateWithDuration(_animationDuration, animations: {
                     if textField.text!.characters.count == 2 && isBackSpace != -92 { //Is there 2 characters and now a third is coming that is not a background
                         
                         //Move everything to the right

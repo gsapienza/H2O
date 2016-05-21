@@ -99,6 +99,20 @@ class MainViewController: UIViewController {
         _customEntryButton._delegate = self
     }
     
+    /**
+     Navigation bar setup when the settings button is needed
+     */
+    private func setupSettingsBarButton() {
+        let navigationItem = UINavigationItem()
+        
+        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .Plain, target: self, action: #selector(MainViewController.onSettingsBarButton(_:)))
+        settingsBarButtonItem.tintColor = UIColor.whiteColor()
+        
+        navigationItem.rightBarButtonItem = settingsBarButtonItem
+        
+        self._navigationBar.items = [navigationItem]
+    }
+    
     //MARK: - Actions
     
     /**
@@ -131,26 +145,24 @@ class MainViewController: UIViewController {
     func onCancelCustomEntryBarButton() {
         CENAudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
         
-        _customEntryView.morphToStartingPath { (Bool) in //Make the entry circle look like the custom button outline again
+        _customEntryView.morphToCustomButtonPath { (Bool) in //Make the entry circle look like the custom button outline again
             self._customEntryView.removeFromSuperview()
             
-            //Setup Settings bar button
-            
-            let navigationItem = UINavigationItem()
-            
-            let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .Plain, target: self, action: #selector(MainViewController.onSettingsBarButton(_:)))
-            settingsBarButtonItem.tintColor = UIColor.whiteColor()
-            
-            navigationItem.rightBarButtonItem = settingsBarButtonItem
-            
-            self._navigationBar.items = [navigationItem]
+            self.setupSettingsBarButton() //Restore settings button
         }
         
         toggleViewControllerViews(false) //Show all views on screen
     }
     
+    /**
+     When the done bar button is tapped when the custom entry view is present
+     */
     func onDoneCustomEntryBarButton() {
-        
+        CENAudioToolbox.standardAudioToolbox.playAudio("Pop_A", fileExtension: "wav", repeatEnabled: false)
+
+        _customEntryView.morphToDropletPath { (Bool) in
+            self.setupSettingsBarButton() //Restore settings button
+        }
     }
     
     /**
@@ -211,7 +223,7 @@ extension MainViewController :EntryButtonProtocol {
         
         _customEntryView.setupStartingPathInFrame(customButton.frame, cornerRadius :customButton.layer.cornerRadius) //Setup the custom button looking path
         
-        _customEntryView.morphToEndingPath(_dailyEntryDial.frame, cornerRadius :_dailyEntryDial.frame.width / 2) //Animate the custom button looking path to the circle where input happens. Circle frame is based on the dailyEntryDialFrame
+        _customEntryView.morphToCirclePath(_dailyEntryDial.frame, cornerRadius :_dailyEntryDial.frame.width / 2) //Animate the custom button looking path to the circle where input happens. Circle frame is based on the dailyEntryDialFrame
         
         toggleViewControllerViews(true) //Hide all other views on screen
         
