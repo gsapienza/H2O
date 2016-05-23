@@ -63,6 +63,6 @@ class SettingsTableViewCell: UITableViewCell {
         addConstraint(NSLayoutConstraint(item: _textLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.height))
         
         _textLabel.font = StandardFonts.regularFont(18)
-        _textLabel.textColor = UIColor.whiteColor()
+        _textLabel.textColor = StandardColors.primaryColor
     }
 }

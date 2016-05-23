@@ -42,6 +42,19 @@
 		37E0D7061CEF66FA004ABFAF /* DateEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */; };
 		37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */; };
 		37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */; };
+		37E0D7231CF0C16C004ABFAF /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; };
+		37E0D7241CF0C16C004ABFAF /* CRToast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37E0D7281CF0C181004ABFAF /* CENToastNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */; };
+		37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */; };
+		37E0D72E1CF0FDF0004ABFAF /* Click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D72D1CF0FDF0004ABFAF /* Click.wav */; };
+		37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */; };
+		37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7591CF11561004ABFAF /* L360ConfettiObject.m */; };
+		37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D75B1CF11561004ABFAF /* L360ConfettiView.m */; };
+		37E0D7601CF11870004ABFAF /* Well done.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D75F1CF11870004ABFAF /* Well done.wav */; };
+		37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */; };
+		37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7641CF22F5D004ABFAF /* Popsicle.swift */; };
+		37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */; };
+		37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +68,20 @@
 			remoteInfo = H2O;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		37E0D7251CF0C16C004ABFAF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				37E0D7241CF0C16C004ABFAF /* CRToast.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		375F4FDB1CEA91A6009C14AE /* H2O.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H2O.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +126,22 @@
 		37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEntryTests.swift; sourceTree = "<group>"; };
 		37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateExtension.swift; path = H2OTests/NSDateExtension.swift; sourceTree = SOURCE_ROOT; };
 		37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresetTableViewCell.swift; sourceTree = "<group>"; };
+		37E0D7211CF0C164004ABFAF /* CRToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CRToast.framework; path = Carthage/Build/iOS/CRToast.framework; sourceTree = SOURCE_ROOT; };
+		37E0D7261CF0C181004ABFAF /* CENToastNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CENToastNotificationManager.h; sourceTree = "<group>"; };
+		37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CENToastNotificationManager.m; sourceTree = "<group>"; };
+		37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		37E0D72D1CF0FDF0004ABFAF /* Click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Click.wav; sourceTree = "<group>"; };
+		37E0D7561CF11561004ABFAF /* L360ConfettiArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L360ConfettiArea.h; sourceTree = "<group>"; };
+		37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L360ConfettiArea.m; sourceTree = "<group>"; };
+		37E0D7581CF11561004ABFAF /* L360ConfettiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L360ConfettiObject.h; sourceTree = "<group>"; };
+		37E0D7591CF11561004ABFAF /* L360ConfettiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L360ConfettiObject.m; sourceTree = "<group>"; };
+		37E0D75A1CF11561004ABFAF /* L360ConfettiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L360ConfettiView.h; sourceTree = "<group>"; };
+		37E0D75B1CF11561004ABFAF /* L360ConfettiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L360ConfettiView.m; sourceTree = "<group>"; };
+		37E0D75F1CF11870004ABFAF /* Well done.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Well done.wav"; sourceTree = "<group>"; };
+		37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		37E0D7641CF22F5D004ABFAF /* Popsicle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popsicle.swift; sourceTree = "<group>"; };
+		37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyInformationTableViewCell.swift; sourceTree = "<group>"; };
+		37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyEntryDateView.swift; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E0D7231CF0C16C004ABFAF /* CRToast.framework in Frameworks */,
 				3785667B1CEAA29C003418C2 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,9 +189,10 @@
 				375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
 				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
-				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
 				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
+				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
 				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
+				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Views */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
@@ -160,14 +205,13 @@
 		3785665A1CEA93BC003418C2 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D6F01CEE2649004ABFAF /* Alert Error.wav */,
-				37A182611CEB94A80055DA02 /* Pop_A.wav */,
-				37E0D6F21CEE26E9004ABFAF /* b4.wav */,
-				37A182631CEB96430055DA02 /* b1.wav */,
+				37E0D7611CF210D2004ABFAF /* Sounds */,
 				378566791CEAA281003418C2 /* Fonts */,
 				3785667D1CEAA2C0003418C2 /* H2O-Bridging-Header.h */,
 				3785667E1CEAA2C1003418C2 /* CENTextUtilities.h */,
 				3785667F1CEAA2C1003418C2 /* CENTextUtilities.m */,
+				37E0D7261CF0C181004ABFAF /* CENToastNotificationManager.h */,
+				37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */,
 				375F4FE81CEA91A6009C14AE /* Assets.xcassets */,
 				375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */,
 				375F4FED1CEA91A6009C14AE /* Info.plist */,
@@ -181,6 +225,10 @@
 				375F4FE21CEA91A6009C14AE /* Main.storyboard */,
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
+				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
+				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
+				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
+				37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */,
 				37E0D6F51CEE280E004ABFAF /* Entry Buttons */,
 				37E0D6F41CEE2803004ABFAF /* Settings */,
 			);
@@ -213,6 +261,8 @@
 		3785667C1CEAA2A4003418C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37E0D7551CF11561004ABFAF /* L360Confetti */,
+				37E0D7211CF0C164004ABFAF /* CRToast.framework */,
 				3785667A1CEAA29C003418C2 /* CoreText.framework */,
 			);
 			name = Frameworks;
@@ -258,6 +308,32 @@
 			name = Shelved;
 			sourceTree = "<group>";
 		};
+		37E0D7551CF11561004ABFAF /* L360Confetti */ = {
+			isa = PBXGroup;
+			children = (
+				37E0D7561CF11561004ABFAF /* L360ConfettiArea.h */,
+				37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */,
+				37E0D7581CF11561004ABFAF /* L360ConfettiObject.h */,
+				37E0D7591CF11561004ABFAF /* L360ConfettiObject.m */,
+				37E0D75A1CF11561004ABFAF /* L360ConfettiView.h */,
+				37E0D75B1CF11561004ABFAF /* L360ConfettiView.m */,
+			);
+			path = L360Confetti;
+			sourceTree = "<group>";
+		};
+		37E0D7611CF210D2004ABFAF /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				37E0D75F1CF11870004ABFAF /* Well done.wav */,
+				37E0D6F01CEE2649004ABFAF /* Alert Error.wav */,
+				37E0D72D1CF0FDF0004ABFAF /* Click.wav */,
+				37A182611CEB94A80055DA02 /* Pop_A.wav */,
+				37E0D6F21CEE26E9004ABFAF /* b4.wav */,
+				37A182631CEB96430055DA02 /* b1.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -268,6 +344,7 @@
 				375F4FD71CEA91A6009C14AE /* Sources */,
 				375F4FD81CEA91A6009C14AE /* Frameworks */,
 				375F4FD91CEA91A6009C14AE /* Resources */,
+				37E0D7251CF0C16C004ABFAF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -346,7 +423,9 @@
 				375F4FE91CEA91A6009C14AE /* Assets.xcassets in Resources */,
 				37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */,
 				37A182621CEB94A80055DA02 /* Pop_A.wav in Resources */,
+				37E0D7601CF11870004ABFAF /* Well done.wav in Resources */,
 				375F4FE41CEA91A6009C14AE /* Main.storyboard in Resources */,
+				37E0D72E1CF0FDF0004ABFAF /* Click.wav in Resources */,
 				37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */,
 				378566781CEAA27E003418C2 /* Bariol_Thin.otf in Resources */,
 				378566751CEAA27E003418C2 /* Bariol_Bold.otf in Resources */,
@@ -371,13 +450,21 @@
 				3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */,
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
+				37E0D7281CF0C181004ABFAF /* CENToastNotificationManager.m in Sources */,
+				37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
 				37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */,
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
+				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
+				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
+				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
+				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
+				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
 				378566671CEA9645003418C2 /* Day.swift in Sources */,
+				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
 				378566651CEA9645003418C2 /* User.swift in Sources */,
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
@@ -385,6 +472,7 @@
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
 				37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */,
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
+				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
@@ -524,6 +612,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = H2O/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O;
@@ -542,6 +635,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = H2O/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O;

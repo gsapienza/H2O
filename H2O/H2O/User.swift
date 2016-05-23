@@ -26,7 +26,13 @@ class User: NSManagedObject {
                 return createNewUser()
             }
             
+            for entry in (users.first?.entries)! {
+                let object = entry as! Entry
+                print(object.amount)
+            }
+
             return users.first
+            
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
             
@@ -50,6 +56,41 @@ class User: NSManagedObject {
         }
         
         return user
+    }
+    
+    func addNewEntryToUser(amount :Float) {
+        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+
+        let entry = Entry.createNewEntry(amount)
+        
+        let entries = self.mutableSetValueForKey("entries")
+        entries.addObject(entry)
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
+    
+    func getAmountOfWaterForToday() -> Float {
+        var todaysWaterAmount :Float = 0.0
+        
+        for entry in entries! {
+            let entryDate = (entry as! Entry).date
+            let todayDate = NSDate()
+            
+            let calendar = NSCalendar.currentCalendar() //Calendar type
+            
+            let entryDateComponents = calendar.components([.Day, .Month, .Year], fromDate: entryDate!)
+            let todayDateComponents = calendar.components([.Day, .Month, .Year], fromDate: todayDate)
+
+            if entryDateComponents.month == todayDateComponents.month && entryDateComponents.day == todayDateComponents.day && entryDateComponents.year == todayDateComponents.year {
+                todaysWaterAmount += ((entry as! Entry).amount?.floatValue)!
+            }
+        }
+        
+        return todaysWaterAmount
     }
 
     /*func addNewDay(date :NSDate) {

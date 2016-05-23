@@ -15,6 +15,6 @@ import CoreData
 extension User {
 
     @NSManaged var id: String?
-    @NSManaged var days: NSSet?
+    @NSManaged var entries: NSSet?
     
 }

@@ -8,9 +8,9 @@
 
 import UIKit
 
-class StandardFonts: NSObject {
+@objc class StandardFonts: NSObject {
     
-    class func regularFont(size :CGFloat) -> UIFont {
+    @objc class func regularFont(size :CGFloat) -> UIFont {
         return UIFont(name: "Bariol-Regular", size: size)!
     }
     

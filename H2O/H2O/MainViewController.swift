@@ -46,15 +46,10 @@ class MainViewController: UIViewController {
     
         /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
     var _customEntryView = CustomEntryView()
+    
+        /// View for confetti to burst at when the user hit their goal
+    var _confettiArea = L360ConfettiArea()
 
-    /**
-     Sets status bar style for all view controllers
-     
-     - returns: White status bar style
-     */
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
     
     //MARK: - Setup functions
     
@@ -69,6 +64,14 @@ class MainViewController: UIViewController {
         
         setupNavigationBar()
         setupPresetEntryCircles()
+        setupSettingsBarButton()
+        setupConfettiArea()
+        
+        _dailyEntryDial._delegate = self
+        
+        //If the date changes while the app is open this timer will update the UI to reflect daily changes
+        let newDateTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(newDateTimer, forMode: NSRunLoopCommonModes)
     }
 
     /**
@@ -106,22 +109,53 @@ class MainViewController: UIViewController {
         let navigationItem = UINavigationItem()
         
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .Plain, target: self, action: #selector(MainViewController.onSettingsBarButton(_:)))
-        settingsBarButtonItem.tintColor = UIColor.whiteColor()
+        settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
         navigationItem.rightBarButtonItem = settingsBarButtonItem
         
         self._navigationBar.items = [navigationItem]
     }
     
+    /**
+     Sets up the area for confetti when the user hit their goal 🎊
+     */
+    private func setupConfettiArea() {
+        view.addSubview(_confettiArea)
+        
+        _confettiArea.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
+        
+        _confettiArea.userInteractionEnabled = false
+    }
+    
     //MARK: - Actions
     
     /**
-     Adds water to today by using presets, custom amount or other means
+     Adds water to user by using presets, custom amount or other means
      
      - parameter amount: Amount of water in fl oz
      */
-    private func addWaterToToday(amount :Float) {
+    func addWaterToToday(amount :Float) {
+        let beforeAmount = AppDelegate.getAppDelegate().user?.getAmountOfWaterForToday() //Water drank before entering this latest entry
         
+        //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added
+        if beforeAmount! < _dailyEntryDial._goal && beforeAmount! + amount >= _dailyEntryDial._goal {
+            _confettiArea.burstAt(_dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
+            CENAudioToolbox.standardAudioToolbox.playAudio("Well done", fileExtension: "wav", repeatEnabled: false)
+            CENToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(_dailyEntryDial._goal))" + Constants.standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
+            })
+        } else {
+            CENToastNotificationManager.postToastNotification("\(Int(amount))" + Constants.standardUnit.rawValue + " added", color: StandardColors.waterColor, image: UIImage(named: "Check"), completionBlock: {
+            })
+        }
+        
+        AppDelegate.getAppDelegate().user!.addNewEntryToUser(amount)
+        
+        _dailyEntryDial.updateAmountOfWaterDrankToday(true) //Updates the daily dial
     }
     
     /**
@@ -145,10 +179,10 @@ class MainViewController: UIViewController {
     func onCancelCustomEntryBarButton() {
         CENAudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
         
+        setupSettingsBarButton() //Restore settings button
+
         _customEntryView.morphToCustomButtonPath { (Bool) in //Make the entry circle look like the custom button outline again
             self._customEntryView.removeFromSuperview()
-            
-            self.setupSettingsBarButton() //Restore settings button
         }
         
         toggleViewControllerViews(false) //Show all views on screen
@@ -158,10 +192,25 @@ class MainViewController: UIViewController {
      When the done bar button is tapped when the custom entry view is present
      */
     func onDoneCustomEntryBarButton() {
-        CENAudioToolbox.standardAudioToolbox.playAudio("Pop_A", fileExtension: "wav", repeatEnabled: false)
-
-        _customEntryView.morphToDropletPath { (Bool) in
-            self.setupSettingsBarButton() //Restore settings button
+        if _customEntryView._amountTextField.text != "" { //If the text field is not blank
+            CENAudioToolbox.standardAudioToolbox.playAudio("Pop_A", fileExtension: "wav", repeatEnabled: false)
+            
+            setupSettingsBarButton() //Restore settings button
+            
+            let amount = NSNumberFormatter().numberFromString(_customEntryView._amountTextField.text!)!.floatValue
+            addWaterToToday(amount)
+            
+            _customEntryView.morphToDropletPath { (Bool) in
+                self._customEntryView.removeFromSuperview()
+            }
+            
+            toggleViewControllerViews(false) //Show all views on screen
+        } else {
+            CENAudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
+            
+            _customEntryView.invalidEntry()
+            CENToastNotificationManager.postToastNotification("Custom Amount Cannot Be Empty", color: StandardColors.standardRedColor, image: nil, completionBlock: {
+            })
         }
     }
     
@@ -200,6 +249,13 @@ class MainViewController: UIViewController {
         }) { (Bool) in
         }
     }
+    
+    /**
+     Called via timer to check if the day has changed while the app is opened and UI elements need updating
+     */
+    func updateTimeRelatedItems() {
+        _dailyEntryDial.updateAmountOfWaterDrankToday(true)
+    }
 }
 
 // MARK: - EntryButtonDelegate
@@ -235,7 +291,7 @@ extension MainViewController :EntryButtonProtocol {
         
         let doneBarButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
         
-        doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal) //Done button view properties
+        doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.boldFont(18)], forState: .Normal) //Done button view properties
         
         let navigationItem = UINavigationItem()
         navigationItem.leftBarButtonItem = cancelBarButton
@@ -254,6 +310,7 @@ extension MainViewController :SettingsViewControllerProtocol {
      */
     func goalUpdated(newValue: Float) {
         _dailyEntryDial._goal = newValue
+        _dailyEntryDial.updateAmountOfWaterDrankToday(true)
     }
     
     /**
@@ -274,3 +331,21 @@ extension MainViewController :SettingsViewControllerProtocol {
     }
 }
 
+// MARK: - DailyEntryDialProtocol
+extension MainViewController :DailyEntryDialProtocol {
+    /**
+     Retrieves the amount of water drank today from the database
+     
+     - returns: Amount of water drank today
+     */
+    func getAmountOfWaterEnteredToday() -> Float {
+        return (AppDelegate.getAppDelegate().user?.getAmountOfWaterForToday())!
+    }
+    
+    func dialButtonTapped() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let informationViewController = (storyboard.instantiateViewControllerWithIdentifier("InformationViewController") as! InformationViewController)
+        
+        informationViewController.setupPopsicle()
+    }
+}

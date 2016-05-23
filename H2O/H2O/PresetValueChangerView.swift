@@ -60,7 +60,7 @@ class PresetValueChangerView: UIView {
         _unitLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let unit :NSString = Constants.standardUnit.rawValue
-        let font = StandardFonts.regularFont(18)
+        let font = StandardFonts.boldFont(18)
         
         let textSize = unit.sizeWithAttributes([NSFontAttributeName : font]) //Gets size of text based on font and string
             
@@ -69,7 +69,7 @@ class PresetValueChangerView: UIView {
         addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: textSize.width + 1)) //Add a +1 because it is too small without it ¯\_(ツ)_/¯
 
-        _unitLabel.textColor = UIColor.whiteColor()
+        _unitLabel.textColor = StandardColors.primaryColor
         _unitLabel.font = font
         _unitLabel.text = unit as String
     }
@@ -87,11 +87,11 @@ class PresetValueChangerView: UIView {
         addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.width / 2))
         addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.height))
         
-        _presetValueTextField.textColor = UIColor.whiteColor()
-        _presetValueTextField.font = StandardFonts.regularFont(18)
+        _presetValueTextField.textColor = StandardColors.primaryColor
+        _presetValueTextField.font = StandardFonts.boldFont(18)
         _presetValueTextField.textAlignment = .Right
         _presetValueTextField.keyboardType = .NumberPad
-        _presetValueTextField.keyboardAppearance = .Dark
+        _presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
         _presetValueTextField.tintColor = StandardColors.waterColor
         _presetValueTextField.delegate = self
         
@@ -100,7 +100,11 @@ class PresetValueChangerView: UIView {
         let screenWidth = AppDelegate.getAppDelegate().window?.frame.width
         
         let keyPadToolbar = UIToolbar(frame: CGRectMake(0, 0, screenWidth!, 50))
-        keyPadToolbar.barStyle = .BlackTranslucent
+        if AppDelegate.isDarkModeEnabled() {
+            keyPadToolbar.barStyle = .BlackTranslucent
+        } else {
+            keyPadToolbar.barStyle = .Default
+        }
         let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
         doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal)

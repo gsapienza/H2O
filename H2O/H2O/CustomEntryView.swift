@@ -53,6 +53,7 @@ class CustomEntryView: UIView {
         }
     }
     
+        /// Circle that resembles the circle shape path to morph into the droplet
     var _startingDropletMorphingShapePath :UIBezierPath {
         set{}
         get {
@@ -69,6 +70,7 @@ class CustomEntryView: UIView {
         }
     }
     
+        /// Water droplet path
     var _endingDropletMorphingShapePath :UIBezierPath {
         set{}
         get {
@@ -112,6 +114,7 @@ class CustomEntryView: UIView {
         super.removeFromSuperview()
         
         _dropletShapeLayer.removeFromSuperlayer()
+        _amountTextField.text = "" //Sets the entry text to blank
     }
     
     /**
@@ -127,7 +130,7 @@ class CustomEntryView: UIView {
         _morphingShape.path = _customButtonShapePath.CGPath
 
         _morphingShape.lineWidth = _lineWidth
-        _morphingShape.strokeColor = UIColor.whiteColor().CGColor
+        _morphingShape.strokeColor = StandardColors.primaryColor.CGColor
         _morphingShape.fillColor = UIColor.clearColor().CGColor
         
         layer.addSublayer(_morphingShape)
@@ -165,7 +168,7 @@ class CustomEntryView: UIView {
         _amountTextField.font = StandardFonts.regularFont(80)
         _amountTextField.textAlignment = .Right
         _amountTextField.keyboardType = .NumberPad
-        _amountTextField.keyboardAppearance = .Dark
+        _amountTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
         _amountTextField.delegate = self
         _amountTextField.tintColor = StandardColors.waterColor
         _amountTextField.placeholder = "12"
@@ -179,8 +182,8 @@ class CustomEntryView: UIView {
     private func setupUnitLabel() {
         _unitLabel.frame = CGRectMake(_viewContainer.bounds.width / 2, 0, _viewContainer.bounds.width / 2, _viewContainer.bounds.height)
         
-        _unitLabel.textColor = UIColor.whiteColor()
-        _unitLabel.font = StandardFonts.regularFont(80)
+        _unitLabel.textColor = StandardColors.primaryColor
+        _unitLabel.font = StandardFonts.thinFont(80)
         _unitLabel.text = Constants.standardUnit.rawValue
         _unitLabel.textAlignment = .Left
         
@@ -203,7 +206,7 @@ class CustomEntryView: UIView {
         let delay = 0.1
         
         //Delay here for asthetic purposes only. Will work fine without it
-        AppDelegate.delay(delay) {
+        AppDelegate.delay(_animationDuration) {
             self._morphingShape.path = self._circleShapePath.CGPath //Set the path before animating
             
             self.animateViewContainerToFinish({ (Bool) in //Animates the view container to be visble to the user
@@ -231,7 +234,6 @@ class CustomEntryView: UIView {
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
             completionHandler(true) //Informs the caller that this animation is complete
-            self._amountTextField.text = "" //Sets the entry text to blank
         }
         
         //Morph path animation
@@ -254,12 +256,11 @@ class CustomEntryView: UIView {
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
             completionHandler(true) //Informs the caller that this animation is complete
-            self._amountTextField.text = "" //Sets the entry text to blank
         }
         
         //Morph path animation
         let morphAnimation = CABasicAnimation(keyPath: "path")
-        morphAnimation.fromValue = _startingDropletMorphingShapePath.CGPath
+        morphAnimation.fromValue = _startingDropletMorphingShapePath.CGPath //Looks like the circle path that was used before. But this path is adjusted to morph into the droplet
         morphAnimation.toValue = _endingDropletMorphingShapePath.CGPath
         morphAnimation.duration = _animationDuration
         morphAnimation.removedOnCompletion = false
@@ -273,7 +274,7 @@ class CustomEntryView: UIView {
         _dropletShapeLayer.path = _endingDropletMorphingShapePath.CGPath //Droplet path
         
         _dropletShapeLayer.fillColor = StandardColors.waterColor.CGColor
-        _dropletShapeLayer.strokeColor = UIColor.whiteColor().CGColor
+        _dropletShapeLayer.strokeColor = StandardColors.primaryColor.CGColor
         _dropletShapeLayer.lineWidth = _lineWidth
         _dropletShapeLayer.opacity = 0
         
@@ -293,6 +294,37 @@ class CustomEntryView: UIView {
         dropletOpacityAnimation.removedOnCompletion = false
         
         _dropletShapeLayer.addAnimation(dropletOpacityAnimation, forKey: "opacity")
+    }
+    
+    func invalidEntry() {
+        let animationDuration :NSTimeInterval = 0.8
+        let moveValue :CGFloat = 20 //initial X translation to shake
+        
+        let shakeDuration = 0.2
+
+        ///Shake keyframe animation
+        UIView.animateKeyframesWithDuration(animationDuration, delay: 0, options: .AllowUserInteraction, animations: { () -> Void in
+            ///Shake forward
+            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPointMake(self.layer.position.x + moveValue, self.layer.position.y)
+            })
+            
+            ///Shake back
+            UIView.addKeyframeWithRelativeStartTime(shakeDuration, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPointMake(self.layer.position.x - moveValue * 2, self.layer.position.y)
+            })
+            
+            ///Shake forward
+            UIView.addKeyframeWithRelativeStartTime(shakeDuration * 2, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPointMake(self.layer.position.x + moveValue * 2, self.layer.position.y)
+            })
+            
+            ///Shake back
+            UIView.addKeyframeWithRelativeStartTime(shakeDuration * 3, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPointMake(self.layer.position.x - moveValue, self.layer.position.y)
+            })
+        }) { (Bool) -> Void in
+        }
     }
     
     //MARK: - View Container Animations

@@ -47,8 +47,13 @@ class SettingsViewController: UITableViewController {
         /// Large preset static cell
     @IBOutlet weak var _presetCell3: SettingsPresetTableViewCell!
     
+    @IBOutlet weak var _themeCell: SettingsTableViewCell!
+    
         /// HealthKit toggle Control
     @IBOutlet weak var _healthKitSwitch: UISwitch!
+    
+        /// Switch to control the apps current theme
+    @IBOutlet weak var _themeSwitch: UISwitch!
     
     var _delegate :SettingsViewControllerProtocol?
     
@@ -61,10 +66,12 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
         
         view.backgroundColor = StandardColors.backgroundColor
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRectMake(0, -1, 0, 1)) //Covers the bottom lines in the table view including the last cells line
+        tableView.separatorColor = StandardColors.primaryColor
         
         setupNavigationBar()
         setupCells()
+        setupToggles()
     }
     
     /**
@@ -74,11 +81,11 @@ class SettingsViewController: UITableViewController {
         navigationController?.navigationBar.barTintColor = StandardColors.standardSecondaryColor
         navigationController?.navigationBar.translucent = false
         navigationItem.title = "Settings"
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: StandardFonts.regularFont(20)] //Navigation bar view properties
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(20)] //Navigation bar view properties
         
         let closeButton = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: #selector(SettingsViewController.onCloseButton))
         
-        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal) //Close button view properties
+        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal) //Close button view properties
         
         navigationItem.leftBarButtonItem = closeButton
     }
@@ -100,22 +107,44 @@ class SettingsViewController: UITableViewController {
         _goalCell._presetValueChangerView._presetValueTextField.text = String(Int(goal))
         _goalCell._delegate = self
         
+        var imagePrefix = "Light" //Prefix to append to preset images depending if the theme is dark or light
+        
+        if AppDelegate.isDarkModeEnabled() {
+            imagePrefix = "Dark"
+        }
+        
         //Preset cells config
         let presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
-        _presetCell1._imageView.image = UIImage(named: "SmallPresetImage")
+        _presetCell1._imageView.image = UIImage(named: imagePrefix + "SmallPresetImage")
         _presetCell1._textLabel.text = "Small Preset"
         _presetCell1._presetValueChangerView._presetValueTextField.text = String(Int(presetWaterValues[0]))
         _presetCell1._delegate = self
 
-        _presetCell2._imageView.image = UIImage(named: "MediumPresetImage")
+        _presetCell2._imageView.image = UIImage(named: imagePrefix + "MediumPresetImage")
         _presetCell2._textLabel.text = "Medium Preset"
         _presetCell2._presetValueChangerView._presetValueTextField.text = String(Int(presetWaterValues[1]))
         _presetCell2._delegate = self
 
-        _presetCell3._imageView.image = UIImage(named: "LargePresetImage")
+        _presetCell3._imageView.image = UIImage(named: imagePrefix + "LargePresetImage")
         _presetCell3._textLabel.text = "Large Preset"
         _presetCell3._presetValueChangerView._presetValueTextField.text = String(Int(presetWaterValues[2]))
         _presetCell3._delegate = self
+        
+        //Dark Mode cell config
+        _themeCell._imageView.image = UIImage(named: "DarkModeCellImage")
+        _themeCell._textLabel.text = "Dark Mode"
+        _themeSwitch.onTintColor = StandardColors.waterColor
+    }
+    
+    /**
+     Sets up the toggles in settings
+     */
+    private func setupToggles() {
+        if AppDelegate.isDarkModeEnabled() {
+            _themeSwitch.setOn(true, animated: false)
+        } else {
+            _themeSwitch.setOn(false, animated: false)
+        }
     }
     
     //MARK: - Table View Overrides
@@ -127,7 +156,7 @@ class SettingsViewController: UITableViewController {
         view.tintColor = UIColor.clearColor()
         
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = StandardColors.primaryColor
     }
     
     //MARK: - Actions
@@ -138,6 +167,20 @@ class SettingsViewController: UITableViewController {
     func onCloseButton() {
         dismissViewControllerAnimated(true) {
         }
+    }
+    
+    /**
+     Action when the theme switch it toggled
+     
+     - parameter sender: Theme switch
+     */
+    @IBAction func onThemeSwitch(sender: UISwitch) {
+        CENAudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
+
+        AppDelegate.toggleDarkMode(sender.on)
+        
+        view.endEditing(true) //Dismisses keyboard... Too bad this doesnt work very well
+        NSNotificationCenter.defaultCenter().postNotificationName("DarkModeToggled", object: nil)
     }
 }
 
@@ -181,5 +224,7 @@ extension SettingsViewController :SettingsPresetTableViewCellProtocol {
         default:
             break
         }
+        
+        AppDelegate.createShortcuts() //Updates 3D touch shortcuts based on new presets
     }
 }

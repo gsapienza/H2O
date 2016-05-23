@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,8 +43,13 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         setPresets()
         setGoal()
+        setDefaultTheme()
         
-        _user = User.loadUser()
+        AppDelegate.createShortcuts() //Creates 3D touch shortcuts
+        
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) //Wont pause music in the background anymore. Instead plays sounds in the background
+        
+        _user = User.loadUser() //Loads user data from database
                 
        /* if !AppDelegate.isRunningTest() { //If test cases are not running
             tryAddingNewDate()
@@ -53,6 +59,29 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }*/
         
         return true
+    }
+    
+    /**
+     Called when 3D touch icon shortcut is tapped
+     */
+    public func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        let mainViewController = window?.rootViewController as! MainViewController
+        let presets = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
+        
+        AppDelegate.delay(0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
+            switch shortcutItem.type {
+            case "com.theoven.H2O.smallPresetEntry": //First preset
+                mainViewController.addWaterToToday(presets[0])
+            case "com.theoven.H2O.mediumPresetEntry": //Second preset
+                mainViewController.addWaterToToday(presets[1])
+            case "com.theoven.H2O.largePresetEntry": //Third preset
+                mainViewController.addWaterToToday(presets[2])
+            case "com.theoven.H2O.customEntry": //Custom entry
+                mainViewController.customEntryButtonTapped(mainViewController._customEntryButton)
+            default:
+                return
+            }
+        }
     }
     
     public func applicationWillResignActive(application: UIApplication) {
@@ -105,6 +134,19 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    /**
+     Sets default theme value if none exist
+     */
+    private func setDefaultTheme() {
+        let themeString = "DarkMode"
+        guard NSUserDefaults.standardUserDefaults().stringForKey(themeString) != nil else {
+            let theme = "YES"
+            NSUserDefaults.standardUserDefaults().setObject(theme, forKey: themeString)
+            
+            return
+        }
+    }
+    
     // MARK: - Class functions
     
     ///- returns: Current AppDelegate
@@ -122,6 +164,82 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
                 Int64(delay * Double(NSEC_PER_SEC))
             ),
             dispatch_get_main_queue(), closure)
+    }
+    
+    /**
+     Reloads a view controller from scratch including all views, subviews and the status bar. Used when theme changing
+     
+     - parameter viewController: View controller to reload
+     */
+    class func reloadViewController(viewController :UIViewController) {
+        viewController.viewDidLoad()
+        viewController.viewWillAppear(true)
+        viewController.viewDidAppear(true)
+        viewController.setNeedsStatusBarAppearanceUpdate() //Refresh status bar
+        AppDelegate.reloadSubviews(viewController.view) //Refresh views
+    }
+    
+    /**
+     Reloads all subviews and their subviews
+     
+     - parameter view: Root view in view controller
+     */
+    private class func reloadSubviews(view :UIView) {
+        for subview in view.subviews {
+            subview.setNeedsDisplay()
+            subview.awakeFromNib()
+            
+            reloadSubviews(subview)
+        }
+    }
+    
+    /**
+     Function to tell is dark mode is enabled in NSUserDefaults
+     
+     - returns: Dark mode enabled status
+     */
+    class func isDarkModeEnabled() -> Bool {
+        let darkModeEnabled = NSUserDefaults.standardUserDefaults().stringForKey("DarkMode")
+        
+        if darkModeEnabled == "YES" {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    /**
+     Toggles dark mode in NSUserDefaults
+     
+     - parameter enabled: Dark mode on
+     */
+    class func toggleDarkMode(enabled :Bool) {
+        var toggle = ""
+        
+        if enabled {
+            toggle = "YES"
+        } else {
+            toggle = "NO"
+        }
+        
+        NSUserDefaults.standardUserDefaults().setObject(toggle, forKey: "DarkMode")
+    }
+    
+    /**
+     Creates dynamic 3D touch shortcuts to quick add water entries
+     */
+    class func createShortcuts() {
+        let presets = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
+        
+        let smallPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.smallPresetEntry", localizedTitle: String(Int(presets[0])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
+        
+        let mediumPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.mediumPresetEntry", localizedTitle: String(Int(presets[1])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkMediumPresetImage"), userInfo: nil)
+        
+        let largePresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.largePresetEntry", localizedTitle: String(Int(presets[2])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkLargePresetImage"), userInfo: nil)
+        
+        let customShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.customEntry", localizedTitle: "Custom", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .Add), userInfo: nil)
+
+        UIApplication.sharedApplication().shortcutItems = [smallPresetShortcut, mediumPresetShortcut, largePresetShortcut, customShortcut]
     }
 
     // MARK: - Core Data stack

@@ -22,7 +22,7 @@ class EntryButton: UIButton {
     override var highlighted: Bool {
         didSet {
             if highlighted {
-                layer.backgroundColor = UIColor.whiteColor().CGColor
+                layer.backgroundColor = StandardColors.primaryColor.CGColor
             } else {
                 layer.backgroundColor = UIColor.clearColor().CGColor
             }
@@ -46,6 +46,7 @@ class EntryButton: UIButton {
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         layer.cornerRadius = bounds.height / 2
+        clipsToBounds = true
         setupCircleView()
         setupAmountLabel()
         
@@ -70,7 +71,7 @@ class EntryButton: UIButton {
         
         _circleView.layer.cornerRadius = layer.cornerRadius
         
-        _circleView.layer.borderColor = UIColor.whiteColor().CGColor
+        _circleView.layer.borderColor = StandardColors.primaryColor.CGColor
         _circleView.layer.borderWidth = 0.5
     }
     
@@ -79,7 +80,7 @@ class EntryButton: UIButton {
      */
     private func setupAmountLabel() {
         titleLabel?.font = StandardFonts.regularFont(20)//CENTextUtilities.systemFont(20)
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        setTitleColor(StandardColors.primaryColor, forState: .Normal)
         setTitleColor(StandardColors.waterColor, forState: .Highlighted)
     }
     

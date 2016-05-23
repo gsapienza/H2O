@@ -23,10 +23,6 @@ class Entry: NSManagedObject {
         entry.date = NSDate()
         entry.amount = amount
         
-        let user = AppDelegate.getAppDelegate().user!
-        let entries = user.mutableSetValueForKey("entries")
-        entries.addObject(self)
-        
         do {
             try managedContext.save()
         } catch let error as NSError  {
