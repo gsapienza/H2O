@@ -204,7 +204,7 @@
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vcQ-Ib-8Bi" id="hbh-Yp-fAU">
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-1F-3RI">
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-1F-3RI">
                                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YZJ-Mb-iCu">
@@ -214,7 +214,7 @@
                                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                 </collectionViewFlowLayout>
                                                                 <cells>
-                                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qxB-DC-4ad">
+                                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ENTRY_INFO_CELL" id="qxB-DC-4ad" customClass="InformationEntryInfoCollectionViewCell" customModule="H2O" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -222,6 +222,7 @@
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         </view>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     </collectionViewCell>
                                                                 </cells>
                                                             </collectionView>
@@ -285,6 +286,7 @@
                                                     </tableViewCellContentView>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <connections>
+                                                        <outlet property="_dailyEntryDateView" destination="8J1-tc-mz9" id="5WI-Ep-yqN"/>
                                                         <outlet property="_dayEntriesCollectionView" destination="xM0-1F-3RI" id="vgg-fJ-xAD"/>
                                                     </connections>
                                                 </tableViewCell>
@@ -310,22 +312,39 @@
                                                 </mask>
                                             </variation>
                                         </navigationBar>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FKn-1s-VXD">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="5sE-vG-8Hd" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" id="185-dd-VOq"/>
+                                        <constraint firstAttribute="bottom" secondItem="FKn-1s-VXD" secondAttribute="bottom" id="2jn-Zg-poZ"/>
+                                        <constraint firstItem="FKn-1s-VXD" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" id="RR3-DT-CXT"/>
                                         <constraint firstItem="hzY-jB-DOk" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" id="RpY-j2-SAl"/>
+                                        <constraint firstItem="FKn-1s-VXD" firstAttribute="top" secondItem="5sE-vG-8Hd" secondAttribute="bottom" id="ffp-kp-Ns9"/>
                                         <constraint firstAttribute="trailing" secondItem="hzY-jB-DOk" secondAttribute="trailing" id="gP2-MQ-mNC"/>
+                                        <constraint firstAttribute="trailing" secondItem="FKn-1s-VXD" secondAttribute="trailing" id="nb3-3a-Oqh"/>
+                                        <constraint firstItem="FKn-1s-VXD" firstAttribute="top" secondItem="kgT-vF-Qrr" secondAttribute="top" id="o1h-G6-b93"/>
                                         <constraint firstAttribute="bottom" secondItem="hzY-jB-DOk" secondAttribute="bottom" id="sB4-6R-HLv"/>
                                         <constraint firstAttribute="trailing" secondItem="5sE-vG-8Hd" secondAttribute="trailing" id="wDg-df-Q2w"/>
                                         <constraint firstItem="5sE-vG-8Hd" firstAttribute="top" secondItem="kgT-vF-Qrr" secondAttribute="top" constant="20" id="zGn-11-G3e"/>
-                                        <constraint firstItem="hzY-jB-DOk" firstAttribute="height" secondItem="kgT-vF-Qrr" secondAttribute="height" multiplier="0.66" id="zqi-7L-rkE"/>
+                                        <constraint firstItem="hzY-jB-DOk" firstAttribute="height" secondItem="kgT-vF-Qrr" secondAttribute="height" multiplier="0.6" id="zqi-7L-rkE"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
                                             <exclude reference="hzY-jB-DOk"/>
                                             <exclude reference="5sE-vG-8Hd"/>
+                                            <exclude reference="FKn-1s-VXD"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <exclude reference="2jn-Zg-poZ"/>
+                                            <exclude reference="RR3-DT-CXT"/>
+                                            <exclude reference="ffp-kp-Ns9"/>
+                                            <exclude reference="nb3-3a-Oqh"/>
+                                            <exclude reference="o1h-G6-b93"/>
                                             <exclude reference="185-dd-VOq"/>
                                             <exclude reference="wDg-df-Q2w"/>
                                             <exclude reference="zGn-11-G3e"/>
@@ -339,8 +358,14 @@
                                         <mask key="subviews">
                                             <include reference="hzY-jB-DOk"/>
                                             <include reference="5sE-vG-8Hd"/>
+                                            <include reference="FKn-1s-VXD"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <include reference="2jn-Zg-poZ"/>
+                                            <include reference="RR3-DT-CXT"/>
+                                            <exclude reference="ffp-kp-Ns9"/>
+                                            <include reference="nb3-3a-Oqh"/>
+                                            <include reference="o1h-G6-b93"/>
                                             <include reference="185-dd-VOq"/>
                                             <include reference="wDg-df-Q2w"/>
                                             <include reference="zGn-11-G3e"/>
@@ -366,6 +391,7 @@
                         <outlet property="_blurView" destination="Rly-hr-sFV" id="VJh-zm-cDg"/>
                         <outlet property="_informationTableView" destination="hzY-jB-DOk" id="TbX-VJ-wuZ"/>
                         <outlet property="_navigationBar" destination="5sE-vG-8Hd" id="afR-dU-DTp"/>
+                        <outlet property="_noDataLabel" destination="FKn-1s-VXD" id="wlV-v8-cLI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JOb-W9-0o1" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -49,7 +49,19 @@ class StandardColors: NSObject {
             if AppDelegate.isDarkModeEnabled() {
                 return UIColor.whiteColor()
             } else {
-                return UIColor(red: 30/255, green: 35/255, blue: 44/255, alpha: 1)//UIColor.blackColor()
+                return UIColor(red: 30/255, green: 35/255, blue: 44/255, alpha: 1)
+            }
+        }
+    }
+    
+        /// Reversed primary color
+    static var inversedPrimaryColor :UIColor {
+        set{}
+        get {
+            if AppDelegate.isDarkModeEnabled() {
+                return UIColor(red: 30/255, green: 35/255, blue: 44/255, alpha: 1)
+            } else {
+                return UIColor.whiteColor()
             }
         }
     }

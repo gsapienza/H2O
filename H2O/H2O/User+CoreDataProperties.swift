@@ -15,6 +15,6 @@ import CoreData
 extension User {
 
     @NSManaged var id: String?
-    @NSManaged var entries: NSSet?
+    @NSManaged var entries: NSOrderedSet?
     
 }

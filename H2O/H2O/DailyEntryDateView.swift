@@ -57,8 +57,6 @@ class DailyEntryDateView: UIView {
     private func setupDateLabels() {
         let dateFont = StandardFonts.regularFont(14)
         
-        _dayLabel.text = "10"
-
         let sizeOfDay = _dayLabel.text!.sizeWithAttributes([NSFontAttributeName : dateFont])
         
         let calendarLabelSpacingMargin :CGFloat = 5
@@ -74,10 +72,7 @@ class DailyEntryDateView: UIView {
         
         _dayLabel.font = dateFont
         _dayLabel.textAlignment = .Center
-        
-
-        
-        _monthLabel.text = "september"
+                
         
         let sizeOfMonth = _dayLabel.text!.sizeWithAttributes([NSFontAttributeName : dateFont])
         

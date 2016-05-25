@@ -20,7 +20,7 @@ class Entry: NSManagedObject {
         let entry = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext) as! Entry
         
         entry.id = NSUUID().UUIDString
-        entry.date = NSDate()
+        entry.date = NSDate()//User.getNextDay(NSDate())//NSDate()
         entry.amount = amount
         
         do {

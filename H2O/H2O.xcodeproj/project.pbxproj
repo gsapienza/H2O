@@ -55,6 +55,7 @@
 		37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7641CF22F5D004ABFAF /* Popsicle.swift */; };
 		37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */; };
 		37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */; };
+		37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -142,6 +143,7 @@
 		37E0D7641CF22F5D004ABFAF /* Popsicle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popsicle.swift; sourceTree = "<group>"; };
 		37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyInformationTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyEntryDateView.swift; sourceTree = "<group>"; };
+		37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationEntryInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -228,6 +230,7 @@
 				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
 				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
 				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
+				37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */,
 				37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */,
 				37E0D6F51CEE280E004ABFAF /* Entry Buttons */,
 				37E0D6F41CEE2803004ABFAF /* Settings */,
@@ -472,6 +475,7 @@
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
 				37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */,
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
+				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,

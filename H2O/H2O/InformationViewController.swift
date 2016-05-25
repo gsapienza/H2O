@@ -12,14 +12,18 @@ class InformationViewController: Popsicle {
     @IBOutlet weak var _navigationBar: UINavigationBar!
     @IBOutlet weak var _blurView: UIVisualEffectView!
     @IBOutlet weak var _informationTableView: UITableView!
-
+    @IBOutlet weak var _noDataLabel: UILabel!
+    
+    var _dateCollection :[[String : AnyObject]]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        _dateCollection = AppDelegate.getAppDelegate().user!.getEntriesForDates()
         setupNavigationBar()
         setupBlurView()
         setupTableView()
+        setupNoDataLabel()
     }
 
     /**
@@ -59,6 +63,12 @@ class InformationViewController: Popsicle {
         _informationTableView.separatorColor = StandardColors.primaryColor
     }
     
+    private func setupNoDataLabel() {
+        _noDataLabel.text = "No Water Data Logged"
+        _noDataLabel.textColor = StandardColors.primaryColor
+        _noDataLabel.font = StandardFonts.boldFont(24)
+    }
+    
     func onCloseButton() {
         dismissPopsicle()
     }
@@ -67,12 +77,55 @@ class InformationViewController: Popsicle {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension InformationViewController :UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        let numberOfRows = (_dateCollection?.count)!
+        
+        if numberOfRows == 0 {
+            _noDataLabel.hidden = false
+            _informationTableView.hidden = true
+        } else {
+            _noDataLabel.hidden = true
+            _informationTableView.hidden = false
+        }
+        
+        return numberOfRows
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DAILY_INFO_CELL", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("DAILY_INFO_CELL", forIndexPath: indexPath) as! DailyInformationTableViewCell
+        
+        let cellDateCollection = _dateCollection![indexPath.row]
+        
+        let calendar = NSCalendar.currentCalendar() //Calendar type
+        
+        let dateComponents = calendar.components([.Day, .Month, .Year], fromDate: cellDateCollection["date"] as! NSDate)
+        
+        let dateFormatter = NSDateFormatter()
+        
+        cell._dailyEntryDateView._monthLabel.text = dateFormatter.monthSymbols[dateComponents.month - 1].lowercaseString
+        cell._dailyEntryDateView._dayLabel.text = String(dateComponents.day)
+        
+        cell._delegate = self
         
         return cell
+    }
+}
+
+// MARK: - DailyInformationTableViewCellProtocol
+extension InformationViewController :DailyInformationTableViewCellProtocol {
+    func getEntriesForDay(cell: DailyInformationTableViewCell) -> [Entry] {
+        let indexPathForCell = _informationTableView.indexPathForCell(cell)
+        
+        let dict = _dateCollection![(indexPathForCell?.row)!]
+        
+        let entries = dict["entries"] as! [Entry]
+        
+        return entries
+    }
+    
+    func promptEntryDeletion(entry: Entry) {
+        let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this entry?", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
     }
 }
