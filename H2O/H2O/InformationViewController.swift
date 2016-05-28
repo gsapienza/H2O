@@ -11,8 +11,10 @@ import UIKit
 protocol InformationViewControllerProtocol {
     /**
      Called when a water entry was deleted for any day
+     
+     - parameter dateOfEntry: Date that the entry was created
      */
-    func entryWasDeleted()
+    func entryWasDeleted(dateOfEntry :NSDate)
 }
 
 class InformationViewController: Popsicle {
@@ -157,6 +159,8 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         
         let entry = entries[_indexOfEntryToDelete]
         
+        let dateOfEntry = entry.date?.copy() as! NSDate
+        
         entry.deleteEntry()
         
         entries.removeAtIndex(_indexOfEntryToDelete)
@@ -173,6 +177,6 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
             _informationTableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         }
         
-        _informationViewControllerDelegate?.entryWasDeleted()
+        _informationViewControllerDelegate?.entryWasDeleted(dateOfEntry)
     }
 }

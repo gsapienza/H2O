@@ -56,7 +56,40 @@ class HealthManager: NSObject {
         }
     }
     
-    func deleteWaterEntry() {
+    /**
+     Deletes water entry created by this app only by comparing start dates to those entered into the Health database
+     
+     - parameter date: Date of entry to use as key to search for entry in Health database
+     */
+    func deleteWaterEntry(date :NSDate) {
+        let waterType = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryWater) //Type of health data to add
+
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false) //Sort descriptor by start date
         
+        let calendar = NSCalendar.currentCalendar() //Calendar type
+        
+        let entryDateComponents = calendar.components([.Day, .Month, .Year, .Hour, .Minute, .Second], fromDate: date) //Components up to the second for the entry date. Milliseconds is too strict on the comparison
+        
+        //Query the health database
+        let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query :HKSampleQuery, samples :[HKSample]?, error :NSError?) in
+            
+            for sample in samples! { //For each entry created by app
+                let sampleDateComponents = calendar.components([.Day, .Month, .Year, .Hour, .Minute, .Second], fromDate: sample.startDate) //Components of sample entry up to the second
+
+                if calendar.dateFromComponents(entryDateComponents)?.compare(calendar.dateFromComponents(sampleDateComponents)!) == .OrderedSame { //Compare dates without the milliseconds
+                    
+                    //If found delete the item from Health Kit
+                    self._healthKitStore.deleteObject(sample, withCompletion: { (success :Bool, error :NSError?) in
+                        if success {
+                            print("Health Data Deleted Successfully")
+                        } else {
+                            print("Health Data Deleted Unsuccessful")
+                        }
+                    })
+                }
+            }
+        }
+        
+        _healthKitStore.executeQuery(healthSampleQuery) //Execute the query on health kit database
     }
 }

@@ -271,7 +271,7 @@ class MainViewController: UIViewController {
     }
     
     /**
-     Toggles all views on screen with a fancy animation
+     Toggles all views on screen with a fancy animation. If false the subviews scale in otherwise they scale out
      
      - parameter hide: Should the views be hiddden
      */
@@ -408,22 +408,29 @@ extension MainViewController :DailyEntryDialProtocol {
         return NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
     }
     
+    /**
+     Called when the dial button has been tapped and brings up the information view controller as a popsicle so the blur view has a background
+     */
     func dialButtonTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let informationViewController = (storyboard.instantiateViewControllerWithIdentifier("InformationViewController") as! InformationViewController)
+        let informationViewController = (storyboard.instantiateViewControllerWithIdentifier("InformationViewController") as! InformationViewController) //Get the view controller
         
-        informationViewController.setupPopsicle()
-        informationViewController._informationViewControllerDelegate = self
+        informationViewController.setupPopsicle() //Push the view controller up like a modal controller
+        informationViewController._informationViewControllerDelegate = self //Delegate to listen for events like deletion
     }
 }
 
 // MARK: - InformationViewControllerProtocol
 extension MainViewController :InformationViewControllerProtocol {
     /**
-     When an entry was deleted from the database. See if it effects the day dial view
+     When an entry was deleted from the database. See if it effects the day dial view and delete from Health Kit Database
+     
+     - parameter dateOfEntry: Date that the entry was created
      */
-    func entryWasDeleted() {
+    func entryWasDeleted(entryDate :NSDate) {
         _dailyEntryDial.updateAmountOfWaterDrankToday(true)
         updateFluidValue()
+        
+        HealthManager.defaultManager.deleteWaterEntry(entryDate)
     }
 }
