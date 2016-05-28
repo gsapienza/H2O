@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreMotion
 
 protocol EntryButtonProtocol {
     /**
@@ -44,12 +45,19 @@ class MainViewController: UIViewController {
         /// Daily entry amount with dial to represent progress towards goal
     @IBOutlet weak var _dailyEntryDial: DailyEntryDial!
     
+        /// Fluid view that can animate to indicate amount of water drank today
+    @IBOutlet weak var _fluidView: BAFluidView!
+    
+        /// Blur view overlayed on top of the fluid view
+    @IBOutlet weak var _fluidBlurView: UIVisualEffectView!
+    
         /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
     var _customEntryView = CustomEntryView()
     
         /// View for confetti to burst at when the user hit their goal
     var _confettiArea = L360ConfettiArea()
-
+    
+    let _motionManager = CMMotionManager()
     
     //MARK: - Setup functions
     
@@ -63,9 +71,11 @@ class MainViewController: UIViewController {
         _customEntryView = CustomEntryView(frame: view.bounds)
         
         setupNavigationBar()
+        setupFluidView()
         setupPresetEntryCircles()
         setupSettingsBarButton()
         setupConfettiArea()
+        setupBlurView()
         
         _dailyEntryDial._delegate = self
         
@@ -84,6 +94,49 @@ class MainViewController: UIViewController {
         _navigationBar.backgroundColor = UIColor.clearColor()
     }
 
+    /**
+     Sets up fluid view to indicate how much water the user has drank. Animates up on first launch
+     */
+    private func setupFluidView() {
+        _fluidView.fillColor = StandardColors.waterColor //Water fill
+        _fluidView.fillDuration = 2 //New duration of height animations
+        _fluidView.startTiltAnimation() //Set up for core motion movement
+
+        updateFluidValue() //Update the fluid value to get a new height
+        
+        if _motionManager.deviceMotionAvailable {
+            _motionManager.deviceMotionUpdateInterval = 0.3
+            _motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data :CMDeviceMotion?, error :NSError?) in
+                let userInfo = NSDictionary(object: data!, forKey: "data")
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(kBAFluidViewCMMotionUpdate, object: nil, userInfo: userInfo as [NSObject : AnyObject])
+            })
+        }
+    }
+    
+    /**
+     Updates the height of the fluid value by getting the ratio of amount of water drank and goal
+     */
+    private func updateFluidValue() {
+        let newFillValue :CGFloat = CGFloat(getAmountOfWaterEnteredToday() / getGoal()) //New ratio
+        
+        AppDelegate.delay(0.2) { //Aesthetic delay
+            self._fluidView.fillTo(newFillValue) //New fill value 0-1
+            self._fluidView.startAnimation() //Starts the animation
+        }
+    }
+    
+    /**
+     Sets up the blur view on top of the fluid view for aesthetic purposes
+     */
+    private func setupBlurView() {
+        if AppDelegate.isDarkModeEnabled() {
+            _fluidBlurView.effect = UIBlurEffect(style: .Dark)
+        } else {
+            _fluidBlurView.effect = UIBlurEffect(style: .Light)
+        }
+    }
+    
     /**
      Sets up 3 preset circles
      */
@@ -143,10 +196,10 @@ class MainViewController: UIViewController {
         let beforeAmount = AppDelegate.getAppDelegate().user?.getAmountOfWaterForToday() //Water drank before entering this latest entry
         
         //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added
-        if beforeAmount! < _dailyEntryDial._goal && beforeAmount! + amount >= _dailyEntryDial._goal {
+        if beforeAmount! < getGoal() && beforeAmount! + amount >= getGoal() {
             _confettiArea.burstAt(_dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
             CENAudioToolbox.standardAudioToolbox.playAudio("Well done", fileExtension: "wav", repeatEnabled: false)
-            CENToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(_dailyEntryDial._goal))" + Constants.standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
+            CENToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(getGoal()))" + Constants.standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
             })
         } else {
             CENToastNotificationManager.postToastNotification("\(Int(amount))" + Constants.standardUnit.rawValue + " added", color: StandardColors.waterColor, image: UIImage(named: "Check"), completionBlock: {
@@ -156,6 +209,9 @@ class MainViewController: UIViewController {
         AppDelegate.getAppDelegate().user!.addNewEntryToUser(amount)
         
         _dailyEntryDial.updateAmountOfWaterDrankToday(true) //Updates the daily dial
+        updateFluidValue()
+        
+        HealthManager.defaultManager.saveWaterAmountToHealthKit(amount, date: NSDate())
     }
     
     /**
@@ -255,6 +311,7 @@ class MainViewController: UIViewController {
      */
     func updateTimeRelatedItems() {
         _dailyEntryDial.updateAmountOfWaterDrankToday(true)
+        updateFluidValue()
     }
 }
 
@@ -309,8 +366,8 @@ extension MainViewController :SettingsViewControllerProtocol {
      - parameter newValue: New goal set
      */
     func goalUpdated(newValue: Float) {
-        _dailyEntryDial._goal = newValue
         _dailyEntryDial.updateAmountOfWaterDrankToday(true)
+        updateFluidValue()
     }
     
     /**
@@ -342,10 +399,31 @@ extension MainViewController :DailyEntryDialProtocol {
         return (AppDelegate.getAppDelegate().user?.getAmountOfWaterForToday())!
     }
     
+    /**
+     Determines the user set goal from NSUserDefaults
+     
+     - returns: Goal float value set by user
+     */
+    func getGoal() -> Float {
+        return NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
+    }
+    
     func dialButtonTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let informationViewController = (storyboard.instantiateViewControllerWithIdentifier("InformationViewController") as! InformationViewController)
         
         informationViewController.setupPopsicle()
+        informationViewController._informationViewControllerDelegate = self
+    }
+}
+
+// MARK: - InformationViewControllerProtocol
+extension MainViewController :InformationViewControllerProtocol {
+    /**
+     When an entry was deleted from the database. See if it effects the day dial view
+     */
+    func entryWasDeleted() {
+        _dailyEntryDial.updateAmountOfWaterDrankToday(true)
+        updateFluidValue()
     }
 }

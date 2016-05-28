@@ -14,7 +14,7 @@ class StandardColors: NSObject {
         set{}
         get {
             if AppDelegate.isDarkModeEnabled() {
-                return UIColor(red: 30/255, green: 35/255, blue: 44/255, alpha: 1)
+                return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             } else {
                 return UIColor.whiteColor()
             }
@@ -24,10 +24,10 @@ class StandardColors: NSObject {
      /// Color of water images found through the app
     static let waterColor = UIColor(red: 35/255, green: 210/255, blue: 231/255, alpha: 1)
     
-     /// Standard red color to use throughout the app in destrictive or not instances
+     /// Standard red color to use throughout the app in destructive instances
     static let standardRedColor = UIColor(red: 230/255, green: 76/255, blue: 12/255, alpha: 1)
     
-        /// Standard green color to use throughout the app in destrictive or not instances
+        /// Standard green color to use throughout the app
     static let standardGreenColor = UIColor.greenColor()
     
      /// Secondary color to use with background color
@@ -35,7 +35,7 @@ class StandardColors: NSObject {
         set{}
         get {
             if AppDelegate.isDarkModeEnabled() {
-                return UIColor(red: 45/255, green: 53/255, blue: 68/255, alpha: 1)
+                return UIColor(red: 2/255, green: 30/255, blue: 42/255, alpha: 1)
             } else {
                 return UIColor(white: 0.95, alpha: 0.5)
             }
@@ -49,7 +49,7 @@ class StandardColors: NSObject {
             if AppDelegate.isDarkModeEnabled() {
                 return UIColor.whiteColor()
             } else {
-                return UIColor(red: 30/255, green: 35/255, blue: 44/255, alpha: 1)
+                return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             }
         }
     }
@@ -59,7 +59,7 @@ class StandardColors: NSObject {
         set{}
         get {
             if AppDelegate.isDarkModeEnabled() {
-                return UIColor(red: 30/255, green: 35/255, blue: 44/255, alpha: 1)
+                return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             } else {
                 return UIColor.whiteColor()
             }

@@ -16,14 +16,25 @@ protocol DailyEntryDialProtocol {
      */
     func getAmountOfWaterEnteredToday() -> Float
     
+    /**
+     Determines the user set goal from NSUserDefaults
+     
+     - returns: Goal float value set by user
+     */
+    func getGoal() -> Float
+    
+    /**
+     Called when the user has tapped this view like a button
+     */
     func dialButtonTapped()
 }
 
 class DailyEntryDial: UIView {
         /// Goal instance var, is loaded through NSUserDefaults and contains daily water goal
-    var _goal :Float = 0 {
-        didSet {
-          //  changeCurrentAmountOfWaterDrankToday(_currentAmountOfWaterDrankToday, animated: true)
+    var _goal :Float {
+        set{}
+        get {
+            return _delegate!.getGoal()
         }
     }
     
@@ -67,9 +78,7 @@ class DailyEntryDial: UIView {
      */
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
-        
-        _goal = NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
-        
+                
         setupOuterCirclePath()
         setupInnerCircleShapeLayer()
         setupLabel()
@@ -90,7 +99,7 @@ class DailyEntryDial: UIView {
         
         _outerCircleShapeLayer.frame = bounds
         
-        _outerCircleShapeLayer.strokeColor = StandardColors.standardSecondaryColor.CGColor //Color of border
+        _outerCircleShapeLayer.strokeColor = StandardColors.standardSecondaryColor.colorWithAlphaComponent(0.6).CGColor //Color of border
         _outerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
         _outerCircleShapeLayer.lineWidth = _circleLineWidth //Size of the border width
         
@@ -109,12 +118,10 @@ class DailyEntryDial: UIView {
         
         _innerCircleShapeLayer.frame = bounds
         
-       // _innerCircleShapeLayer.strokeStart = 0 //Starting point
-        
         _innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.CGColor //Color of border
         _innerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
         _innerCircleShapeLayer.lineWidth = _circleLineWidth //Size of the border width
-        _innerCircleShapeLayer.lineCap = kCALineCapRound //Rounds out the edges
+        //_innerCircleShapeLayer.lineCap = kCALineCapRound //Rounds out the edges
         
         _innerCircleShapeLayer.transform = CATransform3DMakeRotation(degreesToRadians(270), 0, 0, 1.0) //Rotation used to get the starting point at the top center and turn clockwise
         

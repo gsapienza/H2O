@@ -1,0 +1,1 @@
+sudo jazzy --min-acl private --docset-path /H2O.docset

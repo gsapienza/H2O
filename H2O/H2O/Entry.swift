@@ -31,5 +31,17 @@ class Entry: NSManagedObject {
         
         return entry
     }
+    
+    func deleteEntry() {
+        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+
+        managedContext.deleteObject(self)
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
 
 }

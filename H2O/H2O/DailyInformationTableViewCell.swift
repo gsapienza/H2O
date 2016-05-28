@@ -10,7 +10,7 @@ import UIKit
 
 protocol DailyInformationTableViewCellProtocol {
     func getEntriesForDay(cell :DailyInformationTableViewCell) -> [Entry]
-    func promptEntryDeletion(entry :Entry)
+    func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int)
 }
 
 class DailyInformationTableViewCell: UITableViewCell {
@@ -65,9 +65,7 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
 extension DailyInformationTableViewCell :InformationEntryInfoCollectionViewCellProtocol {
     func promptEntryDeletion(cell: InformationEntryInfoCollectionViewCell) {
         let indexPath = _dayEntriesCollectionView.indexPathForCell(cell)
-        
-        let entry = _delegate?.getEntriesForDay(self)[indexPath!.row]
-        
-        _delegate?.promptEntryDeletion(entry!)
+                
+        _delegate?.promptEntryDeletion(self, index: indexPath!.row)
     }
 }

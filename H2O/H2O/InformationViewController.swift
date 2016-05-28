@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol InformationViewControllerProtocol {
+    /**
+     Called when a water entry was deleted for any day
+     */
+    func entryWasDeleted()
+}
+
 class InformationViewController: Popsicle {
     @IBOutlet weak var _navigationBar: UINavigationBar!
     @IBOutlet weak var _blurView: UIVisualEffectView!
@@ -15,6 +22,12 @@ class InformationViewController: Popsicle {
     @IBOutlet weak var _noDataLabel: UILabel!
     
     var _dateCollection :[[String : AnyObject]]?
+    
+    var _cellToDeleteFrom = DailyInformationTableViewCell()
+    var _indexOfEntryToDelete = -1
+    
+        /// Delegate to inform the presenting view controller changes to entries
+    var _informationViewControllerDelegate :InformationViewControllerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,10 +135,44 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         return entries
     }
     
-    func promptEntryDeletion(entry: Entry) {
+    func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {
+        _cellToDeleteFrom = cellToDeleteFrom
+        _indexOfEntryToDelete = index
+        
         let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this entry?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (alert: UIAlertAction!) in
+            self.onEntryDeletion()
+        }))
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func onEntryDeletion() {
+        let indexPath = _informationTableView.indexPathForCell(_cellToDeleteFrom)
+        
+        var dict = _dateCollection![indexPath!.row]
+        
+        var entries = dict["entries"] as! [Entry]
+        
+        let entry = entries[_indexOfEntryToDelete]
+        
+        entry.deleteEntry()
+        
+        entries.removeAtIndex(_indexOfEntryToDelete)
+        
+        _dateCollection![indexPath!.row]["entries"] = entries
+        
+        let indexPathToDelete = NSIndexPath(forItem: _indexOfEntryToDelete, inSection: 0)
+        
+        _cellToDeleteFrom._dayEntriesCollectionView.deleteItemsAtIndexPaths([indexPathToDelete])
+        
+        if entries.count == 0 {
+            _dateCollection?.removeAtIndex(indexPath!.row)
+            
+            _informationTableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        }
+        
+        _informationViewControllerDelegate?.entryWasDeleted()
     }
 }

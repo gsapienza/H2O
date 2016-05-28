@@ -114,7 +114,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setPresets() {
         let presetWaterValuesString = "PresetWaterValues"
         guard NSUserDefaults.standardUserDefaults().arrayForKey(presetWaterValuesString) != nil else {
-            let presets :[Float] = [8.0, 16.0, 23.0]
+            let presets :[Float] = [8.0, 17.0, 23.0]
             NSUserDefaults.standardUserDefaults().setObject(presets, forKey: presetWaterValuesString)
             
             return
@@ -270,7 +270,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
 
-            dict[NSUnderlyingErrorKey] = error as NSError
+            dict[NSUnderlyingErrorKey] = error as? NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

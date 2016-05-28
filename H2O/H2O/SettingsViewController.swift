@@ -170,7 +170,22 @@ class SettingsViewController: UITableViewController {
     }
     
     /**
-     Action when the theme switch it toggled
+     Action when the HealthKit switch is toggled
+     
+     - parameter sender: HealthKit Switch
+     */
+    @IBAction func onHealthKitSwitch(sender: AnyObject) {
+        HealthManager.defaultManager.authorizeHealthKit { (success, error) in
+            if success {
+                print("HealthKit authorization successful")
+            } else {
+                print("Could not authorize HealthKit")
+            }
+        }
+    }
+    
+    /**
+     Action when the theme switch is toggled
      
      - parameter sender: Theme switch
      */

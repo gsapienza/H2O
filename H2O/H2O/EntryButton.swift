@@ -22,7 +22,7 @@ class EntryButton: UIButton {
     override var highlighted: Bool {
         didSet {
             if highlighted {
-                layer.backgroundColor = StandardColors.primaryColor.CGColor
+                layer.backgroundColor = StandardColors.primaryColor.colorWithAlphaComponent(0.5).CGColor
             } else {
                 layer.backgroundColor = UIColor.clearColor().CGColor
             }

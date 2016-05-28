@@ -56,6 +56,11 @@
 		37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */; };
 		37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */; };
 		37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */; };
+		37E0D7741CF894B5004ABFAF /* BAFluidView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7731CF894B5004ABFAF /* BAFluidView.m */; };
+		37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */; };
+		37E0D77A1CF94DAB004ABFAF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */; };
+		37E0D77C1CF955C5004ABFAF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D77B1CF955C5004ABFAF /* HealthKit.framework */; };
+		37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D77E1CF955DA004ABFAF /* HealthManager.swift */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -144,6 +149,15 @@
 		37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyInformationTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyEntryDateView.swift; sourceTree = "<group>"; };
 		37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationEntryInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		37E0D7721CF894B5004ABFAF /* BAFluidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAFluidView.h; sourceTree = "<group>"; };
+		37E0D7731CF894B5004ABFAF /* BAFluidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAFluidView.m; sourceTree = "<group>"; };
+		37E0D7751CF89507004ABFAF /* FluidConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FluidConstants.h; sourceTree = "<group>"; };
+		37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHex.h"; sourceTree = "<group>"; };
+		37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHex.m"; sourceTree = "<group>"; };
+		37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		37E0D77B1CF955C5004ABFAF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		37E0D77D1CF955C5004ABFAF /* H2O.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = H2O.entitlements; sourceTree = "<group>"; };
+		37E0D77E1CF955DA004ABFAF /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthManager.swift; path = ../HealthManager.swift; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E0D77A1CF94DAB004ABFAF /* CoreMotion.framework in Frameworks */,
+				37E0D77C1CF955C5004ABFAF /* HealthKit.framework in Frameworks */,
 				37E0D7231CF0C16C004ABFAF /* CRToast.framework in Frameworks */,
 				3785667B1CEAA29C003418C2 /* CoreText.framework in Frameworks */,
 			);
@@ -188,6 +204,7 @@
 		375F4FDD1CEA91A6009C14AE /* H2O */ = {
 			isa = PBXGroup;
 			children = (
+				37E0D77D1CF955C5004ABFAF /* H2O.entitlements */,
 				375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
 				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
@@ -195,6 +212,7 @@
 				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
 				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
 				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
+				37E0D77E1CF955DA004ABFAF /* HealthManager.swift */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Views */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
@@ -264,8 +282,15 @@
 		3785667C1CEAA2A4003418C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37E0D7721CF894B5004ABFAF /* BAFluidView.h */,
+				37E0D7731CF894B5004ABFAF /* BAFluidView.m */,
+				37E0D7751CF89507004ABFAF /* FluidConstants.h */,
+				37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */,
+				37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */,
 				37E0D7551CF11561004ABFAF /* L360Confetti */,
+				37E0D77B1CF955C5004ABFAF /* HealthKit.framework */,
 				37E0D7211CF0C164004ABFAF /* CRToast.framework */,
+				37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */,
 				3785667A1CEAA29C003418C2 /* CoreText.framework */,
 			);
 			name = Frameworks;
@@ -389,6 +414,11 @@
 					375F4FDA1CEA91A6009C14AE = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = G898DU57KC;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					37E0D6FA1CEF66A7004ABFAF = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -460,6 +490,7 @@
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
+				37E0D7741CF894B5004ABFAF /* BAFluidView.m in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
@@ -467,6 +498,8 @@
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
 				378566671CEA9645003418C2 /* Day.swift in Sources */,
+				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
+				37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
 				378566651CEA9645003418C2 /* User.swift in Sources */,
@@ -613,13 +646,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/H2O/L360Confetti",
 				);
 				INFOPLIST_FILE = H2O/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -636,13 +670,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/H2O/L360Confetti",
 				);
 				INFOPLIST_FILE = H2O/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

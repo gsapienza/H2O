@@ -74,7 +74,7 @@ class User: NSManagedObject {
             print("Could not save \(error), \(error.userInfo)")
         }
     }
-    
+        
     func getAmountOfWaterForToday() -> Float {
         var todaysWaterAmount :Float = 0.0
         
