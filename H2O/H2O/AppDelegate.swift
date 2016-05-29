@@ -161,7 +161,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let currentDateComponents = calendar.components([.Hour], fromDate: NSDate()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
             
-            if currentDateComponents.hour >= 6 && currentDateComponents.hour <= 18 { //If between 6AM and 6PM
+            if currentDateComponents.hour > 5 && currentDateComponents.hour < 18 { //If between 6AM and 6PM
                 if AppDelegate.isDarkModeEnabled() { //If dark mode is enabled
                     AppDelegate.toggleDarkMode(false) //Activate light mode
                     NSNotificationCenter.defaultCenter().postNotificationName("DarkModeToggled", object: nil) //Update view controllers
