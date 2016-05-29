@@ -290,7 +290,6 @@ NSString * const kBAFluidViewCMMotionUpdate = @"BAFluidViewCMMotionUpdate";
         [self.rollLayer addSublayer:self.lineLayer];
         [self.layer addSublayer:self.rollLayer];
     }
-    
     self.rollLayer.frame = self.frame;
     
     //listen for the device manager
