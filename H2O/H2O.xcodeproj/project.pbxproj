@@ -16,8 +16,6 @@
 		3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
 		378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */; };
 		378566651CEA9645003418C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665F1CEA9645003418C2 /* User.swift */; };
-		378566661CEA9645003418C2 /* Day+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378566601CEA9645003418C2 /* Day+CoreDataProperties.swift */; };
-		378566671CEA9645003418C2 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378566611CEA9645003418C2 /* Day.swift */; };
 		378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378566621CEA9645003418C2 /* Entry+CoreDataProperties.swift */; };
 		378566691CEA9645003418C2 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378566631CEA9645003418C2 /* Entry.swift */; };
 		3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666B1CEAA161003418C2 /* EntryButton.swift */; };
@@ -56,11 +54,11 @@
 		37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */; };
 		37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */; };
 		37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */; };
-		37E0D7741CF894B5004ABFAF /* BAFluidView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7731CF894B5004ABFAF /* BAFluidView.m */; };
 		37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */; };
 		37E0D77A1CF94DAB004ABFAF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */; };
 		37E0D77C1CF955C5004ABFAF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D77B1CF955C5004ABFAF /* HealthKit.framework */; };
 		37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D77E1CF955DA004ABFAF /* HealthManager.swift */; };
+		37E0D7851CFAB0C2004ABFAF /* BAFluidView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -101,8 +99,6 @@
 		3785665C1CEA941A003418C2 /* StandardColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardColors.swift; sourceTree = "<group>"; };
 		3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3785665F1CEA9645003418C2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		378566601CEA9645003418C2 /* Day+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		378566611CEA9645003418C2 /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		378566621CEA9645003418C2 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		378566631CEA9645003418C2 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		3785666B1CEAA161003418C2 /* EntryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryButton.swift; sourceTree = "<group>"; };
@@ -149,8 +145,6 @@
 		37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyInformationTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyEntryDateView.swift; sourceTree = "<group>"; };
 		37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationEntryInfoCollectionViewCell.swift; sourceTree = "<group>"; };
-		37E0D7721CF894B5004ABFAF /* BAFluidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAFluidView.h; sourceTree = "<group>"; };
-		37E0D7731CF894B5004ABFAF /* BAFluidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAFluidView.m; sourceTree = "<group>"; };
 		37E0D7751CF89507004ABFAF /* FluidConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FluidConstants.h; sourceTree = "<group>"; };
 		37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHex.h"; sourceTree = "<group>"; };
 		37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHex.m"; sourceTree = "<group>"; };
@@ -158,6 +152,8 @@
 		37E0D77B1CF955C5004ABFAF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		37E0D77D1CF955C5004ABFAF /* H2O.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = H2O.entitlements; sourceTree = "<group>"; };
 		37E0D77E1CF955DA004ABFAF /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthManager.swift; path = ../HealthManager.swift; sourceTree = "<group>"; };
+		37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAFluidView.h; sourceTree = "<group>"; };
+		37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAFluidView.m; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,7 +212,6 @@
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Views */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
-				37E0D71E1CEFF0DF004ABFAF /* Shelved */,
 				3785667C1CEAA2A4003418C2 /* Frameworks */,
 			);
 			path = H2O;
@@ -282,8 +277,8 @@
 		3785667C1CEAA2A4003418C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D7721CF894B5004ABFAF /* BAFluidView.h */,
-				37E0D7731CF894B5004ABFAF /* BAFluidView.m */,
+				37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */,
+				37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */,
 				37E0D7751CF89507004ABFAF /* FluidConstants.h */,
 				37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */,
 				37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */,
@@ -325,15 +320,6 @@
 				37E0D6FF1CEF66A7004ABFAF /* Info.plist */,
 			);
 			path = H2OTests;
-			sourceTree = "<group>";
-		};
-		37E0D71E1CEFF0DF004ABFAF /* Shelved */ = {
-			isa = PBXGroup;
-			children = (
-				378566601CEA9645003418C2 /* Day+CoreDataProperties.swift */,
-				378566611CEA9645003418C2 /* Day.swift */,
-			);
-			name = Shelved;
 			sourceTree = "<group>";
 		};
 		37E0D7551CF11561004ABFAF /* L360Confetti */ = {
@@ -490,14 +476,13 @@
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
-				37E0D7741CF894B5004ABFAF /* BAFluidView.m in Sources */,
+				37E0D7851CFAB0C2004ABFAF /* BAFluidView.m in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
-				378566671CEA9645003418C2 /* Day.swift in Sources */,
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
 				37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
@@ -513,7 +498,6 @@
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
-				378566661CEA9645003418C2 /* Day+CoreDataProperties.swift in Sources */,
 				3785666E1CEAA16C003418C2 /* CustomEntryButton.swift in Sources */,
 				37A182601CEB942E0055DA02 /* CENAudioToolbox.swift in Sources */,
 			);

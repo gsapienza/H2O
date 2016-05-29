@@ -12,7 +12,7 @@ import CoreData
 
 class Entry: NSManagedObject {
 
-    class func createNewEntry(amount :Float) -> Entry {
+    class func createNewEntry(amount :Float, date :NSDate?) -> Entry {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
         
         let entity = NSEntityDescription.entityForName("Entry", inManagedObjectContext:managedContext)
@@ -20,7 +20,12 @@ class Entry: NSManagedObject {
         let entry = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext) as! Entry
         
         entry.id = NSUUID().UUIDString
-        entry.date = NSDate()//User.getNextDay(NSDate())//NSDate()
+        if date != nil {
+            entry.date = date!
+        } else {
+            entry.date = NSDate()
+        }
+        
         entry.amount = amount
         
         do {

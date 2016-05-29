@@ -53,10 +53,10 @@ class User: NSManagedObject {
         return user
     }
     
-    func addNewEntryToUser(amount :Float) {
+    func addNewEntryToUser(amount :Float, date :NSDate?) {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
 
-        let entry = Entry.createNewEntry(amount)
+        let entry = Entry.createNewEntry(amount, date :date)
         
         let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
         mutableEntries.addObject(entry)

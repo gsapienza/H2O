@@ -50,13 +50,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) //Wont pause music in the background anymore. Instead plays sounds in the background
         
         _user = User.loadUser() //Loads user data from database
-                
-       /* if !AppDelegate.isRunningTest() { //If test cases are not running
-            tryAddingNewDate()
-            
-            let newDateTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(AppDelegate.tryAddingNewDate), userInfo: nil, repeats: true)
-            NSRunLoop.currentRunLoop().addTimer(newDateTimer, forMode: NSRunLoopCommonModes)
-        }*/
+        
+        checkToSwitchThemes() //Check theme status on launch if automatic theme change is enabled
+        
+        //Set a timer to check the theme status so that if the app is open when the time changes, the theme will change
+        let automaticThemeSwitcherTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(AppDelegate.checkToSwitchThemes), userInfo: nil, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(automaticThemeSwitcherTimer, forMode: NSRunLoopCommonModes)
         
         return true
     }
@@ -108,6 +107,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     
+    //MARK: - Default Settings
+    
     /**
      Sets default preset values if none exist
      */
@@ -147,23 +148,31 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // MARK: - Class functions
+    //MARK: - Theme Management
     
-    ///- returns: Current AppDelegate
-    class func getAppDelegate() -> AppDelegate {
-        return (UIApplication.sharedApplication().delegate as? AppDelegate)!
-    }
-    
-    /// Delays block of code from running by a specified amount of time
-    ///- parameters:
-    ///   - delay: Time to delay code from being ran
-    class func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    /**
+     Checks the time of day and changes the theme if automatic theme change is enabled and if it is not set correctly based on current time of day. 6AM - 6PM is light mode and 6PM to 6AM is dark mode
+     */
+    func checkToSwitchThemes() {
+        let automaticThemeChangeEnabled = NSUserDefaults.standardUserDefaults().boolForKey("AutomaticThemeChange") //Get automatic status of automatic theme change
+        
+        if automaticThemeChangeEnabled {
+            let calendar = NSCalendar.currentCalendar() //Calendar type
+            
+            let currentDateComponents = calendar.components([.Hour], fromDate: NSDate()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
+            
+            if currentDateComponents.hour >= 6 && currentDateComponents.hour <= 18 { //If between 6AM and 6PM
+                if AppDelegate.isDarkModeEnabled() { //If dark mode is enabled
+                    AppDelegate.toggleDarkMode(false) //Activate light mode
+                    NSNotificationCenter.defaultCenter().postNotificationName("DarkModeToggled", object: nil) //Update view controllers
+                }
+            } else { //If its between 6PM and 6AM
+                if !AppDelegate.isDarkModeEnabled() { //If light mode is enabled
+                    AppDelegate.toggleDarkMode(true) //Activate dark mode
+                    NSNotificationCenter.defaultCenter().postNotificationName("DarkModeToggled", object: nil) //Update viewcontrollers
+                }
+            }
+        }
     }
     
     /**
@@ -225,6 +234,25 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         NSUserDefaults.standardUserDefaults().setObject(toggle, forKey: "DarkMode")
     }
     
+    // MARK: - Class functions
+    
+    ///- returns: Current AppDelegate
+    class func getAppDelegate() -> AppDelegate {
+        return (UIApplication.sharedApplication().delegate as? AppDelegate)!
+    }
+    
+    /// Delays block of code from running by a specified amount of time
+    ///- parameters:
+    ///   - delay: Time to delay code from being ran
+    class func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+    
     /**
      Creates dynamic 3D touch shortcuts to quick add water entries
      */
@@ -270,7 +298,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
 
-            dict[NSUnderlyingErrorKey] = error as? NSError
+            dict[NSUnderlyingErrorKey] = error as! NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

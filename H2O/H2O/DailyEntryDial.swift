@@ -99,7 +99,8 @@ class DailyEntryDial: UIView {
         
         _outerCircleShapeLayer.frame = bounds
         
-        _outerCircleShapeLayer.strokeColor = StandardColors.standardSecondaryColor.colorWithAlphaComponent(0.6).CGColor //Color of border
+        _outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.colorWithAlphaComponent(0.2).CGColor //Color of border
+
         _outerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
         _outerCircleShapeLayer.lineWidth = _circleLineWidth //Size of the border width
         

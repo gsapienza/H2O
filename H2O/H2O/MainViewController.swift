@@ -100,9 +100,6 @@ class MainViewController: UIViewController {
     private func setupFluidView() {
         _fluidView.fillColor = StandardColors.waterColor //Water fill
         _fluidView.fillDuration = 2 //New duration of height animations
-        _fluidView.startTiltAnimation() //Set up for core motion movement
-
-        updateFluidValue() //Update the fluid value to get a new height
         
         if _motionManager.deviceMotionAvailable {
             _motionManager.deviceMotionUpdateInterval = 0.3
@@ -112,18 +109,8 @@ class MainViewController: UIViewController {
                 NSNotificationCenter.defaultCenter().postNotificationName(kBAFluidViewCMMotionUpdate, object: nil, userInfo: userInfo as [NSObject : AnyObject])
             })
         }
-    }
-    
-    /**
-     Updates the height of the fluid value by getting the ratio of amount of water drank and goal
-     */
-    private func updateFluidValue() {
-        let newFillValue :CGFloat = CGFloat(getAmountOfWaterEnteredToday() / getGoal()) //New ratio
         
-        AppDelegate.delay(0.2) { //Aesthetic delay
-            self._fluidView.fillTo(newFillValue) //New fill value 0-1
-            self._fluidView.startAnimation() //Starts the animation
-        }
+        updateFluidValue() //Update the fluid value to get a new height
     }
     
     /**
@@ -143,15 +130,19 @@ class MainViewController: UIViewController {
     private func setupPresetEntryCircles() {
         let presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
         
+        //First button
         _entryButton1._amount = presetWaterValues[0]
         _entryButton1._delegate = self
         
+        //Second button
         _entryButton2._amount = presetWaterValues[1]
         _entryButton2._delegate = self
 
+        //Third button
         _entryButton3._amount = presetWaterValues[2]
         _entryButton3._delegate = self
         
+        //Custom button
         _customEntryButton._delegate = self
     }
     
@@ -206,7 +197,7 @@ class MainViewController: UIViewController {
             })
         }
         
-        AppDelegate.getAppDelegate().user!.addNewEntryToUser(amount)
+        AppDelegate.getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
         
         _dailyEntryDial.updateAmountOfWaterDrankToday(true) //Updates the daily dial
         updateFluidValue()
@@ -271,7 +262,7 @@ class MainViewController: UIViewController {
     }
     
     /**
-     Toggles all views on screen with a fancy animation. If false the subviews scale in otherwise they scale out
+     Toggles all views on screen with a fancy animation. If false the subviews scale in otherwise they scale out    
      
      - parameter hide: Should the views be hiddden
      */
@@ -312,6 +303,19 @@ class MainViewController: UIViewController {
     func updateTimeRelatedItems() {
         _dailyEntryDial.updateAmountOfWaterDrankToday(true)
         updateFluidValue()
+    }
+    
+    /**
+     Updates the height of the fluid value by getting the ratio of amount of water drank and goal
+     */
+    private func updateFluidValue() {
+        let newFillValue :CGFloat = CGFloat((getAmountOfWaterEnteredToday() / getGoal()) * 0.9) //New ratio
+        
+        AppDelegate.delay(0.2) { //Aesthetic delay
+            self._fluidView.fillTo(newFillValue) //New fill value 0-1
+            self._fluidView.startAnimation() //Starts the animation
+            self._fluidView.startTiltAnimation() //Set up for core motion movement
+        }
     }
 }
 
