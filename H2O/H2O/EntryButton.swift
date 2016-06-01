@@ -38,17 +38,22 @@ class EntryButton: UIButton {
         super.layoutSubviews()
         
         backgroundColor = UIColor.clearColor()
+        layer.cornerRadius = bounds.height / 2
+        _circleView.layer.cornerRadius = layer.cornerRadius
+        
+        setupColors()
     }
     
     /**
-     Initiates setup and adds action for this button
+     Autolayout setup and adds action for self
      */
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        layer.cornerRadius = bounds.height / 2
-        clipsToBounds = true
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
         setupCircleView()
         setupAmountLabel()
+        
+        clipsToBounds = true
         
         addTarget(self, action: #selector(EntryButton.onTap), forControlEvents: .TouchUpInside)
     }
@@ -69,9 +74,6 @@ class EntryButton: UIButton {
         
         _circleView.backgroundColor = UIColor.clearColor()
         
-        _circleView.layer.cornerRadius = layer.cornerRadius
-        
-        _circleView.layer.borderColor = StandardColors.primaryColor.CGColor
         _circleView.layer.borderWidth = 0.5
     }
     
@@ -80,8 +82,6 @@ class EntryButton: UIButton {
      */
     private func setupAmountLabel() {
         titleLabel?.font = StandardFonts.regularFont(20)//CENTextUtilities.systemFont(20)
-        setTitleColor(StandardColors.primaryColor, forState: .Normal)
-        setTitleColor(StandardColors.waterColor, forState: .Highlighted)
     }
     
     //MARK: - Actions
@@ -102,5 +102,13 @@ class EntryButton: UIButton {
         }
         
         _delegate?.entryButtonTapped(_amount)
+    }
+}
+
+// MARK: - NightModeProtocol
+extension EntryButton :NightModeProtocol {
+    func setupColors() {
+        _circleView.layer.borderColor = StandardColors.primaryColor.CGColor
+        titleLabel?.textColor = StandardColors.primaryColor
     }
 }

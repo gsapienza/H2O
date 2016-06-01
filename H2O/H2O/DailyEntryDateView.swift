@@ -20,8 +20,8 @@ class DailyEntryDateView: UIView {
         backgroundColor = UIColor.clearColor()
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
         setupCalendarContainerView()
         setupCalendarBackgroundImageView()
@@ -56,6 +56,7 @@ class DailyEntryDateView: UIView {
     
     private func setupDateLabels() {
         let dateFont = StandardFonts.regularFont(14)
+        _dayLabel.text = ""
         
         let sizeOfDay = _dayLabel.text!.sizeWithAttributes([NSFontAttributeName : dateFont])
         

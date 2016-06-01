@@ -25,7 +25,9 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         _entryAmountView.layer.cornerRadius = _entryAmountView.bounds.width / 2
     }
     
-    override func drawRect(rect: CGRect) {
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
         setupEntryAmountView()
         setupTimeLabel()
         setupEntryAmountLabel()
@@ -55,6 +57,7 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         _timeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let timeLabelFont = StandardFonts.regularFont(12)
+        _timeLabel.text = ""
         
         let sizeOfTime = _timeLabel.text!.sizeWithAttributes([NSFontAttributeName : timeLabelFont])
 
@@ -75,6 +78,7 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         _entryAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let entryLabelFont = StandardFonts.regularFont(14)
+        _entryAmountLabel.text = ""
         
         let sizeOfEntry = _entryAmountLabel.text!.sizeWithAttributes([NSFontAttributeName : entryLabelFont])
         

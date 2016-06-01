@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var _dailyEntryDial: DailyEntryDial!
     
         /// Fluid view that can animate to indicate amount of water drank today
-    @IBOutlet weak var _fluidView: BAFluidView!
+    @IBOutlet weak var _fluidView: GSFluidView!
     
         /// Blur view overlayed on top of the fluid view
     @IBOutlet weak var _fluidBlurView: UIVisualEffectView!
@@ -309,12 +309,11 @@ class MainViewController: UIViewController {
      Updates the height of the fluid value by getting the ratio of amount of water drank and goal
      */
     private func updateFluidValue() {
-        let newFillValue :CGFloat = CGFloat((getAmountOfWaterEnteredToday() / getGoal()) * 0.9) //New ratio
+        var newFillValue :Float = Float((getAmountOfWaterEnteredToday() / getGoal()) * 1.0) //New ratio
         
         AppDelegate.delay(0.2) { //Aesthetic delay
-            self._fluidView.fillTo(newFillValue) //New fill value 0-1
-            self._fluidView.startAnimation() //Starts the animation
-            self._fluidView.startTiltAnimation() //Set up for core motion movement
+            self._fluidView.fillTo(&newFillValue) //New fill value 0-1
+            //self._fluidView.startTiltAnimation() //Set up for core motion movement
         }
     }
 }

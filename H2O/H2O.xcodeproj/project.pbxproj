@@ -32,6 +32,8 @@
 		37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182651CEBC2190055DA02 /* SettingsViewController.swift */; };
 		37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
 		37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */; };
+		37ADB1561CFBA33A00BE3711 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */; };
+		37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
 		37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
@@ -118,6 +120,8 @@
 		37A182651CEBC2190055DA02 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetValueChangerView.swift; sourceTree = "<group>"; };
+		37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
+		37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeProtocol.swift; sourceTree = "<group>"; };
 		37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEntryView.swift; sourceTree = "<group>"; };
 		37E0D6EE1CED2D95004ABFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		37E0D6F01CEE2649004ABFAF /* Alert Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Alert Error.wav"; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
 				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
 				37E0D77E1CF955DA004ABFAF /* HealthManager.swift */,
+				37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Views */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
@@ -240,6 +245,7 @@
 				375F4FE21CEA91A6009C14AE /* Main.storyboard */,
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
+				37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */,
 				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
 				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
 				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
@@ -277,8 +283,8 @@
 		3785667C1CEAA2A4003418C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */,
 				37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */,
+				37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */,
 				37E0D7751CF89507004ABFAF /* FluidConstants.h */,
 				37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */,
 				37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */,
@@ -481,11 +487,13 @@
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
+				37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */,
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
 				37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
+				37ADB1561CFBA33A00BE3711 /* GSFluidView.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
 				378566651CEA9645003418C2 /* User.swift in Sources */,
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
@@ -724,6 +732,7 @@
 				37E0D7041CEF66A7004ABFAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

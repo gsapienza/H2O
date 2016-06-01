@@ -65,26 +65,29 @@ class DailyEntryDial: UIView {
     //MARK: - View Layout
     
     /**
-     Makes the background always transparent
+     Makes the background always transparent and sets up circle layer. Initial amount is also calculated here
      */
     override func layoutSubviews() {
         super.layoutSubviews()
         
         backgroundColor = UIColor.clearColor()
+        
+        setupOuterCirclePath()
+        setupInnerCircleShapeLayer()
+        
+        updateAmountOfWaterDrankToday(false)
+        
+        setupColors()
     }
     
     /**
-     Sets the goal from NSUserDefaults and sets up properties for subviews
+     Setup for autolayout views
      */
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-                
-        setupOuterCirclePath()
-        setupInnerCircleShapeLayer()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
         setupLabel()
         setupDialButton()
-        
-        updateAmountOfWaterDrankToday(false)
     }
     
     /**
@@ -99,9 +102,6 @@ class DailyEntryDial: UIView {
         
         _outerCircleShapeLayer.frame = bounds
         
-        _outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.colorWithAlphaComponent(0.2).CGColor //Color of border
-
-        _outerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
         _outerCircleShapeLayer.lineWidth = _circleLineWidth //Size of the border width
         
         layer.addSublayer(_outerCircleShapeLayer)
@@ -119,8 +119,6 @@ class DailyEntryDial: UIView {
         
         _innerCircleShapeLayer.frame = bounds
         
-        _innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.CGColor //Color of border
-        _innerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
         _innerCircleShapeLayer.lineWidth = _circleLineWidth //Size of the border width
         //_innerCircleShapeLayer.lineCap = kCALineCapRound //Rounds out the edges
         
@@ -170,7 +168,6 @@ class DailyEntryDial: UIView {
         addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
         
         _currentAmountOfWaterDrankTodayLabel.font = StandardFonts.thinFont(80)
-        _currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
         _currentAmountOfWaterDrankTodayLabel.textAlignment = .Center
     }
     
@@ -220,5 +217,17 @@ class DailyEntryDial: UIView {
             _innerCircleShapeLayer.strokeEnd = CGFloat(newStrokeEnd)
             CATransaction.commit()
         }
+    }
+}
+
+// MARK: - NightModeProtocol
+extension DailyEntryDial :NightModeProtocol {
+    func setupColors() {
+        _currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
+        _outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.colorWithAlphaComponent(0.2).CGColor //Color of border
+        _outerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
+        
+        _innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.CGColor //Color of border
+        _innerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
     }
 }

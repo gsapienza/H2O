@@ -195,6 +195,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     private class func reloadSubviews(view :UIView) {
         for subview in view.subviews {
+            subview.setNeedsLayout()
             subview.setNeedsDisplay()
             subview.awakeFromNib()
             

@@ -28,11 +28,17 @@ class SettingsTableViewCell: UITableViewCell {
         backgroundColor = StandardColors.standardSecondaryColor
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setupColors()
+    }
+    
     /**
      Basic setup for cell views
     */
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
         setupImageView()
         setupTextLabel()
@@ -70,7 +76,6 @@ class SettingsTableViewCell: UITableViewCell {
         addConstraint(NSLayoutConstraint(item: _textLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.height))
         
         _textLabel.font = StandardFonts.regularFont(18)
-        _textLabel.textColor = StandardColors.primaryColor
         _textLabel.minimumScaleFactor = 0.7
         _textLabel.adjustsFontSizeToFitWidth = true
     }
@@ -81,5 +86,12 @@ class SettingsTableViewCell: UITableViewCell {
     func fillCellWithTextLabel() {
         _textLabelWidthConstraint.constant = bounds.width - (_sideMargin * 2) //Text label starts at the side margin to begin with so we need to double the amount of side margin to make it work for the righ side as well
         layoutIfNeeded()
+    }
+}
+
+// MARK: - NightModeProtocol
+extension SettingsTableViewCell :NightModeProtocol {
+    func setupColors() {
+        _textLabel.textColor = StandardColors.primaryColor
     }
 }

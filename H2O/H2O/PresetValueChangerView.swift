@@ -37,16 +37,25 @@ class PresetValueChangerView: UIView {
         super.layoutSubviews()
         
         backgroundColor = UIColor.clearColor()
+        
+        setupColors()
     }
     
     //MARK: - View Setup
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    required override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
     
     /**
      Sets up basic properties for this view
      */
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        
+    private func setup() {
         setupUnitLabel()
         setupPresetValueTextField()
     }
@@ -69,7 +78,6 @@ class PresetValueChangerView: UIView {
         addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: textSize.width + 1)) //Add a +1 because it is too small without it ¯\_(ツ)_/¯
 
-        _unitLabel.textColor = StandardColors.primaryColor
         _unitLabel.font = font
         _unitLabel.text = unit as String
     }
@@ -84,10 +92,9 @@ class PresetValueChangerView: UIView {
         
         addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Trailing, relatedBy: .Equal, toItem: _unitLabel , attribute: .Leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.width / 2))
-        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.height))
+        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Width, relatedBy: .Equal, toItem: self, attribute: .Width, multiplier: 0.5, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 1, constant: 0))
         
-        _presetValueTextField.textColor = StandardColors.primaryColor
         _presetValueTextField.font = StandardFonts.boldFont(18)
         _presetValueTextField.textAlignment = .Right
         _presetValueTextField.keyboardType = .NumberPad
@@ -161,5 +168,13 @@ extension PresetValueChangerView :UITextFieldDelegate {
         }
         
         _delegate?.valueDidChange(Float(_presetValueTextField.text!)!)
+    }
+}
+
+// MARK: - NightModeProtocol
+extension PresetValueChangerView :NightModeProtocol {
+    func setupColors() {
+        _unitLabel.textColor = StandardColors.primaryColor
+        _presetValueTextField.textColor = StandardColors.primaryColor
     }
 }

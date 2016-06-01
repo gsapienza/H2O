@@ -26,8 +26,8 @@ class SettingsPresetTableViewCell: SettingsTableViewCell {
     var _delegate :SettingsPresetTableViewCellProtocol?
     
     //MARK: - View Setup
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
         setupPresetValueChangerView()
     }
