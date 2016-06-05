@@ -45,6 +45,9 @@ class MainViewController: UIViewController {
         /// Daily entry amount with dial to represent progress towards goal
     @IBOutlet weak var _dailyEntryDial: DailyEntryDial!
     
+    /// Image view for background gradient
+    @IBOutlet weak var _backgroundImageView: UIImageView!
+    
         /// Fluid view that can animate to indicate amount of water drank today
     @IBOutlet weak var _fluidView: GSFluidView!
     
@@ -68,6 +71,13 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
     
         view.backgroundColor = StandardColors.backgroundColor
+        
+        if AppDelegate.isDarkModeEnabled() {
+            _backgroundImageView.image = UIImage(named: "DarkModeBackground")
+        } else {
+            _backgroundImageView.image = UIImage(named: "LightModeBackground")
+        }
+        
         _customEntryView = CustomEntryView(frame: view.bounds)
         
         setupNavigationBar()

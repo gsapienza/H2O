@@ -23,10 +23,14 @@ class InformationViewController: Popsicle {
     @IBOutlet weak var _informationTableView: UITableView!
     @IBOutlet weak var _noDataLabel: UILabel!
     
+    let _weeklyBarGraphView = WeekBarGraphView()
+
     var _dateCollection :[[String : AnyObject]]?
     
     var _cellToDeleteFrom = DailyInformationTableViewCell()
     var _indexOfEntryToDelete = -1
+    
+    var _lastScrollOffset = CGPointMake(0, 0)
     
         /// Delegate to inform the presenting view controller changes to entries
     var _informationViewControllerDelegate :InformationViewControllerProtocol?
@@ -39,6 +43,7 @@ class InformationViewController: Popsicle {
         setupBlurView()
         setupTableView()
         setupNoDataLabel()
+        setupWeeklyBarGraphView()
     }
 
     /**
@@ -84,6 +89,21 @@ class InformationViewController: Popsicle {
         _noDataLabel.font = StandardFonts.boldFont(24)
     }
     
+    private func setupWeeklyBarGraphView() {
+        let tableHeaderView = UIView(frame: CGRectMake(0, 0, view.bounds.width, 250))
+        
+        _informationTableView.tableHeaderView = tableHeaderView
+        
+        let barGraphMargin :CGFloat = 10
+        _weeklyBarGraphView.frame = CGRectMake(barGraphMargin, barGraphMargin, view.bounds.width - barGraphMargin * 2, tableHeaderView.bounds.height - barGraphMargin * 2)
+        
+        let topGradientColor = UIColor(red: 198, green: 234, blue: 242, alpha: 1).CGColor
+        let bottomGradientColor = StandardColors.waterColor.CGColor
+        _weeklyBarGraphView.gradientColors = [topGradientColor, bottomGradientColor]
+        
+        tableHeaderView.addSubview(_weeklyBarGraphView)
+    }
+    
     func onCloseButton() {
         dismissPopsicle()
     }
@@ -122,6 +142,32 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         cell._delegate = self
         
         return cell
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let graphHeaderTransformValue :CGFloat = (1.0 / _weeklyBarGraphView.bounds.height) * 2
+        
+        setAnchorPoint(CGPointMake(0.5, 1), view: _weeklyBarGraphView)
+        let xScale = _weeklyBarGraphView.transform.a
+        let yScale = _weeklyBarGraphView.transform.d
+        
+        if scrollView.contentOffset.y > _lastScrollOffset.y {
+           // _weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale - graphHeaderTransformValue, yScale - graphHeaderTransformValue)
+        } else {
+           // _weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale + graphHeaderTransformValue, yScale + graphHeaderTransformValue)
+        }
+        
+        _lastScrollOffset = scrollView.contentOffset
+    }
+    
+    func setAnchorPoint(anchorPoint: CGPoint, view: UIView){
+        let oldOrigin = view.frame.origin
+        view.layer.anchorPoint = anchorPoint
+        let newOrigin = view.frame.origin
+        
+        let transition = CGPointMake (newOrigin.x - oldOrigin.x, newOrigin.y - oldOrigin.y)
+        
+        view.center = CGPointMake (view.center.x - transition.x, view.center.y - transition.y)
     }
 }
 

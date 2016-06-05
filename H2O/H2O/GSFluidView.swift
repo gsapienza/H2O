@@ -128,11 +128,11 @@ class GSFluidView: UIView {
             let finalXValue = liquidLayer.position.x //Second animation state to send the animation forward to its normal x coordinate
             
             phaseShiftAnimation.values = [leftMostXValue, finalXValue]
-            phaseShiftAnimation.duration = 1
+            phaseShiftAnimation.duration = 0.75
             phaseShiftAnimation.repeatCount = HUGE //Repeat forever
             phaseShiftAnimation.removedOnCompletion = false
             phaseShiftAnimation.fillMode = kCAFillModeForwards
-          //  liquidLayer.addAnimation(phaseShiftAnimation, forKey: "position.x")
+            liquidLayer.addAnimation(phaseShiftAnimation, forKey: "position.x")
             
             /// Wave amplitude animation
             let waveMovementAnimationDuration = 0.5 //Duration of amplitude changes

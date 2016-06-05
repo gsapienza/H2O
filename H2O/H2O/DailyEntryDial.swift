@@ -120,7 +120,7 @@ class DailyEntryDial: UIView {
         _innerCircleShapeLayer.frame = bounds
         
         _innerCircleShapeLayer.lineWidth = _circleLineWidth //Size of the border width
-        //_innerCircleShapeLayer.lineCap = kCALineCapRound //Rounds out the edges
+        _innerCircleShapeLayer.lineCap = kCALineCapRound //Rounds out the edges
         
         _innerCircleShapeLayer.transform = CATransform3DMakeRotation(degreesToRadians(270), 0, 0, 1.0) //Rotation used to get the starting point at the top center and turn clockwise
         

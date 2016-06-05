@@ -22,7 +22,16 @@ class StandardColors: NSObject {
     }
     
      /// Color of water images found through the app
-    static let waterColor = UIColor(red: 60/255, green: 188/255, blue: 248/255, alpha: 1)
+    static var waterColor :UIColor {
+        set{}
+        get {
+            if AppDelegate.isDarkModeEnabled() {
+                return UIColor(red: 44/255, green: 187/255, blue: 218/255, alpha: 1)
+            } else {
+                return UIColor(red: 44/255, green: 187/255, blue: 218/255, alpha: 1)
+            }
+        }
+    }
     
      /// Standard red color to use throughout the app in destructive instances
     static let standardRedColor = UIColor(red: 230/255, green: 76/255, blue: 12/255, alpha: 1)

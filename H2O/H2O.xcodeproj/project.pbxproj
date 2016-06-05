@@ -34,6 +34,7 @@
 		37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */; };
 		37ADB1561CFBA33A00BE3711 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */; };
 		37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
+		37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */; };
 		37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
@@ -122,6 +123,7 @@
 		37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetValueChangerView.swift; sourceTree = "<group>"; };
 		37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
 		37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeProtocol.swift; sourceTree = "<group>"; };
+		37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekBarGraphView.swift; sourceTree = "<group>"; };
 		37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEntryView.swift; sourceTree = "<group>"; };
 		37E0D6EE1CED2D95004ABFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		37E0D6F01CEE2649004ABFAF /* Alert Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Alert Error.wav"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
 				37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */,
 				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
+				37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */,
 				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
 				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
 				37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */,
@@ -283,8 +286,8 @@
 		3785667C1CEAA2A4003418C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */,
 				37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */,
+				37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */,
 				37E0D7751CF89507004ABFAF /* FluidConstants.h */,
 				37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */,
 				37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */,
@@ -503,6 +506,7 @@
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
+				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
