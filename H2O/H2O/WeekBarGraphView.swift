@@ -39,8 +39,8 @@ class WeekBarGraphView: UIView {
     private func setupGradientLayer() {
         let gradientLayer = CAGradientLayer()
         
-        gradientLayer.frame = bounds
-        gradientLayer.locations = [0, 0.5]
+        gradientLayer.frame = CGRectMake(0, -bounds.height / 6, bounds.width, bounds.height + bounds.height / 6)
+        gradientLayer.locations = [0, 0.9]
         gradientLayer.colors = gradientColors as [AnyObject]
         layer.addSublayer(gradientLayer)
     }
@@ -96,23 +96,31 @@ class WeekBarGraphDrawingView :UIView {
     /// Delegate to communicate with WeeklyBarGraphView
     var delegate :WeekBarGraphDrawingViewProtocol?
     
+    let numberOfValuesToFitOnYAxis = 5
+    
     /**
      Draws x and y axis for bar graph
      */
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         
-        let startingXPoint = bounds.width / 8 //Right side beginning of line for X Axis
-        let startingYPoint = bounds.height / 1.2 //Bottom side beginning of line for Y Axis
+        let startingXPoint = bounds.width / 8 //Left side beginning of line for X Axis
+        let startingYPoint = bounds.height / 1.2 //Bottom side beginning of line for Y Axis for Core graphics or Top side beginning of line for Y Axis for normal UIKit 
         
         drawingColor.set() //Set the color of drawings to be the standard drawing color
 
         drawXAxis(startingXPoint, startingYPoint: startingYPoint) //Draw the x axis
         drawYAxis(startingXPoint, startingYPoint: startingYPoint) //Draw the y axis
+        
+        setupYAxisValues(startingXPoint, startingYPoint: startingYPoint) //Set up values to go on the y axis
     }
+    
     
     /**
      Draws x axis on bottom of graph
+     
+     - parameter startingXPoint: Where the x axis should begin drawing horizontally
+     - parameter startingYPoint: Where the x axis should place its Y value
      */
     private func drawXAxis(startingXPoint :CGFloat, startingYPoint :CGFloat) {
         
@@ -129,6 +137,12 @@ class WeekBarGraphDrawingView :UIView {
         CGContextStrokePath(ctx) //Draw X axis
     }
     
+    /**
+     Draws y axis on left side of graph
+     
+     - parameter startingXPoint: Where the y axis should begin drawing vertically
+     - parameter startingYPoint: Where the y axis should place its Y value before drawing up
+     */
     private func drawYAxis(startingXPoint :CGFloat, startingYPoint :CGFloat) {
         let startPoint = CGPointMake(startingXPoint, startingYPoint) //Establish where to begin drawing Y axis
         let endPoint = CGPointMake(startingXPoint, bounds.height - startingYPoint) //Establish where to end drawing Y axis
@@ -144,41 +158,56 @@ class WeekBarGraphDrawingView :UIView {
     }
     
     /**
-     Set up values for x and y axis
-     */
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setupYAxisValues()
-    }
-    
-    /**
      Places y axis values vertically on the left side of the y axis. Values come from the yAxisRangeValues in the delegate
+     
+     - parameter startingXPoint: Where the y axis is placed on the x axis
+     - parameter startingYPoint: Where the y axis is placed on the y axis
      */
-    private func setupYAxisValues() {
-        let startingXPoint = bounds.width / 8 //Right side beginning of line for X Axis
-        let startingYPoint = bounds.height / 1.2 //Bottom side beginning of line for Y Axis
+    private func setupYAxisValues(startingXPoint :CGFloat, startingYPoint :CGFloat) {
+        let labelWidth :CGFloat = 40 //Width of each number label
+
+        let endingYPoint = bounds.height - startingYPoint //Where the y axis stop drawing at the bottom
         
-        let endingYPoint = bounds.height - startingYPoint //Where the y axis stop drawing
+        let yLineHeight = endingYPoint - startingYPoint //Height of the y axis line
         
-        let marginBetweenValues :CGFloat = 40 //Spacing between numbers vertically
-        
-        let numberOfYValues :CGFloat = (startingYPoint - endingYPoint) / marginBetweenValues //Number of values that can fit on y axis accounting for spacing
-        
-        for i in 0 ... Int(numberOfYValues) { //Iterate through all the possible spaces that can fit on graph
-            let labelSize :CGFloat = 40 //Width and height of number label
-            let xMargin :CGFloat = 10 //Margin of label from right to the y axis
-            let xPosition = startingXPoint - labelSize - xMargin //X Position to place label
-            let yPosition = ((startingYPoint - endingYPoint) / numberOfYValues) * CGFloat(i) //Y position to place label
-            
+        for i in 0 ... numberOfValuesToFitOnYAxis { //Iterates through the number of values you want placed on y axis and then places them
             let numberLabel = UILabel() //Label to place
+            numberLabel.text = "" //Initial text so that the label can be measured later. Will crash without something being set
+            
+            let xMargin :CGFloat = 5 //Margin of label from right to the y axis
+            
+            let xPosition = startingXPoint - labelWidth - xMargin //X Position to place label
+            let yPosition = startingYPoint + ((yLineHeight / CGFloat(numberOfValuesToFitOnYAxis)) * CGFloat(i)) //Y position to place label
+            
+            //Number label positioning
+
+            let sizeOfNumber = numberLabel.text!.sizeWithAttributes([NSFontAttributeName : numberLabel.font]) //Gets size of text based on font and string
+            
+            numberLabel.frame = CGRectMake(xPosition, 0, labelWidth, sizeOfNumber.height) //Sets up frame and leaves the y value 0 so that we can center it
+            numberLabel.center = CGPointMake(numberLabel.center.x, yPosition) //Places the y value determined above as the center of the number label
             
             //Label properties
+            
             numberLabel.font = StandardFonts.boldFont(12)
             numberLabel.textAlignment = .Right
-            numberLabel.text = String((delegate?.yAxisRangeValues().end)! / Double(i))
-            numberLabel.textColor = UIColor.whiteColor()
+            numberLabel.textColor = drawingColor
             
-            numberLabel.frame = CGRectMake(xPosition, yPosition, labelSize, labelSize)
+            //Set the label value
+            
+            let yAxisRangeValues = (delegate?.yAxisRangeValues())! //Range values set for the y axis
+
+            let numberRange = yAxisRangeValues.end - yAxisRangeValues.start //Computes the value between the start and end of Y axis values
+            
+            let number = yAxisRangeValues.start + ((numberRange / Double(numberOfValuesToFitOnYAxis)) * Double(i)) //Number calculated that fits between the yaxisrange values from the delegate
+            
+            var roundedNumberText = NSString(format: "%.1f", number) //Round to the first decimal point
+            
+            if roundedNumberText.hasSuffix(".0") { //If the number has a .0 after the decimal point, just cut it
+                roundedNumberText = roundedNumberText.substringToIndex(roundedNumberText.length - 2) //Remove the .0
+            }
+            
+            numberLabel.text = roundedNumberText as String + Constants.standardUnit.rawValue //Number with unit trailing
+            
             
             addSubview(numberLabel)
         }
