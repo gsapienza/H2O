@@ -428,8 +428,8 @@ extension MainViewController :DailyEntryDialProtocol {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let informationViewController = (storyboard.instantiateViewControllerWithIdentifier("InformationViewController") as! InformationViewController) //Get the view controller
         
-        informationViewController.setupPopsicle() //Push the view controller up like a modal controller
         informationViewController._informationViewControllerDelegate = self //Delegate to listen for events like deletion
+        informationViewController.setupPopsicle() //Push the view controller up like a modal controller
     }
 }
 
@@ -445,5 +445,14 @@ extension MainViewController :InformationViewControllerProtocol {
         updateFluidValue()
         
         HealthManager.defaultManager.deleteWaterEntry(entryDate)
+    }
+    
+    /**
+     Determines the user set goal from NSUserDefaults
+     
+     - returns: Goal float value set by user
+     */
+    func informationViewGetGoal() -> Float {
+        return NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
     }
 }

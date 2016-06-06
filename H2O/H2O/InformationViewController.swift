@@ -15,6 +15,13 @@ protocol InformationViewControllerProtocol {
      - parameter dateOfEntry: Date that the entry was created
      */
     func entryWasDeleted(dateOfEntry :NSDate)
+    
+    /**
+     Determines the user set goal from NSUserDefaults
+     
+     - returns: Goal float value set by user
+     */
+    func informationViewGetGoal() -> Float
 }
 
 class InformationViewController: Popsicle {
@@ -100,6 +107,10 @@ class InformationViewController: Popsicle {
         let topGradientColor = UIColor(red: 198, green: 234, blue: 242, alpha: 1).CGColor
         let bottomGradientColor = StandardColors.waterColor.CGColor
         _weeklyBarGraphView.gradientColors = [topGradientColor, bottomGradientColor]
+        
+        let roundedGoal = 50.0 * floor((_informationViewControllerDelegate!.informationViewGetGoal() / 50.0) + 0.5)
+        _weeklyBarGraphView.yAxisRange = (0, Double(roundedGoal))
+        _weeklyBarGraphView.goal = _informationViewControllerDelegate!.informationViewGetGoal()
         
         tableHeaderView.addSubview(_weeklyBarGraphView)
     }
