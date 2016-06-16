@@ -8,12 +8,12 @@
 
 import UIKit
 
-extension NSDate {
-    func dateForCurrentTimeZone() -> NSDate {
-        let timeZone = NSTimeZone.localTimeZone()
+extension Date {
+    func dateForCurrentTimeZone() -> Date {
+        let timeZone = TimeZone.local()
         
-        let seconds = Double(timeZone.secondsFromGMTForDate(self))
+        let seconds = Double(timeZone.secondsFromGMT(for: self))
         
-        return NSDate(timeInterval: seconds, sinceDate: self)
+        return Date(timeInterval: seconds, since: self)
     }
 }

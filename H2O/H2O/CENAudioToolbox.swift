@@ -16,11 +16,11 @@ public class CENAudioToolbox: NSObject {
     /// Audio player for sounds
     private var _audioPlayer: AVAudioPlayer!
     
-    public func playAudio(fileName :String, fileExtension :String, repeatEnabled :Bool) {
-        let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-        dispatch_async(backgroundQueue, {
-            let url : NSURL = NSBundle.mainBundle().URLForResource(fileName, withExtension: fileExtension)!
-            self._audioPlayer = try! AVAudioPlayer(contentsOfURL: url)
+    public func playAudio(_ fileName :String, fileExtension :String, repeatEnabled :Bool) {
+        let backgroundQueue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(Int(UInt64(DispatchQueueAttributes.qosBackground.rawValue)))))
+        backgroundQueue.async(execute: {
+            let url : URL = Bundle.main().urlForResource(fileName, withExtension: fileExtension)!
+            self._audioPlayer = try! AVAudioPlayer(contentsOf: url)
             if repeatEnabled {
                 self._audioPlayer.numberOfLoops = -1
             }

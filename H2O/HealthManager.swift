@@ -21,8 +21,8 @@ class HealthManager: NSObject {
      
      - parameter completion: When authorization is complete
      */
-    func authorizeHealthKit(completion: ((success: Bool, error: NSError!) -> Void)!) {
-        let healthKitTypesToWrite :Set = [HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryWater)!] //Write to water type (read is not available)
+    func authorizeHealthKit(_ completion: ((success: Bool, error: NSError?) -> Void)!) {
+        let healthKitTypesToWrite :Set = [HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!] //Write to water type (read is not available)
         
         if !HKHealthStore.isHealthDataAvailable() { //If health data is not available say on an iPad
             let error = NSError(domain: "com.theoven.H2O", code: 2, userInfo: [NSLocalizedDescriptionKey : "HealthKit is not available in this Device"])
@@ -31,7 +31,7 @@ class HealthManager: NSObject {
         }
         
         //Request authorization
-        _healthKitStore.requestAuthorizationToShareTypes(healthKitTypesToWrite, readTypes: nil) { (success :Bool, error :NSError?) in
+        _healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite, read: nil) { (success :Bool, error :NSError?) in
             if success {
                 self.addPreviousHealthKitData() //If authorized see if any previous data was entered in health from previous installs and add it to the apps database
             }
@@ -45,12 +45,12 @@ class HealthManager: NSObject {
      - parameter amount: Amount of water to save in fl oz
      - parameter date:   Date that water was saved
      */
-    func saveWaterAmountToHealthKit(amount :Float, date :NSDate) {
-        let waterType = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryWater) //Type of health data to add
-        let waterQuantity = HKQuantity(unit: HKUnit.fluidOunceUSUnit(), doubleValue: Double(amount)) //Quantity of water with the unit of measurement
-        let waterSample = HKQuantitySample(type: waterType!, quantity: waterQuantity, startDate: date, endDate: date) //HKObject with appropriate water data and date so it can now be saved
+    func saveWaterAmountToHealthKit(_ amount :Float, date :Date) {
+        let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater) //Type of health data to add
+        let waterQuantity = HKQuantity(unit: HKUnit.fluidOunceUS(), doubleValue: Double(amount)) //Quantity of water with the unit of measurement
+        let waterSample = HKQuantitySample(type: waterType!, quantity: waterQuantity, start: date, end: date) //HKObject with appropriate water data and date so it can now be saved
         
-        _healthKitStore.saveObject(waterSample) { (success :Bool, error :NSError?) in //Save the object to the health app
+        _healthKitStore.save(waterSample) { (success :Bool, error :NSError?) in //Save the object to the health app
             if success {
                 print("Health Data Saved Successfully")
             } else {
@@ -64,26 +64,26 @@ class HealthManager: NSObject {
      
      - parameter date: Date of entry to use as key to search for entry in Health database
      */
-    func deleteWaterEntry(date :NSDate) {
+    func deleteWaterEntry(_ date :Date) {
         if waterAuthorizedFromHealthKit() { //If the app is able to write water to healthkit
-            let waterType = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryWater) //Type of health data to add
+            let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater) //Type of health data to add
             
-            let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false) //Sort descriptor by start date
+            let sortDescriptor = SortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false) //Sort descriptor by start date
             
-            let calendar = NSCalendar.currentCalendar() //Calendar type
+            let calendar = Calendar.current() //Calendar type
             
-            let entryDateComponents = calendar.components([.Day, .Month, .Year, .Hour, .Minute, .Second], fromDate: date) //Components up to the second for the entry date. Milliseconds is too strict on the comparison
+            let entryDateComponents = calendar.components([.day, .month, .year, .hour, .minute, .second], from: date) //Components up to the second for the entry date. Milliseconds is too strict on the comparison
             
             //Query the health database
             let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query :HKSampleQuery, samples :[HKSample]?, error :NSError?) in
                 
                 for sample in samples! { //For each entry created by app
-                    let sampleDateComponents = calendar.components([.Day, .Month, .Year, .Hour, .Minute, .Second], fromDate: sample.startDate) //Components of sample entry up to the second
+                    let sampleDateComponents = calendar.components([.day, .month, .year, .hour, .minute, .second], from: sample.startDate) //Components of sample entry up to the second
                     
-                    if calendar.dateFromComponents(entryDateComponents)?.compare(calendar.dateFromComponents(sampleDateComponents)!) == .OrderedSame { //Compare dates without the milliseconds
+                    if calendar.date(from: entryDateComponents)?.compare(calendar.date(from: sampleDateComponents)!) == .orderedSame { //Compare dates without the milliseconds
                         
                         //If found delete the item from Health Kit
-                        self._healthKitStore.deleteObject(sample, withCompletion: { (success :Bool, error :NSError?) in
+                        self._healthKitStore.delete(sample, withCompletion: { (success :Bool, error :NSError?) in
                             if success {
                                 print("Health Data Deleted Successfully")
                             } else {
@@ -94,7 +94,7 @@ class HealthManager: NSObject {
                 }
             }
             
-            _healthKitStore.executeQuery(healthSampleQuery) //Execute the query on health kit database
+            _healthKitStore.execute(healthSampleQuery) //Execute the query on health kit database
         } else { //Water cannot be written to healthkit
             print("Water not authorized to write in HealthKit")
         }
@@ -104,9 +104,9 @@ class HealthManager: NSObject {
      Gets previous values in healthkit for say a previous install and restores them to the app
      */
     func addPreviousHealthKitData() {
-        let waterType = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryWater) //Type of health data to add
+        let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater) //Type of health data to add
         
-        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true) //Sort descriptor by start date
+        let sortDescriptor = SortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true) //Sort descriptor by start date
         
         //Query the health database
         let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query :HKSampleQuery, samples :[HKSample]?, error :NSError?) in
@@ -114,14 +114,14 @@ class HealthManager: NSObject {
             for sample in samples! { //For each entry created by app
                 let category = sample as! HKQuantitySample //Get the water entry
                 let sampleDate = category.startDate //Start date for water entry
-                let sampleAmount = category.quantity.doubleValueForUnit(HKUnit.fluidOunceUSUnit()) //Amount of water entered
+                let sampleAmount = category.quantity.doubleValue(for: HKUnit.fluidOunceUS()) //Amount of water entered
                 
                 AppDelegate.getAppDelegate().user?.addNewEntryToUser(Float(sampleAmount), date: sampleDate) //Adds water to database
                 
             }
         }
         
-        _healthKitStore.executeQuery(healthSampleQuery) //Execute the query on health kit database
+        _healthKitStore.execute(healthSampleQuery) //Execute the query on health kit database
     }
     
     /**
@@ -130,10 +130,10 @@ class HealthManager: NSObject {
      - returns: True if the user has allowed the app to write water to healthkit
      */
     func waterAuthorizedFromHealthKit() -> Bool {
-        let waterType = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryWater)! //Type of health data to look at
-        let authStatus = _healthKitStore.authorizationStatusForType(waterType) //Status of water permission in health
+        let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)! //Type of health data to look at
+        let authStatus = _healthKitStore.authorizationStatus(for: waterType) //Status of water permission in health
         
-        if authStatus == .SharingAuthorized { //If authorized to share return true
+        if authStatus == .sharingAuthorized { //If authorized to share return true
             return true
         } else {
             return false

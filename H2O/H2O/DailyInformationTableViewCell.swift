@@ -9,8 +9,8 @@
 import UIKit
 
 protocol DailyInformationTableViewCellProtocol {
-    func getEntriesForDay(cell :DailyInformationTableViewCell) -> [Entry]
-    func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int)
+    func getEntriesForDay(_ cell :DailyInformationTableViewCell) -> [Entry]
+    func promptEntryDeletion(_ cellToDeleteFrom: DailyInformationTableViewCell, index :Int)
 }
 
 class DailyInformationTableViewCell: UITableViewCell {
@@ -29,31 +29,31 @@ class DailyInformationTableViewCell: UITableViewCell {
 }
 
 extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (_delegate?.getEntriesForDay(self).count)!
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = bounds.height * 0.7
         
-        return CGSizeMake(size, size)
+        return CGSize(width: size, height: size)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ENTRY_INFO_CELL", forIndexPath: indexPath) as! InformationEntryInfoCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ENTRY_INFO_CELL", for: indexPath) as! InformationEntryInfoCollectionViewCell
         
-        let entry = _delegate?.getEntriesForDay(self)[indexPath.row]
+        let entry = _delegate?.getEntriesForDay(self)[(indexPath as NSIndexPath).row]
         let entryTimeDate = entry!.date
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
         
-        let timeString = dateFormatter.stringFromDate(entryTimeDate!)
+        let timeString = dateFormatter.string(from: entryTimeDate! as Date)
         
         cell._timeLabel.text = timeString
         
         let entryAmount = String(entry!.amount!) + Constants.standardUnit.rawValue
-        
+       
         cell._entryAmountLabel.text = entryAmount
         
         cell._delegate = self
@@ -63,9 +63,9 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
 }
 
 extension DailyInformationTableViewCell :InformationEntryInfoCollectionViewCellProtocol {
-    func promptEntryDeletion(cell: InformationEntryInfoCollectionViewCell) {
-        let indexPath = _dayEntriesCollectionView.indexPathForCell(cell)
+    func promptEntryDeletion(_ cell: InformationEntryInfoCollectionViewCell) {
+        let indexPath = _dayEntriesCollectionView.indexPath(for: cell)
                 
-        _delegate?.promptEntryDeletion(self, index: indexPath!.row)
+        _delegate?.promptEntryDeletion(self, index: (indexPath! as NSIndexPath).row)
     }
 }

@@ -14,27 +14,22 @@ extension UIViewController {
      Set up method swizzling for the dark and light mode switching
     */
     public override static func initialize() {
-        struct Static {
-            static var token: dispatch_once_t = 0
-        }
         
         if self !== UIViewController.self { //Is self not a subclass of a UIViewController
             return
         }
         
-        dispatch_once(&Static.token) {
-            //View did load swizzle
-            let originalViewWillAppearSelector = #selector(UIViewController.viewDidLoad)
-            let swizzledViewWillAppearSelector = #selector(UIViewController.newViewDidLoad)
-            
-            self.swizzleSelector(originalViewWillAppearSelector, swizzledSelector: swizzledViewWillAppearSelector)
-            
-            //Preferred Status bar style swizzle
-            let originalPreferredStatusBarStyleSelector = #selector(UIViewController.preferredStatusBarStyle)
-            let swizzledPreferredStatusBarStyleSelector = #selector(UIViewController.newPreferredStatusBarStyle)
-            
-            self.swizzleSelector(originalPreferredStatusBarStyleSelector, swizzledSelector: swizzledPreferredStatusBarStyleSelector)
-        }
+        //View did load swizzle
+        let originalViewWillAppearSelector = #selector(UIViewController.viewDidLoad)
+        let swizzledViewWillAppearSelector = #selector(UIViewController.newViewDidLoad)
+        
+        self.swizzleSelector(originalViewWillAppearSelector, swizzledSelector: swizzledViewWillAppearSelector)
+        
+        //Preferred Status bar style swizzle
+        let originalPreferredStatusBarStyleSelector = #selector(UIViewController.preferredStatusBarStyle)
+        let swizzledPreferredStatusBarStyleSelector = #selector(UIViewController.newPreferredStatusBarStyle)
+        
+        self.swizzleSelector(originalPreferredStatusBarStyleSelector, swizzledSelector: swizzledPreferredStatusBarStyleSelector)
     }
     
     /**
@@ -43,7 +38,7 @@ extension UIViewController {
      - parameter originalSelector: Original method to replace
      - parameter swizzledSelector: Replacing method
      */
-    public static func swizzleSelector(originalSelector :Selector, swizzledSelector :Selector) {
+    public static func swizzleSelector(_ originalSelector :Selector, swizzledSelector :Selector) {
         let originalMethod = class_getInstanceMethod(self, originalSelector) //Instance method for the original function
         let swizzledMethod = class_getInstanceMethod(self, swizzledSelector) //Instance method for the swizzled function
         
@@ -63,7 +58,7 @@ extension UIViewController {
      */
     func newViewDidLoad() {
         newViewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIViewController.onThemeChange), name: "DarkModeToggled", object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(UIViewController.onThemeChange), name: "DarkModeToggled", object: nil)
     }
     
     /**
@@ -73,9 +68,9 @@ extension UIViewController {
      */
     func newPreferredStatusBarStyle() -> UIStatusBarStyle {
         if AppDelegate.isDarkModeEnabled() {
-            return .LightContent
+            return .lightContent
         } else {
-            return .Default
+            return .default
         }
     }
     
@@ -83,7 +78,7 @@ extension UIViewController {
      NSNotification method when theme changes. Removes observers for notifications because they will be added back when the view controllers reload and we dont want duplicates. And reloads all of the view controllers to represent the new colors
      */
     func onThemeChange() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default().removeObserver(self)
         AppDelegate.reloadViewController(self)
     }
 }

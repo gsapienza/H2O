@@ -70,7 +70,7 @@ class DailyEntryDial: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear()
         
         setupOuterCirclePath()
         setupInnerCircleShapeLayer()
@@ -94,11 +94,11 @@ class DailyEntryDial: UIView {
      Setup for the outer circle that is always displaying to show how much water is needed to drink before reaching goal. Setup using a border
      */
     private func setupOuterCirclePath() {
-        let rect = CGRectInset(bounds, _circleLineWidth / 2, _circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
+        let rect = bounds.insetBy(dx: _circleLineWidth / 2, dy: _circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
         
-        let outerCirclePath = UIBezierPath(ovalInRect: rect) //Circle path
+        let outerCirclePath = UIBezierPath(ovalIn: rect) //Circle path
         
-        _outerCircleShapeLayer.path = outerCirclePath.CGPath
+        _outerCircleShapeLayer.path = outerCirclePath.cgPath
         
         _outerCircleShapeLayer.frame = bounds
         
@@ -111,11 +111,11 @@ class DailyEntryDial: UIView {
      Sets up the inner circle path that will represent how much water was drank today. Starts at 0
      */
     private func setupInnerCircleShapeLayer() {
-        let rect = CGRectInset(bounds, _circleLineWidth / 2, _circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
+        let rect = bounds.insetBy(dx: _circleLineWidth / 2, dy: _circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
 
-        let innerCirclePath = UIBezierPath(ovalInRect: rect) //Circle path
+        let innerCirclePath = UIBezierPath(ovalIn: rect) //Circle path
 
-        _innerCircleShapeLayer.path = innerCirclePath.CGPath
+        _innerCircleShapeLayer.path = innerCirclePath.cgPath
         
         _innerCircleShapeLayer.frame = bounds
         
@@ -132,14 +132,14 @@ class DailyEntryDial: UIView {
         
         _dialButton.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _dialButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
         
-        _dialButton.backgroundColor = UIColor.clearColor()
+        _dialButton.backgroundColor = UIColor.clear()
         _dialButton.titleLabel?.text = ""
-        _dialButton.addTarget(self, action: #selector(DailyEntryDial.onDialButton), forControlEvents: .TouchUpInside)
+        _dialButton.addTarget(self, action: #selector(DailyEntryDial.onDialButton), for: .touchUpInside)
     }
     
     /**
@@ -149,7 +149,7 @@ class DailyEntryDial: UIView {
      
      - returns: Radian value converted from degrees
      */
-    private func degreesToRadians(degrees :CGFloat) -> CGFloat {
+    private func degreesToRadians(_ degrees :CGFloat) -> CGFloat {
         return degrees * CGFloat(M_PI)/180
     }
     
@@ -162,24 +162,24 @@ class DailyEntryDial: UIView {
         
         _currentAmountOfWaterDrankTodayLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _currentAmountOfWaterDrankTodayLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
         
         _currentAmountOfWaterDrankTodayLabel.font = StandardFonts.thinFont(80)
-        _currentAmountOfWaterDrankTodayLabel.textAlignment = .Center
+        _currentAmountOfWaterDrankTodayLabel.textAlignment = .center
     }
     
     //MARK: - Actions
     func onDialButton() {
-        UIView.animateWithDuration(0.1, delay: 0, options: .CurveEaseIn, animations: {
-            self.transform = CGAffineTransformMakeScale(0.8, 0.8)
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
+            self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }) { (Bool) in
             self._delegate?.dialButtonTapped()
 
-            UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .CurveEaseIn, animations: {
-                self.transform = CGAffineTransformIdentity
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
+                self.transform = CGAffineTransform.identity
                 }, completion: { (Bool) in
             })
         }
@@ -192,7 +192,7 @@ class DailyEntryDial: UIView {
      
      - parameter animated: Should the dial gauge animate on change
      */
-    func updateAmountOfWaterDrankToday(animated :Bool) {
+    func updateAmountOfWaterDrankToday(_ animated :Bool) {
         _currentAmountOfWaterDrankTodayLabel.text = String(Int(currentAmountOfWaterDrankToday)) + Constants.standardUnit.rawValue
         
         let newStrokeEnd = currentAmountOfWaterDrankToday / _goal
@@ -208,9 +208,9 @@ class DailyEntryDial: UIView {
             strokeAnimation.fromValue = previousStrokeEnd
             strokeAnimation.toValue = newStrokeEnd
             strokeAnimation.duration = animationTime
-            strokeAnimation.removedOnCompletion = false
+            strokeAnimation.isRemovedOnCompletion = false
             
-            _innerCircleShapeLayer.addAnimation(strokeAnimation, forKey: "strokeEnd")
+            _innerCircleShapeLayer.add(strokeAnimation, forKey: "strokeEnd")
         } else {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
@@ -224,10 +224,10 @@ class DailyEntryDial: UIView {
 extension DailyEntryDial :NightModeProtocol {
     func setupColors() {
         _currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
-        _outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.colorWithAlphaComponent(0.2).CGColor //Color of border
-        _outerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
+        _outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.withAlphaComponent(0.2).cgColor //Color of border
+        _outerCircleShapeLayer.fillColor = UIColor.clear().cgColor //Color of fill
         
-        _innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.CGColor //Color of border
-        _innerCircleShapeLayer.fillColor = UIColor.clearColor().CGColor //Color of fill
+        _innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.cgColor //Color of border
+        _innerCircleShapeLayer.fillColor = UIColor.clear().cgColor //Color of fill
     }
 }

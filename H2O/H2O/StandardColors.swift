@@ -16,7 +16,7 @@ class StandardColors: NSObject {
             if AppDelegate.isDarkModeEnabled() {
                 return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             } else {
-                return UIColor.whiteColor()
+                return UIColor.white()
             }
         }
     }
@@ -37,7 +37,7 @@ class StandardColors: NSObject {
     static let standardRedColor = UIColor(red: 230/255, green: 76/255, blue: 12/255, alpha: 1)
     
         /// Standard green color to use throughout the app
-    static let standardGreenColor = UIColor.greenColor()
+    static let standardGreenColor = UIColor.green()
     
      /// Secondary color to use with background color
     static var standardSecondaryColor :UIColor {
@@ -56,7 +56,7 @@ class StandardColors: NSObject {
         set{}
         get {            
             if AppDelegate.isDarkModeEnabled() {
-                return UIColor.whiteColor()
+                return UIColor.white()
             } else {
                 return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             }
@@ -70,7 +70,7 @@ class StandardColors: NSObject {
             if AppDelegate.isDarkModeEnabled() {
                 return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             } else {
-                return UIColor.whiteColor()
+                return UIColor.white()
             }
         }
     }
@@ -80,9 +80,9 @@ class StandardColors: NSObject {
         set{}
         get {
             if AppDelegate.isDarkModeEnabled() {
-                return .Dark
+                return .dark
             } else {
-                return .Light
+                return .light
             }
         }
     }

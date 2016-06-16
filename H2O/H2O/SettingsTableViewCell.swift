@@ -50,14 +50,14 @@ class SettingsTableViewCell: UITableViewCell {
     private func setupImageView() {
         addSubview(_imageView)
         
-        _imageView.contentMode = .Center
+        _imageView.contentMode = .center
         
         _imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 15))
-        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 25))
-        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 25))
+        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 15))
+        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
+        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
     }
     
     
@@ -69,11 +69,11 @@ class SettingsTableViewCell: UITableViewCell {
         
         _textLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _textLabel, attribute: .Leading, relatedBy: .Equal, toItem: _imageView, attribute: .Trailing, multiplier: 1, constant: _sideMargin))
-        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
-        _textLabelWidthConstraint = NSLayoutConstraint(item: _textLabel, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.width / 2)
+        addConstraint(NSLayoutConstraint(item: _textLabel, attribute: .leading, relatedBy: .equal, toItem: _imageView, attribute: .trailing, multiplier: 1, constant: _sideMargin))
+        addConstraint(NSLayoutConstraint(item: _imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        _textLabelWidthConstraint = NSLayoutConstraint(item: _textLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bounds.width / 2)
         addConstraint(_textLabelWidthConstraint)
-        addConstraint(NSLayoutConstraint(item: _textLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: bounds.height))
+        addConstraint(NSLayoutConstraint(item: _textLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bounds.height))
         
         _textLabel.font = StandardFonts.regularFont(18)
         _textLabel.minimumScaleFactor = 0.7

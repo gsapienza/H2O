@@ -58,12 +58,12 @@ class CustomEntryView: UIView {
         set{}
         get {
             let startDropletPath = UIBezierPath()
-            startDropletPath.moveToPoint(CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height))
-            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.78114 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.22484 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height))
-            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.77516 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.78114 * _endingFrame.height))
-            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.18923 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.75817 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height))
-            startDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.24183 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.18855 * _endingFrame.height))
-            startDropletPath.closePath()
+            startDropletPath.move(to: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height))
+            startDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.78114 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.22484 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height))
+            startDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.77516 * _endingFrame.width, y: _endingFrame.minY + 1.00000 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.78114 * _endingFrame.height))
+            startDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 1.00000 * _endingFrame.width, y: _endingFrame.minY + 0.18923 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.75817 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height))
+            startDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.51044 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.24183 * _endingFrame.width, y: _endingFrame.minY + 0.00000 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.00000 * _endingFrame.width, y: _endingFrame.minY + 0.18855 * _endingFrame.height))
+            startDropletPath.close()
             startDropletPath.usesEvenOddFillRule = true
             
             return startDropletPath
@@ -75,12 +75,12 @@ class CustomEntryView: UIView {
         set{}
         get {
             let endDropletPath = UIBezierPath()
-            endDropletPath.moveToPoint(CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height))
-            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.73319 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.38764 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height))
-            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.61236 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.73319 * _endingFrame.height))
-            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.50741 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height))
-            endDropletPath.addCurveToPoint(CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.50715 * _endingFrame.height))
-            endDropletPath.closePath()
+            endDropletPath.move(to: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height))
+            endDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.50000 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.73319 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.38764 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height))
+            endDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.61236 * _endingFrame.width, y: _endingFrame.minY + 0.81667 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.73319 * _endingFrame.height))
+            endDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.70417 * _endingFrame.width, y: _endingFrame.minY + 0.50741 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height))
+            endDropletPath.addCurve(to: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.62993 * _endingFrame.height), controlPoint1: CGPoint(x: _endingFrame.minX + 0.50133 * _endingFrame.width, y: _endingFrame.minY + 0.17917 * _endingFrame.height), controlPoint2: CGPoint(x: _endingFrame.minX + 0.29583 * _endingFrame.width, y: _endingFrame.minY + 0.50715 * _endingFrame.height))
+            endDropletPath.close()
             endDropletPath.usesEvenOddFillRule = true
             
             return endDropletPath
@@ -104,7 +104,7 @@ class CustomEntryView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear()
     }
     
     /**
@@ -123,15 +123,15 @@ class CustomEntryView: UIView {
      - parameter frame:        Frame of custom button
      - parameter cornerRadius: Custom button corner radius
      */
-    func setupStartingPathInFrame(frame :CGRect, cornerRadius :CGFloat) {
+    func setupStartingPathInFrame(_ frame :CGRect, cornerRadius :CGFloat) {
         _startingFrame = frame
         _startingCornerRadius = cornerRadius
         
-        _morphingShape.path = _customButtonShapePath.CGPath
+        _morphingShape.path = _customButtonShapePath.cgPath
 
         _morphingShape.lineWidth = _lineWidth
-        _morphingShape.strokeColor = StandardColors.primaryColor.CGColor
-        _morphingShape.fillColor = UIColor.clearColor().CGColor
+        _morphingShape.strokeColor = StandardColors.primaryColor.cgColor
+        _morphingShape.fillColor = UIColor.clear().cgColor
         
         layer.addSublayer(_morphingShape)
         
@@ -144,16 +144,16 @@ class CustomEntryView: UIView {
     private func setupViewContainer() {
         _viewContainer.frame = _startingFrame
         _viewContainer.clipsToBounds = true
-        _viewContainer.backgroundColor = UIColor.clearColor()
+        _viewContainer.backgroundColor = UIColor.clear()
         
         let scaleAmount :CGFloat = 0.1 //Amount to scale everything in view container. Before scaling up
         
         setupAmountTextField() //Positions text field
-        _amountTextField.transform = CGAffineTransformMakeScale(scaleAmount, scaleAmount)
+        _amountTextField.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
         
         setupUnitLabel() //Positions unit label
         
-        _unitLabel.transform = CGAffineTransformMakeScale(scaleAmount, scaleAmount)
+        _unitLabel.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
         
         addSubview(_viewContainer)
     }
@@ -162,12 +162,12 @@ class CustomEntryView: UIView {
      Positions the amount entry text field. Simple view properties and position
      */
     private func setupAmountTextField() {
-        _amountTextField.frame = CGRectMake(0, 0, _viewContainer.bounds.width / 2, _viewContainer.bounds.height)
+        _amountTextField.frame = CGRect(x: 0, y: 0, width: _viewContainer.bounds.width / 2, height: _viewContainer.bounds.height)
         
         _amountTextField.textColor = StandardColors.waterColor
         _amountTextField.font = StandardFonts.regularFont(80)
-        _amountTextField.textAlignment = .Right
-        _amountTextField.keyboardType = .NumberPad
+        _amountTextField.textAlignment = .right
+        _amountTextField.keyboardType = .numberPad
         _amountTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
         _amountTextField.delegate = self
         _amountTextField.tintColor = StandardColors.waterColor
@@ -180,12 +180,12 @@ class CustomEntryView: UIView {
      Positions the unit label. Simple view properties and position
      */
     private func setupUnitLabel() {
-        _unitLabel.frame = CGRectMake(_viewContainer.bounds.width / 2, 0, _viewContainer.bounds.width / 2, _viewContainer.bounds.height)
+        _unitLabel.frame = CGRect(x: _viewContainer.bounds.width / 2, y: 0, width: _viewContainer.bounds.width / 2, height: _viewContainer.bounds.height)
         
         _unitLabel.textColor = StandardColors.primaryColor
         _unitLabel.font = StandardFonts.thinFont(80)
         _unitLabel.text = Constants.standardUnit.rawValue
-        _unitLabel.textAlignment = .Left
+        _unitLabel.textAlignment = .left
         
         _viewContainer.addSubview(_unitLabel)
     }
@@ -198,7 +198,7 @@ class CustomEntryView: UIView {
      - parameter endFrame:     Frame of the final circle
      - parameter cornerRadius: Corner radius of the circle
      */
-    func morphToCirclePath(endFrame :CGRect, cornerRadius :CGFloat) {
+    func morphToCirclePath(_ endFrame :CGRect, cornerRadius :CGFloat) {
         //Set the ivars
         _endingFrame = endFrame
         _endingCornerRadius = cornerRadius
@@ -207,7 +207,7 @@ class CustomEntryView: UIView {
         
         //Delay here for asthetic purposes only. Will work fine without it
         AppDelegate.delay(_animationDuration) {
-            self._morphingShape.path = self._circleShapePath.CGPath //Set the path before animating
+            self._morphingShape.path = self._circleShapePath.cgPath //Set the path before animating
             
             self.animateViewContainerToFinish({ (Bool) in //Animates the view container to be visble to the user
             })
@@ -215,13 +215,13 @@ class CustomEntryView: UIView {
         
         //Morph path animation
         let morphAnimation = CABasicAnimation(keyPath: "path")
-        morphAnimation.fromValue = _customButtonShapePath.CGPath
-        morphAnimation.toValue = _circleShapePath.CGPath
+        morphAnimation.fromValue = _customButtonShapePath.cgPath
+        morphAnimation.toValue = _circleShapePath.cgPath
         morphAnimation.duration = _animationDuration
         morphAnimation.beginTime = CACurrentMediaTime() + delay //Accounts for delay above
-        morphAnimation.removedOnCompletion = false
+        morphAnimation.isRemovedOnCompletion = false
         
-        _morphingShape.addAnimation(morphAnimation, forKey: "path")
+        _morphingShape.add(morphAnimation, forKey: "path")
     }
     
     /**
@@ -229,8 +229,8 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
      */
-    func morphToCustomButtonPath(completionHandler: (Bool) -> Void) {
-        self._morphingShape.path = _customButtonShapePath.CGPath //Set path back to starting point
+    func morphToCustomButtonPath(_ completionHandler: (Bool) -> Void) {
+        self._morphingShape.path = _customButtonShapePath.cgPath //Set path back to starting point
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
             completionHandler(true) //Informs the caller that this animation is complete
@@ -238,12 +238,12 @@ class CustomEntryView: UIView {
         
         //Morph path animation
         let morphAnimation = CABasicAnimation(keyPath: "path")
-        morphAnimation.fromValue = _circleShapePath.CGPath
-        morphAnimation.toValue = _customButtonShapePath.CGPath
+        morphAnimation.fromValue = _circleShapePath.cgPath
+        morphAnimation.toValue = _customButtonShapePath.cgPath
         morphAnimation.duration = _animationDuration
-        morphAnimation.removedOnCompletion = false
+        morphAnimation.isRemovedOnCompletion = false
         
-        _morphingShape.addAnimation(morphAnimation, forKey: "path")
+        _morphingShape.add(morphAnimation, forKey: "path")
     }
     
     /**
@@ -251,8 +251,8 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
      */
-    func morphToDropletPath(completionHandler: (Bool) -> Void) {
-        self._morphingShape.path = _endingDropletMorphingShapePath.CGPath //Set path to droplet
+    func morphToDropletPath(_ completionHandler: (Bool) -> Void) {
+        self._morphingShape.path = _endingDropletMorphingShapePath.cgPath //Set path to droplet
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
             completionHandler(true) //Informs the caller that this animation is complete
@@ -260,21 +260,21 @@ class CustomEntryView: UIView {
         
         //Morph path animation
         let morphAnimation = CABasicAnimation(keyPath: "path")
-        morphAnimation.fromValue = _startingDropletMorphingShapePath.CGPath //Looks like the circle path that was used before. But this path is adjusted to morph into the droplet
-        morphAnimation.toValue = _endingDropletMorphingShapePath.CGPath
+        morphAnimation.fromValue = _startingDropletMorphingShapePath.cgPath //Looks like the circle path that was used before. But this path is adjusted to morph into the droplet
+        morphAnimation.toValue = _endingDropletMorphingShapePath.cgPath
         morphAnimation.duration = _animationDuration
-        morphAnimation.removedOnCompletion = false
+        morphAnimation.isRemovedOnCompletion = false
         
-        _morphingShape.addAnimation(morphAnimation, forKey: "path")
+        _morphingShape.add(morphAnimation, forKey: "path")
         
         
         
         //Setup for droplet layer to fade in after morph is made to show a blue droplet
         
-        _dropletShapeLayer.path = _endingDropletMorphingShapePath.CGPath //Droplet path
+        _dropletShapeLayer.path = _endingDropletMorphingShapePath.cgPath //Droplet path
         
-        _dropletShapeLayer.fillColor = StandardColors.waterColor.CGColor
-        _dropletShapeLayer.strokeColor = StandardColors.primaryColor.CGColor
+        _dropletShapeLayer.fillColor = StandardColors.waterColor.cgColor
+        _dropletShapeLayer.strokeColor = StandardColors.primaryColor.cgColor
         _dropletShapeLayer.lineWidth = _lineWidth
         _dropletShapeLayer.opacity = 0
         
@@ -291,37 +291,37 @@ class CustomEntryView: UIView {
         dropletOpacityAnimation.toValue = 1
         dropletOpacityAnimation.duration = _animationDuration
         dropletOpacityAnimation.beginTime = CACurrentMediaTime() + _animationDuration
-        dropletOpacityAnimation.removedOnCompletion = false
+        dropletOpacityAnimation.isRemovedOnCompletion = false
         
-        _dropletShapeLayer.addAnimation(dropletOpacityAnimation, forKey: "opacity")
+        _dropletShapeLayer.add(dropletOpacityAnimation, forKey: "opacity")
     }
     
     func invalidEntry() {
-        let animationDuration :NSTimeInterval = 0.8
+        let animationDuration :TimeInterval = 0.8
         let moveValue :CGFloat = 20 //initial X translation to shake
         
         let shakeDuration = 0.2
 
         ///Shake keyframe animation
-        UIView.animateKeyframesWithDuration(animationDuration, delay: 0, options: .AllowUserInteraction, animations: { () -> Void in
+        UIView.animateKeyframes(withDuration: animationDuration, delay: 0, options: .allowUserInteraction, animations: { () -> Void in
             ///Shake forward
-            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPointMake(self.layer.position.x + moveValue, self.layer.position.y)
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPoint(x: self.layer.position.x + moveValue, y: self.layer.position.y)
             })
             
             ///Shake back
-            UIView.addKeyframeWithRelativeStartTime(shakeDuration, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPointMake(self.layer.position.x - moveValue * 2, self.layer.position.y)
+            UIView.addKeyframe(withRelativeStartTime: shakeDuration, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPoint(x: self.layer.position.x - moveValue * 2, y: self.layer.position.y)
             })
             
             ///Shake forward
-            UIView.addKeyframeWithRelativeStartTime(shakeDuration * 2, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPointMake(self.layer.position.x + moveValue * 2, self.layer.position.y)
+            UIView.addKeyframe(withRelativeStartTime: shakeDuration * 2, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPoint(x: self.layer.position.x + moveValue * 2, y: self.layer.position.y)
             })
             
             ///Shake back
-            UIView.addKeyframeWithRelativeStartTime(shakeDuration * 3, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPointMake(self.layer.position.x - moveValue, self.layer.position.y)
+            UIView.addKeyframe(withRelativeStartTime: shakeDuration * 3, relativeDuration: shakeDuration, animations: { () -> Void in
+                self.layer.position = CGPoint(x: self.layer.position.x - moveValue, y: self.layer.position.y)
             })
         }) { (Bool) -> Void in
         }
@@ -334,14 +334,14 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: When the animation is complete
      */
-    private func animateViewContainerToFinish(completionHandler: (Bool) -> Void) {
-        UIView.animateWithDuration(_animationDuration, animations: {
+    private func animateViewContainerToFinish(_ completionHandler: (Bool) -> Void) {
+        UIView.animate(withDuration: _animationDuration, animations: {
             self._viewContainer.frame = self._endingFrame //Frame at ending point
             
-            self._unitLabel.transform = CGAffineTransformIdentity
+            self._unitLabel.transform = CGAffineTransform.identity
             self.setupUnitLabel() //Repositions unit label after transform
             
-            self._amountTextField.transform = CGAffineTransformIdentity
+            self._amountTextField.transform = CGAffineTransform.identity
             self.setupAmountTextField() //Repositions text field after transform
             
             }) { (Bool) in
@@ -355,17 +355,17 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: When the animation is complete
      */
-    private func animateViewContainerToStart(completionHandler: (Bool) -> Void) {
+    private func animateViewContainerToStart(_ completionHandler: (Bool) -> Void) {
         let scaleAmount :CGFloat = 0.0001
         _amountTextField.resignFirstResponder()
 
-        UIView.animateWithDuration(_animationDuration, animations: {
+        UIView.animate(withDuration: _animationDuration, animations: {
             self._viewContainer.frame = self._startingFrame //Frame at starting custom button point
             
-            self._unitLabel.transform = CGAffineTransformMakeScale(scaleAmount, scaleAmount)
+            self._unitLabel.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
             self.setupUnitLabel() //Repositions unit label after transform
             
-            self._amountTextField.transform = CGAffineTransformMakeScale(scaleAmount, scaleAmount)
+            self._amountTextField.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
             self.setupAmountTextField() //Repositions text field after transform
             
         }) { (Bool) in
@@ -378,8 +378,8 @@ class CustomEntryView: UIView {
     /**
      Allows interaction of all views except for this views background. So taps will hit the superview instead
      */
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, withEvent: event)
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
         
         if view != self {
             return view
@@ -396,8 +396,8 @@ extension CustomEntryView :UITextFieldDelegate {
      
      - returns: Is editing allowed
      */
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let char = string.cStringUsingEncoding(NSUTF8StringEncoding)!
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
         
         if Int(string) != nil || isBackSpace == -92 { //Is it a number or a backspace value
@@ -405,23 +405,23 @@ extension CustomEntryView :UITextFieldDelegate {
                 return false
             } else {
                 let character = Array(arrayLiteral: Constants.standardUnit.rawValue)[0]
-                let sizeOfCharacter = character.sizeWithAttributes([NSFontAttributeName : _unitLabel.font!]) //Gets size of text based on font and string
+                let sizeOfCharacter = character.size(attributes: [NSFontAttributeName : _unitLabel.font!]) //Gets size of text based on font and string
                 
                 let amountToMoveCharacters = sizeOfCharacter.width / 2 //Amount to move text field and unit label
                 
                 //Shifts the text field and unit label if three numbers are entered
-                UIView.animateWithDuration(_animationDuration, animations: {
+                UIView.animate(withDuration: _animationDuration, animations: {
                     if textField.text!.characters.count == 2 && isBackSpace != -92 { //Is there 2 characters and now a third is coming that is not a background
                         
                         //Move everything to the right
-                        self._unitLabel.frame = CGRectOffset(self._unitLabel.frame, amountToMoveCharacters, 0)
-                        self._amountTextField.frame = CGRectOffset(self._amountTextField.frame, amountToMoveCharacters, 0)
+                        self._unitLabel.frame = self._unitLabel.frame.offsetBy(dx: amountToMoveCharacters, dy: 0)
+                        self._amountTextField.frame = self._amountTextField.frame.offsetBy(dx: amountToMoveCharacters, dy: 0)
                         
                     } else if textField.text!.characters.count == 3 && isBackSpace == -92 { //If there are 3 characters and a backspace is coming to make it two
                         
                         //Move everything to the left
-                        self._unitLabel.frame = CGRectOffset(self._unitLabel.frame, -amountToMoveCharacters, 0)
-                        self._amountTextField.frame = CGRectOffset(self._amountTextField.frame, -amountToMoveCharacters, 0)
+                        self._unitLabel.frame = self._unitLabel.frame.offsetBy(dx: -amountToMoveCharacters, dy: 0)
+                        self._amountTextField.frame = self._amountTextField.frame.offsetBy(dx: -amountToMoveCharacters, dy: 0)
                     }
                 })
                 

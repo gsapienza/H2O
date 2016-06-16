@@ -39,27 +39,27 @@ class DateEntryTests: XCTestCase {
      
      - parameter dateString: ""
      */
-    func addTestDate(date :NSDate) {
+    func addTestDate(_ date :Date) {
         AppDelegate.getAppDelegate().user!.addNewDay(date)
     }
     
-    func getDateFromString(dateString :String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
+    func getDateFromString(_ dateString :String) -> Date {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MMM-yy"
         
-        let date = dateFormatter.dateFromString(dateString)!
+        let date = dateFormatter.date(from: dateString)!
         
         return date
     }
     
-    func getTheDateFromNumberOfDaysAway(numberOfDaysAway :Int) -> NSDate {
-        let dayComponent = NSDateComponents()
+    func getTheDateFromNumberOfDaysAway(_ numberOfDaysAway :Int) -> Date {
+        var dayComponent = DateComponents()
         
         dayComponent.day = numberOfDaysAway
         
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current()
         
-        let newDate = calendar.dateByAddingComponents(dayComponent, toDate: NSDate().dateForCurrentTimeZone(), options: .MatchNextTime) //Computes the next date
+        let newDate = calendar.date(byAdding: dayComponent, to: Date().dateForCurrentTimeZone(), options: .matchNextTime) //Computes the next date
         
         return newDate!
     }
@@ -119,7 +119,7 @@ class DateEntryTests: XCTestCase {
      Test if test date falls on the same day as today
      */
     func testSameDateEntry() {
-        addTestDate(NSDate().dateForCurrentTimeZone())
+        addTestDate(Date().dateForCurrentTimeZone())
         AppDelegate.getAppDelegate().user!.createDaysToDate()
         
         XCTAssertEqual(AppDelegate.getAppDelegate().user!.days?.count, 1)

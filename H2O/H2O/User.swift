@@ -15,12 +15,12 @@ class User: NSManagedObject {
     class func loadUser() -> User? {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
         
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let fetchRequest :NSFetchRequest<User> = NSFetchRequest(entityName: "User")
         
         do {
             let results =
-                try managedContext.executeFetchRequest(fetchRequest)
-            let users = results as! [User]
+                try managedContext.fetch(fetchRequest)
+            let users = results
             
             guard users.count != 0 else {
                 return createNewUser()
@@ -38,11 +38,11 @@ class User: NSManagedObject {
     private class func createNewUser() -> User {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
         
-        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext:managedContext)
+        let entity = NSEntityDescription.entity(forEntityName: "User", in:managedContext)
         
-        let user = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext) as! User
+        let user = NSManagedObject(entity: entity!, insertInto: managedContext) as! User
         
-        user.id = NSUUID().UUIDString
+        user.id = UUID().uuidString
         
         do {
             try managedContext.save()
@@ -53,15 +53,15 @@ class User: NSManagedObject {
         return user
     }
     
-    func addNewEntryToUser(amount :Float, date :NSDate?) {
+    func addNewEntryToUser(_ amount :Float, date :Date?) {
         let managedContext = AppDelegate.getAppDelegate().managedObjectContext
 
         let entry = Entry.createNewEntry(amount, date :date)
         
         let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
-        mutableEntries.addObject(entry)
+        mutableEntries.add(entry)
         
-        entries = mutableEntries.copy() as? NSOrderedSet
+        entries = mutableEntries.copy() as? OrderedSet
         
         do {
             try managedContext.save()
@@ -75,12 +75,12 @@ class User: NSManagedObject {
         
         for entry in entries! {
             let entryDate = (entry as! Entry).date
-            let todayDate = NSDate()
+            let todayDate = Date()
             
-            let calendar = NSCalendar.currentCalendar() //Calendar type
+            let calendar = Calendar.current() //Calendar type
             
-            let entryDateComponents = calendar.components([.Day, .Month, .Year], fromDate: entryDate!)
-            let todayDateComponents = calendar.components([.Day, .Month, .Year], fromDate: todayDate)
+            let entryDateComponents = calendar.components([.day, .month, .year], from: entryDate!)
+            let todayDateComponents = calendar.components([.day, .month, .year], from: todayDate)
 
             if entryDateComponents.month == todayDateComponents.month && entryDateComponents.day == todayDateComponents.day && entryDateComponents.year == todayDateComponents.year {
                 todaysWaterAmount += ((entry as! Entry).amount?.floatValue)!
@@ -95,7 +95,7 @@ class User: NSManagedObject {
         
         var lastCollection :[String :AnyObject]?
         
-        for (i, entry) in entries!.enumerate() {
+        for (i, entry) in entries!.enumerated() {
             let entryObject = entry as! Entry
             
             if lastCollection == nil {
@@ -104,23 +104,23 @@ class User: NSManagedObject {
                         
             let entriesArray = lastCollection!["entries"] as! [Entry]
             
-            let newEntries = NSArray(object: entryObject).arrayByAddingObjectsFromArray(entriesArray)
+            let newEntries = NSArray(object: entryObject).addingObjects(from: entriesArray)
             
             lastCollection!["entries"] = newEntries
                         
             if entryObject == entries?.lastObject as! Entry {
-                dateCollections.insert(lastCollection!, atIndex: 0)
+                dateCollections.insert(lastCollection!, at: 0)
                 lastCollection = nil
             } else {
                 let nextEntry = entries![i + 1] as! Entry
                 
-                let calendar = NSCalendar.currentCalendar() //Calendar type
+                let calendar = Calendar.current() //Calendar type
                 
-                let nextEntryDateComponents = calendar.components([.Day, .Month, .Year], fromDate: nextEntry.date!)
-                let lastDateComponents = calendar.components([.Day, .Month, .Year], fromDate: (lastCollection!["date"] as! NSDate))
+                let nextEntryDateComponents = calendar.components([.day, .month, .year], from: nextEntry.date!)
+                let lastDateComponents = calendar.components([.day, .month, .year], from: (lastCollection!["date"] as! Date))
                 
                 if nextEntryDateComponents.month != lastDateComponents.month || nextEntryDateComponents.day != lastDateComponents.day || nextEntryDateComponents.year != lastDateComponents.year {
-                    dateCollections.insert(lastCollection!, atIndex: 0)
+                    dateCollections.insert(lastCollection!, at: 0)
                     lastCollection = nil
                 }
             }
@@ -129,14 +129,14 @@ class User: NSManagedObject {
         return dateCollections
     }
 
-    class func getNextDay(fromDate :NSDate) -> NSDate {
-        let dayComponent = NSDateComponents()
+    class func getNextDay(_ fromDate :Date) -> Date {
+        var dayComponent = DateComponents()
         
         dayComponent.day = 1 //Only 1 day ahead
         
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current()
         
-        let nextDate = calendar.dateByAddingComponents(dayComponent, toDate: fromDate, options: .MatchNextTime) //Computes the next date
+        let nextDate = calendar.date(byAdding: dayComponent, to: fromDate, options: .matchNextTime) //Computes the next date
         
         return nextDate!
     }

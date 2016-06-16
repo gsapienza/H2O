@@ -9,7 +9,7 @@
 import UIKit
 
 protocol InformationEntryInfoCollectionViewCellProtocol {
-    func promptEntryDeletion(cell :InformationEntryInfoCollectionViewCell)
+    func promptEntryDeletion(_ cell :InformationEntryInfoCollectionViewCell)
 }
 
 class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
@@ -38,14 +38,14 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         
         _entryAmountView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _entryAmountView, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _entryAmountView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _entryAmountView, attribute: .Width, relatedBy: .Equal, toItem: _entryAmountView, attribute: .Height, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _entryAmountView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _entryAmountView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _entryAmountView, attribute: .width, relatedBy: .equal, toItem: _entryAmountView, attribute: .height, multiplier: 1, constant: 0))
         
         _entryAmountView.clipsToBounds = true
         _entryAmountView.backgroundColor = StandardColors.primaryColor
         
-        _entryAmountView.layer.borderColor = UIColor.redColor().colorWithAlphaComponent(0.8).CGColor
+        _entryAmountView.layer.borderColor = UIColor.red().withAlphaComponent(0.8).cgColor
         _entryAmountView.layer.borderWidth = 0
         
         addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(InformationEntryInfoCollectionViewCell.onLongPressGesture(_:))))
@@ -59,17 +59,17 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         let timeLabelFont = StandardFonts.regularFont(12)
         _timeLabel.text = ""
         
-        let sizeOfTime = _timeLabel.text!.sizeWithAttributes([NSFontAttributeName : timeLabelFont])
+        let sizeOfTime = _timeLabel.text!.size(attributes: [NSFontAttributeName : timeLabelFont])
 
-        addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .Top, relatedBy: .Equal, toItem: _entryAmountView, attribute: .Bottom, multiplier: 1, constant: 8))
-        addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
-         addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 0))
-         addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: sizeOfTime.height))
+        addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .top, relatedBy: .equal, toItem: _entryAmountView, attribute: .bottom, multiplier: 1, constant: 8))
+        addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+         addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+         addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _timeLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: sizeOfTime.height))
         
         _timeLabel.textColor = StandardColors.primaryColor
         _timeLabel.font = timeLabelFont
-        _timeLabel.textAlignment = .Center
+        _timeLabel.textAlignment = .center
     }
     
     private func setupEntryAmountLabel() {
@@ -80,45 +80,43 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         let entryLabelFont = StandardFonts.regularFont(14)
         _entryAmountLabel.text = ""
         
-        let sizeOfEntry = _entryAmountLabel.text!.sizeWithAttributes([NSFontAttributeName : entryLabelFont])
+        let sizeOfEntry = _entryAmountLabel.text!.size(attributes: [NSFontAttributeName : entryLabelFont])
         
-        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .CenterY, relatedBy: .Equal, toItem: _entryAmountView, attribute: .CenterY, multiplier: 1, constant: 0))
-        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .Leading, relatedBy: .Equal, toItem: _entryAmountView, attribute: .Leading, multiplier: 1, constant: 0))
-        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .Trailing, relatedBy: .Equal, toItem: _entryAmountView, attribute: .Trailing, multiplier: 1, constant: 0))
-        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: sizeOfEntry.height))
+        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .centerY, relatedBy: .equal, toItem: _entryAmountView, attribute: .centerY, multiplier: 1, constant: 0))
+        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .leading, relatedBy: .equal, toItem: _entryAmountView, attribute: .leading, multiplier: 1, constant: 0))
+        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .trailing, relatedBy: .equal, toItem: _entryAmountView, attribute: .trailing, multiplier: 1, constant: 0))
+        _entryAmountView.addConstraint(NSLayoutConstraint(item: _entryAmountLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: sizeOfEntry.height))
         
         _entryAmountLabel.textColor = StandardColors.inversedPrimaryColor
         _entryAmountLabel.font = entryLabelFont
-        _entryAmountLabel.textAlignment = .Center
+        _entryAmountLabel.textAlignment = .center
     }
     
-    func onLongPressGesture(gestureRecognizer :UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == .Began {
+    func onLongPressGesture(_ gestureRecognizer :UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
             animateBorder(30, isDelegate: true)
-        } else if gestureRecognizer.state == .Ended {
-           animateBorder(0, isDelegate: false)
+        } else if gestureRecognizer.state == .ended {
+            animateBorder(0, isDelegate: false)
         }
     }
     
-    private func animateBorder(toValue :CGFloat, isDelegate :Bool) -> CABasicAnimation {
+    private func animateBorder(_ toValue :CGFloat, isDelegate :Bool) {
         _entryAmountView.layer.borderWidth = toValue
         
         let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: "borderWidth")
-        borderAnimation.fromValue = _entryAmountView.layer.presentationLayer()!.valueForKeyPath("borderWidth")?.floatValue
+        borderAnimation.fromValue = _entryAmountView.layer.presentation()!.value(forKeyPath: "borderWidth")?.floatValue
         borderAnimation.toValue = toValue
         borderAnimation.duration = 0.3
-        borderAnimation.removedOnCompletion = false
+        borderAnimation.isRemovedOnCompletion = false
         
         if isDelegate {
             borderAnimation.delegate = self
         }
         
-        _entryAmountView.layer.addAnimation(borderAnimation, forKey: "borderWidth")
-        
-        return borderAnimation
+        _entryAmountView.layer.add(borderAnimation, forKey: "borderWidth")        
     }
     
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         animateBorder(0, isDelegate: false)
         _delegate?.promptEntryDeletion(self)
     }

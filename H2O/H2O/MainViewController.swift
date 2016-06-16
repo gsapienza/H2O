@@ -15,14 +15,14 @@ protocol EntryButtonProtocol {
      
      - parameter amount: Amount set in the preset
      */
-    func entryButtonTapped(amount :Float)
+    func entryButtonTapped(_ amount :Float)
     
     /**
      When the custom entry button is tapped
      
      - parameter customButton: Button that was tapped
      */
-    func customEntryButtonTapped(customButton :EntryButton)
+    func customEntryButtonTapped(_ customButton :EntryButton)
 }
 
 class MainViewController: UIViewController {
@@ -90,18 +90,18 @@ class MainViewController: UIViewController {
         _dailyEntryDial._delegate = self
         
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
-        let newDateTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(newDateTimer, forMode: NSRunLoopCommonModes)
+        let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
+        RunLoop.current().add(newDateTimer, forMode: RunLoopMode.commonModes)
     }
 
     /**
      Sets up navigation bar state by making it fully transparent
      */
     private func setupNavigationBar() {
-        _navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        _navigationBar.setBackgroundImage(UIImage(), for: .default)
         _navigationBar.shadowImage = UIImage()
-        _navigationBar.translucent = true
-        _navigationBar.backgroundColor = UIColor.clearColor()
+        _navigationBar.isTranslucent = true
+        _navigationBar.backgroundColor = UIColor.clear()
     }
 
     /**
@@ -111,15 +111,6 @@ class MainViewController: UIViewController {
         _fluidView.fillColor = StandardColors.waterColor //Water fill
         _fluidView.fillDuration = 2 //New duration of height animations
         
-        if _motionManager.deviceMotionAvailable {
-            _motionManager.deviceMotionUpdateInterval = 0.3
-            _motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data :CMDeviceMotion?, error :NSError?) in
-                let userInfo = NSDictionary(object: data!, forKey: "data")
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(kBAFluidViewCMMotionUpdate, object: nil, userInfo: userInfo as [NSObject : AnyObject])
-            })
-        }
-        
         updateFluidValue() //Update the fluid value to get a new height
     }
     
@@ -128,9 +119,9 @@ class MainViewController: UIViewController {
      */
     private func setupBlurView() {
         if AppDelegate.isDarkModeEnabled() {
-            _fluidBlurView.effect = UIBlurEffect(style: .Dark)
+            _fluidBlurView.effect = UIBlurEffect(style: .dark)
         } else {
-            _fluidBlurView.effect = UIBlurEffect(style: .Light)
+            _fluidBlurView.effect = UIBlurEffect(style: .light)
         }
     }
     
@@ -138,7 +129,7 @@ class MainViewController: UIViewController {
      Sets up 3 preset circles
      */
     private func setupPresetEntryCircles() {
-        let presetWaterValues = NSUserDefaults.standardUserDefaults().arrayForKey("PresetWaterValues") as! [Float]
+        let presetWaterValues = UserDefaults.standard().array(forKey: "PresetWaterValues") as! [Float]
         
         //First button
         _entryButton1._amount = presetWaterValues[0]
@@ -162,7 +153,7 @@ class MainViewController: UIViewController {
     private func setupSettingsBarButton() {
         let navigationItem = UINavigationItem()
         
-        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .Plain, target: self, action: #selector(MainViewController.onSettingsBarButton(_:)))
+        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .plain, target: self, action: #selector(MainViewController.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
         navigationItem.rightBarButtonItem = settingsBarButtonItem
@@ -178,12 +169,12 @@ class MainViewController: UIViewController {
         
         _confettiArea.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: _confettiArea, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0))
         
-        _confettiArea.userInteractionEnabled = false
+        _confettiArea.isUserInteractionEnabled = false
     }
     
     //MARK: - Actions
@@ -193,12 +184,12 @@ class MainViewController: UIViewController {
      
      - parameter amount: Amount of water in fl oz
      */
-    func addWaterToToday(amount :Float) {
+    func addWaterToToday(_ amount :Float) {
         let beforeAmount = AppDelegate.getAppDelegate().user?.getAmountOfWaterForToday() //Water drank before entering this latest entry
         
         //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added
         if beforeAmount! < getGoal() && beforeAmount! + amount >= getGoal() {
-            _confettiArea.burstAt(_dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
+            _confettiArea.burst(at: _dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
             CENAudioToolbox.standardAudioToolbox.playAudio("Well done", fileExtension: "wav", repeatEnabled: false)
             CENToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(getGoal()))" + Constants.standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
             })
@@ -212,7 +203,7 @@ class MainViewController: UIViewController {
         _dailyEntryDial.updateAmountOfWaterDrankToday(true) //Updates the daily dial
         updateFluidValue()
         
-        HealthManager.defaultManager.saveWaterAmountToHealthKit(amount, date: NSDate())
+        HealthManager.defaultManager.saveWaterAmountToHealthKit(amount, date: Date())
     }
     
     /**
@@ -220,14 +211,14 @@ class MainViewController: UIViewController {
      
      - parameter sender: Settings bar button
      */
-    @IBAction func onSettingsBarButton(sender: AnyObject) {
+    @IBAction func onSettingsBarButton(_ sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let navigationViewController = (storyboard.instantiateViewControllerWithIdentifier("SettingsViewController") as! UINavigationController)
+        let navigationViewController = (storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! UINavigationController)
         
         let settingsViewController = navigationViewController.viewControllers.first as! SettingsViewController
         settingsViewController._delegate = self
         
-        self.presentViewController(navigationViewController, animated: true, completion: nil)
+        self.present(navigationViewController, animated: true, completion: nil)
     }
     
     /**
@@ -254,7 +245,7 @@ class MainViewController: UIViewController {
             
             setupSettingsBarButton() //Restore settings button
             
-            let amount = NSNumberFormatter().numberFromString(_customEntryView._amountTextField.text!)!.floatValue
+            let amount = NumberFormatter().number(from: _customEntryView._amountTextField.text!)!.floatValue
             addWaterToToday(amount)
             
             _customEntryView.morphToDropletPath { (Bool) in
@@ -276,18 +267,18 @@ class MainViewController: UIViewController {
      
      - parameter hide: Should the views be hiddden
      */
-    private func toggleViewControllerViews(hide :Bool) {
+    private func toggleViewControllerViews(_ hide :Bool) {
         //Original values
-        var scale = CGAffineTransformMakeScale(1, 1)
+        var scale = CGAffineTransform(scaleX: 1, y: 1)
         var alpha :CGFloat = 1
         
         if hide { //If you want to hide them instead
-            scale = CGAffineTransformMakeScale(0.00001, 0.00001)
+            scale = CGAffineTransform(scaleX: 0.00001, y: 0.00001)
             alpha = 0
         }
         
         //Animations happen here
-        UIView.animateWithDuration(0.25, delay: 0, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self._entryButton1.transform = scale
             self._entryButton1.alpha = alpha
             
@@ -335,7 +326,7 @@ extension MainViewController :EntryButtonProtocol {
      
      - parameter amount: Amount to add in fl oz
      */
-    func entryButtonTapped(amount: Float) {
+    func entryButtonTapped(_ amount: Float) {
         addWaterToToday(amount)
     }
     
@@ -344,7 +335,7 @@ extension MainViewController :EntryButtonProtocol {
      
      - parameter customButton: Button that was tapped
      */
-    func customEntryButtonTapped(customButton :EntryButton) {
+    func customEntryButtonTapped(_ customButton :EntryButton) {
         view.addSubview(_customEntryView)
         
         _customEntryView.setupStartingPathInFrame(customButton.frame, cornerRadius :customButton.layer.cornerRadius) //Setup the custom button looking path
@@ -355,13 +346,13 @@ extension MainViewController :EntryButtonProtocol {
         
         //Navigation bar setup for controlling custom entry
         
-        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
+        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
         
-        cancelBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(18)], forState: .Normal) //Cancel button view properties
+        cancelBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(18)], for: UIControlState()) //Cancel button view properties
         
-        let doneBarButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
+        let doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
         
-        doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.boldFont(18)], forState: .Normal) //Done button view properties
+        doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.boldFont(18)], for: UIControlState()) //Done button view properties
         
         let navigationItem = UINavigationItem()
         navigationItem.leftBarButtonItem = cancelBarButton
@@ -378,7 +369,7 @@ extension MainViewController :SettingsViewControllerProtocol {
      
      - parameter newValue: New goal set
      */
-    func goalUpdated(newValue: Float) {
+    func goalUpdated(_ newValue: Float) {
         _dailyEntryDial.updateAmountOfWaterDrankToday(true)
         updateFluidValue()
     }
@@ -389,13 +380,13 @@ extension MainViewController :SettingsViewControllerProtocol {
      - parameter presetSize: Size of preset to update
      - parameter newValue:     New Value for preset
      */
-    func presetUpdated(presetSize: PresetSize, newValue: Float) {
+    func presetUpdated(_ presetSize: PresetSize, newValue: Float) {
         switch presetSize {
-        case .Small:
+        case .small:
             _entryButton1._amount = newValue
-        case .Medium:
+        case .medium:
             _entryButton2._amount = newValue
-        case .Large:
+        case .large:
             _entryButton3._amount = newValue
         }
     }
@@ -418,7 +409,7 @@ extension MainViewController :DailyEntryDialProtocol {
      - returns: Goal float value set by user
      */
     func getGoal() -> Float {
-        return NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
+        return UserDefaults.standard().float(forKey: "GoalValue")
     }
     
     /**
@@ -426,7 +417,7 @@ extension MainViewController :DailyEntryDialProtocol {
      */
     func dialButtonTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let informationViewController = (storyboard.instantiateViewControllerWithIdentifier("InformationViewController") as! InformationViewController) //Get the view controller
+        let informationViewController = (storyboard.instantiateViewController(withIdentifier: "InformationViewController") as! InformationViewController) //Get the view controller
         
         informationViewController._informationViewControllerDelegate = self //Delegate to listen for events like deletion
         informationViewController.setupPopsicle() //Push the view controller up like a modal controller
@@ -440,7 +431,7 @@ extension MainViewController :InformationViewControllerProtocol {
      
      - parameter dateOfEntry: Date that the entry was created
      */
-    func entryWasDeleted(entryDate :NSDate) {
+    func entryWasDeleted(_ entryDate :Date) {
         _dailyEntryDial.updateAmountOfWaterDrankToday(true)
         updateFluidValue()
         
@@ -453,6 +444,6 @@ extension MainViewController :InformationViewControllerProtocol {
      - returns: Goal float value set by user
      */
     func informationViewGetGoal() -> Float {
-        return NSUserDefaults.standardUserDefaults().floatForKey("GoalValue")
+        return UserDefaults.standard().float(forKey: "GoalValue")
     }
 }

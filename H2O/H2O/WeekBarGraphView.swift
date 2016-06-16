@@ -29,7 +29,7 @@ class WeekBarGraphView: UIView {
         
         clipsToBounds = true
         layer.cornerRadius = 10
-        layer.backgroundColor = UIColor.blueColor().CGColor
+        layer.backgroundColor = UIColor.blue().cgColor
         
         //View setup
         setupGradientLayer()
@@ -42,7 +42,7 @@ class WeekBarGraphView: UIView {
     private func setupGradientLayer() {
         let gradientLayer = CAGradientLayer()
         
-        gradientLayer.frame = CGRectMake(0, -bounds.height / 6, bounds.width, bounds.height + bounds.height / 6) //Gradient uses these weird magic numbers just because it looks better this way
+        gradientLayer.frame = CGRect(x: 0, y: -bounds.height / 6, width: bounds.width, height: bounds.height + bounds.height / 6) //Gradient uses these weird magic numbers just because it looks better this way
         gradientLayer.locations = [0, 0.9]
         gradientLayer.colors = gradientColors as [AnyObject]
         layer.addSublayer(gradientLayer)
@@ -58,14 +58,14 @@ class WeekBarGraphView: UIView {
         
         let margin :CGFloat = 20
         
-        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: margin))
-        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: margin))
-        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: -margin))
-        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: -margin))
+        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: margin))
+        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: margin))
+        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -margin))
+        addConstraint(NSLayoutConstraint(item: drawingView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -margin))
         
 
         drawingView.delegate = self
-        drawingView.backgroundColor = UIColor.clearColor() //So the gradient background shows
+        drawingView.backgroundColor = UIColor.clear() //So the gradient background shows
     }
 }
 
@@ -114,13 +114,13 @@ class WeekBarGraphDrawingView :UIView {
     private let drawingColor = UIColor(white: 1, alpha: 0.8)
     
     /// Bottom x and y intersection points. Basically how much of a margin each line hangs from the edge
-    private var xyStartingPoint = CGPointMake(35, 15)
+    private var xyStartingPoint = CGPoint(x: 35, y: 15)
     
     /**
      Draws x and y axis for bar graph
      */
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
         drawingColor.set() //Set the color of drawings to be the standard drawing color
 
@@ -138,34 +138,34 @@ class WeekBarGraphDrawingView :UIView {
      Draws x axis on bottom of graph
      */
     private func drawXAxis() {
-        let startPoint = CGPointMake(xyStartingPoint.x, bounds.height - xyStartingPoint.y) //Establish where to begin drawing X axis
-        let endPoint = CGPointMake(bounds.width, bounds.height - xyStartingPoint.y) //Establish where to end drawing X axis
+        let startPoint = CGPoint(x: xyStartingPoint.x, y: bounds.height - xyStartingPoint.y) //Establish where to begin drawing X axis
+        let endPoint = CGPoint(x: bounds.width, y: bounds.height - xyStartingPoint.y) //Establish where to end drawing X axis
         
         let ctx = UIGraphicsGetCurrentContext()
         
-        CGContextSetLineWidth(ctx, 1)
+        ctx?.setLineWidth(1)
         
-        CGContextMoveToPoint(ctx, startPoint.x, startPoint.y) //Move to start point
-        CGContextAddLineToPoint(ctx, endPoint.x, endPoint.y) //Add end point
+        ctx?.moveTo(x: startPoint.x, y: startPoint.y) //Move to start point
+        ctx?.addLineTo(x: endPoint.x, y: endPoint.y) //Add end point
         
-        CGContextStrokePath(ctx) //Draw X axis
+        ctx?.strokePath() //Draw X axis
     }
     
     /**
      Draws y axis on left side of graph
      */
     private func drawYAxis() {
-        let startPoint = CGPointMake(xyStartingPoint.x, 0) //Establish where to begin drawing Y axis
-        let endPoint = CGPointMake(xyStartingPoint.x, bounds.height - xyStartingPoint.y) //Establish where to end drawing Y axis
+        let startPoint = CGPoint(x: xyStartingPoint.x, y: 0) //Establish where to begin drawing Y axis
+        let endPoint = CGPoint(x: xyStartingPoint.x, y: bounds.height - xyStartingPoint.y) //Establish where to end drawing Y axis
         
         let ctx = UIGraphicsGetCurrentContext()
         
-        CGContextSetLineWidth(ctx, 1)
+        ctx?.setLineWidth(1)
         
-        CGContextMoveToPoint(ctx, startPoint.x, startPoint.y) //Move to start point
-        CGContextAddLineToPoint(ctx, endPoint.x, endPoint.y) //Add end point
+        ctx?.moveTo(x: startPoint.x, y: startPoint.y) //Move to start point
+        ctx?.addLineTo(x: endPoint.x, y: endPoint.y) //Add end point
         
-        CGContextStrokePath(ctx) //Draw X axis
+        ctx?.strokePath() //Draw X axis
     }
     
     /**
@@ -183,12 +183,12 @@ class WeekBarGraphDrawingView :UIView {
             //Label properties
             
             xLabel.font = StandardFonts.boldFont(12)
-            xLabel.textAlignment = .Center
+            xLabel.textAlignment = .center
             xLabel.textColor = drawingColor
             
             //X Label positioning
             
-            let sizeOfValue = xLabel.text!.sizeWithAttributes([NSFontAttributeName : xLabel.font]) //Gets size of text based on font and string
+            let sizeOfValue = xLabel.text!.size(attributes: [NSFontAttributeName : xLabel.font]) //Gets size of text based on font and string
             
             let sizeOfXAxis = bounds.width - xyStartingPoint.x //Size of x axis line
 
@@ -199,7 +199,7 @@ class WeekBarGraphDrawingView :UIView {
             
             let xLabelWidth :CGFloat = 30 //Width of xValue label
             
-            xLabel.frame = CGRectMake(xPosition, yPosition, xLabelWidth, sizeOfValue.height) //Sets up frame and leaves the y value 0 so that we can center it
+            xLabel.frame = CGRect(x: xPosition, y: yPosition, width: xLabelWidth, height: sizeOfValue.height) //Sets up frame and leaves the y value 0 so that we can center it
             
             addSubview(xLabel)
         }
@@ -220,7 +220,7 @@ class WeekBarGraphDrawingView :UIView {
             //Label properties
             
             numberLabel.font = StandardFonts.boldFont(12)
-            numberLabel.textAlignment = .Right
+            numberLabel.textAlignment = .right
             numberLabel.textColor = drawingColor
             
             let sizeOfYAxis = bounds.height - xyStartingPoint.y
@@ -230,10 +230,10 @@ class WeekBarGraphDrawingView :UIView {
             
             //Number label positioning
 
-            let sizeOfNumber = numberLabel.text!.sizeWithAttributes([NSFontAttributeName : numberLabel.font]) //Gets size of text based on font and string
+            let sizeOfNumber = numberLabel.text!.size(attributes: [NSFontAttributeName : numberLabel.font]) //Gets size of text based on font and string
             
-            numberLabel.frame = CGRectMake(xPosition, 0, labelWidth, sizeOfNumber.height) //Sets up frame and leaves the y value 0 so that we can center it
-            numberLabel.center = CGPointMake(numberLabel.center.x, yPosition) //Places the y value determined above as the center of the number label
+            numberLabel.frame = CGRect(x: xPosition, y: 0, width: labelWidth, height: sizeOfNumber.height) //Sets up frame and leaves the y value 0 so that we can center it
+            numberLabel.center = CGPoint(x: numberLabel.center.x, y: yPosition) //Places the y value determined above as the center of the number label
             
             //Set the label value
             
@@ -246,7 +246,7 @@ class WeekBarGraphDrawingView :UIView {
             var roundedNumberText = NSString(format: "%.1f", number) //Round to the first decimal point
             
             if roundedNumberText.hasSuffix(".0") { //If the number has a .0 after the decimal point, just cut it
-                roundedNumberText = roundedNumberText.substringToIndex(roundedNumberText.length - 2) //Remove the .0
+                roundedNumberText = roundedNumberText.substring(to: roundedNumberText.length - 2) //Remove the .0
             }
             
             numberLabel.text = roundedNumberText as String + Constants.standardUnit.rawValue //Number with unit trailing
@@ -259,7 +259,7 @@ class WeekBarGraphDrawingView :UIView {
     /**
      Draws dotted line to indicate where goal is, if any
      */
-    private func drawGoalLine(startingXPoint :CGFloat, startingYPoint :CGFloat) {
+    private func drawGoalLine(_ startingXPoint :CGFloat, startingYPoint :CGFloat) {
         let goalValue = delegate?.goalValue()
         
         if goalValue != 0 {
@@ -273,17 +273,17 @@ class WeekBarGraphDrawingView :UIView {
             
             let goalYValue = CGFloat(100)//(yLineHeight / CGFloat(goalValue!)) * yLineHeight
             
-            let startPoint = CGPointMake(startingXPoint, goalYValue) //Establish where to begin drawing Y axis
-            let endPoint = CGPointMake(xLineWidth, goalYValue) //Establish where to end drawing Y axis
+            let startPoint = CGPoint(x: startingXPoint, y: goalYValue) //Establish where to begin drawing Y axis
+            let endPoint = CGPoint(x: xLineWidth, y: goalYValue) //Establish where to end drawing Y axis
             
             let ctx = UIGraphicsGetCurrentContext()
             
-            CGContextSetLineWidth(ctx, 1)
-            CGContextSetLineDash(ctx, 0, [5, 5], 2)
-            CGContextMoveToPoint(ctx, startPoint.x, startPoint.y) //Move to start point
-            CGContextAddLineToPoint(ctx, endPoint.x, endPoint.y) //Add end point
+            ctx?.setLineWidth(1)
+            ctx?.setLineDash(phase: 0, lengths: [5, 5], count: 2)
+            ctx?.moveTo(x: startPoint.x, y: startPoint.y) //Move to start point
+            ctx?.addLineTo(x: endPoint.x, y: endPoint.y) //Add end point
             
-            CGContextStrokePath(ctx) //Draw X axis
+            ctx?.strokePath() //Draw X axis
         }
     }
 }

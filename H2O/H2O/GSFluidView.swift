@@ -21,7 +21,7 @@ class GSFluidView: UIView {
     /// Fill Color of Fluid
     var fillColor = UIColor() {
         didSet {
-            liquidLayer.fillColor = fillColor.CGColor
+            liquidLayer.fillColor = fillColor.cgColor
         }
     }
     
@@ -61,7 +61,7 @@ class GSFluidView: UIView {
         super.layoutSubviews()
         
         //Initial amplitude values created by using the min amplitude and moving to the max amplitude by the time of the increment of the wave
-        for i in minAmplitude.stride(to: maxAmplitude, by: amplitudeIncrement) {
+        for i in stride(from: minAmplitude, to: maxAmplitude, by: amplitudeIncrement) {
             amplitudeArray.append(i)
         }
         
@@ -69,11 +69,11 @@ class GSFluidView: UIView {
     }
     
     private func setupLiquid() {
-        liquidLayer.anchorPoint = CGPointMake(0, 0)
+        liquidLayer.anchorPoint = CGPoint(x: 0, y: 0)
         
         let liquidLayerWidth = bounds.width * 3 //Set to 3 times the width of the view because the liquid layer will later be horizontally animating. When that animation takes place, the liquid layer x value is sent backwards. Setting the bounds to be larger than the view will ensure that it stays on screen
         
-        liquidLayer.frame = CGRectMake(0, frame.height, liquidLayerWidth, frame.height) //Y value is at the the bottom so it can be animated up later in setFillValue
+        liquidLayer.frame = CGRect(x: 0, y: frame.height, width: liquidLayerWidth, height: frame.height) //Y value is at the the bottom so it can be animated up later in setFillValue
         
         layer.addSublayer(liquidLayer)
         startWaveAnimation() //Starts wave movement and horizontally animates the liquid layer
@@ -86,7 +86,7 @@ class GSFluidView: UIView {
      
      - parameter fillPercentage: 0 to 1 value
      */
-    func fillTo(inout fillPercentage :Float) {
+    func fillTo(_ fillPercentage :inout Float) {
         if fillPercentage > 1.0 { //Ensures a max of 1 is used as the value
             fillPercentage = 1.0
         }
@@ -101,15 +101,15 @@ class GSFluidView: UIView {
         
         let finalRatioYPosition = CGFloat((1.02 - fillPercentage)) * liquidLayer.frame.height //Final Y value to fill to based on percentage. 1.02 is chosen instead of 1 to make it so that the waves can be seen even if the fill percentage is 1 and full
         
-        let liquidPresentationLayer = liquidLayer.presentationLayer() //Liquid presentation layer. Presentation layer will give more accurate value to the current state of the liquid layer so we will animate this
+        let liquidPresentationLayer = liquidLayer.presentation() //Liquid presentation layer. Presentation layer will give more accurate value to the current state of the liquid layer so we will animate this
         
         /// Vertical animation setup
         let verticalFillAnimation = CAKeyframeAnimation(keyPath: "position.y")
         verticalFillAnimation.values = [(liquidPresentationLayer?.position.y)!, finalRatioYPosition]
         verticalFillAnimation.duration = fillDuration * Double(fillDifference) //Duration calculated from fill duration that can be configured multiplied by the fill difference to give a nice effect
-        verticalFillAnimation.removedOnCompletion = false
+        verticalFillAnimation.isRemovedOnCompletion = false
         verticalFillAnimation.fillMode = kCAFillModeForwards
-        liquidLayer.addAnimation(verticalFillAnimation, forKey: "position.y")
+        liquidLayer.add(verticalFillAnimation, forKey: "position.y")
     }
     
     //MARK: - Liquid Waves
@@ -130,9 +130,9 @@ class GSFluidView: UIView {
             phaseShiftAnimation.values = [leftMostXValue, finalXValue]
             phaseShiftAnimation.duration = 0.75
             phaseShiftAnimation.repeatCount = HUGE //Repeat forever
-            phaseShiftAnimation.removedOnCompletion = false
+            phaseShiftAnimation.isRemovedOnCompletion = false
             phaseShiftAnimation.fillMode = kCAFillModeForwards
-            liquidLayer.addAnimation(phaseShiftAnimation, forKey: "position.x")
+            liquidLayer.add(phaseShiftAnimation, forKey: "position.x")
             
             /// Wave amplitude animation
             let waveMovementAnimationDuration = 0.5 //Duration of amplitude changes
@@ -141,12 +141,12 @@ class GSFluidView: UIView {
             waveMovementAnimation!.timingFunctions = [CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)]
             waveMovementAnimation!.values = getNewAmplitudeValues() //Gets random amplitude values to animate with. Returns an array of CGPaths
             waveMovementAnimation!.duration = waveMovementAnimationDuration
-            waveMovementAnimation!.removedOnCompletion = false
+            waveMovementAnimation!.isRemovedOnCompletion = false
             waveMovementAnimation!.fillMode = kCAFillModeForwards
             
             //Timer is set to repeat wave animation forever. This is done instead of repeat count because we need a new set of values everytime the animation runs, setting it to repeat would just repeat the same animation with the same exact amplitude values as before
-            let waveMovementTimer = NSTimer(timeInterval: waveMovementAnimationDuration, target: self, selector: #selector(GSFluidView.updateWaveAnimation), userInfo: nil, repeats: true)
-            NSRunLoop.currentRunLoop().addTimer(waveMovementTimer, forMode: NSRunLoopCommonModes)
+            let waveMovementTimer = Timer(timeInterval: waveMovementAnimationDuration, target: self, selector: #selector(GSFluidView.updateWaveAnimation), userInfo: nil, repeats: true)
+            RunLoop.current().add(waveMovementTimer, forMode: RunLoopMode.commonModes)
         }
     }
     
@@ -154,9 +154,9 @@ class GSFluidView: UIView {
      Called by timer to regenerate the wave animation using new amplitude values
      */
     internal func updateWaveAnimation() {
-        liquidLayer.removeAnimationForKey("path") //Remove the last animation
+        liquidLayer.removeAnimation(forKey: "path") //Remove the last animation
         waveMovementAnimation!.values = getNewAmplitudeValues() //Set the new values to the wave animation
-        liquidLayer.addAnimation(waveMovementAnimation!, forKey: "path") //New animation with new values
+        liquidLayer.add(waveMovementAnimation!, forKey: "path") //New animation with new values
     }
     
     /**
@@ -174,8 +174,8 @@ class GSFluidView: UIView {
          
          - returns: Array of paths that meet the starting amplitude to the random amplitude value
          */
-        func getPaths(randomAmplitudeValue :Int, amplitudeIncrement :Int) -> [CGPath] {
-            let startPoint = CGPointMake(0, 0) //Start point for the liquid path. Top left
+        func getPaths(_ randomAmplitudeValue :Int, amplitudeIncrement :Int) -> [CGPath] {
+            let startPoint = CGPoint(x: 0, y: 0) //Start point for the liquid path. Top left
             
             var paths :[CGPath] = [] //Paths to return
             
@@ -184,14 +184,14 @@ class GSFluidView: UIView {
              
              - parameter pathComputation: Computation of path to go in for loop
              */
-            func strideToRandomAmplitudeValue(pathComputation : (j :Int) -> Void) {
+            func strideToRandomAmplitudeValue(_ pathComputation : (j :Int) -> Void) {
                 //For loops create incremental paths based on how far the last amplitudeValue was from the new one. For example, a previous amplitude of 5 and a random value of 20 will give us 4 new paths
                 if amplitudeIncrement < 0 { //If increment is negative
-                    for j in startingAmplitude.stride(through: randomAmplitudeValue, by: amplitudeIncrement) { //Move backwards
+                    for j in stride(from: startingAmplitude, through: randomAmplitudeValue, by: amplitudeIncrement) { //Move backwards
                         pathComputation(j: j) //Get a single path
                     }
                 } else { //If increment is positive
-                    for j in startingAmplitude.stride(to: randomAmplitudeValue, by: amplitudeIncrement) { //Move forwards
+                    for j in stride(from :startingAmplitude, to: randomAmplitudeValue, by: amplitudeIncrement) { //Move forwards
                         pathComputation(j: j) //Get a single path
                     }
                 }
@@ -201,30 +201,30 @@ class GSFluidView: UIView {
             strideToRandomAmplitudeValue { (j) in
                 let line = UIBezierPath() //Liquid path
                 
-                line.moveToPoint(startPoint) //Top left
+                line.move(to: startPoint) //Top left
                 
                 var temporaryAmplitude = CGFloat(j) //Amplitude value in between startingAmplitude and randomAmplitude value
                 
                 let dividingWave = self.bounds.width / 2 //This controls how many waves will be in the view. The liquidView width divided by the dividingWave equals how many waves exist. In this case it will be 6 because we made the width of the liquid view to be the width of this view multiplied by 3. Dividing that value by 2 would equal 6.
                 
-                for i in Int(dividingWave).stride(to: Int(self.liquidLayer.bounds.width), by: Int(dividingWave)) { //Number of waves in view
+                for i in stride(from: Int(dividingWave), to: Int(self.liquidLayer.bounds.width), by: Int(dividingWave)) { //Number of waves in view
                     
-                    let quadEndPoint = CGPointMake(startPoint.x + CGFloat(i), startPoint.y) //Move to x value on top of liquid
+                    let quadEndPoint = CGPoint(x: startPoint.x + CGFloat(i), y: startPoint.y) //Move to x value on top of liquid
                     
-                    let controlPoint = CGPointMake(startPoint.x + CGFloat(i) - (dividingWave / 2), startPoint.y + temporaryAmplitude) //Dip in the middle of the iteration of the number of wave. This control point is where the wave will essentially go
+                    let controlPoint = CGPoint(x: startPoint.x + CGFloat(i) - (dividingWave / 2), y: startPoint.y + temporaryAmplitude) //Dip in the middle of the iteration of the number of wave. This control point is where the wave will essentially go
                     
-                    line.addQuadCurveToPoint(quadEndPoint, controlPoint: controlPoint) //Add rounded curve on top of liquid (basically a point to make up a wave)
+                    line.addQuadCurve(to: quadEndPoint, controlPoint: controlPoint) //Add rounded curve on top of liquid (basically a point to make up a wave)
                     
                     temporaryAmplitude = -temporaryAmplitude //Inverses amplitude to simply go up or down depending on the last animations (essentially making a complete wave)
                 }
                 
-                line.addLineToPoint(CGPointMake(self.liquidLayer.bounds.width, self.frame.height + CGFloat(self.maxAmplitude))) //Bottom right corner
+                line.addLine(to: CGPoint(x: self.liquidLayer.bounds.width, y: self.frame.height + CGFloat(self.maxAmplitude))) //Bottom right corner
                 
-                line.addLineToPoint(CGPointMake(0, self.frame.height + CGFloat(self.maxAmplitude))) //Bottom left corner
+                line.addLine(to: CGPoint(x: 0, y: self.frame.height + CGFloat(self.maxAmplitude))) //Bottom left corner
                 
-                line.closePath() //Close path right back up to the top left and now we have a liquid path!
+                line.close() //Close path right back up to the top left and now we have a liquid path!
                 
-                paths.append(line.CGPath) //Add this path to the paths to return
+                paths.append(line.cgPath) //Add this path to the paths to return
             }
             
             return paths
@@ -245,7 +245,7 @@ class GSFluidView: UIView {
             paths = getPaths(randomAmplitudeValue, amplitudeIncrement: amplitudeIncrement) //Get paths with random amplitude being greater than the last amplitude (startingAmplitude) therefore having to go forwards to meet it
         }
         
-        newAmplitudeValues.appendContentsOf(paths) //Add paths to array
+        newAmplitudeValues.append(contentsOf: paths) //Add paths to array
         
         startingAmplitude = randomAmplitudeValue //Starting amplitude has now become the last amplitude selected so that it can increment again once this method is called again
         

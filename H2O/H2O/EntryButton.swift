@@ -12,19 +12,19 @@ class EntryButton: UIButton {
         /// Amount that entry button will add to goal
     var _amount :Float = 0 {
         didSet {
-            setTitle(String(Int(_amount)) + Constants.standardUnit.rawValue, forState: .Normal)
+            setTitle(String(Int(_amount)) + Constants.standardUnit.rawValue, for: UIControlState())
         }
     }
         /// EntryButtonDelegate Protocol delegate
     var _delegate :EntryButtonProtocol?
     
         /// What to do when the button is highlighted. Simply changes the button background color. The text is changed on highlight in the setupAmountLabelFunction
-    override var highlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
-            if highlighted {
-                layer.backgroundColor = StandardColors.primaryColor.colorWithAlphaComponent(0.5).CGColor
+            if isHighlighted {
+                layer.backgroundColor = StandardColors.primaryColor.withAlphaComponent(0.5).cgColor
             } else {
-                layer.backgroundColor = UIColor.clearColor().CGColor
+                layer.backgroundColor = UIColor.clear().cgColor
             }
         }
     }
@@ -37,7 +37,7 @@ class EntryButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear()
         layer.cornerRadius = bounds.height / 2
         _circleView.layer.cornerRadius = layer.cornerRadius
         
@@ -55,7 +55,7 @@ class EntryButton: UIButton {
         
         clipsToBounds = true
         
-        addTarget(self, action: #selector(EntryButton.onTap), forControlEvents: .TouchUpInside)
+        addTarget(self, action: #selector(EntryButton.onTap), for: .touchUpInside)
     }
     
     /**
@@ -63,16 +63,16 @@ class EntryButton: UIButton {
      */
     private func setupCircleView() {
         addSubview(_circleView)
-        _circleView.userInteractionEnabled = false
+        _circleView.isUserInteractionEnabled = false
         _circleView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
 
         
-        _circleView.backgroundColor = UIColor.clearColor()
+        _circleView.backgroundColor = UIColor.clear()
         
         _circleView.layer.borderWidth = 0.5
     }
@@ -92,11 +92,11 @@ class EntryButton: UIButton {
     internal func onTap() {
         CENAudioToolbox.standardAudioToolbox.playAudio("Pop_A", fileExtension: "wav", repeatEnabled: false)
         
-        UIView.animateWithDuration(0.1, delay: 0, options: .AllowUserInteraction, animations: { 
-            self.transform = CGAffineTransformMakeScale(0.8, 0.8)
+        UIView.animate(withDuration: 0.1, delay: 0, options: .allowUserInteraction, animations: { 
+            self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             }) { (Bool) in
-                UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .AllowUserInteraction, animations: {
-                    self.transform = CGAffineTransformIdentity
+                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .allowUserInteraction, animations: {
+                    self.transform = CGAffineTransform.identity
                     }, completion: { (Bool) in
                 })
         }
@@ -108,7 +108,7 @@ class EntryButton: UIButton {
 // MARK: - NightModeProtocol
 extension EntryButton :NightModeProtocol {
     func setupColors() {
-        _circleView.layer.borderColor = StandardColors.primaryColor.CGColor
+        _circleView.layer.borderColor = StandardColors.primaryColor.cgColor
         titleLabel?.textColor = StandardColors.primaryColor
     }
 }
