@@ -37,7 +37,7 @@ class StandardColors: NSObject {
     static let standardRedColor = UIColor(red: 230/255, green: 76/255, blue: 12/255, alpha: 1)
     
         /// Standard green color to use throughout the app
-    static let standardGreenColor = UIColor.green()
+    static let standardGreenColor = UIColor(red: 26/255, green: 181/255, blue: 138/255, alpha: 1)
     
      /// Secondary color to use with background color
     static var standardSecondaryColor :UIColor {

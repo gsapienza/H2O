@@ -117,7 +117,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         guard UserDefaults.standard().array(forKey: presetWaterValuesString) != nil else {
             let presets :[Float] = [8.0, 17.0, 23.0]
             UserDefaults.standard().set(presets, forKey: presetWaterValuesString)
-            UserDefaults.standard().synchronize()
             
             return
         }
@@ -150,7 +149,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //MARK: - Theme Management
-    
+        
     /**
      Checks the time of day and changes the theme if automatic theme change is enabled and if it is not set correctly based on current time of day. 6AM - 6PM is light mode and 6PM to 6AM is dark mode
      */
@@ -160,17 +159,19 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         if automaticThemeChangeEnabled {
             let calendar = Calendar.current() //Calendar type
             
+            //UIApplicationProtectedDataDidBecomeAvailable
+            
             let currentDateComponents = calendar.components([.hour], from: Date()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
             
             if currentDateComponents.hour > 5 && currentDateComponents.hour < 18 { //If between 6AM and 6PM
                 if AppDelegate.isDarkModeEnabled() { //If dark mode is enabled
                     AppDelegate.toggleDarkMode(false) //Activate light mode
-                    NotificationCenter.default().post(name: Notification.Name(rawValue: "DarkModeToggled"), object: nil) //Update view controllers
+                    NotificationCenter.default().post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update view controllers
                 }
             } else { //If its between 6PM and 6AM
                 if !AppDelegate.isDarkModeEnabled() { //If light mode is enabled
                     AppDelegate.toggleDarkMode(true) //Activate dark mode
-                    NotificationCenter.default().post(name: Notification.Name(rawValue: "DarkModeToggled"), object: nil) //Update viewcontrollers
+                    NotificationCenter.default().post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update viewcontrollers
                 }
             }
         }

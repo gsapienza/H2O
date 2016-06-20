@@ -90,7 +90,7 @@ class EntryButton: UIButton {
      Action on tap. Plays audio and animates the button tapped. Calls a delegate method to inform the delegate that the button was tapped
      */
     internal func onTap() {
-        CENAudioToolbox.standardAudioToolbox.playAudio("Pop_A", fileExtension: "wav", repeatEnabled: false)
+        CENAudioToolbox.standardAudioToolbox.playAudio("Water", fileExtension: "wav", repeatEnabled: false)
         
         UIView.animate(withDuration: 0.1, delay: 0, options: .allowUserInteraction, animations: { 
             self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)

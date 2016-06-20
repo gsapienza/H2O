@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3708613E1D131B6800C89394 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708613D1D131B6800C89394 /* NotificationConstants.swift */; };
+		370861401D17151F00C89394 /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3708613F1D17151F00C89394 /* Water.wav */; };
 		375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */; };
 		375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE01CEA91A6009C14AE /* MainViewController.swift */; };
 		375F4FE41CEA91A6009C14AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FE21CEA91A6009C14AE /* Main.storyboard */; };
@@ -91,6 +93,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3708613D1D131B6800C89394 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationConstants.swift; path = ../NotificationConstants.swift; sourceTree = "<group>"; };
+		3708613F1D17151F00C89394 /* Water.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Water.wav; sourceTree = "<group>"; };
 		375F4FDB1CEA91A6009C14AE /* H2O.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H2O.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		375F4FE01CEA91A6009C14AE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
 				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
 				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
+				3708613D1D131B6800C89394 /* NotificationConstants.swift */,
 				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
 				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
 				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
@@ -347,6 +352,7 @@
 		37E0D7611CF210D2004ABFAF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				3708613F1D17151F00C89394 /* Water.wav */,
 				37E0D75F1CF11870004ABFAF /* Well done.wav */,
 				37E0D6F01CEE2649004ABFAF /* Alert Error.wav */,
 				37E0D72D1CF0FDF0004ABFAF /* Click.wav */,
@@ -456,6 +462,7 @@
 				37E0D7601CF11870004ABFAF /* Well done.wav in Resources */,
 				375F4FE41CEA91A6009C14AE /* Main.storyboard in Resources */,
 				37E0D72E1CF0FDF0004ABFAF /* Click.wav in Resources */,
+				370861401D17151F00C89394 /* Water.wav in Resources */,
 				37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */,
 				378566781CEAA27E003418C2 /* Bariol_Thin.otf in Resources */,
 				378566751CEAA27E003418C2 /* Bariol_Bold.otf in Resources */,
@@ -509,6 +516,7 @@
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
+				3708613E1D131B6800C89394 /* NotificationConstants.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,

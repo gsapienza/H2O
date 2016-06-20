@@ -269,7 +269,7 @@ class SettingsViewController: UITableViewController {
         AppDelegate.toggleDarkMode(sender.isOn) //Change theme based on switch state
         
         view.endEditing(true) //Dismisses keyboard... Too bad this doesnt work very well
-        NotificationCenter.default().post(name: Notification.Name(rawValue: "DarkModeToggled"), object: nil)
+        NotificationCenter.default().post(name: NotificationConstants.DarkModeToggledNotification, object: nil)
     }
     
     /**

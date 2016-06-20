@@ -104,7 +104,7 @@ class InformationViewController: Popsicle {
         let barGraphMargin :CGFloat = 10
         _weeklyBarGraphView.frame = CGRect(x: barGraphMargin, y: barGraphMargin, width: view.bounds.width - barGraphMargin * 2, height: tableHeaderView.bounds.height - barGraphMargin * 2)
         
-        let topGradientColor = UIColor(red: 198, green: 234, blue: 242, alpha: 1).cgColor
+        let topGradientColor = UIColor(red: 134, green: 226, blue: 246, alpha: 1).cgColor
         let bottomGradientColor = StandardColors.waterColor.cgColor
         _weeklyBarGraphView.gradientColors = [topGradientColor, bottomGradientColor]
         
@@ -148,9 +148,11 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         let dateFormatter = DateFormatter()
         
         cell._dailyEntryDateView._monthLabel.text = dateFormatter.monthSymbols[dateComponents.month! - 1].lowercased()
-        cell._dailyEntryDateView._dayLabel.text = String(dateComponents.day)
+        cell._dailyEntryDateView._dayLabel.text = String(dateComponents.day!)
         
         cell._delegate = self
+        
+        cell._dayEntriesCollectionView.reloadData()
         
         return cell
     }
@@ -169,7 +171,7 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         }
         
         _lastScrollOffset = scrollView.contentOffset
-    }*/
+    }
     
     func setAnchorPoint(_ anchorPoint: CGPoint, view: UIView){
         let oldOrigin = view.frame.origin
@@ -179,7 +181,7 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         let transition = CGPoint (x: newOrigin.x - oldOrigin.x, y: newOrigin.y - oldOrigin.y)
         
         view.center = CGPoint (x: view.center.x - transition.x, y: view.center.y - transition.y)
-    }
+    }*/
 }
 
 // MARK: - DailyInformationTableViewCellProtocol

@@ -91,7 +91,7 @@ class User: NSManagedObject {
     }
     
     func getEntriesForDates() -> [[String :AnyObject]] {
-        var dateCollections :[[String :AnyObject]]  = []
+        var dateCollections :[[String :AnyObject]]  = [] //Array of dict of collections by date
         
         var lastCollection :[String :AnyObject]?
         
@@ -106,23 +106,24 @@ class User: NSManagedObject {
             
             let newEntries = NSArray(object: entryObject).addingObjects(from: entriesArray)
             
+           // print(entryObject)
             lastCollection!["entries"] = newEntries
                         
-            if entryObject == entries?.lastObject as! Entry {
-                dateCollections.insert(lastCollection!, at: 0)
+            if entryObject == entries?.lastObject as! Entry { //if there is no next collection because we are at the end of the entries
+                dateCollections.insert(lastCollection!, at: 0) //Add the last collection the beginning so it can appear at the top of the list
                 lastCollection = nil
             } else {
-                let nextEntry = entries![i + 1] as! Entry
+                let nextEntry = entries![i + 1] as! Entry //Get the next entry from the current index
                 
                 let calendar = Calendar.current() //Calendar type
                 
-                let nextEntryDateComponents = calendar.components([.day, .month, .year], from: nextEntry.date!)
-                let lastDateComponents = calendar.components([.day, .month, .year], from: (lastCollection!["date"] as! Date))
+                let nextEntryDateComponents = calendar.components([.day, .month, .year], from: nextEntry.date!) //Next entry from index date components
+                let lastDateComponents = calendar.components([.day, .month, .year], from: (lastCollection!["date"] as! Date)) //The last entry from index date components
                 
                 if nextEntryDateComponents.month != lastDateComponents.month || nextEntryDateComponents.day != lastDateComponents.day || nextEntryDateComponents.year != lastDateComponents.year {
                     dateCollections.insert(lastCollection!, at: 0)
-                    lastCollection = nil
-                }
+                    lastCollection = nil //Setting lastCollection to nil will make the lastCollection reset on the next loop
+                }                
             }
         }
         

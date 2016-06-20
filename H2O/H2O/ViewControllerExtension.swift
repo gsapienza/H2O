@@ -23,13 +23,13 @@ extension UIViewController {
         let originalViewWillAppearSelector = #selector(UIViewController.viewDidLoad)
         let swizzledViewWillAppearSelector = #selector(UIViewController.newViewDidLoad)
         
-        self.swizzleSelector(originalViewWillAppearSelector, swizzledSelector: swizzledViewWillAppearSelector)
+        swizzleSelector(originalViewWillAppearSelector, swizzledSelector: swizzledViewWillAppearSelector)
         
         //Preferred Status bar style swizzle
         let originalPreferredStatusBarStyleSelector = #selector(UIViewController.preferredStatusBarStyle)
         let swizzledPreferredStatusBarStyleSelector = #selector(UIViewController.newPreferredStatusBarStyle)
         
-        self.swizzleSelector(originalPreferredStatusBarStyleSelector, swizzledSelector: swizzledPreferredStatusBarStyleSelector)
+        swizzleSelector(originalPreferredStatusBarStyleSelector, swizzledSelector: swizzledPreferredStatusBarStyleSelector)
     }
     
     /**
@@ -58,7 +58,7 @@ extension UIViewController {
      */
     func newViewDidLoad() {
         newViewDidLoad()
-        NotificationCenter.default().addObserver(self, selector: #selector(UIViewController.onThemeChange), name: "DarkModeToggled", object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(UIViewController.onThemeChange), name: NotificationConstants.DarkModeToggledNotification, object: nil)
     }
     
     /**

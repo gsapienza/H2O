@@ -42,7 +42,7 @@ class WeekBarGraphView: UIView {
     private func setupGradientLayer() {
         let gradientLayer = CAGradientLayer()
         
-        gradientLayer.frame = CGRect(x: 0, y: -bounds.height / 6, width: bounds.width, height: bounds.height + bounds.height / 6) //Gradient uses these weird magic numbers just because it looks better this way
+        gradientLayer.frame = CGRect(x: 0, y: -bounds.height / 4, width: bounds.width, height: bounds.height + bounds.height / 4) //Gradient uses these weird magic numbers just because it looks better like this way
         gradientLayer.locations = [0, 0.9]
         gradientLayer.colors = gradientColors as [AnyObject]
         layer.addSublayer(gradientLayer)
@@ -114,7 +114,7 @@ class WeekBarGraphDrawingView :UIView {
     private let drawingColor = UIColor(white: 1, alpha: 0.8)
     
     /// Bottom x and y intersection points. Basically how much of a margin each line hangs from the edge
-    private var xyStartingPoint = CGPoint(x: 35, y: 15)
+    private var xyStartingPoint = CGPoint(x: 45, y: 15)
     
     /**
      Draws x and y axis for bar graph
@@ -197,7 +197,7 @@ class WeekBarGraphDrawingView :UIView {
             let yPosition = bounds.height - sizeOfValue.height //Y position is just the height of superview and subtracts the height of the label to meet with the x line
             
             
-            let xLabelWidth :CGFloat = 30 //Width of xValue label
+            let xLabelWidth :CGFloat = 40 //Width of xValue label
             
             xLabel.frame = CGRect(x: xPosition, y: yPosition, width: xLabelWidth, height: sizeOfValue.height) //Sets up frame and leaves the y value 0 so that we can center it
             
@@ -211,7 +211,7 @@ class WeekBarGraphDrawingView :UIView {
      Places y axis values vertically on the left side of the y axis. Values come from the yAxisRangeValues in the delegate
      */
     private func setupYAxisValues() {
-        let labelWidth :CGFloat = 30 //Width of each number label
+        let labelWidth :CGFloat = 40 //Width of each number label
 
         for i in 0 ... numberOfValuesToFitOnYAxis { //Iterates through the number of values you want placed on y axis and then places them
             let numberLabel = UILabel() //Label to place
