@@ -77,7 +77,7 @@ class User: NSManagedObject {
             let entryDate = (entry as! Entry).date
             let todayDate = Date()
             
-            let calendar = Calendar.current() //Calendar type
+            let calendar = Calendar.current //Calendar type
             
             let entryDateComponents = calendar.components([.day, .month, .year], from: entryDate!)
             let todayDateComponents = calendar.components([.day, .month, .year], from: todayDate)
@@ -115,7 +115,7 @@ class User: NSManagedObject {
             } else {
                 let nextEntry = entries![i + 1] as! Entry //Get the next entry from the current index
                 
-                let calendar = Calendar.current() //Calendar type
+                let calendar = Calendar.current //Calendar type
                 
                 let nextEntryDateComponents = calendar.components([.day, .month, .year], from: nextEntry.date!) //Next entry from index date components
                 let lastDateComponents = calendar.components([.day, .month, .year], from: (lastCollection!["date"] as! Date)) //The last entry from index date components
@@ -135,7 +135,7 @@ class User: NSManagedObject {
         
         dayComponent.day = 1 //Only 1 day ahead
         
-        let calendar = Calendar.current()
+        let calendar = Calendar.current
         
         let nextDate = calendar.date(byAdding: dayComponent, to: fromDate, options: .matchNextTime) //Computes the next date
         

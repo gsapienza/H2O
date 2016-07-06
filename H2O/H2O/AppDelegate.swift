@@ -29,7 +29,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      - returns: true if test cases are running
      */
     class func isRunningTest() -> Bool {
-        let environment = ProcessInfo.processInfo().environment
+        let environment = ProcessInfo.processInfo.environment
         
         let isRunningTest = environment["APP_IS_RUNNING_TEST"]
         
@@ -55,7 +55,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Set a timer to check the theme status so that if the app is open when the time changes, the theme will change
         let automaticThemeSwitcherTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(AppDelegate.checkToSwitchThemes), userInfo: nil, repeats: true)
-        RunLoop.current().add(automaticThemeSwitcherTimer, forMode: RunLoopMode.commonModes)
+        RunLoop.current.add(automaticThemeSwitcherTimer, forMode: RunLoopMode.commonModes)
         
         return true
     }
@@ -65,18 +65,18 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         let mainViewController = window?.rootViewController as! MainViewController
-        let presets = UserDefaults.standard().array(forKey: "PresetWaterValues") as! [Float]
+        let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
         
         AppDelegate.delay(0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
             switch shortcutItem.type {
             case "com.theoven.H2O.smallPresetEntry": //First preset
-                mainViewController.addWaterToToday(presets[0])
+                mainViewController.addWaterToToday(amount: presets[0])
             case "com.theoven.H2O.mediumPresetEntry": //Second preset
-                mainViewController.addWaterToToday(presets[1])
+                mainViewController.addWaterToToday(amount: presets[1])
             case "com.theoven.H2O.largePresetEntry": //Third preset
-                mainViewController.addWaterToToday(presets[2])
+                mainViewController.addWaterToToday(amount: presets[2])
             case "com.theoven.H2O.customEntry": //Custom entry
-                mainViewController.customEntryButtonTapped(mainViewController._customEntryButton)
+                mainViewController.customEntryButtonTapped(customButton: mainViewController.customEntryButton)
             default:
                 return
             }
@@ -114,9 +114,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     private func setPresets() {
         let presetWaterValuesString = "PresetWaterValues"
-        guard UserDefaults.standard().array(forKey: presetWaterValuesString) != nil else {
+        guard UserDefaults.standard.array(forKey: presetWaterValuesString) != nil else {
             let presets :[Float] = [8.0, 17.0, 23.0]
-            UserDefaults.standard().set(presets, forKey: presetWaterValuesString)
+            UserDefaults.standard.set(presets, forKey: presetWaterValuesString)
             
             return
         }
@@ -127,9 +127,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     private func setGoal() {
         let goalValueString = "GoalValue"
-        guard UserDefaults.standard().float(forKey: goalValueString) != 0 else {
+        guard UserDefaults.standard.float(forKey: goalValueString) != 0 else {
             let goal :Float = 87.0
-            UserDefaults.standard().set(goal, forKey: goalValueString)
+            UserDefaults.standard.set(goal, forKey: goalValueString)
             
             return
         }
@@ -140,9 +140,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     private func setDefaultTheme() {
         let themeString = "DarkMode"
-        guard UserDefaults.standard().string(forKey: themeString) != nil else {
+        guard UserDefaults.standard.string(forKey: themeString) != nil else {
             let theme = "YES"
-            UserDefaults.standard().set(theme, forKey: themeString)
+            UserDefaults.standard.set(theme, forKey: themeString)
             
             return
         }
@@ -154,10 +154,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      Checks the time of day and changes the theme if automatic theme change is enabled and if it is not set correctly based on current time of day. 6AM - 6PM is light mode and 6PM to 6AM is dark mode
      */
     func checkToSwitchThemes() {
-        let automaticThemeChangeEnabled = UserDefaults.standard().bool(forKey: "AutomaticThemeChange") //Get automatic status of automatic theme change
+        let automaticThemeChangeEnabled = UserDefaults.standard.bool(forKey: "AutomaticThemeChange") //Get automatic status of automatic theme change
         
         if automaticThemeChangeEnabled {
-            let calendar = Calendar.current() //Calendar type
+            let calendar = Calendar.current //Calendar type
             
             //UIApplicationProtectedDataDidBecomeAvailable
             
@@ -166,12 +166,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             if currentDateComponents.hour > 5 && currentDateComponents.hour < 18 { //If between 6AM and 6PM
                 if AppDelegate.isDarkModeEnabled() { //If dark mode is enabled
                     AppDelegate.toggleDarkMode(false) //Activate light mode
-                    NotificationCenter.default().post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update view controllers
+                    NotificationCenter.default.post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update view controllers
                 }
             } else { //If its between 6PM and 6AM
                 if !AppDelegate.isDarkModeEnabled() { //If light mode is enabled
                     AppDelegate.toggleDarkMode(true) //Activate dark mode
-                    NotificationCenter.default().post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update viewcontrollers
+                    NotificationCenter.default.post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update viewcontrollers
                 }
             }
         }
@@ -211,7 +211,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      - returns: Dark mode enabled status
      */
     class func isDarkModeEnabled() -> Bool {
-        let darkModeEnabled = UserDefaults.standard().string(forKey: "DarkMode")
+        let darkModeEnabled = UserDefaults.standard.string(forKey: "DarkMode")
         
         if darkModeEnabled == "YES" {
             return true
@@ -234,7 +234,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             toggle = "NO"
         }
         
-        UserDefaults.standard().set(toggle, forKey: "DarkMode")
+        UserDefaults.standard.set(toggle, forKey: "DarkMode")
     }
     
     // MARK: - Class functions
@@ -257,7 +257,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      Creates dynamic 3D touch shortcuts to quick add water entries
      */
     class func createShortcuts() {
-        let presets = UserDefaults.standard().array(forKey: "PresetWaterValues") as! [Float]
+        let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
         
         let smallPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.smallPresetEntry", localizedTitle: String(Int(presets[0])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
         
@@ -274,13 +274,13 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.theoven.H2O" in the application's documents Application Support directory.
-        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main().urlForResource("H2O", withExtension: "momd")!
+        let modelURL = Bundle.main.urlForResource("H2O", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 

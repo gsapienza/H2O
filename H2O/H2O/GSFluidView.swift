@@ -146,7 +146,7 @@ class GSFluidView: UIView {
             
             //Timer is set to repeat wave animation forever. This is done instead of repeat count because we need a new set of values everytime the animation runs, setting it to repeat would just repeat the same animation with the same exact amplitude values as before
             let waveMovementTimer = Timer(timeInterval: waveMovementAnimationDuration, target: self, selector: #selector(GSFluidView.updateWaveAnimation), userInfo: nil, repeats: true)
-            RunLoop.current().add(waveMovementTimer, forMode: RunLoopMode.commonModes)
+            RunLoop.current.add(waveMovementTimer, forMode: RunLoopMode.commonModes)
         }
     }
     

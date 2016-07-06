@@ -58,7 +58,7 @@ extension UIViewController {
      */
     func newViewDidLoad() {
         newViewDidLoad()
-        NotificationCenter.default().addObserver(self, selector: #selector(UIViewController.onThemeChange), name: NotificationConstants.DarkModeToggledNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.onThemeChange), name: NotificationConstants.DarkModeToggledNotification, object: nil)
     }
     
     /**
@@ -78,7 +78,7 @@ extension UIViewController {
      NSNotification method when theme changes. Removes observers for notifications because they will be added back when the view controllers reload and we dont want duplicates. And reloads all of the view controllers to represent the new colors
      */
     func onThemeChange() {
-        NotificationCenter.default().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         AppDelegate.reloadViewController(self)
     }
 }

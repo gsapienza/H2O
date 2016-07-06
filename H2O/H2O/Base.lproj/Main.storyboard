@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15G12a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15G19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11103.10"/>
@@ -22,7 +22,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DarkModeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="fSB-1S-zFO"/>
@@ -212,15 +212,15 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="_backgroundImageView" destination="fSB-1S-zFO" id="Pjd-L8-0dc"/>
-                        <outlet property="_customEntryButton" destination="iEf-Hb-nAI" id="Nq8-PH-cdV"/>
-                        <outlet property="_dailyEntryDial" destination="I6X-Es-J7b" id="PMy-oK-y2n"/>
-                        <outlet property="_entryButton1" destination="WyK-Wa-Gte" id="3Q7-Qx-pAb"/>
-                        <outlet property="_entryButton2" destination="vaH-5j-lxw" id="qOi-sF-d8e"/>
-                        <outlet property="_entryButton3" destination="vNo-5S-rta" id="Yjh-qg-z5e"/>
-                        <outlet property="_fluidBlurView" destination="8Pc-zd-9hT" id="YOE-kS-HTj"/>
-                        <outlet property="_fluidView" destination="aIN-vY-GFh" id="COu-ra-Ux7"/>
-                        <outlet property="_navigationBar" destination="YTO-cM-a51" id="Coj-Cd-w4G"/>
+                        <outlet property="backgroundImageView" destination="fSB-1S-zFO" id="1oW-4v-AmU"/>
+                        <outlet property="customEntryButton" destination="iEf-Hb-nAI" id="MS2-Qh-jnq"/>
+                        <outlet property="dailyEntryDial" destination="I6X-Es-J7b" id="RMv-Ga-eAJ"/>
+                        <outlet property="entryButton1" destination="WyK-Wa-Gte" id="zsB-hi-VG5"/>
+                        <outlet property="entryButton2" destination="vaH-5j-lxw" id="IxM-wD-ZWX"/>
+                        <outlet property="entryButton3" destination="vNo-5S-rta" id="3IA-tj-piZ"/>
+                        <outlet property="fluidBlurView" destination="8Pc-zd-9hT" id="9X3-F2-p39"/>
+                        <outlet property="fluidView" destination="aIN-vY-GFh" id="WLV-sL-Yww"/>
+                        <outlet property="navigationBar" destination="YTO-cM-a51" id="Zss-Pg-3FI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -236,7 +236,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Un7-5x-VJb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="v2y-xF-Hgp">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rly-hr-sFV">
@@ -248,10 +248,10 @@
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <prototypes>
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DAILY_INFO_CELL" rowHeight="120" id="vcQ-Ib-8Bi" customClass="DailyInformationTableViewCell" customModule="H2O" customModuleProvider="target">
-                                                    <frame key="frameInset" minY="28" width="414" height="120"/>
+                                                    <frame key="frameInset" minY="28" width="375" height="120"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vcQ-Ib-8Bi" id="hbh-Yp-fAU">
-                                                        <frame key="frameInset" width="414" height="119"/>
+                                                        <frame key="frameInset" width="375" height="119"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-1F-3RI">
@@ -333,8 +333,8 @@
                                                     </tableViewCellContentView>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
-                                                        <outlet property="_dailyEntryDateView" destination="8J1-tc-mz9" id="5WI-Ep-yqN"/>
-                                                        <outlet property="_dayEntriesCollectionView" destination="xM0-1F-3RI" id="vgg-fJ-xAD"/>
+                                                        <outlet property="dailyEntryDateView" destination="8J1-tc-mz9" id="Emf-Ru-eXm"/>
+                                                        <outlet property="dayEntriesCollectionView" destination="xM0-1F-3RI" id="nRz-gZ-Uex"/>
                                                     </connections>
                                                 </tableViewCell>
                                             </prototypes>
@@ -436,10 +436,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_blurView" destination="Rly-hr-sFV" id="VJh-zm-cDg"/>
-                        <outlet property="_informationTableView" destination="hzY-jB-DOk" id="TbX-VJ-wuZ"/>
-                        <outlet property="_navigationBar" destination="5sE-vG-8Hd" id="afR-dU-DTp"/>
-                        <outlet property="_noDataLabel" destination="FKn-1s-VXD" id="wlV-v8-cLI"/>
+                        <outlet property="blurView" destination="Rly-hr-sFV" id="SOu-R8-ykV"/>
+                        <outlet property="informationTableView" destination="hzY-jB-DOk" id="SL2-4P-3fE"/>
+                        <outlet property="navigationBar" destination="5sE-vG-8Hd" id="kxC-gc-nzv"/>
+                        <outlet property="noDataLabel" destination="FKn-1s-VXD" id="O3C-uf-3Z2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JOb-W9-0o1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -467,7 +467,7 @@
             <objects>
                 <tableViewController id="aQN-Mt-cvV" customClass="SettingsViewController" customModule="H2O" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="iCS-0J-CrL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -475,10 +475,10 @@
                             <tableViewSection headerTitle=" " id="vzU-KA-wyw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="F7H-e4-U0O" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F7H-e4-U0O" id="LKh-HJ-FLt">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ztn-oT-QCy">
@@ -523,10 +523,10 @@
                             <tableViewSection headerTitle=" " id="UhM-in-g3W">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="BCl-gm-687" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="170" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="170" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BCl-gm-687" id="JZ6-iL-Fpb">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -536,28 +536,28 @@
                             <tableViewSection headerTitle=" " id="guA-FE-QyB">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="hfp-W2-g8A" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="248" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="248" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hfp-W2-g8A" id="hVB-nQ-HFU">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="HCo-8B-0SZ" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="298" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="298" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HCo-8B-0SZ" id="ABW-dy-RmU">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="56O-H1-UyO" customClass="SettingsPresetTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="348" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="348" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="56O-H1-UyO" id="n5A-8x-Xu7">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -567,10 +567,10 @@
                             <tableViewSection headerTitle=" " id="7ai-dZ-7LB">
                                 <cells>
                                     <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Fqc-Jj-005" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="426" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="426" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fqc-Jj-005" id="rMT-K9-vXN">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mX1-hA-j1E">
@@ -621,10 +621,10 @@
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="I5U-Yd-5di" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="476" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="476" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I5U-Yd-5di" id="7JQ-NE-TfZ">
-                                            <frame key="frameInset" width="414" height="49"/>
+                                            <frame key="frameInset" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YKd-ob-PKE">
@@ -684,15 +684,15 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Xb1-SL-FcY"/>
                     <connections>
-                        <outlet property="_automaticThemeCell" destination="I5U-Yd-5di" id="j02-GN-b3A"/>
-                        <outlet property="_automaticThemeSwitch" destination="YKd-ob-PKE" id="7zq-7w-Ydt"/>
-                        <outlet property="_goalCell" destination="BCl-gm-687" id="qpS-tX-wpS"/>
-                        <outlet property="_healthKitCell" destination="F7H-e4-U0O" id="DnH-cp-GCf"/>
-                        <outlet property="_presetCell1" destination="hfp-W2-g8A" id="Uhn-nP-Xjv"/>
-                        <outlet property="_presetCell2" destination="HCo-8B-0SZ" id="bnH-X6-RKQ"/>
-                        <outlet property="_presetCell3" destination="56O-H1-UyO" id="3cF-bK-fZK"/>
-                        <outlet property="_themeCell" destination="Fqc-Jj-005" id="LDr-pw-Qed"/>
-                        <outlet property="_themeSwitch" destination="mX1-hA-j1E" id="AiT-Q8-EKe"/>
+                        <outlet property="automaticThemeCell" destination="I5U-Yd-5di" id="AR6-bd-ta3"/>
+                        <outlet property="automaticThemeSwitch" destination="YKd-ob-PKE" id="wym-Sh-Nhn"/>
+                        <outlet property="goalCell" destination="BCl-gm-687" id="S8A-RK-bDP"/>
+                        <outlet property="healthKitCell" destination="F7H-e4-U0O" id="lig-V8-MXb"/>
+                        <outlet property="presetCell1" destination="hfp-W2-g8A" id="Gcr-uE-HaV"/>
+                        <outlet property="presetCell2" destination="HCo-8B-0SZ" id="cKT-fb-I0J"/>
+                        <outlet property="presetCell3" destination="56O-H1-UyO" id="Ylh-rp-keP"/>
+                        <outlet property="themeCell" destination="Fqc-Jj-005" id="1KE-CT-MjE"/>
+                        <outlet property="themeSwitch" destination="mX1-hA-j1E" id="hQN-r3-pCm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SVS-pb-ExO" userLabel="First Responder" sceneMemberID="firstResponder"/>

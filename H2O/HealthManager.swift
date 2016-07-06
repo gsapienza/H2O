@@ -70,7 +70,7 @@ class HealthManager: NSObject {
             
             let sortDescriptor = SortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false) //Sort descriptor by start date
             
-            let calendar = Calendar.current() //Calendar type
+            let calendar = Calendar.current //Calendar type
             
             let entryDateComponents = calendar.components([.day, .month, .year, .hour, .minute, .second], from: date) //Components up to the second for the entry date. Milliseconds is too strict on the comparison
             

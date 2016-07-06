@@ -10,13 +10,13 @@ import UIKit
 
 class EntryButton: UIButton {
         /// Amount that entry button will add to goal
-    var _amount :Float = 0 {
+    var amount :Float = 0 {
         didSet {
-            setTitle(String(Int(_amount)) + Constants.standardUnit.rawValue, for: UIControlState())
+            setTitle(String(Int(amount)) + Constants.standardUnit.rawValue, for: UIControlState())
         }
     }
         /// EntryButtonDelegate Protocol delegate
-    var _delegate :EntryButtonProtocol?
+    var delegate :EntryButtonProtocol?
     
         /// What to do when the button is highlighted. Simply changes the button background color. The text is changed on highlight in the setupAmountLabelFunction
     override var isHighlighted: Bool {
@@ -30,7 +30,7 @@ class EntryButton: UIButton {
     }
     
         /// Circle view outline surrounding the button
-    private let _circleView = UIView()
+    private let circleView = UIView()
     
     //MARK: - View Setup
     
@@ -39,7 +39,7 @@ class EntryButton: UIButton {
         
         backgroundColor = UIColor.clear()
         layer.cornerRadius = bounds.height / 2
-        _circleView.layer.cornerRadius = layer.cornerRadius
+        circleView.layer.cornerRadius = layer.cornerRadius
         
         setupColors()
     }
@@ -62,19 +62,19 @@ class EntryButton: UIButton {
      Sets up circle view outline as a seperate view in case future animating is desired
      */
     private func setupCircleView() {
-        addSubview(_circleView)
-        _circleView.isUserInteractionEnabled = false
-        _circleView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(circleView)
+        circleView.isUserInteractionEnabled = false
+        circleView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _circleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
 
         
-        _circleView.backgroundColor = UIColor.clear()
+        circleView.backgroundColor = UIColor.clear()
         
-        _circleView.layer.borderWidth = 0.5
+        circleView.layer.borderWidth = 0.5
     }
     
     /**
@@ -101,14 +101,14 @@ class EntryButton: UIButton {
                 })
         }
         
-        _delegate?.entryButtonTapped(_amount)
+        delegate?.entryButtonTapped(amount: amount)
     }
 }
 
 // MARK: - NightModeProtocol
 extension EntryButton :NightModeProtocol {
     func setupColors() {
-        _circleView.layer.borderColor = StandardColors.primaryColor.cgColor
+        circleView.layer.borderColor = StandardColors.primaryColor.cgColor
         titleLabel?.textColor = StandardColors.primaryColor
     }
 }

@@ -14,7 +14,7 @@ protocol InformationViewControllerProtocol {
      
      - parameter dateOfEntry: Date that the entry was created
      */
-    func entryWasDeleted(_ dateOfEntry :Date)
+    func entryWasDeleted( dateOfEntry :Date)
     
     /**
      Determines the user set goal from NSUserDefaults
@@ -25,27 +25,27 @@ protocol InformationViewControllerProtocol {
 }
 
 class InformationViewController: Popsicle {
-    @IBOutlet weak var _navigationBar: UINavigationBar!
-    @IBOutlet weak var _blurView: UIVisualEffectView!
-    @IBOutlet weak var _informationTableView: UITableView!
-    @IBOutlet weak var _noDataLabel: UILabel!
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBOutlet weak var informationTableView: UITableView!
+    @IBOutlet weak var noDataLabel: UILabel!
     
-    let _weeklyBarGraphView = WeekBarGraphView()
+    let weeklyBarGraphView = WeekBarGraphView()
 
-    var _dateCollection :[[String : AnyObject]]?
+    var dateCollection :[[String : AnyObject]]?
     
-    var _cellToDeleteFrom = DailyInformationTableViewCell()
-    var _indexOfEntryToDelete = -1
+    var cellToDeleteFrom = DailyInformationTableViewCell()
+    var indexOfEntryToDelete = -1
     
-    var _lastScrollOffset = CGPoint(x: 0, y: 0)
+    var lastScrollOffset = CGPoint(x: 0, y: 0)
     
         /// Delegate to inform the presenting view controller changes to entries
-    var _informationViewControllerDelegate :InformationViewControllerProtocol?
+    var informationViewControllerDelegate :InformationViewControllerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        _dateCollection = AppDelegate.getAppDelegate().user!.getEntriesForDates()
+        dateCollection = AppDelegate.getAppDelegate().user!.getEntriesForDates()
         setupNavigationBar()
         setupBlurView()
         setupTableView()
@@ -57,14 +57,14 @@ class InformationViewController: Popsicle {
      Sets up view properties for the navigation bar
      */
     private func setupNavigationBar() {
-        _navigationBar.setBackgroundImage(UIImage(), for: .default)
-        _navigationBar.shadowImage = UIImage()
-        _navigationBar.isTranslucent = true
-        _navigationBar.backgroundColor = UIColor.clear()
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.isTranslucent = true
+        navigationBar.backgroundColor = UIColor.clear()
         
         let navigationItem = UINavigationItem()
         navigationItem.title = "Information"
-        _navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(20)] //Navigation bar view properties
+        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(20)] //Navigation bar view properties
         
         let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
         
@@ -72,47 +72,47 @@ class InformationViewController: Popsicle {
         
         navigationItem.leftBarButtonItem = closeButton
         
-        _navigationBar.items = [navigationItem]
+        navigationBar.items = [navigationItem]
     }
     
     private func setupBlurView() {
         if AppDelegate.isDarkModeEnabled() {
-            _blurView.effect = UIBlurEffect(style: .dark)
+            blurView.effect = UIBlurEffect(style: .dark)
         } else {
-            _blurView.effect = UIBlurEffect(style: .light)
+            blurView.effect = UIBlurEffect(style: .light)
         }
     }
     
     private func setupTableView() {
-        _informationTableView.dataSource = self
-        _informationTableView.delegate = self
+        informationTableView.dataSource = self
+        informationTableView.delegate = self
         
-        _informationTableView.separatorColor = StandardColors.primaryColor
+        informationTableView.separatorColor = StandardColors.primaryColor
     }
     
     private func setupNoDataLabel() {
-        _noDataLabel.text = "No Water Data Logged"
-        _noDataLabel.textColor = StandardColors.primaryColor
-        _noDataLabel.font = StandardFonts.boldFont(24)
+        noDataLabel.text = "No Water Data Logged"
+        noDataLabel.textColor = StandardColors.primaryColor
+        noDataLabel.font = StandardFonts.boldFont(24)
     }
     
     private func setupWeeklyBarGraphView() {
         let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 250))
         
-        _informationTableView.tableHeaderView = tableHeaderView
+        informationTableView.tableHeaderView = tableHeaderView
         
         let barGraphMargin :CGFloat = 10
-        _weeklyBarGraphView.frame = CGRect(x: barGraphMargin, y: barGraphMargin, width: view.bounds.width - barGraphMargin * 2, height: tableHeaderView.bounds.height - barGraphMargin * 2)
+        weeklyBarGraphView.frame = CGRect(x: barGraphMargin, y: barGraphMargin, width: view.bounds.width - barGraphMargin * 2, height: tableHeaderView.bounds.height - barGraphMargin * 2)
         
         let topGradientColor = UIColor(red: 134, green: 226, blue: 246, alpha: 1).cgColor
         let bottomGradientColor = StandardColors.waterColor.cgColor
-        _weeklyBarGraphView.gradientColors = [topGradientColor, bottomGradientColor]
+        weeklyBarGraphView.gradientColors = [topGradientColor, bottomGradientColor]
         
-        let roundedGoal = 50.0 * floor((_informationViewControllerDelegate!.informationViewGetGoal() / 50.0) + 0.5)
-        _weeklyBarGraphView.yAxisRange = (0, Double(roundedGoal))
-        _weeklyBarGraphView.goal = _informationViewControllerDelegate!.informationViewGetGoal()
+        let roundedGoal = 50.0 * floor((informationViewControllerDelegate!.informationViewGetGoal() / 50.0) + 0.5)
+        weeklyBarGraphView.yAxisRange = (0, Double(roundedGoal))
+        weeklyBarGraphView.goal = informationViewControllerDelegate!.informationViewGetGoal()
         
-        tableHeaderView.addSubview(_weeklyBarGraphView)
+        tableHeaderView.addSubview(weeklyBarGraphView)
     }
     
     func onCloseButton() {
@@ -122,15 +122,15 @@ class InformationViewController: Popsicle {
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension InformationViewController :UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows = (_dateCollection?.count)!
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let numberOfRows = (dateCollection?.count)!
         
         if numberOfRows == 0 {
-            _noDataLabel.isHidden = false
-            _informationTableView.isHidden = true
+            noDataLabel.isHidden = false
+            informationTableView.isHidden = true
         } else {
-            _noDataLabel.isHidden = true
-            _informationTableView.isHidden = false
+            noDataLabel.isHidden = true
+            informationTableView.isHidden = false
         }
         
         return numberOfRows
@@ -139,41 +139,41 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DAILY_INFO_CELL", for: indexPath) as! DailyInformationTableViewCell
         
-        let cellDateCollection = _dateCollection![(indexPath as NSIndexPath).row]
+        let cellDateCollection = dateCollection![(indexPath as NSIndexPath).row]
         
-        let calendar = Calendar.current() //Calendar type
+        let calendar = Calendar.current //Calendar type
         
         let dateComponents = calendar.components([.day, .month, .year], from: cellDateCollection["date"] as! Date)
         
         let dateFormatter = DateFormatter()
         
-        cell._dailyEntryDateView._monthLabel.text = dateFormatter.monthSymbols[dateComponents.month! - 1].lowercased()
-        cell._dailyEntryDateView._dayLabel.text = String(dateComponents.day!)
+        cell.dailyEntryDateView.monthLabel.text = dateFormatter.monthSymbols[dateComponents.month! - 1].lowercased()
+        cell.dailyEntryDateView.dayLabel.text = String(dateComponents.day!)
         
-        cell._delegate = self
+        cell.delegate = self
         
-        cell._dayEntriesCollectionView.reloadData()
+        cell.dayEntriesCollectionView.reloadData()
         
         return cell
     }
     
-   /* func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let graphHeaderTransformValue :CGFloat = (1.0 / _weeklyBarGraphView.bounds.height) * 2
+   /* func scrollViewDidScroll( scrollView: UIScrollView) {
+        let graphHeaderTransformValue :CGFloat = (1.0 / weeklyBarGraphView.bounds.height) * 2
         
-        setAnchorPoint(CGPoint(x: 0.5, y: 1), view: _weeklyBarGraphView)
-        let xScale = _weeklyBarGraphView.transform.a
-        let yScale = _weeklyBarGraphView.transform.d
+        setAnchorPoint(CGPoint(x: 0.5, y: 1), view: weeklyBarGraphView)
+        let xScale = weeklyBarGraphView.transform.a
+        let yScale = weeklyBarGraphView.transform.d
         
-        if scrollView.contentOffset.y > _lastScrollOffset.y {
-           // _weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale - graphHeaderTransformValue, yScale - graphHeaderTransformValue)
+        if scrollView.contentOffset.y > lastScrollOffset.y {
+           // weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale - graphHeaderTransformValue, yScale - graphHeaderTransformValue)
         } else {
-           // _weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale + graphHeaderTransformValue, yScale + graphHeaderTransformValue)
+           // weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale + graphHeaderTransformValue, yScale + graphHeaderTransformValue)
         }
         
-        _lastScrollOffset = scrollView.contentOffset
+        lastScrollOffset = scrollView.contentOffset
     }
     
-    func setAnchorPoint(_ anchorPoint: CGPoint, view: UIView){
+    func setAnchorPoint( anchorPoint: CGPoint, view: UIView){
         let oldOrigin = view.frame.origin
         view.layer.anchorPoint = anchorPoint
         let newOrigin = view.frame.origin
@@ -186,19 +186,19 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
 
 // MARK: - DailyInformationTableViewCellProtocol
 extension InformationViewController :DailyInformationTableViewCellProtocol {
-    func getEntriesForDay(_ cell: DailyInformationTableViewCell) -> [Entry] {
-        let indexPathForCell = _informationTableView.indexPath(for: cell)
+    func getEntriesForDay( cell: DailyInformationTableViewCell) -> [Entry] {
+        let indexPathForCell = informationTableView.indexPath(for: cell)
         
-        let dict = _dateCollection![((indexPathForCell as NSIndexPath?)?.row)!]
+        let dict = dateCollection![((indexPathForCell as NSIndexPath?)?.row)!]
         
         let entries = dict["entries"] as! [Entry]
         
         return entries
     }
     
-    func promptEntryDeletion(_ cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {
-        _cellToDeleteFrom = cellToDeleteFrom
-        _indexOfEntryToDelete = index
+    func promptEntryDeletion( cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {
+        self.cellToDeleteFrom = cellToDeleteFrom
+        indexOfEntryToDelete = index
         
         let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this entry?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (alert: UIAlertAction!) in
@@ -210,32 +210,32 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
     }
     
     func onEntryDeletion() {
-        let indexPath = _informationTableView.indexPath(for: _cellToDeleteFrom)
+        let indexPath = informationTableView.indexPath(for: cellToDeleteFrom)
         
-        var dict = _dateCollection![(indexPath! as NSIndexPath).row]
+        var dict = dateCollection![(indexPath! as NSIndexPath).row]
         
         var entries = dict["entries"] as! [Entry]
         
-        let entry = entries[_indexOfEntryToDelete]
+        let entry = entries[indexOfEntryToDelete]
         
         let dateOfEntry = entry.date
         
         entry.deleteEntry()
         
-        entries.remove(at: _indexOfEntryToDelete)
+        entries.remove(at: indexOfEntryToDelete)
         
-        _dateCollection![(indexPath! as NSIndexPath).row]["entries"] = entries
+        dateCollection![(indexPath! as NSIndexPath).row]["entries"] = entries
         
-        let indexPathToDelete = IndexPath(item: _indexOfEntryToDelete, section: 0)
+        let indexPathToDelete = IndexPath(item: indexOfEntryToDelete, section: 0)
         
-        _cellToDeleteFrom._dayEntriesCollectionView.deleteItems(at: [indexPathToDelete])
+        cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: [indexPathToDelete])
         
         if entries.count == 0 {
-            _dateCollection?.remove(at: (indexPath! as NSIndexPath).row)
+            dateCollection?.remove(at: (indexPath! as NSIndexPath).row)
             
-            _informationTableView.deleteRows(at: [indexPath!], with: .fade)
+            informationTableView.deleteRows(at: [indexPath!], with: .fade)
         }
         
-        _informationViewControllerDelegate?.entryWasDeleted(dateOfEntry!)
+        informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry!)
     }
 }

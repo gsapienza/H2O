@@ -42,7 +42,6 @@
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
 		37E0D6F31CEE26E9004ABFAF /* b4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F21CEE26E9004ABFAF /* b4.wav */; };
 		37E0D6FE1CEF66A7004ABFAF /* H2OTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */; };
-		37E0D7061CEF66FA004ABFAF /* DateEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */; };
 		37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */; };
 		37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */; };
 		37E0D7231CF0C16C004ABFAF /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; };
@@ -135,7 +134,6 @@
 		37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = H2OTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H2OTests.swift; sourceTree = "<group>"; };
 		37E0D6FF1CEF66A7004ABFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEntryTests.swift; sourceTree = "<group>"; };
 		37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateExtension.swift; path = H2OTests/NSDateExtension.swift; sourceTree = SOURCE_ROOT; };
 		37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresetTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D7211CF0C164004ABFAF /* CRToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CRToast.framework; path = Carthage/Build/iOS/CRToast.framework; sourceTree = SOURCE_ROOT; };
@@ -330,7 +328,6 @@
 			isa = PBXGroup;
 			children = (
 				37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */,
-				37E0D7051CEF66FA004ABFAF /* DateEntryTests.swift */,
 				37E0D6FF1CEF66A7004ABFAF /* Info.plist */,
 			);
 			path = H2OTests;
@@ -529,7 +526,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37E0D7061CEF66FA004ABFAF /* DateEntryTests.swift in Sources */,
 				37E0D6FE1CEF66A7004ABFAF /* H2OTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

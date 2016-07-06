@@ -14,21 +14,21 @@ protocol PresetValueChangerViewProtocol {
      
      - parameter newValue: New preset value
      */
-    func valueDidChange(_ newValue :Float)
+    func valueDidChange( newValue :Float)
 }
 
 class PresetValueChangerView: UIView {
         /// Unit label at tail end of view
-    private let _unitLabel = UILabel()
+    private let unitLabel = UILabel()
     
         /// Text view with preset value
-    let _presetValueTextField = UITextField()
+    let presetValueTextField = UITextField()
     
         /// Delegate to update when a new value is declared
-    var _delegate :PresetValueChangerViewProtocol?
+    var delegate :PresetValueChangerViewProtocol?
     
         /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
-    var _previousValue = String()
+    var previousValue = String()
     
     /**
      Permanent transparent background
@@ -64,43 +64,43 @@ class PresetValueChangerView: UIView {
      Setup properties for unit label at end of view
      */
     private func setupUnitLabel() {
-        addSubview(_unitLabel)
+        addSubview(unitLabel)
         
-        _unitLabel.translatesAutoresizingMaskIntoConstraints = false
+        unitLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let unit :NSString = Constants.standardUnit.rawValue
         let font = StandardFonts.boldFont(18)
         
         let textSize = unit.size(attributes: [NSFontAttributeName : font]) //Gets size of text based on font and string
             
-        addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _unitLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: textSize.width + 1)) //Add a +1 because it is too small without it ¯\_(ツ)_/¯
+        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: textSize.width + 1)) //Add a +1 because it is too small without it ¯\(ツ)/¯
 
-        _unitLabel.font = font
-        _unitLabel.text = unit as String
+        unitLabel.font = font
+        unitLabel.text = unit as String
     }
     
     /**
      Sets up preset text field as well as toolbar that lays on top of keyboard that finishes editing
      */
     private func setupPresetValueTextField() {
-        addSubview(_presetValueTextField)
+        addSubview(presetValueTextField)
         
-        _presetValueTextField.translatesAutoresizingMaskIntoConstraints = false
+        presetValueTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .trailing, relatedBy: .equal, toItem: _unitLabel , attribute: .leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _presetValueTextField, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .trailing, relatedBy: .equal, toItem: unitLabel , attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
+        addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        _presetValueTextField.font = StandardFonts.boldFont(18)
-        _presetValueTextField.textAlignment = .right
-        _presetValueTextField.keyboardType = .numberPad
-        _presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
-        _presetValueTextField.tintColor = StandardColors.waterColor
-        _presetValueTextField.delegate = self
+        presetValueTextField.font = StandardFonts.boldFont(18)
+        presetValueTextField.textAlignment = .right
+        presetValueTextField.keyboardType = .numberPad
+        presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
+        presetValueTextField.tintColor = StandardColors.waterColor
+        presetValueTextField.delegate = self
         
         //Keyboard toolbar
         
@@ -119,14 +119,14 @@ class PresetValueChangerView: UIView {
         keyPadToolbar.items = [flexibleBarButtonItem, doneBarButtonItem]
         keyPadToolbar.sizeToFit()
         
-        _presetValueTextField.inputAccessoryView = keyPadToolbar
+        presetValueTextField.inputAccessoryView = keyPadToolbar
     }
     
     /**
      Done editing preset. Finish editing to call text field delegate and save
      */
     func onDoneEditing() {
-        _presetValueTextField.resignFirstResponder()
+        presetValueTextField.resignFirstResponder()
     }
 }
 
@@ -136,7 +136,7 @@ extension PresetValueChangerView :UITextFieldDelegate {
      When the text field begins editing this saves its value so that if the user leaves it empty, the text field text will be replaced by its old value
      */
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        _previousValue = textField.text!
+        previousValue = textField.text!
     }
     
     /**
@@ -164,17 +164,17 @@ extension PresetValueChangerView :UITextFieldDelegate {
     */
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text?.characters.count == 0 { //If the preset text field is empty
-            textField.text = _previousValue //Replace it with its previous value
+            textField.text = previousValue //Replace it with its previous value
         }
         
-        _delegate?.valueDidChange(Float(_presetValueTextField.text!)!)
+        delegate?.valueDidChange(newValue: Float(presetValueTextField.text!)!)
     }
 }
 
 // MARK: - NightModeProtocol
 extension PresetValueChangerView :NightModeProtocol {
     func setupColors() {
-        _unitLabel.textColor = StandardColors.primaryColor
-        _presetValueTextField.textColor = StandardColors.primaryColor
+        unitLabel.textColor = StandardColors.primaryColor
+        presetValueTextField.textColor = StandardColors.primaryColor
     }
 }

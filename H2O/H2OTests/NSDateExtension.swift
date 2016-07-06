@@ -10,7 +10,7 @@ import UIKit
 
 extension Date {
     func dateForCurrentTimeZone() -> Date {
-        let timeZone = TimeZone.local()
+        let timeZone = TimeZone.local
         
         let seconds = Double(timeZone.secondsFromGMT(for: self))
         

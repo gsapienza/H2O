@@ -9,26 +9,26 @@
 import UIKit
 
 protocol PopsicleProtocol {
-    func popsicleDismissed(_ popsicle :Popsicle) //Called when popsicle is dismissed
+    func popsicleDismissed( popsicle :Popsicle) //Called when popsicle is dismissed
 }
 
 /// Autolayout supported modal view that overlays root view controller
 class Popsicle: UIViewController {
     /// PopsicleProtocol Delegate
-    var _delegate :PopsicleProtocol!
+    var delegate :PopsicleProtocol!
     
     /// Top constraint of popsicle view
-    var _topConstraint = NSLayoutConstraint()
+    var topConstraint = NSLayoutConstraint()
     
     /// Is the popsicle showing on screen
-    var _popsiclePushed = false
+    var popsiclePushed = false
 
     /**
-     When autolayout constraints are laid out, then show the view controller with an animation. This can be called multiple times by the system so the _popsiclePushed flag prevents multiple pushes
+     When autolayout constraints are laid out, then show the view controller with an animation. This can be called multiple times by the system so the popsiclePushed flag prevents multiple pushes
      */
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if !_popsiclePushed {
+        if !popsiclePushed {
             AppDelegate.delay(0.1, closure: { 
                 self.pushPopsicle()
             })
@@ -43,7 +43,7 @@ class Popsicle: UIViewController {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         rootViewController!.addChildViewController(self)
-        addSubview(view, toView: (rootViewController?.view)!)
+        addSubview(subView: view, toView: (rootViewController?.view)!)
     }
     
     /**
@@ -52,11 +52,11 @@ class Popsicle: UIViewController {
      - parameter subView:    View to add to parent view
      - parameter parentView: View to add subview
      */
-    func addSubview(_ subView: UIView, toView parentView: UIView) {
+    func addSubview( subView: UIView, toView parentView: UIView) {
         parentView.addSubview(subView)
         
-        _topConstraint = NSLayoutConstraint(item: subView, attribute: .top, relatedBy: .equal, toItem: parentView, attribute: .top, multiplier: 1, constant: parentView.bounds.height)
-        parentView.addConstraint(_topConstraint)
+        topConstraint = NSLayoutConstraint(item: subView, attribute: .top, relatedBy: .equal, toItem: parentView, attribute: .top, multiplier: 1, constant: parentView.bounds.height)
+        parentView.addConstraint(topConstraint)
         parentView.addConstraint(NSLayoutConstraint(item: subView, attribute: .leading, relatedBy: .equal, toItem: parentView, attribute: .leading, multiplier: 1, constant: 0))
         parentView.addConstraint(NSLayoutConstraint(item: subView, attribute: .width, relatedBy: .equal, toItem: parentView, attribute: .width, multiplier: 1, constant: 0))
         parentView.addConstraint(NSLayoutConstraint(item: subView, attribute: .height, relatedBy: .equal, toItem: parentView, attribute: .height, multiplier: 1, constant: 0))
@@ -64,14 +64,14 @@ class Popsicle: UIViewController {
     }
     
     /**
-     Animates the top constraint to be 0 (on top) and makes _popsiclePushed true to prevent further calls by viewDidLayoutSubviews
+     Animates the top constraint to be 0 (on top) and makes popsiclePushed true to prevent further calls by viewDidLayoutSubviews
      */
     func pushPopsicle() {
-        _topConstraint.constant = 0
-        _popsiclePushed = true
+        topConstraint.constant = 0
+        popsiclePushed = true
 
         UIView.animate(withDuration: 0.4, animations: { () -> Void in
-            self.view.layoutIfNeeded()
+            self.view.superview?.layoutIfNeeded()
             }) { (Bool) -> Void in
         }
     }
@@ -80,17 +80,17 @@ class Popsicle: UIViewController {
      Dismisses view controller by animating top constraint to the bottom and removing it from the root view controller
      */
     func dismissPopsicle() {
-        _topConstraint.constant = view.bounds.height
+        topConstraint.constant = view.bounds.height
         
         UIView.animate(withDuration: 0.4, animations: { () -> Void in
-            self.view.layoutIfNeeded()
+            self.view.superview?.layoutIfNeeded()
             }) { (Bool) -> Void in
-                self._popsiclePushed = false
+                self.popsiclePushed = false
                 
                 self.removeFromParentViewController()
                 self.view.removeFromSuperview()
         }
         
-        _delegate?.popsicleDismissed(self)
+        delegate?.popsicleDismissed(popsicle: self)
     }
 }

@@ -15,15 +15,15 @@ protocol SettingsPresetTableViewCellProtocol {
      - parameter settingsPresetTableViewCell: Cell affected to differentiate one from another
      - parameter newValue:                    New Preset Value
      */
-    func presetValueDidChange(_ settingsPresetTableViewCell :SettingsPresetTableViewCell, newValue :Float)
+    func presetValueDidChange( settingsPresetTableViewCell :SettingsPresetTableViewCell, newValue :Float)
 }
 
 class SettingsPresetTableViewCell: SettingsTableViewCell {
         /// Preset changer view. Provides a text field so that users can change the presets for water amounts or goals
-    let _presetValueChangerView = PresetValueChangerView()
+    let presetValueChangerView = PresetValueChangerView()
     
         /// Delegate to update when the preset value changed for this cell
-    var _delegate :SettingsPresetTableViewCellProtocol?
+    var delegate :SettingsPresetTableViewCellProtocol?
     
     //MARK: - View Setup
     override func layoutSubviews() {
@@ -36,16 +36,16 @@ class SettingsPresetTableViewCell: SettingsTableViewCell {
      Sets up properties for the preset changer
      */
     private func setupPresetValueChangerView() {
-        addSubview(_presetValueChangerView)
+        addSubview(presetValueChangerView)
         
-        _presetValueChangerView.translatesAutoresizingMaskIntoConstraints = false
+        presetValueChangerView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: _presetValueChangerView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -15))
-        addConstraint(NSLayoutConstraint(item: _presetValueChangerView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _presetValueChangerView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: _presetValueChangerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bounds.width / 4))
+        addConstraint(NSLayoutConstraint(item: presetValueChangerView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -15))
+        addConstraint(NSLayoutConstraint(item: presetValueChangerView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: presetValueChangerView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: presetValueChangerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bounds.width / 4))
         
-        _presetValueChangerView._delegate = self
+        presetValueChangerView.delegate = self
     }
 }
 
@@ -56,7 +56,7 @@ extension SettingsPresetTableViewCell :PresetValueChangerViewProtocol {
      
      - parameter newValue: New preset value for this cell
      */
-    func valueDidChange(_ newValue: Float) {
-        _delegate?.presetValueDidChange(self, newValue: newValue)
+    func valueDidChange( newValue: Float) {
+        delegate?.presetValueDidChange(settingsPresetTableViewCell: self, newValue: newValue)
     }
 }

@@ -10,10 +10,10 @@ import UIKit
 
 class CustomEntryButton: EntryButton {
         /// Makes the amount just a getter. Because setting a preset for a custom button wouldnt make sense
-    override var _amount: Float {
+    override var amount: Float {
         set{}
         get {
-            return super._amount
+            return super.amount
         }
     }
     
@@ -23,6 +23,6 @@ class CustomEntryButton: EntryButton {
     override func onTap() {
         CENAudioToolbox.standardAudioToolbox.playAudio("b4", fileExtension: "wav", repeatEnabled: false)
 
-        _delegate?.customEntryButtonTapped(self) //Tell the delegate that custom button was tapped
+        delegate?.customEntryButtonTapped(customButton: self) //Tell the delegate that custom button was tapped
     }
 }
