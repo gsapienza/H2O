@@ -400,27 +400,14 @@ extension MainViewController :SettingsViewControllerProtocol {
 
 // MARK: - DailyEntryDialProtocol
 extension MainViewController :DailyEntryDialProtocol {
-    /**
-     Retrieves the amount of water drank today from the database
-     
-     - returns: Amount of water drank today
-     */
     func getAmountOfWaterEnteredToday() -> Float {
         return (AppDelegate.getAppDelegate().user?.getAmountOfWaterForToday())!
     }
     
-    /**
-     Determines the user set goal from NSUserDefaults
-     
-     - returns: Goal float value set by user
-     */
     func getGoal() -> Float {
         return UserDefaults.standard.float(forKey: "GoalValue")
     }
     
-    /**
-     Called when the dial button has been tapped and brings up the information view controller as a popsicle so the blur view has a background
-     */
     func dialButtonTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let informationViewController = (storyboard.instantiateViewController(withIdentifier: "InformationViewController") as! InformationViewController) //Get the view controller
@@ -432,11 +419,6 @@ extension MainViewController :DailyEntryDialProtocol {
 
 // MARK: - InformationViewControllerProtocol
 extension MainViewController :InformationViewControllerProtocol {
-    /**
-     When an entry was deleted from the database. See if it effects the day dial view and delete from Health Kit Database
-     
-     - parameter dateOfEntry: Date that the entry was created
-     */
     func entryWasDeleted( dateOfEntry :Date) {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         updateFluidValue()
@@ -444,11 +426,6 @@ extension MainViewController :InformationViewControllerProtocol {
         HealthManager.defaultManager.deleteWaterEntry(dateOfEntry)
     }
     
-    /**
-     Determines the user set goal from NSUserDefaults
-     
-     - returns: Goal float value set by user
-     */
     func informationViewGetGoal() -> Float {
         return UserDefaults.standard.float(forKey: "GoalValue")
     }
