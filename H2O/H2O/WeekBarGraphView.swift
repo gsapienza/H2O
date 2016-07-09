@@ -207,9 +207,7 @@ class WeekBarGraphDrawingView :UIView {
         
     }
     
-    /**
-     Places y axis values vertically on the left side of the y axis. Values come from the yAxisRangeValues in the delegate
-     */
+    ///Places y axis values vertically on the left side of the y axis. Values come from the yAxisRangeValues in the delegate
     private func setupYAxisValues() {
         let labelWidth :CGFloat = 40 //Width of each number label
 
@@ -256,9 +254,7 @@ class WeekBarGraphDrawingView :UIView {
         }
     }
     
-    /**
-     Draws dotted line to indicate where goal is, if any
-     */
+    ///Draws dotted line to indicate where goal is, if any
     private func drawGoalLine(_ startingXPoint :CGFloat, startingYPoint :CGFloat) {
         let goalValue = delegate?.goalValue()
         

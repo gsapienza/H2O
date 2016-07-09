@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3708613E1D131B6800C89394 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708613D1D131B6800C89394 /* NotificationConstants.swift */; };
 		370861401D17151F00C89394 /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3708613F1D17151F00C89394 /* Water.wav */; };
 		375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */; };
 		375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE01CEA91A6009C14AE /* MainViewController.swift */; };
@@ -15,6 +14,8 @@
 		375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
 		375F4FE91CEA91A6009C14AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FE81CEA91A6009C14AE /* Assets.xcassets */; };
 		375F4FEC1CEA91A6009C14AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */; };
+		3763BDAD1D313D7900FDEBD6 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3763BDAC1D313D7900FDEBD6 /* NotificationConstants.swift */; };
+		3763BDAF1D313D8700FDEBD6 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3763BDAE1D313D8700FDEBD6 /* HealthManager.swift */; };
 		3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
 		378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */; };
 		378566651CEA9645003418C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665F1CEA9645003418C2 /* User.swift */; };
@@ -61,8 +62,6 @@
 		37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */; };
 		37E0D77A1CF94DAB004ABFAF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */; };
 		37E0D77C1CF955C5004ABFAF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D77B1CF955C5004ABFAF /* HealthKit.framework */; };
-		37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D77E1CF955DA004ABFAF /* HealthManager.swift */; };
-		37E0D7851CFAB0C2004ABFAF /* BAFluidView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */; };
 		37EA8E5E1CEB6F5C00E2B332 /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 /* End PBXBuildFile section */
@@ -92,7 +91,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3708613D1D131B6800C89394 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationConstants.swift; path = ../NotificationConstants.swift; sourceTree = "<group>"; };
 		3708613F1D17151F00C89394 /* Water.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Water.wav; sourceTree = "<group>"; };
 		375F4FDB1CEA91A6009C14AE /* H2O.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H2O.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +100,8 @@
 		375F4FE81CEA91A6009C14AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		375F4FEB1CEA91A6009C14AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		375F4FED1CEA91A6009C14AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3763BDAC1D313D7900FDEBD6 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
+		3763BDAE1D313D8700FDEBD6 /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
 		3785665C1CEA941A003418C2 /* StandardColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardColors.swift; sourceTree = "<group>"; };
 		3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3785665F1CEA9645003418C2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -153,15 +153,11 @@
 		37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyInformationTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyEntryDateView.swift; sourceTree = "<group>"; };
 		37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationEntryInfoCollectionViewCell.swift; sourceTree = "<group>"; };
-		37E0D7751CF89507004ABFAF /* FluidConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FluidConstants.h; sourceTree = "<group>"; };
 		37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHex.h"; sourceTree = "<group>"; };
 		37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHex.m"; sourceTree = "<group>"; };
 		37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		37E0D77B1CF955C5004ABFAF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		37E0D77D1CF955C5004ABFAF /* H2O.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = H2O.entitlements; sourceTree = "<group>"; };
-		37E0D77E1CF955DA004ABFAF /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthManager.swift; path = ../HealthManager.swift; sourceTree = "<group>"; };
-		37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAFluidView.h; sourceTree = "<group>"; };
-		37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAFluidView.m; sourceTree = "<group>"; };
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -208,28 +204,59 @@
 		375F4FDD1CEA91A6009C14AE /* H2O */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D77D1CF955C5004ABFAF /* H2O.entitlements */,
 				375F4FDE1CEA91A6009C14AE /* AppDelegate.swift */,
-				3785665C1CEA941A003418C2 /* StandardColors.swift */,
-				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
-				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
-				3708613D1D131B6800C89394 /* NotificationConstants.swift */,
-				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
-				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
-				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
-				37E0D77E1CF955DA004ABFAF /* HealthManager.swift */,
-				37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */,
+				375F4FE21CEA91A6009C14AE /* Main.storyboard */,
+				3763BDAA1D313CBD00FDEBD6 /* Defaults */,
 				3785666A1CEA9660003418C2 /* Core Data */,
-				3785665B1CEA93C5003418C2 /* Views */,
+				3785665B1CEA93C5003418C2 /* Main View */,
+				3763BDAB1D313D0200FDEBD6 /* Information View */,
+				37E0D6F41CEE2803004ABFAF /* Settings View */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
 				3785667C1CEAA2A4003418C2 /* Frameworks */,
 			);
 			path = H2O;
 			sourceTree = "<group>";
 		};
+		3763BDA91D313BB200FDEBD6 /* Night Mode Support */ = {
+			isa = PBXGroup;
+			children = (
+				37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */,
+				37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */,
+			);
+			name = "Night Mode Support";
+			sourceTree = "<group>";
+		};
+		3763BDAA1D313CBD00FDEBD6 /* Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				3785665C1CEA941A003418C2 /* StandardColors.swift */,
+				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
+				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
+				3763BDAC1D313D7900FDEBD6 /* NotificationConstants.swift */,
+			);
+			name = Defaults;
+			sourceTree = "<group>";
+		};
+		3763BDAB1D313D0200FDEBD6 /* Information View */ = {
+			isa = PBXGroup;
+			children = (
+				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
+				37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */,
+				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
+				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
+				37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */,
+			);
+			name = "Information View";
+			sourceTree = "<group>";
+		};
 		3785665A1CEA93BC003418C2 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
+				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
+				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
+				3763BDAE1D313D8700FDEBD6 /* HealthManager.swift */,
+				3763BDA91D313BB200FDEBD6 /* Night Mode Support */,
 				37E0D7611CF210D2004ABFAF /* Sounds */,
 				378566791CEAA281003418C2 /* Fonts */,
 				3785667D1CEAA2C0003418C2 /* H2O-Bridging-Header.h */,
@@ -238,29 +265,22 @@
 				37E0D7261CF0C181004ABFAF /* CENToastNotificationManager.h */,
 				37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */,
 				375F4FE81CEA91A6009C14AE /* Assets.xcassets */,
+				37E0D77D1CF955C5004ABFAF /* H2O.entitlements */,
 				375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */,
 				375F4FED1CEA91A6009C14AE /* Info.plist */,
 			);
 			name = Supporting;
 			sourceTree = "<group>";
 		};
-		3785665B1CEA93C5003418C2 /* Views */ = {
+		3785665B1CEA93C5003418C2 /* Main View */ = {
 			isa = PBXGroup;
 			children = (
-				375F4FE21CEA91A6009C14AE /* Main.storyboard */,
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
 				37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */,
-				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
-				37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */,
-				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
-				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
-				37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */,
-				37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */,
 				37E0D6F51CEE280E004ABFAF /* Entry Buttons */,
-				37E0D6F41CEE2803004ABFAF /* Settings */,
 			);
-			name = Views;
+			name = "Main View";
 			sourceTree = "<group>";
 		};
 		3785666A1CEA9660003418C2 /* Core Data */ = {
@@ -289,9 +309,6 @@
 		3785667C1CEAA2A4003418C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D7831CFAB0C2004ABFAF /* BAFluidView.h */,
-				37E0D7841CFAB0C2004ABFAF /* BAFluidView.m */,
-				37E0D7751CF89507004ABFAF /* FluidConstants.h */,
 				37E0D7761CF89538004ABFAF /* UIColor+ColorWithHex.h */,
 				37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */,
 				37E0D7551CF11561004ABFAF /* L360Confetti */,
@@ -303,7 +320,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		37E0D6F41CEE2803004ABFAF /* Settings */ = {
+		37E0D6F41CEE2803004ABFAF /* Settings View */ = {
 			isa = PBXGroup;
 			children = (
 				37A182651CEBC2190055DA02 /* SettingsViewController.swift */,
@@ -311,7 +328,7 @@
 				37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */,
 				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
 			);
-			name = Settings;
+			name = "Settings View";
 			sourceTree = "<group>";
 		};
 		37E0D6F51CEE280E004ABFAF /* Entry Buttons */ = {
@@ -491,7 +508,6 @@
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
-				37E0D7851CFAB0C2004ABFAF /* BAFluidView.m in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
@@ -500,7 +516,6 @@
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
-				37E0D77F1CF955DA004ABFAF /* HealthManager.swift in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
 				37ADB1561CFBA33A00BE3711 /* GSFluidView.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
@@ -511,9 +526,10 @@
 				37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */,
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
+				3763BDAF1D313D8700FDEBD6 /* HealthManager.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
-				3708613E1D131B6800C89394 /* NotificationConstants.swift in Sources */,
+				3763BDAD1D313D7900FDEBD6 /* NotificationConstants.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
