@@ -26,7 +26,7 @@ protocol InformationViewControllerProtocol {
 
 class InformationViewController: Popsicle {
     
-    //MARK: - UI
+    //MARK: - Public iVars
     
     /// Navigation bar for cancel and done button
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -40,122 +40,61 @@ class InformationViewController: Popsicle {
     /// Label in the middle of the screen if no data was entered yet. Table is not present when this is displayed
     @IBOutlet weak var noDataLabel: UILabel!
     
-    /// Weekly graph view in the header of the water data table view
-    let weeklyBarGraphView = WeekBarGraphView()
-
-    //MARK: - Data
-    
-    /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
-    var dateCollection :[[String : AnyObject]]?
-    
-    /// Date cell that containes an entry ready to be deleted
-    var cellToDeleteFrom = DailyInformationTableViewCell()
-    
-    /// Index of the entry within the date cell that will be deleted. This is used so that the user can select and item to delete then get a confirmation alert before the deletion takes place. This stores the index to delete so the confirmation alert can perform the actual delete action
-    var indexOfEntryToDelete = -1
-    
-   // var lastScrollOffset = CGPoint(x: 0, y: 0)
-    
     /// Delegate to inform the presenting view controller changes to entries
     var informationViewControllerDelegate :InformationViewControllerProtocol?
     
-    //MARK: - Setup
+    //MARK: - Private iVars
+    
+    /// Weekly graph view in the header of the water data table view
+    private var weeklyBarGraphView :WeekBarGraphView!
+
+    //MARK: - Internal iVars
+    
+    /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
+    internal var dateCollection :[[String : AnyObject]]?
+    
+    /// Date cell that containes an entry ready to be deleted
+    internal var cellToDeleteFrom :DailyInformationTableViewCell!
+    
+    /// Index of the entry within the date cell that will be deleted. This is used so that the user can select and item to delete then get a confirmation alert before the deletion takes place. This stores the index to delete so the confirmation alert can perform the actual delete action
+    internal var indexOfEntryToDelete = -1
+    
+    //MARK: - View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dateCollection = AppDelegate.getAppDelegate().user!.getEntriesForDates() //Populate the table from core data
+        dateCollection = AppDelegate.getAppDelegate().user!.entriesForDates() //Populate the table from core data
         
-        setupNavigationBar()
-        setupBlurView()
-        setupTableView()
-        setupNoDataLabel()
-        setupWeeklyBarGraphView()
-    }
-
-    /**
-     Sets up view properties for the navigation bar
-     */
-    private func setupNavigationBar() {
-        //Transparent navigation bar
-        navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationBar.shadowImage = UIImage()
-        navigationBar.isTranslucent = true
-        navigationBar.backgroundColor = UIColor.clear()
+        configureNavigationBar()
+        configureTableView()
+        configureNoDataLabel()
+        configureBlurView()
         
-        //Navigation item setup
-        let navigationItem = UINavigationItem()
-        navigationItem.title = "Information"
-        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(20)] //Navigation bar view properties
+        weeklyBarGraphView = generateWeeklyGraphView()
         
-        let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
-        
-        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(18)], for: UIControlState()) //Close button view properties
-        
-        navigationItem.leftBarButtonItem = closeButton
-        
-        navigationBar.items = [navigationItem]
+        layout()
     }
     
-    
-    /// Layout for background blur view
-    private func setupBlurView() {
-        if AppDelegate.isDarkModeEnabled() {
-            blurView.effect = UIBlurEffect(style: .dark)
-        } else {
-            blurView.effect = UIBlurEffect(style: .light)
-        }
-    }
-    
-    /// Layout for the table view
-    private func setupTableView() {
-        informationTableView.dataSource = self
-        informationTableView.delegate = self
-        
-        informationTableView.separatorColor = StandardColors.primaryColor //White or black seperator line
-    }
-    
-    /// Layout for the no data label that appears when no entries have been made
-    private func setupNoDataLabel() {
-        noDataLabel.text = "No Water Data Logged"
-        noDataLabel.textColor = StandardColors.primaryColor
-        noDataLabel.font = StandardFonts.boldFont(24)
-    }
-    
-    /// Layout for the weekly bar graph in the table header view
-    private func setupWeeklyBarGraphView() {
-        //Header view creation
+    private func layout() {
+        //---Header view creation---
         let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 250))
         
         informationTableView.tableHeaderView = tableHeaderView
         
+        //---Weekly Bar Graph View---
         
         let barGraphMargin :CGFloat = 10 //Margin around the bar graph
         
         weeklyBarGraphView.frame = CGRect(x: barGraphMargin, y: barGraphMargin, width: view.bounds.width - barGraphMargin * 2, height: tableHeaderView.bounds.height - barGraphMargin * 2)
         
-        //Gradients for the bar graph
-        let topGradientColor = UIColor(red: 134, green: 226, blue: 246, alpha: 1).cgColor
-        let bottomGradientColor = StandardColors.waterColor.cgColor
-        weeklyBarGraphView.gradientColors = [topGradientColor, bottomGradientColor]
-        
-        //Goal line setup
-        let roundedGoal = 50.0 * floor((informationViewControllerDelegate!.informationViewGetGoal() / 50.0) + 0.5)
-        weeklyBarGraphView.yAxisRange = (0, Double(roundedGoal))
-        weeklyBarGraphView.goal = informationViewControllerDelegate!.informationViewGetGoal()
-        
         tableHeaderView.addSubview(weeklyBarGraphView)
     }
     
-    //MARK: - Actions
-    
-    /// When the close button is tapped
-    func onCloseButton() {
-        dismissPopsicle()
-    }
+    //MARK: - Internal
     
     /// When the user confirms a delete is allowed this will delete the entry from the database and table view
-    func onEntryDeletion() {
+    internal func onEntryDeletion() {
         let indexPath = informationTableView.indexPath(for: cellToDeleteFrom) //Index path for cell to delete entry from
         
         var dict = dateCollection![(indexPath! as NSIndexPath).row] //Dictionary of date and entry data
@@ -170,7 +109,7 @@ class InformationViewController: Popsicle {
         
         entries.remove(at: indexOfEntryToDelete) //Remove the entry from the array just recovered
         
-        dateCollection![(indexPath! as NSIndexPath).row]["entries"] = entries //Set the entries amount in the collection view to the new entries data set without the deleted entry
+        dateCollection![(indexPath! as NSIndexPath).row]["entries"] = entries as AnyObject //Set the entries amount in the collection view to the new entries data set without the deleted entry
         
         let indexPathToDelete = IndexPath(item: indexOfEntryToDelete, section: 0) //Index path of entry in the collection view in the date cell
         
@@ -183,6 +122,89 @@ class InformationViewController: Popsicle {
         }
         
         informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry!) //Call when entry was deleted
+    }
+}
+
+// MARK: - Private Generators
+private extension InformationViewController {
+    func generateWeeklyGraphView() -> WeekBarGraphView {
+        let view = WeekBarGraphView()
+        
+        //Gradients for the bar graph
+        let topGradientColor = UIColor(red: 134, green: 226, blue: 246, alpha: 1).cgColor
+        let bottomGradientColor = StandardColors.waterColor.cgColor
+        view.gradientColors = [topGradientColor, bottomGradientColor]
+        
+        //Goal line setup
+        let roundedUpToNearestFiftyGoal = 50.0 * ceil((informationViewControllerDelegate!.informationViewGetGoal() / 50.0)) //Rounded goal to the next 50 ex: 87 becomes 100
+        view.yAxisRange = (0, Double(roundedUpToNearestFiftyGoal))
+        view.goal = informationViewControllerDelegate!.informationViewGetGoal()
+        
+        /*if let lastWeekValues = AppDelegate.getAppDelegate().user?.waterValuesThisWeek() {
+         weeklyBarGraphView.weekValues = WeekValues(sunday: CGFloat(lastWeekValues[0]), monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
+         }*/
+        
+        view.weekValues = WeekValues(sunday: 80, monday: 30, tuesday: 20, wednesday: 10, thursday: 40, friday: 40, saturday: 90)
+        
+        return view
+    }
+}
+
+//MARK: - Private View Configurations
+private extension InformationViewController {
+    ///Configures the navigation bar
+    func configureNavigationBar() {
+        //Transparent navigation bar
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.isTranslucent = true
+        navigationBar.backgroundColor = UIColor.clear
+        
+        //Navigation item setup
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Information"
+        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
+        
+        let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+        
+        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
+        
+        navigationItem.leftBarButtonItem = closeButton
+        
+        navigationBar.items = [navigationItem]
+    }
+    
+    
+    /// Configures the background blur view
+    func configureBlurView() {
+        if AppDelegate.isDarkModeEnabled() {
+            blurView.effect = UIBlurEffect(style: .dark)
+        } else {
+            blurView.effect = UIBlurEffect(style: .light)
+        }
+    }
+    
+    /// Configures the table view
+    func configureTableView() {
+        informationTableView.dataSource = self
+        informationTableView.delegate = self
+        
+        informationTableView.separatorColor = StandardColors.primaryColor //White or black seperator line
+    }
+    
+    /// Configures the no data label that appears when no entries have been made
+    func configureNoDataLabel() {
+        noDataLabel.text = "No Water Data Logged"
+        noDataLabel.textColor = StandardColors.primaryColor
+        noDataLabel.font = StandardFonts.boldFont(size: 24)
+    }
+}
+
+//MARK: - Target Action
+internal extension InformationViewController {
+    /// When the close button is tapped
+    func onCloseButton() {
+        dismissPopsicle()
     }
 }
 
@@ -212,7 +234,7 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         
         let calendar = Calendar.current //Calendar type
         
-        let dateComponents = calendar.components([.day, .month, .year], from: cellDateCollection["date"] as! Date) //Get the date from the dictionary
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: cellDateCollection["date"] as! Date) //Get the date from the dictionary
         
         let dateFormatter = DateFormatter()
         
@@ -226,38 +248,12 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         
         return cell
     }
-    
-   /* func scrollViewDidScroll( scrollView: UIScrollView) {
-        let graphHeaderTransformValue :CGFloat = (1.0 / weeklyBarGraphView.bounds.height) * 2
-        
-        setAnchorPoint(CGPoint(x: 0.5, y: 1), view: weeklyBarGraphView)
-        let xScale = weeklyBarGraphView.transform.a
-        let yScale = weeklyBarGraphView.transform.d
-        
-        if scrollView.contentOffset.y > lastScrollOffset.y {
-           // weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale - graphHeaderTransformValue, yScale - graphHeaderTransformValue)
-        } else {
-           // weeklyBarGraphView.transform = CGAffineTransformMakeScale(xScale + graphHeaderTransformValue, yScale + graphHeaderTransformValue)
-        }
-        
-        lastScrollOffset = scrollView.contentOffset
-    }
-    
-    func setAnchorPoint( anchorPoint: CGPoint, view: UIView){
-        let oldOrigin = view.frame.origin
-        view.layer.anchorPoint = anchorPoint
-        let newOrigin = view.frame.origin
-        
-        let transition = CGPoint (x: newOrigin.x - oldOrigin.x, y: newOrigin.y - oldOrigin.y)
-        
-        view.center = CGPoint (x: view.center.x - transition.x, y: view.center.y - transition.y)
-    }*/
 }
 
 // MARK: - DailyInformationTableViewCellProtocol
 extension InformationViewController :DailyInformationTableViewCellProtocol {
     func getEntriesForDay(cell: DailyInformationTableViewCell) -> [Entry] {
-        let indexPathForCell = informationTableView.indexPath(for: cell)
+        let indexPathForCell = informationTableView.indexPathForRow(at: cell.center) //Get the cell by position because when trying to retreive it using the index path for cell, nil will be returned at times if the cell hasnt finished loading
         
         let dict = dateCollection![((indexPathForCell as NSIndexPath?)?.row)!]
         

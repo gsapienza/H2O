@@ -13,7 +13,7 @@ extension UIViewController {
     /**
      Set up method swizzling for the dark and light mode switching
     */
-    public override static func initialize() {
+    open override static func initialize() {
         
         if self !== UIViewController.self { //Is self not a subclass of a UIViewController
             return
@@ -26,7 +26,7 @@ extension UIViewController {
         swizzleSelector(originalViewWillAppearSelector, swizzledSelector: swizzledViewWillAppearSelector)
         
         //Preferred Status bar style swizzle
-        let originalPreferredStatusBarStyleSelector = #selector(UIViewController.preferredStatusBarStyle)
+        let originalPreferredStatusBarStyleSelector = #selector(getter: UIViewController.preferredStatusBarStyle)
         let swizzledPreferredStatusBarStyleSelector = #selector(UIViewController.newPreferredStatusBarStyle)
         
         swizzleSelector(originalPreferredStatusBarStyleSelector, swizzledSelector: swizzledPreferredStatusBarStyleSelector)
@@ -89,8 +89,10 @@ extension UINavigationController {
      
      - returns: View controller that can control the status bar hidden status
      */
-    public override func childViewControllerForStatusBarHidden() -> UIViewController? {
-        return topViewController
+    override open var childViewControllerForStatusBarHidden: UIViewController? {
+        get {
+            return topViewController
+        }
     }
     
     /**
@@ -98,7 +100,9 @@ extension UINavigationController {
      
      - returns: View controller that can control the status bar color
      */
-    public override func childViewControllerForStatusBarStyle() -> UIViewController? {
-        return topViewController
+    override open var childViewControllerForStatusBarStyle: UIViewController? {
+        get {
+            return topViewController
+        }
     }
 }

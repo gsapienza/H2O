@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11163.2" systemVersion="15G24b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11185.3" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11133"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11151.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -162,6 +162,9 @@
                                 <exclude reference="I6X-Es-J7b"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="3iR-ko-PSF"/>
+                                <exclude reference="EyL-sx-Efp"/>
+                                <exclude reference="ond-dM-dHa"/>
                                 <exclude reference="Tdv-OA-zoa"/>
                                 <exclude reference="m77-ei-nLt"/>
                                 <exclude reference="xXR-II-8aI"/>
@@ -177,9 +180,6 @@
                                 <exclude reference="0Wz-RY-9S5"/>
                                 <exclude reference="RNj-lS-aEN"/>
                                 <exclude reference="xB3-CE-j74"/>
-                                <exclude reference="3iR-ko-PSF"/>
-                                <exclude reference="EyL-sx-Efp"/>
-                                <exclude reference="ond-dM-dHa"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -190,6 +190,9 @@
                                 <include reference="I6X-Es-J7b"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="3iR-ko-PSF"/>
+                                <include reference="EyL-sx-Efp"/>
+                                <include reference="ond-dM-dHa"/>
                                 <include reference="Tdv-OA-zoa"/>
                                 <include reference="m77-ei-nLt"/>
                                 <include reference="xXR-II-8aI"/>
@@ -205,9 +208,6 @@
                                 <include reference="0Wz-RY-9S5"/>
                                 <include reference="RNj-lS-aEN"/>
                                 <include reference="xB3-CE-j74"/>
-                                <include reference="3iR-ko-PSF"/>
-                                <include reference="EyL-sx-Efp"/>
-                                <include reference="ond-dM-dHa"/>
                             </mask>
                         </variation>
                     </view>
@@ -450,7 +450,7 @@
         <scene sceneID="6sn-tx-Gp4">
             <objects>
                 <navigationController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zBE-q2-6Kx" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qbc-Hf-Md0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Qbc-Hf-Md0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -483,7 +483,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ztn-oT-QCy">
                                                     <connections>
-                                                        <action selector="onHealthKitButton:" destination="aQN-Mt-cvV" eventType="touchUpInside" id="x0N-Mi-fq4"/>
+                                                        <action selector="onHealthKitButtonWithSender:" destination="aQN-Mt-cvV" eventType="touchUpInside" id="7mQ-uj-BTN"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -566,7 +566,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle=" " id="7ai-dZ-7LB">
                                 <cells>
-                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Fqc-Jj-005" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Fqc-Jj-005" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="426" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fqc-Jj-005" id="rMT-K9-vXN">
@@ -591,7 +591,7 @@
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="onThemeSwitch:" destination="aQN-Mt-cvV" eventType="primaryActionTriggered" id="VTd-Dx-LCD"/>
+                                                        <action selector="onThemeSwitchWithSender:" destination="aQN-Mt-cvV" eventType="valueChanged" id="na6-o3-JJx"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -620,7 +620,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="I5U-Yd-5di" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="I5U-Yd-5di" customClass="SettingsTableViewCell" customModule="H2O" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="476" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I5U-Yd-5di" id="7JQ-NE-TfZ">
@@ -645,7 +645,7 @@
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="onAutomaticThemeSwitch:" destination="aQN-Mt-cvV" eventType="primaryActionTriggered" id="GBv-iV-ufZ"/>
+                                                        <action selector="onAutomaticThemeSwitchWithSender:" destination="aQN-Mt-cvV" eventType="valueChanged" id="kja-MS-DMr"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>

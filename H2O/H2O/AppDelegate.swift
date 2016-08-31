@@ -161,9 +161,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             
             //UIApplicationProtectedDataDidBecomeAvailable
             
-            let currentDateComponents = calendar.components([.hour], from: Date()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
+            let currentDateComponents = calendar.dateComponents([.hour], from: Date()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
             
-            if currentDateComponents.hour > 5 && currentDateComponents.hour < 18 { //If between 6AM and 6PM
+            if currentDateComponents.hour! > 5 && currentDateComponents.hour! < 18 { //If between 6AM and 6PM
                 if AppDelegate.isDarkModeEnabled() { //If dark mode is enabled
                     AppDelegate.toggleDarkMode(false) //Activate light mode
                     NotificationCenter.default.post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update view controllers
@@ -241,16 +241,19 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     ///- returns: Current AppDelegate
     class func getAppDelegate() -> AppDelegate {
-        return (UIApplication.shared().delegate as? AppDelegate)!
+        return (UIApplication.shared.delegate as? AppDelegate)!
     }
     
     /// Delays block of code from running by a specified amount of time
     ///- parameters:
     ///   - delay: Time to delay code from being ran
-    class func delay(_ delay:Double, closure:()->()) {
-        DispatchQueue.main.after(when: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) { 
+    class func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
             closure()
-        }
+            })
+      /*  DispatchQueue.main.after(when: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+            closure()
+        }*/
     }
     
     /**
@@ -259,44 +262,46 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     class func createShortcuts() {
         let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
         
-        let smallPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.smallPresetEntry", localizedTitle: String(Int(presets[0])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
+        let smallPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.smallPresetEntry", localizedTitle: String(Int(presets[0])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
         
-        let mediumPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.mediumPresetEntry", localizedTitle: String(Int(presets[1])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkMediumPresetImage"), userInfo: nil)
+        let mediumPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.mediumPresetEntry", localizedTitle: String(Int(presets[1])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkMediumPresetImage"), userInfo: nil)
         
-        let largePresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.largePresetEntry", localizedTitle: String(Int(presets[2])) + Constants.standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkLargePresetImage"), userInfo: nil)
+        let largePresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.largePresetEntry", localizedTitle: String(Int(presets[2])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkLargePresetImage"), userInfo: nil)
         
         let customShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.customEntry", localizedTitle: "Custom", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .add), userInfo: nil)
 
-        UIApplication.shared().shortcutItems = [smallPresetShortcut, mediumPresetShortcut, largePresetShortcut, customShortcut]
+        UIApplication.shared.shortcutItems = [smallPresetShortcut, mediumPresetShortcut, largePresetShortcut, customShortcut]
     }
 
     // MARK: - Core Data stack
 
     lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.theoven.H2O" in the application's documents Application Support directory.
-        let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        //let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main.urlForResource("H2O", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
+        let modelURL = Bundle.main.url(forResource: "H2O", withExtension: "momd")
+        return NSManagedObjectModel(contentsOf: modelURL!)!
     }()
 
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = try! self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
 
             dict[NSUnderlyingErrorKey] = error as NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)

@@ -96,11 +96,11 @@ class SettingsViewController: UITableViewController {
         navigationController?.navigationBar.barTintColor = StandardColors.standardSecondaryColor
         navigationController?.navigationBar.isTranslucent = false
         navigationItem.title = "Settings"
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(20)] //Navigation bar view properties
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
         let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
         
-        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(18)], for: UIControlState()) //Close button view properties
+        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
         
         navigationItem.leftBarButtonItem = closeButton
     }
@@ -186,7 +186,7 @@ class SettingsViewController: UITableViewController {
      Makes the table view section headers above section of cells transparent
      */
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = UIColor.clear()
+        view.tintColor = UIColor.clear
         
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = StandardColors.primaryColor
@@ -264,7 +264,7 @@ class SettingsViewController: UITableViewController {
      - parameter sender: Theme switch
      */
     @IBAction func onThemeSwitch( sender: UISwitch) {
-        CENAudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
+        AudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
 
         AppDelegate.toggleDarkMode(sender.isOn) //Change theme based on switch state
         
@@ -278,7 +278,7 @@ class SettingsViewController: UITableViewController {
      - parameter sender: Automatic theme changer switch
      */
     @IBAction func onAutomaticThemeSwitch( sender: UISwitch) {
-        CENAudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
+        AudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
         UserDefaults.standard.set(sender.isOn, forKey: "AutomaticThemeChange")
         
         if sender.isOn { //If on then essentially disable the theme cell because it would intefere with the auto changes

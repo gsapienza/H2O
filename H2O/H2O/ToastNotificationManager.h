@@ -1,17 +1,16 @@
 //
-//  CENToastNotificationManager.h
-//  CenifyKit
+//  ToastNotificationManager.h
+//  BakingKit
 //
 //  Created by Gregory Sapienza on 3/12/16.
-//  Copyright © 2016 Cenify. All rights reserved.
+//  Copyright © 2016 The Oven. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CRToast/CRToast.h>
-#import "CENTextUtilities.h"
 
-@interface CENToastNotificationManager : NSObject
+@interface ToastNotificationManager : NSObject
 
 /**
  *  Posts Standard Toast Notification to Top of Screen

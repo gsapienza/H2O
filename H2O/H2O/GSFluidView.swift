@@ -10,14 +10,7 @@ import UIKit
 
 class GSFluidView: UIView {
     
-    //MARK: - Liquid Layer Properties
-    
-    /// Main layer of liquid that has the waves and pretty much all movements
-    private var liquidLayer = CAShapeLayer()
-    
-    /// Lavel of vertical fill from 0 to 1
-    private var fillLevel :Float = 0.0
-    
+    //MARK: - Public iVars
     /// Fill Color of Fluid
     var fillColor = UIColor() {
         didSet {
@@ -27,9 +20,7 @@ class GSFluidView: UIView {
     
     /// Duration of fill of fluid
     var fillDuration = 7.0
-    
-    //MARK: - Wave Properties
-    
+        
     /// Random interval between max and min
     var amplitudeIncrement = 5
     
@@ -38,6 +29,14 @@ class GSFluidView: UIView {
 
     /// Minimum wave height
     var minAmplitude = 5
+    
+    //MARK: - Private iVars
+    
+    /// Main layer of liquid that has the waves and pretty much all movements
+    private var liquidLayer = CAShapeLayer()
+    
+    /// Lavel of vertical fill from 0 to 1
+    private var fillLevel :Float = 0.0
 
     /// Array of possible amplitude values
     private var amplitudeArray :[Int] = []
@@ -48,7 +47,7 @@ class GSFluidView: UIView {
     /// Keyframe animation that control the wave amplitude animation on the liquid layer. NOT THE HORIZONTAL MOVEMENT
     private var waveMovementAnimation :CAKeyframeAnimation?
     
-    var rootView :UIView {
+    private var rootView :UIView {
         set {}
         get {
             return (window?.subviews.first!)!
@@ -112,7 +111,7 @@ class GSFluidView: UIView {
         liquidLayer.add(verticalFillAnimation, forKey: "position.y")
     }
     
-    //MARK: - Liquid Waves
+    //MARK: - Private
     
     /**
      Uses 2 animations to control the waves. The first one is the phase shift which essentially moves the liquid x position horizontally to look like the waves are moving in a single direction. The other animation is the one that actually controls the wave shapes using path animations
@@ -151,15 +150,6 @@ class GSFluidView: UIView {
     }
     
     /**
-     Called by timer to regenerate the wave animation using new amplitude values
-     */
-    internal func updateWaveAnimation() {
-        liquidLayer.removeAnimation(forKey: "path") //Remove the last animation
-        waveMovementAnimation!.values = getNewAmplitudeValues() //Set the new values to the wave animation
-        liquidLayer.add(waveMovementAnimation!, forKey: "path") //New animation with new values
-    }
-    
-    /**
      Generates amplitude values randomly from amplitude array values
      
      - returns: Array of paths to generate wave amplitude animation
@@ -184,15 +174,15 @@ class GSFluidView: UIView {
              
              - parameter pathComputation: Computation of path to go in for loop
              */
-            func strideToRandomAmplitudeValue(_ pathComputation : (j :Int) -> Void) {
+            func strideToRandomAmplitudeValue(_ pathComputation : (_ j :Int) -> Void) {
                 //For loops create incremental paths based on how far the last amplitudeValue was from the new one. For example, a previous amplitude of 5 and a random value of 20 will give us 4 new paths
                 if amplitudeIncrement < 0 { //If increment is negative
                     for j in stride(from: startingAmplitude, through: randomAmplitudeValue, by: amplitudeIncrement) { //Move backwards
-                        pathComputation(j: j) //Get a single path
+                        pathComputation(j) //Get a single path
                     }
                 } else { //If increment is positive
                     for j in stride(from :startingAmplitude, to: randomAmplitudeValue, by: amplitudeIncrement) { //Move forwards
-                        pathComputation(j: j) //Get a single path
+                        pathComputation(j) //Get a single path
                     }
                 }
             }
@@ -251,4 +241,16 @@ class GSFluidView: UIView {
         
         return newAmplitudeValues
     }
+    
+    //MARK: - Internal
+    
+    /**
+     Called by timer to regenerate the wave animation using new amplitude values
+     */
+    internal func updateWaveAnimation() {
+        liquidLayer.removeAnimation(forKey: "path") //Remove the last animation
+        waveMovementAnimation!.values = getNewAmplitudeValues() //Set the new values to the wave animation
+        liquidLayer.add(waveMovementAnimation!, forKey: "path") //New animation with new values
+    }
+    
 }

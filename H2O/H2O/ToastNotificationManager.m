@@ -1,21 +1,21 @@
 //
-//  CENToastNotificationManager.m
-//  CenifyKit
+//  ToastNotificationManager.m
+//  BakingKit
 //
 //  Created by Gregory Sapienza on 3/12/16.
-//  Copyright © 2016 Cenify. All rights reserved.
+//  Copyright © 2016 The Oven. All rights reserved.
 //
 
-#import "CENToastNotificationManager.h"
+#import "ToastNotificationManager.h"
 #import "H2O-Swift.h"
 
-@implementation CENToastNotificationManager
+@implementation ToastNotificationManager
 
 + (void)postToastNotification:(NSString *)text color:(UIColor *)color image:(UIImage *)image completionBlock:(void (^)())completionBlock {
     NSDictionary *options = @{
                               kCRToastTextKey : text,
                               kCRToastBackgroundColorKey : color,
-                              kCRToastFontKey : [StandardFonts regularFont:20],
+                              kCRToastFontKey : [StandardFonts regularFontWithSize:20],
                               kCRToastAnimationInTypeKey : @(CRToastAnimationTypeLinear),
                               kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeLinear),
                               kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionTop),

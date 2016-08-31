@@ -61,7 +61,7 @@ class User: NSManagedObject {
         let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
         mutableEntries.add(entry)
         
-        entries = mutableEntries.copy() as? OrderedSet
+        entries = mutableEntries.copy() as? NSOrderedSet
         
         do {
             try managedContext.save()
@@ -70,7 +70,7 @@ class User: NSManagedObject {
         }
     }
         
-    func getAmountOfWaterForToday() -> Float {
+    func amountOfWaterForToday() -> Float {
         var todaysWaterAmount :Float = 0.0
         
         for entry in entries! {
@@ -79,8 +79,8 @@ class User: NSManagedObject {
             
             let calendar = Calendar.current //Calendar type
             
-            let entryDateComponents = calendar.components([.day, .month, .year], from: entryDate!)
-            let todayDateComponents = calendar.components([.day, .month, .year], from: todayDate)
+            let entryDateComponents = calendar.dateComponents([.day, .month, .year], from: entryDate!)
+            let todayDateComponents = calendar.dateComponents([.day, .month, .year], from: todayDate)
 
             if entryDateComponents.month == todayDateComponents.month && entryDateComponents.day == todayDateComponents.day && entryDateComponents.year == todayDateComponents.year {
                 todaysWaterAmount += ((entry as! Entry).amount?.floatValue)!
@@ -90,7 +90,7 @@ class User: NSManagedObject {
         return todaysWaterAmount
     }
     
-    func getEntriesForDates() -> [[String :AnyObject]] {
+    func entriesForDates() -> [[String :AnyObject]] {
         var dateCollections :[[String :AnyObject]]  = [] //Array of dict of collections by date
         
         var lastCollection :[String :AnyObject]?
@@ -99,7 +99,7 @@ class User: NSManagedObject {
             let entryObject = entry as! Entry
             
             if lastCollection == nil {
-                lastCollection = ["date" : entryObject.date!, "entries" : [Entry]()]
+                lastCollection = ["date" : entryObject.date! as AnyObject, "entries" : [Entry]() as AnyObject]
             }
                         
             let entriesArray = lastCollection!["entries"] as! [Entry]
@@ -107,7 +107,7 @@ class User: NSManagedObject {
             let newEntries = NSArray(object: entryObject).addingObjects(from: entriesArray)
             
            // print(entryObject)
-            lastCollection!["entries"] = newEntries
+            lastCollection!["entries"] = newEntries as AnyObject
                         
             if entryObject == entries?.lastObject as! Entry { //if there is no next collection because we are at the end of the entries
                 dateCollections.insert(lastCollection!, at: 0) //Add the last collection the beginning so it can appear at the top of the list
@@ -117,8 +117,8 @@ class User: NSManagedObject {
                 
                 let calendar = Calendar.current //Calendar type
                 
-                let nextEntryDateComponents = calendar.components([.day, .month, .year], from: nextEntry.date!) //Next entry from index date components
-                let lastDateComponents = calendar.components([.day, .month, .year], from: (lastCollection!["date"] as! Date)) //The last entry from index date components
+                let nextEntryDateComponents = calendar.dateComponents([.day, .month, .year], from: nextEntry.date!) //Next entry from index date components
+                let lastDateComponents = calendar.dateComponents([.day, .month, .year], from: (lastCollection!["date"] as! Date)) //The last entry from index date components
                 
                 if nextEntryDateComponents.month != lastDateComponents.month || nextEntryDateComponents.day != lastDateComponents.day || nextEntryDateComponents.year != lastDateComponents.year {
                     dateCollections.insert(lastCollection!, at: 0)
@@ -129,15 +129,48 @@ class User: NSManagedObject {
         
         return dateCollections
     }
+    
+    func waterValuesThisWeek() -> [Float] {
+        var dateEntries = entriesForDates()
+        
+        var lastWeekValues :[Float]  = []
+        
+        let todaysDateComponents = Calendar.current.dateComponents([.day], from: Date())
 
-    class func getNextDay(_ fromDate :Date) -> Date {
+        for _ in 1 ... todaysDateComponents.day! {
+            if let dateEntry = dateEntries.popLast() {
+              //  let entryDate = dateEntry["date"] as! Date
+                
+                var totalDateEntryValue :Float = 0
+                for value in dateEntry["entries"] as! [Entry] {
+                    totalDateEntryValue += value.amount!.floatValue
+                }
+                
+                lastWeekValues.append(totalDateEntryValue)
+            } else {
+                lastWeekValues.append(0)
+            }
+        }
+        
+        let remainingDays = 7 - todaysDateComponents.day!
+        
+        for _ in 1 ... remainingDays {
+            lastWeekValues.append(0)
+        }
+        
+        return lastWeekValues.reversed()
+
+    }
+
+    class func nextDay(_ fromDate :Date) -> Date {
         var dayComponent = DateComponents()
         
         dayComponent.day = 1 //Only 1 day ahead
         
         let calendar = Calendar.current
         
-        let nextDate = calendar.date(byAdding: dayComponent, to: fromDate, options: .matchNextTime) //Computes the next date
+        //let nextDate = calendar.date(byAdding: dayComponent, to: fromDate, options: .matchNextTime) //Computes the next date
+        let nextDate = calendar.date(byAdding: dayComponent, to: fromDate, wrappingComponents: true)
         
         return nextDate!
     }

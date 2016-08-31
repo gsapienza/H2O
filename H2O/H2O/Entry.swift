@@ -26,7 +26,7 @@ class Entry: NSManagedObject {
             entry.date = Date()
         }
         
-        entry.amount = amount
+        entry.amount = NSNumber(value: amount)
         
         do {
             try managedContext.save()

@@ -46,5 +46,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>To add and delete water entries.</string>
 </dict>
 </plist>

@@ -19,7 +19,7 @@ protocol PresetValueChangerViewProtocol {
 
 class PresetValueChangerView: UIView {
         /// Unit label at tail end of view
-    private let unitLabel = UILabel()
+    internal let unitLabel = UILabel()
     
         /// Text view with preset value
     let presetValueTextField = UITextField()
@@ -36,7 +36,7 @@ class PresetValueChangerView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColor.clear()
+        backgroundColor = UIColor.clear
         
         setupColors()
     }
@@ -68,8 +68,8 @@ class PresetValueChangerView: UIView {
         
         unitLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let unit :NSString = Constants.standardUnit.rawValue
-        let font = StandardFonts.boldFont(18)
+        let unit :NSString = standardUnit.rawValue as NSString
+        let font = StandardFonts.boldFont(size: 18)
         
         let textSize = unit.size(attributes: [NSFontAttributeName : font]) //Gets size of text based on font and string
             
@@ -95,7 +95,7 @@ class PresetValueChangerView: UIView {
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        presetValueTextField.font = StandardFonts.boldFont(18)
+        presetValueTextField.font = StandardFonts.boldFont(size: 18)
         presetValueTextField.textAlignment = .right
         presetValueTextField.keyboardType = .numberPad
         presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
@@ -114,7 +114,7 @@ class PresetValueChangerView: UIView {
         }
         let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
-        doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(18)], for: UIControlState())
+        doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
         
         keyPadToolbar.items = [flexibleBarButtonItem, doneBarButtonItem]
         keyPadToolbar.sizeToFit()

@@ -10,19 +10,19 @@ import UIKit
 
 @objc class StandardFonts: NSObject {
     
-    @objc class func regularFont(_ size :CGFloat) -> UIFont {
+    class func regularFont(size :CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size)
     }
     
-    class func lightFont(_ size :CGFloat) -> UIFont {
+    class func lightFont(size :CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightLight)
     }
     
-    class func thinFont(_ size :CGFloat) -> UIFont {
+    class func thinFont(size :CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
     }
     
-    class func boldFont(_ size :CGFloat) -> UIFont {
+    class func boldFont(size :CGFloat) -> UIFont {
         return UIFont.boldSystemFont(ofSize: size)
     }
 }

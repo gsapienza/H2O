@@ -13,8 +13,5 @@ enum Unit :String {
     case Ml = "ml"
 }
 
-class Constants: NSObject {
-    
-     /// Standard unit of measurement
-    static let standardUnit :Unit = .Oz
-}
+/// Standard unit of measurement
+let standardUnit :Unit = .Oz

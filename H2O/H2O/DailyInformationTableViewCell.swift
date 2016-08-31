@@ -26,6 +26,8 @@ protocol DailyInformationTableViewCellProtocol {
 
 class DailyInformationTableViewCell: UITableViewCell {
 
+    //MARK: - Public iVars
+    
     /// Date view displaying the date
     @IBOutlet weak var dailyEntryDateView: DailyEntryDateView!
     
@@ -35,12 +37,13 @@ class DailyInformationTableViewCell: UITableViewCell {
     /// Delegate to communicate with this cell and the view controller containing it
     var delegate :DailyInformationTableViewCellProtocol?
     
+    //MARK: - Setup
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         dayEntriesCollectionView.delegate = self
         dayEntriesCollectionView.dataSource = self
     }
-
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
@@ -70,7 +73,7 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         
         cell.timeLabel.text = timeString
         
-        let entryAmount = String(entry!.amount!) + Constants.standardUnit.rawValue //Entry amount
+        let entryAmount = entry!.amount!.stringValue + standardUnit.rawValue //Entry amount
        
         cell.entryAmountLabel.text = entryAmount
         

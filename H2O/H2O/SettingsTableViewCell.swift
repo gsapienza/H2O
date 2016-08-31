@@ -9,16 +9,21 @@
 import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
-        /// Cell Image view
-    let cellImageView = UIImageView()
     
-        /// Text title label
-    let cellTextLabel = UILabel()
+    //MARK: - Public iVars
     
-        /// Constraint for the text labels width constraint so it can be modified
+    /// Cell Image view
+    var cellImageView :UIImageView!
+    
+    /// Text title label
+    var cellTextLabel :UILabel!
+    
+    ///MARK: - Private iVars
+    
+    /// Constraint for the text labels width constraint so it can be modified
     private var textLabelWidthConstraint = NSLayoutConstraint()
     
-        /// Side margin amount for contained ui elements on the left and right side of the cell
+    /// Side margin amount for contained ui elements on the left and right side of the cell
     private let sideMargin :CGFloat = 15
 
     //MARK: - View Setup
@@ -34,23 +39,18 @@ class SettingsTableViewCell: UITableViewCell {
         setupColors()
     }
     
-    /**
-     Basic setup for cell views
-    */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        setupImageView()
-        setupTextLabel()
+        cellImageView = generateImageView()
+        cellTextLabel = generateTextLabel()
+        
+        layout()
     }
     
-    /**
-     Sets up properties for left most image view
-     */
-    private func setupImageView() {
+    private func layout() {
+        //---Cell Image View---
         addSubview(cellImageView)
-        
-        cellImageView.contentMode = .center
         
         cellImageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -58,13 +58,9 @@ class SettingsTableViewCell: UITableViewCell {
         addConstraint(NSLayoutConstraint(item: cellImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: cellImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
         addConstraint(NSLayoutConstraint(item: cellImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
-    }
-    
-    
-    /**
-     Sets up properties for the description text label
-     */
-    private func setupTextLabel() {
+        
+        //---Cell Text Label---
+        
         addSubview(cellTextLabel)
         
         cellTextLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -74,18 +70,41 @@ class SettingsTableViewCell: UITableViewCell {
         textLabelWidthConstraint = NSLayoutConstraint(item: cellTextLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bounds.width / 2)
         addConstraint(textLabelWidthConstraint)
         addConstraint(NSLayoutConstraint(item: cellTextLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bounds.height))
-        
-        cellTextLabel.font = StandardFonts.regularFont(18)
-        cellTextLabel.minimumScaleFactor = 0.7
-        cellTextLabel.adjustsFontSizeToFitWidth = true
     }
     
-    /**
-     Makes the text label take up the full width of the cell
-     */
+    //MARK: - Public
+    
+    ///Makes the text label take up the full width of the cell
     func fillCellWithTextLabel() {
         textLabelWidthConstraint.constant = bounds.width - (sideMargin * 2) //Text label starts at the side margin to begin with so we need to double the amount of side margin to make it work for the righ side as well
         layoutIfNeeded()
+    }
+}
+
+// MARK: - Private Generators
+private extension SettingsTableViewCell {
+    /// Generates text label to use in cell
+    ///
+    /// - returns: Text label in cell
+    func generateTextLabel() -> UILabel {
+        let label = UILabel()
+        
+        label.font = StandardFonts.regularFont(size: 18)
+        label.minimumScaleFactor = 0.7
+        label.adjustsFontSizeToFitWidth = true
+        
+        return label
+    }
+    
+    /// Generates image view to use in cell
+    ///
+    /// - returns: Image view in cell
+    func generateImageView() -> UIImageView {
+        let imageView = UIImageView()
+        
+        imageView.contentMode = .center
+        
+        return imageView
     }
 }
 

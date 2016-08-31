@@ -28,8 +28,7 @@
 		378566761CEAA27E003418C2 /* Bariol_Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566721CEAA27E003418C2 /* Bariol_Light.otf */; };
 		378566781CEAA27E003418C2 /* Bariol_Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566741CEAA27E003418C2 /* Bariol_Thin.otf */; };
 		3785667B1CEAA29C003418C2 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3785667A1CEAA29C003418C2 /* CoreText.framework */; };
-		378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3785667F1CEAA2C1003418C2 /* CENTextUtilities.m */; };
-		37A182601CEB942E0055DA02 /* CENAudioToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */; };
+		37A182601CEB942E0055DA02 /* AudioToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A1825F1CEB942E0055DA02 /* AudioToolbox.swift */; };
 		37A182621CEB94A80055DA02 /* Pop_A.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37A182611CEB94A80055DA02 /* Pop_A.wav */; };
 		37A182641CEB96430055DA02 /* b1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37A182631CEB96430055DA02 /* b1.wav */; };
 		37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182651CEBC2190055DA02 /* SettingsViewController.swift */; };
@@ -38,16 +37,16 @@
 		37ADB1561CFBA33A00BE3711 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */; };
 		37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
 		37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */; };
+		37C9683D1D5414DE000DE5C0 /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; };
+		37C9683E1D5414DE000DE5C0 /* CRToast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
 		37E0D6F31CEE26E9004ABFAF /* b4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F21CEE26E9004ABFAF /* b4.wav */; };
 		37E0D6FE1CEF66A7004ABFAF /* H2OTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */; };
-		37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */; };
+		37E0D71D1CEFE9B1004ABFAF /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */; };
 		37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */; };
-		37E0D7231CF0C16C004ABFAF /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; };
-		37E0D7241CF0C16C004ABFAF /* CRToast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		37E0D7281CF0C181004ABFAF /* CENToastNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */; };
+		37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7271CF0C181004ABFAF /* ToastNotificationManager.m */; };
 		37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */; };
 		37E0D72E1CF0FDF0004ABFAF /* Click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D72D1CF0FDF0004ABFAF /* Click.wav */; };
 		37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */; };
@@ -77,13 +76,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		37E0D7251CF0C16C004ABFAF /* Embed Frameworks */ = {
+		37C9683F1D5414DE000DE5C0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				37E0D7241CF0C16C004ABFAF /* CRToast.framework in Embed Frameworks */,
+				37C9683E1D5414DE000DE5C0 /* CRToast.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,9 +115,7 @@
 		378566741CEAA27E003418C2 /* Bariol_Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bariol_Thin.otf; sourceTree = "<group>"; };
 		3785667A1CEAA29C003418C2 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		3785667D1CEAA2C0003418C2 /* H2O-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "H2O-Bridging-Header.h"; sourceTree = "<group>"; };
-		3785667E1CEAA2C1003418C2 /* CENTextUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CENTextUtilities.h; sourceTree = "<group>"; };
-		3785667F1CEAA2C1003418C2 /* CENTextUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CENTextUtilities.m; sourceTree = "<group>"; };
-		37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CENAudioToolbox.swift; sourceTree = "<group>"; };
+		37A1825F1CEB942E0055DA02 /* AudioToolbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioToolbox.swift; sourceTree = "<group>"; };
 		37A182611CEB94A80055DA02 /* Pop_A.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pop_A.wav; sourceTree = "<group>"; };
 		37A182631CEB96430055DA02 /* b1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = b1.wav; sourceTree = "<group>"; };
 		37A182651CEBC2190055DA02 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -134,11 +131,11 @@
 		37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = H2OTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37E0D6FD1CEF66A7004ABFAF /* H2OTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H2OTests.swift; sourceTree = "<group>"; };
 		37E0D6FF1CEF66A7004ABFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateExtension.swift; path = H2OTests/NSDateExtension.swift; sourceTree = SOURCE_ROOT; };
+		37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateExtension.swift; path = H2OTests/DateExtension.swift; sourceTree = SOURCE_ROOT; };
 		37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresetTableViewCell.swift; sourceTree = "<group>"; };
 		37E0D7211CF0C164004ABFAF /* CRToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CRToast.framework; path = Carthage/Build/iOS/CRToast.framework; sourceTree = SOURCE_ROOT; };
-		37E0D7261CF0C181004ABFAF /* CENToastNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CENToastNotificationManager.h; sourceTree = "<group>"; };
-		37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CENToastNotificationManager.m; sourceTree = "<group>"; };
+		37E0D7261CF0C181004ABFAF /* ToastNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastNotificationManager.h; sourceTree = "<group>"; };
+		37E0D7271CF0C181004ABFAF /* ToastNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationManager.m; sourceTree = "<group>"; };
 		37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		37E0D72D1CF0FDF0004ABFAF /* Click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Click.wav; sourceTree = "<group>"; };
 		37E0D7561CF11561004ABFAF /* L360ConfettiArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L360ConfettiArea.h; sourceTree = "<group>"; };
@@ -167,8 +164,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				37E0D77A1CF94DAB004ABFAF /* CoreMotion.framework in Frameworks */,
+				37C9683D1D5414DE000DE5C0 /* CRToast.framework in Frameworks */,
 				37E0D77C1CF955C5004ABFAF /* HealthKit.framework in Frameworks */,
-				37E0D7231CF0C16C004ABFAF /* CRToast.framework in Frameworks */,
 				3785667B1CEAA29C003418C2 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,10 +238,10 @@
 			isa = PBXGroup;
 			children = (
 				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
-				37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */,
 				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
 				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
 				37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */,
+				37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */,
 			);
 			name = "Information View";
 			sourceTree = "<group>";
@@ -253,17 +250,15 @@
 			isa = PBXGroup;
 			children = (
 				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
-				37A1825F1CEB942E0055DA02 /* CENAudioToolbox.swift */,
-				37E0D71B1CEFE9AD004ABFAF /* NSDateExtension.swift */,
+				37A1825F1CEB942E0055DA02 /* AudioToolbox.swift */,
+				37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */,
 				3763BDAE1D313D8700FDEBD6 /* HealthManager.swift */,
 				3763BDA91D313BB200FDEBD6 /* Night Mode Support */,
 				37E0D7611CF210D2004ABFAF /* Sounds */,
 				378566791CEAA281003418C2 /* Fonts */,
 				3785667D1CEAA2C0003418C2 /* H2O-Bridging-Header.h */,
-				3785667E1CEAA2C1003418C2 /* CENTextUtilities.h */,
-				3785667F1CEAA2C1003418C2 /* CENTextUtilities.m */,
-				37E0D7261CF0C181004ABFAF /* CENToastNotificationManager.h */,
-				37E0D7271CF0C181004ABFAF /* CENToastNotificationManager.m */,
+				37E0D7261CF0C181004ABFAF /* ToastNotificationManager.h */,
+				37E0D7271CF0C181004ABFAF /* ToastNotificationManager.m */,
 				375F4FE81CEA91A6009C14AE /* Assets.xcassets */,
 				37E0D77D1CF955C5004ABFAF /* H2O.entitlements */,
 				375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */,
@@ -387,7 +382,7 @@
 				375F4FD71CEA91A6009C14AE /* Sources */,
 				375F4FD81CEA91A6009C14AE /* Frameworks */,
 				375F4FD91CEA91A6009C14AE /* Resources */,
-				37E0D7251CF0C16C004ABFAF /* Embed Frameworks */,
+				37C9683F1D5414DE000DE5C0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -501,15 +496,14 @@
 				3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */,
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
-				37E0D7281CF0C181004ABFAF /* CENToastNotificationManager.m in Sources */,
+				37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */,
 				37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
-				37E0D71D1CEFE9B1004ABFAF /* NSDateExtension.swift in Sources */,
+				37E0D71D1CEFE9B1004ABFAF /* DateExtension.swift in Sources */,
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
-				378566801CEAA2C1003418C2 /* CENTextUtilities.m in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
 				37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */,
@@ -534,7 +528,7 @@
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
 				375F4FDF1CEA91A6009C14AE /* AppDelegate.swift in Sources */,
 				3785666E1CEAA16C003418C2 /* CustomEntryButton.swift in Sources */,
-				37A182601CEB942E0055DA02 /* CENAudioToolbox.swift in Sources */,
+				37A182601CEB942E0055DA02 /* AudioToolbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

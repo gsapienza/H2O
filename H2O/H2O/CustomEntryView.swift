@@ -9,32 +9,49 @@
 import UIKit
 
 class CustomEntryView: UIView {
-        /// Shape of outlining circle that will be morphed
-    let morphingShape = CAShapeLayer()
+    //MARK: - Public iVars
     
-        /// Corner radius to start at. The custom button corner radius
+    /// Corner radius to start at. The custom button corner radius
     var startingCornerRadius :CGFloat = 0
     
-        /// Corner radius to end at. The circle outline with the amount entry
+    /// Corner radius to end at. The circle outline with the amount entry
     var endingCornerRadius :CGFloat = 0
     
-        /// Frame for placement for the custom button. Where it looks as if the morphingShape is the actual custom button
+    /// Frame for placement for the custom button. Where it looks as if the morphingShape is the actual custom button
     var startingFrame = CGRect()
     
-        /// Frame for the final circle outling
+    /// Frame for the final circle outling
     var endingFrame = CGRect()
     
-        /// Layer for the blue droplet that appears after the circle path transforms into the droplet path
-    let dropletShapeLayer = CAShapeLayer()
+    /// Text field where the user can enter how much water they drank
+    var amountTextField = UITextField()
     
-        /// Standard outline width for shapes
-    let lineWidth :CGFloat = 0.5
+    //MARK: - Private iVars
     
-        /// Standard animation time for all animations in this view
-    let animationDuration = 0.25
+    /// View that contains the amount text field and unit label. Combined to make positioning everything easier
+    private var viewContainer = UIView()
     
-        /// Custom button path
-    var customButtonShapePath :UIBezierPath {
+    /// Shape of outlining circle that will be morphed
+    private let morphingShape = CAShapeLayer()
+    
+    /// Layer for the blue droplet that appears after the circle path transforms into the droplet path
+    private let dropletShapeLayer = CAShapeLayer()
+    
+    /// Standard outline width for shapes
+    private let lineWidth :CGFloat = 0.5
+    
+    //MARK: - Internal iVars
+    
+    /// Unit of measurement label next to the amount text field
+    internal var unitLabel = UILabel()
+    
+    /// Standard animation time for all animations in this view
+    internal let animationDuration = 0.25
+    
+    //MARK: - Private Shape Paths
+    
+    /// Custom button path
+    private var customButtonShapePath :UIBezierPath {
         set{}
         get {
             let rectanglePath = UIBezierPath(roundedRect: CGRect(x: startingFrame.origin.x, y: startingFrame.origin.y, width: floor(startingFrame.width * 1.00000 + 0.5) - floor(startingFrame.width * 0.00000 + 0.5), height: floor(startingFrame.height * 1.00000 + 0.5) - floor(startingFrame.height * 0.00000 + 0.5)), cornerRadius: startingCornerRadius)
@@ -43,8 +60,8 @@ class CustomEntryView: UIView {
         }
     }
     
-        /// Circle outline path
-    var circleShapePath :UIBezierPath {
+    /// Circle outline path
+    private var circleShapePath :UIBezierPath {
         set{}
         get {
             let ovalPath = UIBezierPath(roundedRect: CGRect(x: endingFrame.origin.x, y: endingFrame.origin.y, width: floor(endingFrame.width * 1.00000 + 0.5) - floor(endingFrame.width * 0.00000 + 0.5), height: floor(endingFrame.height * 1.00000 + 0.5) - floor(endingFrame.height * 0.00000 + 0.5)), cornerRadius: endingCornerRadius)
@@ -53,8 +70,8 @@ class CustomEntryView: UIView {
         }
     }
     
-        /// Circle that resembles the circle shape path to morph into the droplet
-    var startingDropletMorphingShapePath :UIBezierPath {
+    /// Circle that resembles the circle shape path to morph into the droplet
+    private var startingDropletMorphingShapePath :UIBezierPath {
         set{}
         get {
             let startDropletPath = UIBezierPath()
@@ -70,8 +87,8 @@ class CustomEntryView: UIView {
         }
     }
     
-        /// Water droplet path
-    var endingDropletMorphingShapePath :UIBezierPath {
+    /// Water droplet path
+    private var endingDropletMorphingShapePath :UIBezierPath {
         set{}
         get {
             let endDropletPath = UIBezierPath()
@@ -87,34 +104,30 @@ class CustomEntryView: UIView {
         }
     }
     
-        /// View that contains the amount text field and unit label. Combined to make positioning everything easier
-    let viewContainer = UIView()
-    
-        /// Text field where the user can enter how much water they drank
-    let amountTextField = UITextField()
-    
-        /// Unit of measurement label next to the amount text field
-    let unitLabel = UILabel()
-    
     //MARK: - View Setup
     
-    /**
-     Permanent transparent background
-     */
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColor.clear()
+        backgroundColor = UIColor.clear
     }
     
-    /**
-     Cleanup when this view is removed from the superview
-     */
     override func removeFromSuperview() {
         super.removeFromSuperview()
         
         dropletShapeLayer.removeFromSuperlayer()
         amountTextField.text = "" //Sets the entry text to blank
+    }
+    
+    ///Allows interaction of all views except for this views background. So taps will hit the superview instead
+    override func hitTest( _ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        
+        if view != self {
+            return view
+        } else {
+            return nil
+        }
     }
     
     /**
@@ -131,66 +144,35 @@ class CustomEntryView: UIView {
 
         morphingShape.lineWidth = lineWidth
         morphingShape.strokeColor = StandardColors.primaryColor.cgColor
-        morphingShape.fillColor = UIColor.clear().cgColor
+        morphingShape.fillColor = UIColor.clear.cgColor
         
         layer.addSublayer(morphingShape)
         
-        setupViewContainer()
+        viewContainer = generateViewContainer()
+        unitLabel = generateUnitLabel()
+        amountTextField = generateAmountTextField()
+        
+        layout()
     }
     
-    /**
-     Setup for the view container containing the amount text field and unit label. Positions on top of the custom button with a small scale value
-     */
-    private func setupViewContainer() {
+    private func layout() {
+        //---View Container---
+        
         viewContainer.frame = startingFrame
-        viewContainer.clipsToBounds = true
-        viewContainer.backgroundColor = UIColor.clear()
-        
-        let scaleAmount :CGFloat = 0.1 //Amount to scale everything in view container. Before scaling up
-        
-        setupAmountTextField() //Positions text field
-        amountTextField.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
-        
-        setupUnitLabel() //Positions unit label
-        
-        unitLabel.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
-        
         addSubview(viewContainer)
-    }
-    
-    /**
-     Positions the amount entry text field. Simple view properties and position
-     */
-    private func setupAmountTextField() {
+        
+        //---Amount Text Field---
+        
         amountTextField.frame = CGRect(x: 0, y: 0, width: viewContainer.bounds.width / 2, height: viewContainer.bounds.height)
-        
-        amountTextField.textColor = StandardColors.waterColor
-        amountTextField.font = StandardFonts.regularFont(80)
-        amountTextField.textAlignment = .right
-        amountTextField.keyboardType = .numberPad
-        amountTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
-        amountTextField.delegate = self
-        amountTextField.tintColor = StandardColors.waterColor
-        amountTextField.placeholder = "12"
-        
         viewContainer.addSubview(amountTextField)
-    }
-    
-    /**
-     Positions the unit label. Simple view properties and position
-     */
-    private func setupUnitLabel() {
+        
+        //---Unit Label---
+        
         unitLabel.frame = CGRect(x: viewContainer.bounds.width / 2, y: 0, width: viewContainer.bounds.width / 2, height: viewContainer.bounds.height)
-        
-        unitLabel.textColor = StandardColors.primaryColor
-        unitLabel.font = StandardFonts.thinFont(80)
-        unitLabel.text = Constants.standardUnit.rawValue
-        unitLabel.textAlignment = .left
-        
         viewContainer.addSubview(unitLabel)
     }
     
-    //MARK: - Public animations
+    //MARK: - Public
     
     /**
      Animation to morph the to the outlining circle for user entry
@@ -229,7 +211,7 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
      */
-    func morphToCustomButtonPath( completionHandler: (Bool) -> Void) {
+    func morphToCustomButtonPath( completionHandler: @escaping (Bool) -> Void) {
         self.morphingShape.path = customButtonShapePath.cgPath //Set path back to starting point
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
@@ -251,7 +233,7 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
      */
-    func morphToDropletPath( completionHandler: (Bool) -> Void) {
+    func morphToDropletPath( completionHandler: @escaping (Bool) -> Void) {
         self.morphingShape.path = endingDropletMorphingShapePath.cgPath //Set path to droplet
         
         animateViewContainerToStart { (Bool) in //Animate the view container back
@@ -266,7 +248,6 @@ class CustomEntryView: UIView {
         morphAnimation.isRemovedOnCompletion = false
         
         morphingShape.add(morphAnimation, forKey: "path")
-        
         
         
         //Setup for droplet layer to fade in after morph is made to show a blue droplet
@@ -327,22 +308,22 @@ class CustomEntryView: UIView {
         }
     }
     
-    //MARK: - View Container Animations
+    //MARK: - Private
     
     /**
      Animates the view container with the unit label and text field to the entry point in the outline circle
      
      - parameter completionHandler: When the animation is complete
      */
-    private func animateViewContainerToFinish( completionHandler: (Bool) -> Void) {
+    private func animateViewContainerToFinish( completionHandler: @escaping (Bool) -> Void) {
         UIView.animate(withDuration: animationDuration, animations: {
             self.viewContainer.frame = self.endingFrame //Frame at ending point
             
             self.unitLabel.transform = CGAffineTransform.identity
-            self.setupUnitLabel() //Repositions unit label after transform
+            self.unitLabel = self.generateUnitLabel() //Repositions unit label after transform
             
             self.amountTextField.transform = CGAffineTransform.identity
-            self.setupAmountTextField() //Repositions text field after transform
+            self.amountTextField = self.generateAmountTextField() //Repositions text field after transform
             
             }) { (Bool) in
                 self.amountTextField.becomeFirstResponder()
@@ -355,7 +336,7 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: When the animation is complete
      */
-    private func animateViewContainerToStart( completionHandler: (Bool) -> Void) {
+    private func animateViewContainerToStart( completionHandler: @escaping (Bool) -> Void) {
         let scaleAmount :CGFloat = 0.0001
         amountTextField.resignFirstResponder()
 
@@ -363,29 +344,54 @@ class CustomEntryView: UIView {
             self.viewContainer.frame = self.startingFrame //Frame at starting custom button point
             
             self.unitLabel.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
-            self.setupUnitLabel() //Repositions unit label after transform
+            self.unitLabel = self.generateUnitLabel() //Repositions unit label after transform
             
             self.amountTextField.transform = CGAffineTransform(scaleX: scaleAmount, y: scaleAmount)
-            self.setupAmountTextField() //Repositions text field after transform
+            self.amountTextField = self.generateAmountTextField() //Repositions text field after transform
             
         }) { (Bool) in
             completionHandler(true)
         }
     }
-    
-    //MARK: - Other
-    
-    /**
-     Allows interaction of all views except for this views background. So taps will hit the superview instead
-     */
-    override func hitTest( _ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, with: event)
+}
+
+//MARK: - Private Generators
+extension CustomEntryView {
+    func generateViewContainer() -> UIView {
+        let view = UIView()
         
-        if view != self {
-            return view
-        } else {
-            return nil
-        }
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.clear
+        
+        return view
+    }
+    
+    func generateUnitLabel() -> UILabel {
+        let label = UILabel()
+        
+        label.textColor = StandardColors.primaryColor
+        label.font = StandardFonts.thinFont(size: 80)
+        label.text = standardUnit.rawValue
+        label.textAlignment = .left
+       // label.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        
+        return label
+    }
+    
+    func generateAmountTextField() -> UITextField {
+        let textField = UITextField()
+        
+        textField.textColor = StandardColors.waterColor
+        textField.font = StandardFonts.regularFont(size: 80)
+        textField.textAlignment = .right
+        textField.keyboardType = .numberPad
+        textField.keyboardAppearance = StandardColors.standardKeyboardAppearance
+        textField.delegate = self
+        textField.tintColor = StandardColors.waterColor
+        textField.placeholder = "12"
+        //textField.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        
+        return textField
     }
 }
 
@@ -404,7 +410,7 @@ extension CustomEntryView :UITextFieldDelegate {
             if textField.text!.characters.count + 1 > 3 && isBackSpace != -92  { //Is there less than 3 characters or is this not a backspace
                 return false
             } else {
-                let character = Array(arrayLiteral: Constants.standardUnit.rawValue)[0]
+                let character = Array(arrayLiteral: standardUnit.rawValue).first!
                 let sizeOfCharacter = character.size(attributes: [NSFontAttributeName : unitLabel.font!]) //Gets size of text based on font and string
                 
                 let amountToMoveCharacters = sizeOfCharacter.width / 2 //Amount to move text field and unit label
