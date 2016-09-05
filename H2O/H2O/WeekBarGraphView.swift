@@ -37,6 +37,14 @@ struct WeekValues {
     }
 }
 
+protocol WeekBarGraphViewProtocol {
+    ///Goal to show as dotted line in graph. Keep at zero if you don't want it to appear.
+    func weekBarGraphViewGoal() -> Float
+    
+    /// Values represented by the bars in graph
+    func weekBarGraphViewWeekValues() -> WeekValues
+}
+
 //MARK: - WeekBarGraphView Class
 class WeekBarGraphView: UIView {
     //MARK: - Public iVars
@@ -47,11 +55,7 @@ class WeekBarGraphView: UIView {
     /// Range of values to use on the yAxis. Start is drawn starting at the bottom while the end is at the top
     var yAxisRange = (start: 0.0, end: 10.0)
     
-    ///Goal to show as dotted line in graph. Keep at zero if you don't want it to appear.
-    var goal :Float = 0
-    
-    ///Values represented by the bars in graph
-    var weekValues :WeekValues?
+    var delegate :WeekBarGraphViewProtocol?
     
     //MARK: - Private iVars
     
@@ -96,6 +100,11 @@ class WeekBarGraphView: UIView {
         addConstraint(NSLayoutConstraint(item: drawingView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -margin))
         addConstraint(NSLayoutConstraint(item: drawingView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -margin))
     }
+    
+    //MARK: - Public
+    func refreshBarGraph() {
+        drawingView.setNeedsDisplay()
+    }
 }
 
 //MARK: - Private Generators
@@ -135,11 +144,11 @@ extension WeekBarGraphView :WeekBarGraphDrawingViewProtocol {
     }
     
     func getGoalValue() -> Float {
-        return goal
+        return (delegate?.weekBarGraphViewGoal())!
     }
     
     func getWeekValues() -> WeekValues {
-        return weekValues!
+        return (delegate?.weekBarGraphViewWeekValues())!
     }
 }
 
@@ -317,21 +326,28 @@ class WeekBarGraphDrawingView :UIView {
     /// - parameter xPosition: Position where the day of the weeks rests on the x axis
     /// - parameter value:     Value representing that day of the week
     private func addBarForDayOfWeek(xPosition :CGFloat, value :CGFloat) {
-        let yLineHeight = bounds.height - xyStartingPoint.y //Height of the y axis line
+        let lineCapGuessedHeight :CGFloat = 10 //This is the height of the line cap which I guessed and checked
+        let bottomMargin :CGFloat = 8 //Margin between the bottom of the bar and the x axis for aesthetic effect
+
+        let yLineHeight = bounds.height - xyStartingPoint.y - lineCapGuessedHeight - bottomMargin //Height of the y axis line taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
         
         let highestValueOnYAxis = CGFloat((delegate?.getYAxisRangeValues().end)!) //The top y label value
-        let lineCapGuessedHeight :CGFloat = 5 //This is the height of the line cap which I guessed and checked
-        let barStartingYValue = yLineHeight - ((yLineHeight / highestValueOnYAxis) * value) + lineCapGuessedHeight //The y location where to place the top of the bar
+        let barStartingYValue = yLineHeight - ((yLineHeight / highestValueOnYAxis) * value) + lineCapGuessedHeight + bottomMargin //The y location where to place the top of the bar taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
         
-        let startPoint = CGPoint(x: xPosition, y: barStartingYValue) //Establish where to begin drawing on Y axis
-        
-        let bottomMargin :CGFloat = 8 //Margin between the bottom of the bar and the x axis for aesthetic effect
-        
+        var startPoint = CGPoint(x: xPosition, y: barStartingYValue) //Establish where to begin drawing on Y axis
         let endPoint = CGPoint(x: xPosition, y: bounds.height - xyStartingPoint.y - bottomMargin) //Establish where to end drawing on Y axis
+        
+        if startPoint.y > endPoint.y { //If the start point ever makes it to the point where it is lower in the graph, then set it to the endpoint so it is not showing at all. This especially can be noticed with a zero value, since there is a little margin between the bottom of the graph and the x axis line
+            startPoint.y = endPoint.y
+        }
         
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.setLineWidth(10)
-        ctx?.setLineCap(.round)
+        if value != 0 { //Sets the line cap to round for all values except for 0. Even a 0 value with a round cap will show something on the graph. Since we dont want anything showing for a 0 value, the line cap is butt
+            ctx?.setLineCap(.round)
+        } else {
+            ctx?.setLineCap(.butt)
+        }
         ctx?.setAlpha(0.75)
         ctx?.move(to: startPoint) //Move to start point
         ctx?.addLine(to: endPoint) //Add end point

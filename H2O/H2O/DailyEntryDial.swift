@@ -13,34 +13,34 @@ protocol DailyEntryDialProtocol {
     /// Determines the amount of water drank today
     ///
     /// - returns: Float value of water drank today
-    func getAmountOfWaterEnteredToday() -> Float
+    func dialEntryCurrentValue() -> Float
     
-    /// Determines the user set goal from NSUserDefaults
+    /// Determines the user set goal
 
     ///
     /// - returns: Goal float value set by user
-    func getGoal() -> Float
+    func dailyEntryDialGoal() -> Float
     
     ///Called when the user has tapped this view like a button
-    func dialButtonTapped()
+    func dailyEntryDialButtonTapped()
 }
 
 class DailyEntryDial: UIView {
     //MARK: - Public iVars
     
-    /// Goal instance var, is loaded through NSUserDefaults and contains daily water goal (readonly)
-    var goal :Float {
+    /// Goal read from delegate (readonly)
+    private var goal :Float {
         set{}
         get {
-            return delegate!.getGoal()
+            return delegate!.dailyEntryDialGoal()
         }
     }
     
-    /// Current amount of water that the user drank today public property (readonly)
-    var currentAmountOfWaterDrankToday :Float {
+    /// Current amount in the dial towards the goal (readonly)
+    private var currentValue :Float {
         set{}
         get {
-            return (delegate?.getAmountOfWaterEnteredToday())!
+            return (delegate?.dialEntryCurrentValue())!
         }
     }
     
@@ -134,9 +134,9 @@ class DailyEntryDial: UIView {
     ///
     /// - parameter animated: Should the dial gauge animate on change
     func updateAmountOfWaterDrankToday( animated :Bool) {
-        currentAmountOfWaterDrankTodayLabel.text = String(Int(currentAmountOfWaterDrankToday)) + standardUnit.rawValue
+        currentAmountOfWaterDrankTodayLabel.text = String(Int(currentValue)) + standardUnit.rawValue
         
-        let newStrokeEnd = currentAmountOfWaterDrankToday / goal
+        let newStrokeEnd = currentValue / goal
         
         if animated {
             let animationTime = 0.5
@@ -181,7 +181,6 @@ private extension DailyEntryDial {
     }
     
     /// Generates an inner circle path that will represent how much water was drank today. Starts at 0
-
     ///
     /// - returns: Layer containing the circle
     func generateInnerCircleShapeLayer() -> CAShapeLayer {
@@ -235,13 +234,13 @@ internal extension DailyEntryDial {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
             self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }) { (Bool) in
-            self.delegate?.dialButtonTapped()
-            
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-                self.transform = CGAffineTransform.identity
-                }, completion: { (Bool) in
-            })
+            self.delegate?.dailyEntryDialButtonTapped()
         }
+        
+        UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: .curveEaseOut, animations: {
+            self.transform = CGAffineTransform.identity
+            }, completion: { (Bool) in
+        })
     }
 }
 

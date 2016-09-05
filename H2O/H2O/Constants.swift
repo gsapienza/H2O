@@ -12,6 +12,3 @@ enum Unit :String {
     case Oz = "oz"
     case Ml = "ml"
 }
-
-/// Standard unit of measurement
-let standardUnit :Unit = .Oz

@@ -21,7 +21,7 @@ protocol InformationViewControllerProtocol {
      
      - returns: Goal float value set by user
      */
-    func informationViewGetGoal() -> Float
+    func informationViewControllerGoal() -> Float
 }
 
 class InformationViewController: Popsicle {
@@ -43,11 +43,9 @@ class InformationViewController: Popsicle {
     /// Delegate to inform the presenting view controller changes to entries
     var informationViewControllerDelegate :InformationViewControllerProtocol?
     
-    //MARK: - Private iVars
+    /// User set goal
+    var goal :Float!
     
-    /// Weekly graph view in the header of the water data table view
-    private var weeklyBarGraphView :WeekBarGraphView!
-
     //MARK: - Internal iVars
     
     /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
@@ -59,12 +57,15 @@ class InformationViewController: Popsicle {
     /// Index of the entry within the date cell that will be deleted. This is used so that the user can select and item to delete then get a confirmation alert before the deletion takes place. This stores the index to delete so the confirmation alert can perform the actual delete action
     internal var indexOfEntryToDelete = -1
     
+    /// Weekly graph view in the header of the water data table view
+    internal var weeklyBarGraphView :WeekBarGraphView!
+    
     //MARK: - View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dateCollection = AppDelegate.getAppDelegate().user!.entriesForDates() //Populate the table from core data
+        dateCollection = getAppDelegate().user!.entriesForDates() //Populate the table from core data
         
         configureNavigationBar()
         configureTableView()
@@ -136,16 +137,10 @@ private extension InformationViewController {
         view.gradientColors = [topGradientColor, bottomGradientColor]
         
         //Goal line setup
-        let roundedUpToNearestFiftyGoal = 50.0 * ceil((informationViewControllerDelegate!.informationViewGetGoal() / 50.0)) //Rounded goal to the next 50 ex: 87 becomes 100
+        let roundedUpToNearestFiftyGoal = 50.0 * ceil((informationViewControllerDelegate!.informationViewControllerGoal() / 50.0)) //Rounded goal to the next 50 ex: 87 becomes 100
         view.yAxisRange = (0, Double(roundedUpToNearestFiftyGoal))
-        view.goal = informationViewControllerDelegate!.informationViewGetGoal()
-        
-        /*if let lastWeekValues = AppDelegate.getAppDelegate().user?.waterValuesThisWeek() {
-         weeklyBarGraphView.weekValues = WeekValues(sunday: CGFloat(lastWeekValues[0]), monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
-         }*/
-        
-        view.weekValues = WeekValues(sunday: 80, monday: 30, tuesday: 20, wednesday: 10, thursday: 40, friday: 40, saturday: 90)
-        
+        view.delegate = self
+
         return view
     }
 }
@@ -269,9 +264,23 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this entry?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (alert: UIAlertAction!) in
             self.onEntryDeletion()
+            self.weeklyBarGraphView.refreshBarGraph()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: - WeekBarGraphViewProtocol
+extension InformationViewController :WeekBarGraphViewProtocol {
+    func weekBarGraphViewGoal() -> Float {
+        return informationViewControllerDelegate!.informationViewControllerGoal()
+    }
+    
+    func weekBarGraphViewWeekValues() -> WeekValues {
+        let lastWeekValues = getAppDelegate().user!.waterValuesThisWeek()
+        
+        return WeekValues(sunday: CGFloat(lastWeekValues[0]), monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
     }
 }

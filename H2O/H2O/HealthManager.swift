@@ -122,7 +122,7 @@ class HealthManager: NSObject {
                 let sampleDate = category.startDate //Start date for water entry
                 let sampleAmount = category.quantity.doubleValue(for: HKUnit.fluidOunceUS()) //Amount of water entered
                 
-                AppDelegate.getAppDelegate().user?.addNewEntryToUser(Float(sampleAmount), date: sampleDate) //Adds water to database
+                getAppDelegate().user?.addNewEntryToUser(Float(sampleAmount), date: sampleDate) //Adds water to database
                 
             }
         }

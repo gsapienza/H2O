@@ -117,7 +117,7 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
             borderAnimation.delegate = self
         }
         
-        entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)
+        entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)        
     }
 }
 

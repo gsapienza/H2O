@@ -16,6 +16,9 @@
 		375F4FEC1CEA91A6009C14AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */; };
 		3763BDAD1D313D7900FDEBD6 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3763BDAC1D313D7900FDEBD6 /* NotificationConstants.swift */; };
 		3763BDAF1D313D8700FDEBD6 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3763BDAE1D313D8700FDEBD6 /* HealthManager.swift */; };
+		3780931F1D7BD531007CF646 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780931E1D7BD531007CF646 /* Global.swift */; };
+		378093211D7D1916007CF646 /* GSAnimatingProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */; };
+		378093241D7D254B007CF646 /* H2OFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093231D7D254B007CF646 /* H2OFluidView.swift */; };
 		3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
 		378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */; };
 		378566651CEA9645003418C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665F1CEA9645003418C2 /* User.swift */; };
@@ -101,6 +104,9 @@
 		375F4FED1CEA91A6009C14AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3763BDAC1D313D7900FDEBD6 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
 		3763BDAE1D313D8700FDEBD6 /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
+		3780931E1D7BD531007CF646 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAnimatingProgressLayer.swift; sourceTree = "<group>"; };
+		378093231D7D254B007CF646 /* H2OFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H2OFluidView.swift; sourceTree = "<group>"; };
 		3785665C1CEA941A003418C2 /* StandardColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardColors.swift; sourceTree = "<group>"; };
 		3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3785665F1CEA9645003418C2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 		3763BDAA1D313CBD00FDEBD6 /* Defaults */ = {
 			isa = PBXGroup;
 			children = (
+				3780931E1D7BD531007CF646 /* Global.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
 				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
 				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
@@ -273,6 +280,9 @@
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
 				37ADB1551CFBA33A00BE3711 /* GSFluidView.swift */,
+				378093231D7D254B007CF646 /* H2OFluidView.swift */,
+				378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */,
+				37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */,
 				37E0D6F51CEE280E004ABFAF /* Entry Buttons */,
 			);
 			name = "Main View";
@@ -329,7 +339,6 @@
 		37E0D6F51CEE280E004ABFAF /* Entry Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */,
 				3785666B1CEAA161003418C2 /* EntryButton.swift */,
 				3785666D1CEAA16C003418C2 /* CustomEntryButton.swift */,
 			);
@@ -497,8 +506,10 @@
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
 				37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */,
+				3780931F1D7BD531007CF646 /* Global.swift in Sources */,
 				37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
+				378093241D7D254B007CF646 /* H2OFluidView.swift in Sources */,
 				37E0D71D1CEFE9B1004ABFAF /* DateExtension.swift in Sources */,
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
@@ -523,6 +534,7 @@
 				3763BDAF1D313D8700FDEBD6 /* HealthManager.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
+				378093211D7D1916007CF646 /* GSAnimatingProgressLayer.swift in Sources */,
 				3763BDAD1D313D7900FDEBD6 /* NotificationConstants.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,

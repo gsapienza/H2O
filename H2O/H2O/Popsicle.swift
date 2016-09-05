@@ -29,7 +29,7 @@ class Popsicle: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !popsiclePushed {
-            AppDelegate.delay(0.1, closure: { 
+            delay(delay: 0.1, closure: {
                 self.pushPopsicle()
             })
         }
@@ -39,7 +39,7 @@ class Popsicle: UIViewController {
      Sets up popsicle by putting the view controller at the bottom of the screen on top of the root view controller. This does not actually show the view on screen.
      */
     func setupPopsicle() {
-        let rootViewController = AppDelegate.getAppDelegate().window?.rootViewController
+        let rootViewController = getAppDelegate().window?.rootViewController
         
         view.translatesAutoresizingMaskIntoConstraints = false
         rootViewController!.addChildViewController(self)

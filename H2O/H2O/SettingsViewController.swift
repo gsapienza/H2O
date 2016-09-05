@@ -289,7 +289,7 @@ class SettingsViewController: UITableViewController {
             themeSwitch.isEnabled = true
         }
         
-        AppDelegate.getAppDelegate().checkToSwitchThemes() //Switch themes if necessary based on time of day
+        getAppDelegate().checkToSwitchThemes() //Switch themes if necessary based on time of day
     }
 }
 

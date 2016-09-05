@@ -47,7 +47,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     /// Fluid view that can animate to indicate amount of water drank today
-    @IBOutlet weak var fluidView: GSFluidView!
+    @IBOutlet weak var fluidView: H2OFluidView!
     
     /// Blur view overlayed on top of the fluid view
     @IBOutlet weak var fluidBlurView: UIVisualEffectView!
@@ -62,7 +62,21 @@ class MainViewController: UIViewController {
     internal var confettiArea :L360ConfettiArea!
     
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
-    internal var customEntryView = CustomEntryView()
+    internal var customEntryView :CustomEntryView!
+    
+    /// User set water goal (readonly)
+    internal var goal :Float {
+        set{}
+        get {
+            return UserDefaults.standard.float(forKey: "GoalValue")
+        }
+    }
+    
+    /// Last frame set for the fluid view presentation layer. Set by its delegate when animating its position
+    var lastFluidViewPresentationLayerFrame :CGRect?
+    
+    /// Last frame set for the custom view droplet presentation layer. Set by its delegate when animating its position
+    var lastCustomViewDropletPresentationLayerFrame :CGRect?
     
     //MARK: - View Setup
 
@@ -76,6 +90,7 @@ class MainViewController: UIViewController {
         } else {
             backgroundImageView.image = UIImage(named: "LightModeBackground")
         }
+        
         configureNavigationBar()
         configureSettingsBarButton()
         configureFluidView()
@@ -89,6 +104,17 @@ class MainViewController: UIViewController {
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
         let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
         RunLoop.current.add(newDateTimer, forMode: RunLoopMode.commonModes)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        customEntryView = generateCustomEntryView()
+        
+        layout()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
     }
     
     private func layout() {
@@ -103,7 +129,9 @@ class MainViewController: UIViewController {
         view.addConstraint(NSLayoutConstraint(item: confettiArea, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0))
         
         //---Custom Entry View---
-        customEntryView = CustomEntryView(frame: view.bounds)
+        customEntryView.frame = view.bounds
+        
+        view.insertSubview(customEntryView, aboveSubview: fluidView)
     }
     
     //MARK: - Internal
@@ -150,9 +178,9 @@ class MainViewController: UIViewController {
     
     ///Updates the height of the fluid value by getting the ratio of amount of water drank and goal
     internal func updateFluidValue() {
-        var newFillValue :Float = Float((getAmountOfWaterEnteredToday() / getGoal()) * 1.0) //New ratio
+        var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
         
-        AppDelegate.delay(0.2) { //Aesthetic delay
+        delay(delay: 0.2) { //Aesthetic delay
             self.fluidView.fillTo(&newFillValue) //New fill value 0-1
             //self.fluidView.startTiltAnimation() //Set up for core motion movement
         }
@@ -168,6 +196,22 @@ private extension MainViewController {
         let view = L360ConfettiArea()
         
         view.isUserInteractionEnabled = false
+        
+        return view
+    }
+    
+    /// Generates a custom entry view for path animations
+    ///
+    /// - returns: Custom entry view to overlay this view and perform path animations
+    func generateCustomEntryView() -> CustomEntryView {
+        let view = CustomEntryView()
+        
+        view.customButtonFrame = customEntryButton.frame
+        view.customButtonCornerRadius = customEntryButton.layer.cornerRadius
+        view.circleDialFrame = dailyEntryDial.frame
+        view.circleDialCornerRadius = dailyEntryDial.bounds.width / 2
+        view.dropletAtBottomFrame = CGRect(x: dailyEntryDial.frame.origin.x, y: self.view.frame.height, width: dailyEntryDial.frame.width, height: dailyEntryDial.frame.height)
+        view.delegate = self
         
         return view
     }
@@ -199,6 +243,7 @@ private extension MainViewController {
     func configureFluidView() {
         fluidView.fillColor = StandardColors.waterColor //Water fill
         fluidView.fillDuration = 2 //New duration of height animations
+        fluidView.h2OFluidViewDelegate = self
         
         updateFluidValue() //Update the fluid value to get a new height
     }
@@ -239,20 +284,20 @@ internal extension MainViewController {
     ///
     /// - parameter amount: Amount of water in fl oz
     func addWaterToToday( amount :Float) {
-        let beforeAmount = AppDelegate.getAppDelegate().user?.amountOfWaterForToday() //Water drank before entering this latest entry
+        let beforeAmount = getAppDelegate().user?.amountOfWaterForToday() //Water drank before entering this latest entry
         
         //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added
-        if beforeAmount! < getGoal() && beforeAmount! + amount >= getGoal() {
+        if beforeAmount! < goal && beforeAmount! + amount >= goal {
             confettiArea.burst(at: dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
             AudioToolbox.standardAudioToolbox.playAudio("Well done", fileExtension: "wav", repeatEnabled: false)
-            ToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(getGoal()))" + standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
+            ToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(goal))" + standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
             })
         } else {
             ToastNotificationManager.postToastNotification("\(Int(amount))" + standardUnit.rawValue + " added", color: StandardColors.waterColor, image: UIImage(named: "Check"), completionBlock: {
             })
         }
         
-        AppDelegate.getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
+        getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
         
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
         updateFluidValue()
@@ -275,15 +320,16 @@ internal extension MainViewController {
     
     ///When the cancel bar button is tapped when the custom entry view is present
     func onCancelCustomEntryBarButton() {
-        var newFillValue :Float = Float((getAmountOfWaterEnteredToday() / getGoal()) * 1.0) //New ratio
+        var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
         
         AudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
         
         configureSettingsBarButton() //Restore settings button
         
-        customEntryView.morphToCustomButtonPath { (Bool) in //Make the entry circle look like the custom button outline again
-            self.customEntryView.removeFromSuperview()
+        
+        customEntryView.animateFromDialCirclePathToCustomButtonPath { (Bool) in
+            //self.customEntryView.removeFromSuperview()
         }
         
         toggleViewControllerViews(hide: false) //Show all views on screen
@@ -299,11 +345,12 @@ internal extension MainViewController {
             let amount = NumberFormatter().number(from: customEntryView.amountTextField.text!)!.floatValue
             addWaterToToday(amount: amount)
             
-            customEntryView.morphToDropletPath { (Bool) in
-                self.customEntryView.removeFromSuperview()
-            }
+            customEntryView.animateToDropletPathAndDrop(completionHandler: { (Bool) in
+                delay(delay: 0.5, closure: {
+                    self.toggleViewControllerViews(hide: false) //Show all views on screen
+                })
+            })
             
-            toggleViewControllerViews(hide: false) //Show all views on screen
         } else {
             AudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
             
@@ -330,11 +377,8 @@ extension MainViewController :EntryButtonProtocol {
         var fillPercentage :Float = 0
         fluidView.fillTo(&fillPercentage) //Make the fill value 0 to better show the custom entry circle. When cancel or done is tapped, the fill will go back to current value of water that was drank
         
-        view.addSubview(customEntryView)
-        
-        customEntryView.setupStartingPathInFrame(frame: customButton.frame, cornerRadius :customButton.layer.cornerRadius) //Setup the custom button looking path
-        
-        customEntryView.morphToCirclePath(endFrame: dailyEntryDial.frame, cornerRadius :dailyEntryDial.frame.width / 2) //Animate the custom button looking path to the circle where input happens. Circle frame is based on the dailyEntryDialFrame
+        customEntryView.animateFromCustomButtonPathToCirclePath { (Bool) in
+        }
         
         toggleViewControllerViews(hide: true) //Hide all other views on screen
         
@@ -384,15 +428,15 @@ extension MainViewController :SettingsViewControllerProtocol {
 
 // MARK: - DailyEntryDialProtocol
 extension MainViewController :DailyEntryDialProtocol {
-    func getAmountOfWaterEnteredToday() -> Float {
-        return (AppDelegate.getAppDelegate().user?.amountOfWaterForToday())!
+    func dialEntryCurrentValue() -> Float {
+        return (getAppDelegate().user?.amountOfWaterForToday())!
     }
     
-    func getGoal() -> Float {
-        return UserDefaults.standard.float(forKey: "GoalValue")
+    func dailyEntryDialGoal() -> Float {
+        return goal
     }
     
-    func dialButtonTapped() {
+    func dailyEntryDialButtonTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let informationViewController = (storyboard.instantiateViewController(withIdentifier: "InformationViewController") as! InformationViewController) //Get the view controller
         
@@ -410,7 +454,41 @@ extension MainViewController :InformationViewControllerProtocol {
         HealthManager.defaultManager.deleteWaterEntry(dateOfEntry)
     }
     
-    func informationViewGetGoal() -> Float {
-        return UserDefaults.standard.float(forKey: "GoalValue")
+    func informationViewControllerGoal() -> Float {
+        return goal
+    }
+}
+
+// MARK: - H2OFluidViewProtocol
+extension MainViewController :H2OFluidViewProtocol {
+    func fluidViewLayerDidUpdate(fluidView: GSAnimatingProgressLayer) {
+        lastFluidViewPresentationLayerFrame = self.fluidView.liquidLayer.presentation()?.frame
+        
+        guard lastCustomViewDropletPresentationLayerFrame != nil else {
+            return
+        }
+        
+        if (lastFluidViewPresentationLayerFrame?.intersects(lastCustomViewDropletPresentationLayerFrame!))! {
+            print("INTERSECTION")
+        } else {
+            print("FLUID")
+            print(lastFluidViewPresentationLayerFrame)
+            print("DROPLET")
+            print(lastCustomViewDropletPresentationLayerFrame)
+            
+        }
+    }
+}
+
+// MARK: - CustomEntryViewProtocol
+extension MainViewController :CustomEntryViewProtocol {
+    func dropletLayerDidUpdate(layer: GSAnimatingProgressLayer) {
+        lastCustomViewDropletPresentationLayerFrame = customEntryView.dropletShapeLayer.presentation()!.path?.boundingBoxOfPath
+        
+        guard lastFluidViewPresentationLayerFrame != nil else {
+            return
+        }
+        
+        
     }
 }

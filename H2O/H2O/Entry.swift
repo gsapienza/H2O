@@ -13,7 +13,7 @@ import CoreData
 class Entry: NSManagedObject {
 
     class func createNewEntry(_ amount :Float, date :Date?) -> Entry {
-        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+        let managedContext = getAppDelegate().managedObjectContext
         
         let entity = NSEntityDescription.entity(forEntityName: "Entry", in:managedContext)
         
@@ -38,7 +38,7 @@ class Entry: NSManagedObject {
     }
     
     func deleteEntry() {
-        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+        let managedContext = getAppDelegate().managedObjectContext
 
         managedContext.delete(self)
         

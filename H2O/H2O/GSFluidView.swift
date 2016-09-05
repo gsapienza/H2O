@@ -30,10 +30,10 @@ class GSFluidView: UIView {
     /// Minimum wave height
     var minAmplitude = 5
     
-    //MARK: - Private iVars
-    
     /// Main layer of liquid that has the waves and pretty much all movements
-    private var liquidLayer = CAShapeLayer()
+    var liquidLayer = CAShapeLayer()
+    
+    //MARK: - Private iVars
     
     /// Lavel of vertical fill from 0 to 1
     private var fillLevel :Float = 0.0
@@ -48,10 +48,7 @@ class GSFluidView: UIView {
     private var waveMovementAnimation :CAKeyframeAnimation?
     
     private var rootView :UIView {
-        set {}
-        get {
-            return (window?.subviews.first!)!
-        }
+        return (window?.subviews.first!)!
     }
     
     //MARK: - Setup
@@ -252,5 +249,4 @@ class GSFluidView: UIView {
         waveMovementAnimation!.values = getNewAmplitudeValues() //Set the new values to the wave animation
         liquidLayer.add(waveMovementAnimation!, forKey: "path") //New animation with new values
     }
-    
 }

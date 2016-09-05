@@ -13,7 +13,7 @@ import CoreData
 class User: NSManagedObject {
 
     class func loadUser() -> User? {
-        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+        let managedContext = getAppDelegate().managedObjectContext
         
         let fetchRequest :NSFetchRequest<User> = NSFetchRequest(entityName: "User")
         
@@ -36,7 +36,7 @@ class User: NSManagedObject {
     }
     
     private class func createNewUser() -> User {
-        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+        let managedContext = getAppDelegate().managedObjectContext
         
         let entity = NSEntityDescription.entity(forEntityName: "User", in:managedContext)
         
@@ -54,7 +54,7 @@ class User: NSManagedObject {
     }
     
     func addNewEntryToUser(_ amount :Float, date :Date?) {
-        let managedContext = AppDelegate.getAppDelegate().managedObjectContext
+        let managedContext = getAppDelegate().managedObjectContext
 
         let entry = Entry.createNewEntry(amount, date :date)
         
@@ -130,36 +130,50 @@ class User: NSManagedObject {
         return dateCollections
     }
     
+    /// Get the water values for a seven day week beginning on a Sunday
+    ///
+    /// - returns: Seven float values in an array representing a weeks worth of values
     func waterValuesThisWeek() -> [Float] {
-        var dateEntries = entriesForDates()
+        let dateEntries = entriesForDates()
         
-        var lastWeekValues :[Float]  = []
+        var lastWeekValues :[Float] = [0, 0, 0, 0, 0, 0, 0] //Initial week. Everything is 0
         
-        let todaysDateComponents = Calendar.current.dateComponents([.day], from: Date())
+        return getWaterValueForNextDayInWeek(lastWeekValues: &lastWeekValues, dateEntries: dateEntries, entryIndex: 0) //Get week values starting with the last date of entries
+    }
+    
+    /// Gets the water value for the day in week represented by entry index and recursively goes through each day until it reaches a Sunday of the current week where it will then present the weeks worth of values
+    ///
+    /// - parameter lastWeekValues: Last week of values (immutable)
+    /// - parameter dateEntries:    Entries bundled in an array of dictionaries, each containing a date and an array of entries for that date
+    /// - parameter entryIndex:     Index within date entries to check if in the current week
+    ///
+    /// - returns: Array of values representing this weeks values
+    private func getWaterValueForNextDayInWeek(lastWeekValues :inout [Float], dateEntries :[[String :AnyObject]], entryIndex :Int) -> [Float] {
+        guard dateEntries.count != entryIndex else { //Is the entryIndex out of bounds
+            return lastWeekValues
+        }
+        
+        let entries = dateEntries[entryIndex] //Dictionary of a date and of all its entries
+        
+        let date = entries["date"] as! Date //Date within the dictionary of entries
 
-        for _ in 1 ... todaysDateComponents.day! {
-            if let dateEntry = dateEntries.popLast() {
-              //  let entryDate = dateEntry["date"] as! Date
-                
-                var totalDateEntryValue :Float = 0
-                for value in dateEntry["entries"] as! [Entry] {
-                    totalDateEntryValue += value.amount!.floatValue
-                }
-                
-                lastWeekValues.append(totalDateEntryValue)
-            } else {
-                lastWeekValues.append(0)
+        let lastDateComponents = Calendar.current.dateComponents([.weekday, .weekOfYear], from: date) //Components for the entries date
+        let todaysDateComponents = Calendar.current.dateComponents([.weekday, .weekOfYear], from: Date()) //Components for this date
+        
+        if lastDateComponents.weekOfYear == todaysDateComponents.weekOfYear { //If it is the same week in the year
+        
+            //Add up all entries for date
+            var totalDateEntryValue :Float = 0
+            for value in entries["entries"] as! [Entry] {
+                totalDateEntryValue += value.amount!.floatValue
             }
+            
+            lastWeekValues[lastDateComponents.weekday! - 1] = totalDateEntryValue //Value for that date of the week is the total amount of entries added up. We subtract 1 from weekday. Because Sunday is represented as 1 not 0.
+            
+            return getWaterValueForNextDayInWeek(lastWeekValues: &lastWeekValues, dateEntries: dateEntries, entryIndex: entryIndex + 1) //Run func again for the next day in dateEntries
+        } else {
+            return lastWeekValues
         }
-        
-        let remainingDays = 7 - todaysDateComponents.day!
-        
-        for _ in 1 ... remainingDays {
-            lastWeekValues.append(0)
-        }
-        
-        return lastWeekValues.reversed()
-
     }
 
     class func nextDay(_ fromDate :Date) -> Date {

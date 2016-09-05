@@ -17,10 +17,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     private var _user :User?
     
     var user :User? {
-        set {}
-        get {
-            return _user
-        }
+        return _user
     }
     
     /**
@@ -67,7 +64,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainViewController = window?.rootViewController as! MainViewController
         let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
         
-        AppDelegate.delay(0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
+        delay(delay: 0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
             switch shortcutItem.type {
             case "com.theoven.H2O.smallPresetEntry": //First preset
                 mainViewController.addWaterToToday(amount: presets[0])
@@ -238,23 +235,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Class functions
-    
-    ///- returns: Current AppDelegate
-    class func getAppDelegate() -> AppDelegate {
-        return (UIApplication.shared.delegate as? AppDelegate)!
-    }
-    
-    /// Delays block of code from running by a specified amount of time
-    ///- parameters:
-    ///   - delay: Time to delay code from being ran
-    class func delay(_ delay:Double, closure:@escaping ()->()) {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
-            closure()
-            })
-      /*  DispatchQueue.main.after(when: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-            closure()
-        }*/
-    }
     
     /**
      Creates dynamic 3D touch shortcuts to quick add water entries
