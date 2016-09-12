@@ -26,9 +26,9 @@ class StandardColors: NSObject {
         set{}
         get {
             if AppDelegate.isDarkModeEnabled() {
-                return UIColor(red: 44/255, green: 187/255, blue: 218/255, alpha: 1)
+                return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
             } else {
-                return UIColor(red: 44/255, green: 187/255, blue: 218/255, alpha: 1)
+                return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
             }
         }
     }

@@ -287,7 +287,9 @@ class WeekBarGraphDrawingView :UIView {
             numberLabel.textAlignment = .right
             numberLabel.textColor = drawingColor
             
-            let sizeOfYAxis = bounds.height - xyStartingPoint.y
+            let bottomMargin :CGFloat = 10
+            
+            let sizeOfYAxis = bounds.height - xyStartingPoint.y - bottomMargin
             
             let xPosition :CGFloat = 0 //X Position to place label
             let yPosition = sizeOfYAxis - ((sizeOfYAxis / CGFloat(numberOfValuesToFitOnYAxis)) * CGFloat(i)) //Y position to place each label. First in goes at bottom. Last is on top. Later it will be set so this value is used for the labels y center
@@ -326,28 +328,20 @@ class WeekBarGraphDrawingView :UIView {
     /// - parameter xPosition: Position where the day of the weeks rests on the x axis
     /// - parameter value:     Value representing that day of the week
     private func addBarForDayOfWeek(xPosition :CGFloat, value :CGFloat) {
-        let lineCapGuessedHeight :CGFloat = 10 //This is the height of the line cap which I guessed and checked
-        let bottomMargin :CGFloat = 8 //Margin between the bottom of the bar and the x axis for aesthetic effect
+        let bottomMargin :CGFloat = 10 //Margin between the bottom of the bar and the x axis for aesthetic effect
 
-        let yLineHeight = bounds.height - xyStartingPoint.y - lineCapGuessedHeight - bottomMargin //Height of the y axis line taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
+        let yLineHeight = bounds.height - xyStartingPoint.y - bottomMargin //Height of the y axis line taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
         
         let highestValueOnYAxis = CGFloat((delegate?.getYAxisRangeValues().end)!) //The top y label value
-        let barStartingYValue = yLineHeight - ((yLineHeight / highestValueOnYAxis) * value) + lineCapGuessedHeight + bottomMargin //The y location where to place the top of the bar taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
+        let barStartingYValue = yLineHeight - ((yLineHeight / highestValueOnYAxis) * value) //The y location where to place the top of the bar taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
         
-        var startPoint = CGPoint(x: xPosition, y: barStartingYValue) //Establish where to begin drawing on Y axis
+        let startPoint = CGPoint(x: xPosition, y: barStartingYValue + 10) //Establish where to begin drawing on Y axis
         let endPoint = CGPoint(x: xPosition, y: bounds.height - xyStartingPoint.y - bottomMargin) //Establish where to end drawing on Y axis
-        
-        if startPoint.y > endPoint.y { //If the start point ever makes it to the point where it is lower in the graph, then set it to the endpoint so it is not showing at all. This especially can be noticed with a zero value, since there is a little margin between the bottom of the graph and the x axis line
-            startPoint.y = endPoint.y
-        }
-        
+
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.setLineWidth(10)
-        if value != 0 { //Sets the line cap to round for all values except for 0. Even a 0 value with a round cap will show something on the graph. Since we dont want anything showing for a 0 value, the line cap is butt
-            ctx?.setLineCap(.round)
-        } else {
-            ctx?.setLineCap(.butt)
-        }
+        
+        if value != 0 { ctx?.setLineCap(.round) } else { ctx?.setLineCap(.butt) } //Sets the line cap to round for all values except for 0. Even a 0 value with a round cap will show something on the graph. Since we dont want anything showing for a 0 value, the line cap is butt
         ctx?.setAlpha(0.75)
         ctx?.move(to: startPoint) //Move to start point
         ctx?.addLine(to: endPoint) //Add end point

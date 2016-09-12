@@ -37,7 +37,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         setPresets()
         setGoal()
         setDefaultTheme()
@@ -57,10 +57,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    /**
-     Called when 3D touch icon shortcut is tapped
-     */
-    public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let mainViewController = window?.rootViewController as! MainViewController
         let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
         
@@ -317,6 +314,5 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 

@@ -129,6 +129,11 @@ class CustomEntryView: UIView {
         
         unitLabel.frame = CGRect(x: viewContainer.bounds.width / 2, y: 0, width: viewContainer.bounds.width / 2, height: viewContainer.bounds.height)
         viewContainer.addSubview(unitLabel)
+        
+        layer.addSublayer(customButtonToDialCircleShapeLayer)
+
+        layer.addSublayer(dropletShapeLayer)
+
     }
     
     ///Allows interaction of all views except for this views background. So taps will hit the superview instead
@@ -158,7 +163,6 @@ class CustomEntryView: UIView {
             completionHandler(true)
         }
         
-        layer.addSublayer(customButtonToDialCircleShapeLayer)
 
         //Custom Button To Circle Dial Animation
         let customButtonToDialCircleAnimation = CABasicAnimation(keyPath: "path")
@@ -203,10 +207,9 @@ class CustomEntryView: UIView {
         amountTextField.resignFirstResponder()
 
         animateViewContainer(toCenter: customButtonCenterPoint, transform: CGAffineTransform(scaleX: 0.0001, y: 0.0001)) { (Bool) in //Animates the view container to be visble to the user
-            self.customButtonToDialCircleShapeLayer.removeFromSuperlayer() //Remove the circle layer that now looks like a droplet so that we can work with an actual droplet path to animate the blue layer in
             completionHandler(true) //Informs the caller that this animation is complete
         }
-            
+        
         customButtonToDialCircleShapeLayer.path = circleDropletPath
         
         //Morph circle dial to a droplet look with a white outline
@@ -214,20 +217,19 @@ class CustomEntryView: UIView {
         dialCircleToDropletAnimation.fromValue = circleDropletPath
         dialCircleToDropletAnimation.toValue = dropletAtMiddlePath
         dialCircleToDropletAnimation.duration = animationDuration
-        dialCircleToDropletAnimation.fillMode = kCAFillModeForwards
-        dialCircleToDropletAnimation.isRemovedOnCompletion = false
+        dialCircleToDropletAnimation.fillMode = kCAFillModeBackwards
         customButtonToDialCircleShapeLayer.add(dialCircleToDropletAnimation, forKey: "path")
         
+        customButtonToDialCircleShapeLayer.path = nil //Remove the circle layer that now looks like a droplet so that we can work with an actual droplet path to animate the blue layer in
+
         //Setup for droplet layer to fade in after morph is made to show a blue droplet
-        
-        layer.addSublayer(dropletShapeLayer)
         
         //Blue droplet opacity animation
         let dropletOpacityAnimation = CABasicAnimation(keyPath: "opacity")
         dropletOpacityAnimation.fromValue = 0
         dropletOpacityAnimation.toValue = 1
         dropletOpacityAnimation.duration = animationDuration
-        dropletOpacityAnimation.beginTime = CACurrentMediaTime() + animationDuration * 0.8 //Begin after the circle layer, multiplied by 0.8 because I like the timing better
+        dropletOpacityAnimation.beginTime = CACurrentMediaTime() + animationDuration * 0.6 //Begin after the circle layer, multiplied by 0.6 because I like the timing and transition better
         dropletOpacityAnimation.fillMode = kCAFillModeBackwards
         dropletOpacityAnimation.isRemovedOnCompletion = false
         dropletShapeLayer.add(dropletOpacityAnimation, forKey: "opacity")
@@ -239,8 +241,9 @@ class CustomEntryView: UIView {
         dropletFallAnimation.duration = animationDuration * 1.5
         dropletFallAnimation.fillMode = kCAFillModeBackwards
         dropletFallAnimation.beginTime = dropletOpacityAnimation.beginTime + animationDuration
-        dropletFallAnimation.isRemovedOnCompletion = true
-        
+        dropletFallAnimation.isRemovedOnCompletion = false
+        dropletFallAnimation.setValue("path", forKey: gSAnimationID)
+        dropletFallAnimation.delegate = dropletShapeLayer
         dropletShapeLayer.add(dropletFallAnimation, forKey: "path")
     }
     
@@ -320,6 +323,9 @@ extension CustomEntryView {
         label.font = StandardFonts.thinFont(size: 80)
         label.text = standardUnit.rawValue
         label.textAlignment = .left
+        label.baselineAdjustment = .alignCenters
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         
         return label
     }
@@ -338,6 +344,8 @@ extension CustomEntryView {
         textField.delegate = self
         textField.tintColor = StandardColors.waterColor
         textField.placeholder = "12"
+        textField.adjustsFontSizeToFitWidth = true
+        textField.minimumFontSize = 30
         
         return textField
     }
@@ -366,7 +374,7 @@ extension CustomEntryView {
         shapeLayer.opacity = 1 //Droplet final opacity
         shapeLayer.fillColor = StandardColors.waterColor.cgColor
         shapeLayer.progressDelegate = self
-        shapeLayer.keyPathsToMonitor = ["path"]
+        shapeLayer.keyValuesToMonitor = ["path"]
         
         return shapeLayer
     }
@@ -498,7 +506,7 @@ extension CustomEntryView :UITextFieldDelegate {
 // MARK: - GSAnimatingProgressLayerProtocol
 extension CustomEntryView :GSAnimatingProgressLayerProtocol {
     func layerDidUpdate(key: String) {
-        print(dropletShapeLayer.presentation()!.path?.boundingBoxOfPath)
-        //delegate?.dropletLayerDidUpdate(layer: dropletShapeLayer)
+       // print(dropletShapeLayer.presentation()!.path?.boundingBoxOfPath)
+        delegate?.dropletLayerDidUpdate(layer: dropletShapeLayer)
     }
 }

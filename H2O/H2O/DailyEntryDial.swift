@@ -50,7 +50,9 @@ class DailyEntryDial: UIView {
     //MARK: - Internal iVars
     
     /// Line width for the 2 overlapping circles in the gauge
-    internal let circleLineWidth :CGFloat = 20
+    internal var circleLineWidth :CGFloat {
+        return frame.width / 15
+    }
 
     /// Center label displaying the amount of water that the user drank
     internal var currentAmountOfWaterDrankTodayLabel :UILabel!
@@ -100,10 +102,10 @@ class DailyEntryDial: UIView {
         
         currentAmountOfWaterDrankTodayLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
+        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .height, relatedBy: .equal, toItem: currentAmountOfWaterDrankTodayLabel, attribute: .width, multiplier: 1, constant: 0))
         
         //---Dial Button---
         
@@ -207,7 +209,10 @@ private extension DailyEntryDial {
         let label = UILabel()
         
         label.font = StandardFonts.thinFont(size: 80)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.textAlignment = .center
+        label.baselineAdjustment = .alignCenters
         
         return label
     }

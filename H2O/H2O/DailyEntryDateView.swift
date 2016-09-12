@@ -93,9 +93,11 @@ class DailyEntryDateView: UIView {
         
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        let monthLabelSideMargin :CGFloat = 5 //Side margins for month label
+        
         calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .centerY, relatedBy: .equal, toItem: calendarContainerView, attribute: .centerY, multiplier: 1, constant: sizeOfMonth.height / 2 + calendarLabelCenterSpacingMargin)) //Y position of day label is below center point by half the label height and the center margin
-        calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .leading, relatedBy: .equal, toItem: calendarContainerView, attribute: .leading, multiplier: 1, constant: 0))
-        calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .trailing, relatedBy: .equal, toItem: calendarContainerView, attribute: .trailing, multiplier: 1, constant: 0))
+        calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .leading, relatedBy: .equal, toItem: calendarContainerView, attribute: .leading, multiplier: 1, constant: monthLabelSideMargin))
+        calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .trailing, relatedBy: .equal, toItem: calendarContainerView, attribute: .trailing, multiplier: 1, constant: -monthLabelSideMargin))
         calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: sizeOfMonth.height)) //Height is associated with label size with font
     }
 }

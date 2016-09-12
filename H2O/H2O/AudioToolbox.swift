@@ -34,6 +34,7 @@ public class AudioToolbox: NSObject {
             if repeatEnabled {
                 self.audioPlayer.numberOfLoops = -1
             }
+            self.audioPlayer.prepareToPlay()
             self.audioPlayer.play()
         })
     }

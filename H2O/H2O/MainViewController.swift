@@ -78,6 +78,9 @@ class MainViewController: UIViewController {
     /// Last frame set for the custom view droplet presentation layer. Set by its delegate when animating its position
     var lastCustomViewDropletPresentationLayerFrame :CGRect?
     
+    /// Determines whether we want something to happen when the custom view water droplet meets the water liquid view when it drops
+    var monitoringCustomViewDropletMovements = false
+    
     //MARK: - View Setup
 
     override func viewDidLoad() {
@@ -96,10 +99,9 @@ class MainViewController: UIViewController {
         configureFluidView()
         configurePresetEntryCircles()
         configureBlurView()
+        configureDailyEntryDial()
         
         confettiArea = generateConfettiView()
-        
-        dailyEntryDial.delegate = self
         
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
         let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
@@ -242,7 +244,7 @@ private extension MainViewController {
     /// Configures the fluid view in background
     func configureFluidView() {
         fluidView.fillColor = StandardColors.waterColor //Water fill
-        fluidView.fillDuration = 2 //New duration of height animations
+        fluidView.fillDuration = 1.1 //New duration of height animations
         fluidView.h2OFluidViewDelegate = self
         
         updateFluidValue() //Update the fluid value to get a new height
@@ -275,6 +277,11 @@ private extension MainViewController {
         
         //Custom button
         customEntryButton.delegate = self
+    }
+    
+    /// Configures the daily entry of water dial
+    func configureDailyEntryDial() {
+        dailyEntryDial.delegate = self
     }
 }
 
@@ -338,7 +345,7 @@ internal extension MainViewController {
     ///When the done bar button is tapped when the custom entry view is present
     func onDoneCustomEntryBarButton() {
         if customEntryView.amountTextField.text != "" { //If the text field is not blank
-            AudioToolbox.standardAudioToolbox.playAudio("Water", fileExtension: "wav", repeatEnabled: false)
+            monitoringCustomViewDropletMovements = true
             
             configureSettingsBarButton() //Restore settings button
             
@@ -463,32 +470,28 @@ extension MainViewController :InformationViewControllerProtocol {
 extension MainViewController :H2OFluidViewProtocol {
     func fluidViewLayerDidUpdate(fluidView: GSAnimatingProgressLayer) {
         lastFluidViewPresentationLayerFrame = self.fluidView.liquidLayer.presentation()?.frame
-        
-        guard lastCustomViewDropletPresentationLayerFrame != nil else {
-            return
-        }
-        
-        if (lastFluidViewPresentationLayerFrame?.intersects(lastCustomViewDropletPresentationLayerFrame!))! {
-            print("INTERSECTION")
-        } else {
-            print("FLUID")
-            print(lastFluidViewPresentationLayerFrame)
-            print("DROPLET")
-            print(lastCustomViewDropletPresentationLayerFrame)
-            
-        }
     }
 }
 
 // MARK: - CustomEntryViewProtocol
 extension MainViewController :CustomEntryViewProtocol {
     func dropletLayerDidUpdate(layer: GSAnimatingProgressLayer) {
+        
+        
         lastCustomViewDropletPresentationLayerFrame = customEntryView.dropletShapeLayer.presentation()!.path?.boundingBoxOfPath
         
-        guard lastFluidViewPresentationLayerFrame != nil else {
+        guard lastFluidViewPresentationLayerFrame != nil && lastCustomViewDropletPresentationLayerFrame != nil else {
             return
         }
         
-        
+        if (lastFluidViewPresentationLayerFrame?.intersects(lastCustomViewDropletPresentationLayerFrame!))! && monitoringCustomViewDropletMovements {
+            AudioToolbox.standardAudioToolbox.playAudio("Water", fileExtension: "wav", repeatEnabled: false)
+            monitoringCustomViewDropletMovements = false
+//            fluidView.maxAmplitude = 100
+//            fluidView.minAmplitude = 20
+//            fluidView.amplitudeIncrement = 20
+//            fluidView.phaseShiftDuration = 0.55
+//            fluidView.updateAmplitudeArray()
+        }
     }
 }

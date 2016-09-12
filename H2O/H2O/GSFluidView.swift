@@ -30,6 +30,13 @@ class GSFluidView: UIView {
     /// Minimum wave height
     var minAmplitude = 5
     
+    /// Animation duration for the liquid moving horizontally
+    var phaseShiftDuration = 0.75 {
+        didSet {
+            startWaveAnimation()
+        }
+    }
+    
     /// Main layer of liquid that has the waves and pretty much all movements
     var liquidLayer = CAShapeLayer()
     
@@ -56,12 +63,16 @@ class GSFluidView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        updateAmplitudeArray()
+        setupLiquid()
+    }
+    
+    func updateAmplitudeArray() {
         //Initial amplitude values created by using the min amplitude and moving to the max amplitude by the time of the increment of the wave
+        amplitudeArray = []
         for i in stride(from: minAmplitude, to: maxAmplitude, by: amplitudeIncrement) {
             amplitudeArray.append(i)
         }
-        
-        setupLiquid()
     }
     
     private func setupLiquid() {
@@ -114,21 +125,23 @@ class GSFluidView: UIView {
      Uses 2 animations to control the waves. The first one is the phase shift which essentially moves the liquid x position horizontally to look like the waves are moving in a single direction. The other animation is the one that actually controls the wave shapes using path animations
      */
     private func startWaveAnimation() {
+        liquidLayer.removeAnimation(forKey: "position.x")
+        
+        //Phase shift animation to move the wave in a direction horizontally
+        let phaseShiftAnimation = CAKeyframeAnimation(keyPath: "position.x")
+        
+        let leftMostXValue = liquidLayer.position.x - bounds.width //Initial animation state for horizontal movement, setting the x position back
+        let finalXValue = liquidLayer.position.x //Second animation state to send the animation forward to its normal x coordinate
+        
+        phaseShiftAnimation.values = [leftMostXValue, finalXValue]
+        phaseShiftAnimation.duration = phaseShiftDuration
+        phaseShiftAnimation.repeatCount = HUGE //Repeat forever
+        phaseShiftAnimation.isRemovedOnCompletion = false
+        phaseShiftAnimation.fillMode = kCAFillModeForwards
+        liquidLayer.add(phaseShiftAnimation, forKey: "position.x")
+        
         if waveMovementAnimation == nil { //Only create this animation if it hasnt been created before
             //startingAmplitude = maxAmplitude
-            
-            //Phase shift animation to move the wave in a direction horizontally
-            let phaseShiftAnimation = CAKeyframeAnimation(keyPath: "position.x")
-            
-            let leftMostXValue = liquidLayer.position.x - bounds.width //Initial animation state for horizontal movement, setting the x position back
-            let finalXValue = liquidLayer.position.x //Second animation state to send the animation forward to its normal x coordinate
-            
-            phaseShiftAnimation.values = [leftMostXValue, finalXValue]
-            phaseShiftAnimation.duration = 0.75
-            phaseShiftAnimation.repeatCount = HUGE //Repeat forever
-            phaseShiftAnimation.isRemovedOnCompletion = false
-            phaseShiftAnimation.fillMode = kCAFillModeForwards
-            liquidLayer.add(phaseShiftAnimation, forKey: "position.x")
             
             /// Wave amplitude animation
             let waveMovementAnimationDuration = 0.5 //Duration of amplitude changes
@@ -138,7 +151,7 @@ class GSFluidView: UIView {
             waveMovementAnimation!.values = getNewAmplitudeValues() //Gets random amplitude values to animate with. Returns an array of CGPaths
             waveMovementAnimation!.duration = waveMovementAnimationDuration
             waveMovementAnimation!.isRemovedOnCompletion = false
-            waveMovementAnimation!.fillMode = kCAFillModeForwards
+            waveMovementAnimation!.fillMode = kCAFillModeBoth
             
             //Timer is set to repeat wave animation forever. This is done instead of repeat count because we need a new set of values everytime the animation runs, setting it to repeat would just repeat the same animation with the same exact amplitude values as before
             let waveMovementTimer = Timer(timeInterval: waveMovementAnimationDuration, target: self, selector: #selector(GSFluidView.updateWaveAnimation), userInfo: nil, repeats: true)

@@ -79,7 +79,7 @@ class InformationViewController: Popsicle {
     
     private func layout() {
         //---Header view creation---
-        let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 250))
+        let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height / 2.8)) //Height of header determined by what seemed to look best
         
         informationTableView.tableHeaderView = tableHeaderView
         
@@ -281,6 +281,6 @@ extension InformationViewController :WeekBarGraphViewProtocol {
     func weekBarGraphViewWeekValues() -> WeekValues {
         let lastWeekValues = getAppDelegate().user!.waterValuesThisWeek()
         
-        return WeekValues(sunday: CGFloat(lastWeekValues[0]), monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
+        return WeekValues(sunday: 20, monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
     }
 }

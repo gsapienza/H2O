@@ -8,16 +8,8 @@
 
 import UIKit
 
-private struct AnimationInProgress {
-    /// Key set when adding animation
-    var key :String
-    
-    /// The actual CAAnimation
-    var animation :CAAnimation
-    
-    /// Not the animation begin time, but the time set internally when the animation is added
-    var beginTime :CFTimeInterval
-}
+/// Animation ID String Constant
+let gSAnimationID = "animationId"
 
 protocol GSAnimatingProgressLayerProtocol {
     
@@ -32,7 +24,7 @@ class GSAnimatingProgressLayer :CAShapeLayer {
     //MARK: - Public iVars
     
     /// Animation key paths to monitor progress when adding an animation
-    var keyPathsToMonitor :[String]?
+    var keyValuesToMonitor :[String]?
     
     /// Delegate to call back when modifications happen
     var progressDelegate :GSAnimatingProgressLayerProtocol?
@@ -40,63 +32,36 @@ class GSAnimatingProgressLayer :CAShapeLayer {
     //MARK: - Private iVars
     
     /// Animations in progress on layer
-    private var animationsInProgress :[AnimationInProgress] = []
+    var animationsInProgress :[CAAnimation] = []
     
     /// Display timer to update with screen refreshes
-    private var displayLink :CADisplayLink?
+    var displayLink :CADisplayLink?
     
     //MARK: - Public
     
     override func add(_ anim: CAAnimation, forKey key: String?) {
         super.add(anim, forKey: key)
         
-        guard key != nil && keyPathsToMonitor != nil else {
+        guard key != nil && keyValuesToMonitor != nil else {
             return
         }
-        
-        if !keyAlreadyAnimating(key: key!) { //If the key is not currently being animated
-            var beginTime :CFTimeInterval = 0
-            if anim.beginTime != 0 {
-                beginTime = anim.beginTime
-            } else {
-                beginTime = CACurrentMediaTime()
-            }
+
+        if keyValuesToMonitor!.contains(key!) { //If the key for this animation should be monitored
+            animationsInProgress.append(anim)
             
-            let animationInProgress = AnimationInProgress(key: key!, animation: anim, beginTime: beginTime) //Create AnimationInProgress for the animation being added
-            animationsInProgress.append(animationInProgress)
-            
-            if keyPathsToMonitor!.contains(key!) { //If the key for this animation should be monitored
-                displayLink = CADisplayLink(target: self, selector: #selector(displayLinkUpdate))
-                displayLink?.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
-            }
+            displayLink = CADisplayLink(target: self, selector: #selector(displayLinkUpdate))
+            displayLink?.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
         }
     }
     
     //MARK: - Private
     
-    /// Check if there is an animation in progress for a key to monitor
-    ///
-    /// - parameter key: Key to monitor
-    ///
-    /// - returns: True if there is an animation in progress for the key
-    private func keyAlreadyAnimating(key :String) -> Bool {
-        for animation in animationsInProgress {
-            if animation.key == key {
-                return true
-            }
-        }
-        return false
-    }
-    
     /// Updates with screen to provide updates through the delegate to the layers progress through the animation. Will remove an animation in progress when it has completed
-    @objc private func displayLinkUpdate() {
+    func displayLinkUpdate() {
         if let animations = animationsContainedForKeys() { //If there are animations for a key to monitor
-            for (i, animation) in animations.enumerated() {
-                let currentTime = CACurrentMediaTime() //Time since animation was added.
-                let finalTime = animation.beginTime + animation.animation.duration //Duration of the animation. Accounts for begin time of CAAnimation
-                progressDelegate?.layerDidUpdate(key :animation.key)
-                if currentTime >= finalTime { //If the time elapsed has passed the duration of the animtation, remove the animation from those in progress
-                    animationsInProgress.remove(at: i)
+            for animation in animations {
+                if let valueForKey = getValueForKey(anim: animation) {
+                    progressDelegate?.layerDidUpdate(key :valueForKey)
                 }
             }
         } else { //If there are no animations for keys to monitor
@@ -107,17 +72,51 @@ class GSAnimatingProgressLayer :CAShapeLayer {
     /// Finds animations in progress for the keys to monitor
     ///
     /// - returns: Array of animations that should be monitored
-    private func animationsContainedForKeys() -> [AnimationInProgress]? {
-        var animations :[AnimationInProgress]?
+    func animationsContainedForKeys() -> [CAAnimation]? {
+        var animations :[CAAnimation]?
         for animation in animationsInProgress {
-            if (keyPathsToMonitor?.contains(animation.key))! {
-                if animations == nil {
-                    animations = []
+            if let valueForKey = getValueForKey(anim: animation) { //Value for animation in array
+                if (keyValuesToMonitor?.contains(valueForKey))! { //If the value for the animationID is equal to the animations key value
+                    if animations == nil {
+                        animations = []
+                    }
+                    
+                    animations!.append(animation)
                 }
-                
-                animations!.append(animation)
             }
         }
+        
         return animations
+    }
+    
+    /// Get the value for the animationID
+    ///
+    /// - parameter anim: Animation to get value for
+    ///
+    /// - returns: Value of animationID from anumation values
+    func getValueForKey(anim :CAAnimation) -> String? {
+        if let value = anim.value(forKey: gSAnimationID) as? String {
+            return value
+        } else {
+            return nil
+        }
+    }
+}
+
+// MARK: - CAAnimationDelegate
+extension GSAnimatingProgressLayer :CAAnimationDelegate {
+    
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if let animations = animationsContainedForKeys() { //If there are animations for a key to monitor
+            for (i, animation) in animations.enumerated() {
+                if let animationValueForKey = getValueForKey(anim: animation), let animValueForKey = getValueForKey(anim: anim) {
+                    if animValueForKey == animationValueForKey {
+                        if i < animationsInProgress.count { //TODO: Find out why an out of bounds can happen
+                            animationsInProgress.remove(at: i)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

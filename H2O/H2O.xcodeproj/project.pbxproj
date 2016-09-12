@@ -19,6 +19,7 @@
 		3780931F1D7BD531007CF646 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780931E1D7BD531007CF646 /* Global.swift */; };
 		378093211D7D1916007CF646 /* GSAnimatingProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */; };
 		378093241D7D254B007CF646 /* H2OFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093231D7D254B007CF646 /* H2OFluidView.swift */; };
+		3784BD041D86369D00DB581D /* QuickAdd.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3784BD031D86369C00DB581D /* QuickAdd.mp3 */; };
 		3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
 		378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */; };
 		378566651CEA9645003418C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665F1CEA9645003418C2 /* User.swift */; };
@@ -107,6 +108,7 @@
 		3780931E1D7BD531007CF646 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAnimatingProgressLayer.swift; sourceTree = "<group>"; };
 		378093231D7D254B007CF646 /* H2OFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H2OFluidView.swift; sourceTree = "<group>"; };
+		3784BD031D86369C00DB581D /* QuickAdd.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = QuickAdd.mp3; sourceTree = "<group>"; };
 		3785665C1CEA941A003418C2 /* StandardColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardColors.swift; sourceTree = "<group>"; };
 		3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3785665F1CEA9645003418C2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 		37E0D7611CF210D2004ABFAF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				3784BD031D86369C00DB581D /* QuickAdd.mp3 */,
 				3708613F1D17151F00C89394 /* Water.wav */,
 				37E0D75F1CF11870004ABFAF /* Well done.wav */,
 				37E0D6F01CEE2649004ABFAF /* Alert Error.wav */,
@@ -481,6 +484,7 @@
 				375F4FE41CEA91A6009C14AE /* Main.storyboard in Resources */,
 				37E0D72E1CF0FDF0004ABFAF /* Click.wav in Resources */,
 				370861401D17151F00C89394 /* Water.wav in Resources */,
+				3784BD041D86369D00DB581D /* QuickAdd.mp3 in Resources */,
 				37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */,
 				378566781CEAA27E003418C2 /* Bariol_Thin.otf in Resources */,
 				378566751CEAA27E003418C2 /* Bariol_Bold.otf in Resources */,
@@ -680,6 +684,7 @@
 					"$(PROJECT_DIR)/H2O/L360Confetti",
 				);
 				INFOPLIST_FILE = H2O/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -705,6 +710,7 @@
 					"$(PROJECT_DIR)/H2O/L360Confetti",
 				);
 				INFOPLIST_FILE = H2O/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O;
 				PRODUCT_NAME = "$(TARGET_NAME)";
