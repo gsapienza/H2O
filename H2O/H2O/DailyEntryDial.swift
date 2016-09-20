@@ -236,10 +236,11 @@ internal extension DailyEntryDial {
     
     /// Action that happens when dial button is tapped. Calls the implemented delegate function
     func onDialButton() {
+        self.delegate?.dailyEntryDialButtonTapped()
+
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
             self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }) { (Bool) in
-            self.delegate?.dailyEntryDialButtonTapped()
         }
         
         UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: .curveEaseOut, animations: {

@@ -23,13 +23,13 @@ public class AudioToolbox: NSObject {
     
     /// Play audio in main bundle
     ///
-    /// - parameter fileName:      Name of audio file
-    /// - parameter fileExtension: Extension of audio file
+    /// - parameter fileName:      Name of audio file with extension
     /// - parameter repeatEnabled: Option to repeat audio
-    public func playAudio(_ fileName :String, fileExtension :String, repeatEnabled :Bool) {
+    public func playAudio(_ fileName :String, repeatEnabled :Bool) {
         let backgroundQueue = DispatchQueue.global(qos: DispatchQoS.background.qosClass)
         backgroundQueue.async(execute: {
-            let url :URL = Bundle.main.url(forResource: fileName, withExtension: fileExtension)!
+            let fileNameSeperated = fileName.components(separatedBy: ".")
+            let url :URL = Bundle.main.url(forResource: fileNameSeperated.first, withExtension: fileNameSeperated.last)!
             self.audioPlayer = try! AVAudioPlayer(contentsOf: url)
             if repeatEnabled {
                 self.audioPlayer.numberOfLoops = -1

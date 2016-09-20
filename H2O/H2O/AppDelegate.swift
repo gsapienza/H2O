@@ -38,13 +38,18 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        setPresets()
-        setGoal()
-        setDefaultTheme()
-        
-        AppDelegate.createShortcuts() //Creates 3D touch shortcuts
+        if !AppUserDefaults.getWasOpenedOnce() {
+            setDefaultPresets()
+            setDefaultGoal()
+            setDefaultTheme()
+            AppDelegate.createShortcuts() //Creates 3D touch shortcuts
+            
+            AppUserDefaults.setAppWasOpenedOnce(openedOnce: true)
+        }
         
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) //Wont pause music in the background anymore. Instead plays sounds in the background
+        
+        WatchConnection.standardWatchConnection.activateSession() //Activates a session to communicate with the watch if there is one.
         
         _user = User.loadUser() //Loads user data from database
         
@@ -59,20 +64,20 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let mainViewController = window?.rootViewController as! MainViewController
-        let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
-        
-        delay(delay: 0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
-            switch shortcutItem.type {
-            case "com.theoven.H2O.smallPresetEntry": //First preset
-                mainViewController.addWaterToToday(amount: presets[0])
-            case "com.theoven.H2O.mediumPresetEntry": //Second preset
-                mainViewController.addWaterToToday(amount: presets[1])
-            case "com.theoven.H2O.largePresetEntry": //Third preset
-                mainViewController.addWaterToToday(amount: presets[2])
-            case "com.theoven.H2O.customEntry": //Custom entry
-                mainViewController.customEntryButtonTapped(customButton: mainViewController.customEntryButton)
-            default:
-                return
+        if let presets = AppUserDefaults.getPresetWaterValues() {
+            delay(delay: 0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
+                switch shortcutItem.type {
+                case ShortcutItemValue.smallEntry.rawValue: //First preset
+                    mainViewController.addWaterToToday(amount: presets[0])
+                case ShortcutItemValue.mediumEntry.rawValue: //Second preset
+                    mainViewController.addWaterToToday(amount: presets[1])
+                case ShortcutItemValue.largeEntry.rawValue: //Third preset
+                    mainViewController.addWaterToToday(amount: presets[2])
+                case ShortcutItemValue.customEntry.rawValue: //Custom entry
+                    mainViewController.customEntryButtonTapped(customButton: mainViewController.customEntryButton)
+                default:
+                    return
+                }
             }
         }
     }
@@ -103,52 +108,29 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //MARK: - Default Settings
     
-    /**
-     Sets default preset values if none exist
-     */
-    private func setPresets() {
-        let presetWaterValuesString = "PresetWaterValues"
-        guard UserDefaults.standard.array(forKey: presetWaterValuesString) != nil else {
-            let presets :[Float] = [8.0, 17.0, 23.0]
-            UserDefaults.standard.set(presets, forKey: presetWaterValuesString)
-            
-            return
-        }
+    
+    /// Sets default preset values if none exist
+    private func setDefaultPresets() {
+        AppUserDefaults.setPresetWaterValues(presets: defaultPresets)
     }
     
-    /**
-     Sets default goal value if none exists
-     */
-    private func setGoal() {
-        let goalValueString = "GoalValue"
-        guard UserDefaults.standard.float(forKey: goalValueString) != 0 else {
-            let goal :Float = 87.0
-            UserDefaults.standard.set(goal, forKey: goalValueString)
-            
-            return
-        }
+    /// Sets default goal value if none exists
+    private func setDefaultGoal() {
+        AppUserDefaults.setDailyGoalValue(goal: defaultDailyGoal)
     }
     
-    /**
-     Sets default theme value if none exist
-     */
+    /// Sets default theme if none exists
     private func setDefaultTheme() {
-        let themeString = "DarkMode"
-        guard UserDefaults.standard.string(forKey: themeString) != nil else {
-            let theme = "YES"
-            UserDefaults.standard.set(theme, forKey: themeString)
-            
-            return
-        }
+        AppUserDefaults.setDarkModeEnabled(enabled: true)
     }
-    
+
     //MARK: - Theme Management
         
     /**
      Checks the time of day and changes the theme if automatic theme change is enabled and if it is not set correctly based on current time of day. 6AM - 6PM is light mode and 6PM to 6AM is dark mode
      */
     func checkToSwitchThemes() {
-        let automaticThemeChangeEnabled = UserDefaults.standard.bool(forKey: "AutomaticThemeChange") //Get automatic status of automatic theme change
+        let automaticThemeChangeEnabled = AppUserDefaults.getAutomaticThemeChangeEnabled() //Get automatic status of automatic theme change
         
         if automaticThemeChangeEnabled {
             let calendar = Calendar.current //Calendar type
@@ -158,14 +140,14 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             let currentDateComponents = calendar.dateComponents([.hour], from: Date()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
             
             if currentDateComponents.hour! > 5 && currentDateComponents.hour! < 18 { //If between 6AM and 6PM
-                if AppDelegate.isDarkModeEnabled() { //If dark mode is enabled
-                    AppDelegate.toggleDarkMode(false) //Activate light mode
-                    NotificationCenter.default.post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update view controllers
+                if AppUserDefaults.getDarkModeEnabled() { //If dark mode is enabled
+                    AppUserDefaults.setDarkModeEnabled(enabled: false) //Activate light mode
+                    NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil) //Update view controllers
                 }
             } else { //If its between 6PM and 6AM
-                if !AppDelegate.isDarkModeEnabled() { //If light mode is enabled
-                    AppDelegate.toggleDarkMode(true) //Activate dark mode
-                    NotificationCenter.default.post(name: NotificationConstants.DarkModeToggledNotification, object: nil) //Update viewcontrollers
+                if !AppUserDefaults.getDarkModeEnabled() { //If light mode is enabled
+                    AppUserDefaults.setDarkModeEnabled(enabled: true)  //Activate dark mode
+                    NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil) //Update viewcontrollers
                 }
             }
         }
@@ -199,55 +181,23 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    /**
-     Function to tell is dark mode is enabled in NSUserDefaults
-     
-     - returns: Dark mode enabled status
-     */
-    class func isDarkModeEnabled() -> Bool {
-        let darkModeEnabled = UserDefaults.standard.string(forKey: "DarkMode")
-        
-        if darkModeEnabled == "YES" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    /**
-     Toggles dark mode in NSUserDefaults
-     
-     - parameter enabled: Dark mode on
-     */
-    class func toggleDarkMode(_ enabled :Bool) {
-        var toggle = ""
-        
-        if enabled {
-            toggle = "YES"
-        } else {
-            toggle = "NO"
-        }
-        
-        UserDefaults.standard.set(toggle, forKey: "DarkMode")
-    }
-    
     // MARK: - Class functions
     
     /**
      Creates dynamic 3D touch shortcuts to quick add water entries
      */
     class func createShortcuts() {
-        let presets = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
-        
-        let smallPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.smallPresetEntry", localizedTitle: String(Int(presets[0])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
-        
-        let mediumPresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.mediumPresetEntry", localizedTitle: String(Int(presets[1])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkMediumPresetImage"), userInfo: nil)
-        
-        let largePresetShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.largePresetEntry", localizedTitle: String(Int(presets[2])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkLargePresetImage"), userInfo: nil)
-        
-        let customShortcut = UIApplicationShortcutItem(type: "com.theoven.H2O.customEntry", localizedTitle: "Custom", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .add), userInfo: nil)
-
-        UIApplication.shared.shortcutItems = [smallPresetShortcut, mediumPresetShortcut, largePresetShortcut, customShortcut]
+        if let presets = AppUserDefaults.getPresetWaterValues() {
+            let smallPresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.smallEntry.rawValue, localizedTitle: String(Int(presets[0])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
+            
+            let mediumPresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.mediumEntry.rawValue, localizedTitle: String(Int(presets[1])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkMediumPresetImage"), userInfo: nil)
+            
+            let largePresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.largeEntry.rawValue, localizedTitle: String(Int(presets[2])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkLargePresetImage"), userInfo: nil)
+            
+            let customShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.customEntry.rawValue, localizedTitle: "Custom", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .add), userInfo: nil)
+            
+            UIApplication.shared.shortcutItems = [smallPresetShortcut, mediumPresetShortcut, largePresetShortcut, customShortcut]
+        }
     }
 
     // MARK: - Core Data stack

@@ -60,7 +60,7 @@ class InformationViewController: Popsicle {
     /// Weekly graph view in the header of the water data table view
     internal var weeklyBarGraphView :WeekBarGraphView!
     
-    //MARK: - View Setup
+    //MARK: - Public
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +76,8 @@ class InformationViewController: Popsicle {
         
         layout()
     }
+    
+    //MARK: - Private
     
     private func layout() {
         //---Header view creation---
@@ -128,6 +130,10 @@ class InformationViewController: Popsicle {
 
 // MARK: - Private Generators
 private extension InformationViewController {
+    
+    /// Generates a weekly chart view that increments its y values by 50.
+    ///
+    /// - returns: Bar graph displaying days of the week.
     func generateWeeklyGraphView() -> WeekBarGraphView {
         let view = WeekBarGraphView()
         
@@ -157,10 +163,10 @@ private extension InformationViewController {
         
         //Navigation item setup
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Information"
+        navigationItem.title = information_navigation_title_localized_string
         navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
-        let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+        let closeButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
         
         closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
         
@@ -172,7 +178,7 @@ private extension InformationViewController {
     
     /// Configures the background blur view
     func configureBlurView() {
-        if AppDelegate.isDarkModeEnabled() {
+        if AppUserDefaults.getDarkModeEnabled() {
             blurView.effect = UIBlurEffect(style: .dark)
         } else {
             blurView.effect = UIBlurEffect(style: .light)
@@ -189,7 +195,7 @@ private extension InformationViewController {
     
     /// Configures the no data label that appears when no entries have been made
     func configureNoDataLabel() {
-        noDataLabel.text = "No Water Data Logged"
+        noDataLabel.text = no_water_date_logged_localized_string
         noDataLabel.textColor = StandardColors.primaryColor
         noDataLabel.font = StandardFonts.boldFont(size: 24)
     }
@@ -261,13 +267,17 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         self.cellToDeleteFrom = cellToDeleteFrom
         indexOfEntryToDelete = index
         
-        let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this entry?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (alert: UIAlertAction!) in
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
+        feedbackGenerator.notificationOccurred(.warning)
+        
+        let alert = UIAlertController(title: delete_water_entry_alert_title_localized_string, message: are_you_sure_you_want_to_delete_entry_alert_description_localized_string, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: delete_alert_button_localized_string, style: .destructive, handler: { (alert: UIAlertAction!) in
             self.onEntryDeletion()
             self.weeklyBarGraphView.refreshBarGraph()
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: cancel_navigation_item_localized_string, style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }

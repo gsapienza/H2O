@@ -58,7 +58,7 @@ extension UIViewController {
      */
     func newViewDidLoad() {
         newViewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.onThemeChange), name: NotificationConstants.DarkModeToggledNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.onThemeChange), name: DarkModeToggledNotification, object: nil)
     }
     
     /**
@@ -67,7 +67,7 @@ extension UIViewController {
      - returns: Status bar color depending on the apps current theme
      */
     func newPreferredStatusBarStyle() -> UIStatusBarStyle {
-        if AppDelegate.isDarkModeEnabled() {
+        if AppUserDefaults.getDarkModeEnabled() {
             return .lightContent
         } else {
             return .default

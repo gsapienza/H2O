@@ -119,7 +119,7 @@ private extension DailyEntryDateView {
     /// - returns: Image that looks like a calendar
     func generateCalendarBackgroundImageView() -> UIImageView {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "CalendarImage")
+        imageView.image = UIImage(assetIdentifier: .calendarBackground)
         return imageView
     }
     

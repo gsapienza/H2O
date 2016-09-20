@@ -66,9 +66,10 @@ class MainViewController: UIViewController {
     
     /// User set water goal (readonly)
     internal var goal :Float {
-        set{}
-        get {
-            return UserDefaults.standard.float(forKey: "GoalValue")
+        if let _goal = AppUserDefaults.getDailyGoalValue() {
+            return _goal
+        } else {
+            return 0
         }
     }
     
@@ -81,17 +82,20 @@ class MainViewController: UIViewController {
     /// Determines whether we want something to happen when the custom view water droplet meets the water liquid view when it drops
     var monitoringCustomViewDropletMovements = false
     
-    //MARK: - View Setup
+    //MARK: - Public
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureAccessibility()
+        addNotificationObservers()
     
         view.backgroundColor = StandardColors.backgroundColor
         
-        if AppDelegate.isDarkModeEnabled() {
-            backgroundImageView.image = UIImage(named: "DarkModeBackground")
+        if AppUserDefaults.getDarkModeEnabled() {
+            backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
         } else {
-            backgroundImageView.image = UIImage(named: "LightModeBackground")
+            backgroundImageView.image = UIImage(assetIdentifier: .lightModeBackground)
         }
         
         configureNavigationBar()
@@ -106,21 +110,18 @@ class MainViewController: UIViewController {
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
         let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
         RunLoop.current.add(newDateTimer, forMode: RunLoopMode.commonModes)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         customEntryView = generateCustomEntryView()
-        
         layout()
     }
     
-    override func viewDidLayoutSubviews() {
-        
-    }
+    //MARK: - Private
     
     private func layout() {
         //---Confetti Area---
+        
         view.addSubview(confettiArea)
         
         confettiArea.translatesAutoresizingMaskIntoConstraints = false
@@ -131,9 +132,24 @@ class MainViewController: UIViewController {
         view.addConstraint(NSLayoutConstraint(item: confettiArea, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0))
         
         //---Custom Entry View---
+        
         customEntryView.frame = view.bounds
         
         view.insertSubview(customEntryView, aboveSubview: fluidView)
+    }
+    
+    /// Adds notifications for view controller to observe.
+    private func addNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(configureAccessibility), name: Notification.Name.UIAccessibilityReduceMotionStatusDidChange, object: nil)
+    }
+    
+    /// Makes the interface suitable for users who have certain accessibility features enabled.
+    @objc private func configureAccessibility() {
+        if UIAccessibilityIsReduceMotionEnabled() {
+            fluidView.fluidLayout = GSFluidLayout(frame: view.bounds, fluidWidth: view.bounds.width * 3, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 5, minAmplitude: 0, numberOfWaves: 2)
+        } else {
+            fluidView.fluidLayout = GSFluidLayout(frame: view.bounds, fluidWidth: view.bounds.width * 3, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 40, minAmplitude: 5, numberOfWaves: 2)
+        }
     }
     
     //MARK: - Internal
@@ -175,12 +191,16 @@ class MainViewController: UIViewController {
     ///Called via timer to check if the day has changed while the app is opened and UI elements need updating
     internal func updateTimeRelatedItems() {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
-        updateFluidValue()
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
     }
     
-    ///Updates the height of the fluid value by getting the ratio of amount of water drank and goal
-    internal func updateFluidValue() {
-        var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
+    
+    /// Updates the height of the fluid value by getting the ratio of amount of water drank and goal.
+    ///
+    /// - parameter currentValue: Current amount of water drank.
+    internal func updateFluidValue(current :Float) {
+        var newFillValue :Float = Float((current / goal) * 1.0) //New ratio
         
         delay(delay: 0.2) { //Aesthetic delay
             self.fluidView.fillTo(&newFillValue) //New fill value 0-1
@@ -212,7 +232,7 @@ private extension MainViewController {
         view.customButtonCornerRadius = customEntryButton.layer.cornerRadius
         view.circleDialFrame = dailyEntryDial.frame
         view.circleDialCornerRadius = dailyEntryDial.bounds.width / 2
-        view.dropletAtBottomFrame = CGRect(x: dailyEntryDial.frame.origin.x, y: self.view.frame.height, width: dailyEntryDial.frame.width, height: dailyEntryDial.frame.height)
+        view.dropletAtBottomFrame = CGRect(x: dailyEntryDial.frame.origin.x, y: view.frame.height, width: dailyEntryDial.frame.width, height: dailyEntryDial.frame.height)
         view.delegate = self
         
         return view
@@ -233,7 +253,7 @@ private extension MainViewController {
     func configureSettingsBarButton() {
         let navigationItem = UINavigationItem()
         
-        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(named: "SettingsBarButtonItem"), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
+        let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
         navigationItem.rightBarButtonItem = settingsBarButtonItem
@@ -243,16 +263,16 @@ private extension MainViewController {
     
     /// Configures the fluid view in background
     func configureFluidView() {
-        fluidView.fillColor = StandardColors.waterColor //Water fill
-        fluidView.fillDuration = 1.1 //New duration of height animations
+        fluidView.liquidFillColor = StandardColors.waterColor //Water fill
         fluidView.h2OFluidViewDelegate = self
         
-        updateFluidValue() //Update the fluid value to get a new height
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!) //Update the fluid value to get a new height
     }
     
     /// Configures blur view overlaying the in fluid view
     func configureBlurView() {
-        if AppDelegate.isDarkModeEnabled() {
+        if AppUserDefaults.getDarkModeEnabled() {
             fluidBlurView.effect = UIBlurEffect(style: .dark)
         } else {
             fluidBlurView.effect = UIBlurEffect(style: .light)
@@ -261,22 +281,22 @@ private extension MainViewController {
     
     /// Configures the preset buttons
     func configurePresetEntryCircles() {
-        let presetWaterValues = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
-        
-        //First button
-        entryButton1.amount = presetWaterValues[0]
-        entryButton1.delegate = self
-        
-        //Second button
-        entryButton2.amount = presetWaterValues[1]
-        entryButton2.delegate = self
-        
-        //Third button
-        entryButton3.amount = presetWaterValues[2]
-        entryButton3.delegate = self
-        
-        //Custom button
-        customEntryButton.delegate = self
+        if let presetWaterValues = AppUserDefaults.getPresetWaterValues() {
+            //First button
+            entryButton1.amount = presetWaterValues[0]
+            entryButton1.delegate = self
+            
+            //Second button
+            entryButton2.amount = presetWaterValues[1]
+            entryButton2.delegate = self
+            
+            //Third button
+            entryButton3.amount = presetWaterValues[2]
+            entryButton3.delegate = self
+            
+            //Custom button
+            customEntryButton.delegate = self
+        }
     }
     
     /// Configures the daily entry of water dial
@@ -296,18 +316,21 @@ internal extension MainViewController {
         //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added
         if beforeAmount! < goal && beforeAmount! + amount >= goal {
             confettiArea.burst(at: dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
-            AudioToolbox.standardAudioToolbox.playAudio("Well done", fileExtension: "wav", repeatEnabled: false)
-            ToastNotificationManager.postToastNotification("Congratulations! You drank \(Int(goal))" + standardUnit.rawValue + " of water today.", color: StandardColors.standardGreenColor, image: nil, completionBlock: {
+            AudioToolbox.standardAudioToolbox.playAudio(WellDoneSound, repeatEnabled: false)
+            
+            let message = String(format: congratulations_toast_notification_localized_string, Int(amount), standardUnit.rawValue)
+            ToastNotificationManager.postToastNotification(message, color: StandardColors.waterColor, image: UIImage(assetIdentifier: .check), completionBlock: {
             })
         } else {
-            ToastNotificationManager.postToastNotification("\(Int(amount))" + standardUnit.rawValue + " added", color: StandardColors.waterColor, image: UIImage(named: "Check"), completionBlock: {
+            let message = String(format: water_added_toast_notification_localized_string, Int(amount), standardUnit.rawValue)
+            ToastNotificationManager.postToastNotification(message, color: StandardColors.waterColor, image: UIImage(assetIdentifier: .check), completionBlock: {
             })
         }
         
         getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
         
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
-        updateFluidValue()
+        updateFluidValue(current: beforeAmount! + amount)
         
         HealthManager.defaultManager.saveWaterAmountToHealthKit(amount, date: Date())
     }
@@ -316,8 +339,7 @@ internal extension MainViewController {
     ///
     /// - parameter sender: Settings bar button
     @IBAction func onSettingsBarButton(_ sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let navigationViewController = (storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! UINavigationController)
+        let navigationViewController :UINavigationController = UIStoryboard(storyboard: .Main).instantiateViewController()
         
         let settingsViewController = navigationViewController.viewControllers.first as! SettingsViewController
         settingsViewController.delegate = self
@@ -330,7 +352,7 @@ internal extension MainViewController {
         var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
         
-        AudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
+        AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
         
         configureSettingsBarButton() //Restore settings button
         
@@ -359,10 +381,10 @@ internal extension MainViewController {
             })
             
         } else {
-            AudioToolbox.standardAudioToolbox.playAudio("Alert Error", fileExtension: "wav", repeatEnabled: false)
+            AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
             
             customEntryView.invalidEntry()
-            ToastNotificationManager.postToastNotification("Custom Amount Cannot Be Empty", color: StandardColors.standardRedColor, image: nil, completionBlock: {
+            ToastNotificationManager.postToastNotification(custom_amount_cannot_be_empty_toast_notification_localized_string, color: StandardColors.standardRedColor, image: nil, completionBlock: {
             })
         }
     }
@@ -391,11 +413,11 @@ extension MainViewController :EntryButtonProtocol {
         
         //Navigation bar setup for controlling custom entry
         
-        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
+        let cancelBarButton = UIBarButtonItem(title: cancel_navigation_item_localized_string, style: .plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
         
         cancelBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Cancel button view properties
         
-        let doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
+        let doneBarButton = UIBarButtonItem(title: done_navigation_item_localized_string, style: .plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
         
         doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.boldFont(size: 18)], for: UIControlState()) //Done button view properties
         
@@ -414,7 +436,8 @@ extension MainViewController :SettingsViewControllerProtocol {
     /// - parameter newValue: New goal set
     func goalUpdated(newValue: Float) {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
-        updateFluidValue()
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
     }
     
     /// When one of the presets values has been updated
@@ -444,8 +467,11 @@ extension MainViewController :DailyEntryDialProtocol {
     }
     
     func dailyEntryDialButtonTapped() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let informationViewController = (storyboard.instantiateViewController(withIdentifier: "InformationViewController") as! InformationViewController) //Get the view controller
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+        
+        let informationViewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController() //Get the view controller
         
         informationViewController.informationViewControllerDelegate = self //Delegate to listen for events like deletion
         informationViewController.setupPopsicle() //Push the view controller up like a modal controller
@@ -456,7 +482,8 @@ extension MainViewController :DailyEntryDialProtocol {
 extension MainViewController :InformationViewControllerProtocol {
     func entryWasDeleted( dateOfEntry :Date) {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
-        updateFluidValue()
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
         
         HealthManager.defaultManager.deleteWaterEntry(dateOfEntry)
     }
@@ -485,7 +512,7 @@ extension MainViewController :CustomEntryViewProtocol {
         }
         
         if (lastFluidViewPresentationLayerFrame?.intersects(lastCustomViewDropletPresentationLayerFrame!))! && monitoringCustomViewDropletMovements {
-            AudioToolbox.standardAudioToolbox.playAudio("Water", fileExtension: "wav", repeatEnabled: false)
+            AudioToolbox.standardAudioToolbox.playAudio(WaterSound, repeatEnabled: false)
             monitoringCustomViewDropletMovements = false
 //            fluidView.maxAmplitude = 100
 //            fluidView.minAmplitude = 20

@@ -6,14 +6,22 @@
 //  Copyright © 2016 The Oven. All rights reserved.
 //
 
-import UIKit
+import Foundation
+
+#if os(iOS)
+    import UIKit
+#endif
+
+#if os(watchOS)
+    import WatchKit
+#endif
 
 class StandardColors: NSObject {
      /// Standard dark blue background color
     static var backgroundColor :UIColor {
         set{}
         get {
-            if AppDelegate.isDarkModeEnabled() {
+            if AppUserDefaults.getDarkModeEnabled() {
                 return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             } else {
                 return UIColor.white
@@ -25,7 +33,7 @@ class StandardColors: NSObject {
     static var waterColor :UIColor {
         set{}
         get {
-            if AppDelegate.isDarkModeEnabled() {
+            if AppUserDefaults.getDarkModeEnabled() {
                 return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
             } else {
                 return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
@@ -43,7 +51,7 @@ class StandardColors: NSObject {
     static var standardSecondaryColor :UIColor {
         set{}
         get {
-            if AppDelegate.isDarkModeEnabled() {
+            if AppUserDefaults.getDarkModeEnabled() {
                 return UIColor(red: 2/255, green: 30/255, blue: 42/255, alpha: 1)
             } else {
                 return UIColor(white: 0.95, alpha: 0.5)
@@ -55,7 +63,7 @@ class StandardColors: NSObject {
     static var primaryColor :UIColor {
         set{}
         get {            
-            if AppDelegate.isDarkModeEnabled() {
+            if AppUserDefaults.getDarkModeEnabled() {
                 return UIColor.white
             } else {
                 return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
@@ -67,7 +75,7 @@ class StandardColors: NSObject {
     static var inversedPrimaryColor :UIColor {
         set{}
         get {
-            if AppDelegate.isDarkModeEnabled() {
+            if AppUserDefaults.getDarkModeEnabled() {
                 return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
             } else {
                 return UIColor.white
@@ -75,15 +83,19 @@ class StandardColors: NSObject {
         }
     }
     
+    #if os(iOS)
+    
         /// Keyboard color to use depending on theme
     static var standardKeyboardAppearance :UIKeyboardAppearance {
         set{}
         get {
-            if AppDelegate.isDarkModeEnabled() {
+            if AppUserDefaults.getDarkModeEnabled() {
                 return .dark
             } else {
                 return .light
             }
         }
     }
+    
+    #endif
 }

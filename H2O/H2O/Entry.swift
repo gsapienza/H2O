@@ -13,11 +13,9 @@ import CoreData
 class Entry: NSManagedObject {
 
     class func createNewEntry(_ amount :Float, date :Date?) -> Entry {
-        let managedContext = getAppDelegate().managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: "Entry", in:User.managedContext())
         
-        let entity = NSEntityDescription.entity(forEntityName: "Entry", in:managedContext)
-        
-        let entry = NSManagedObject(entity: entity!, insertInto: managedContext) as! Entry
+        let entry = NSManagedObject(entity: entity!, insertInto: User.managedContext()) as! Entry
         
         entry.id = UUID().uuidString
         if date != nil {
@@ -29,7 +27,7 @@ class Entry: NSManagedObject {
         entry.amount = NSNumber(value: amount)
         
         do {
-            try managedContext.save()
+            try User.managedContext().save()
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }
@@ -38,12 +36,10 @@ class Entry: NSManagedObject {
     }
     
     func deleteEntry() {
-        let managedContext = getAppDelegate().managedObjectContext
-
-        managedContext.delete(self)
+        User.managedContext().delete(self)
         
         do {
-            try managedContext.save()
+            try User.managedContext().save()
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }

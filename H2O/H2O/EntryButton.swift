@@ -11,7 +11,7 @@ import UIKit
 class EntryButton: UIButton {
     //MARK: - Public iVars
     
-    /// Amount that entry button will add to goal
+    /// Amount that entry button will add to goal, sets the titleLabel to this value plus the unit following.
     var amount :Float = 0 {
         didSet {
             setTitle(String(Int(amount)) + standardUnit.rawValue, for: UIControlState())
@@ -103,8 +103,10 @@ private extension EntryButton {
 internal extension EntryButton {
     ///Action on tap. Plays audio and animates the button tapped. Calls a delegate method to inform the delegate that the button was tapped
     func onTap() {
-        AudioToolbox.standardAudioToolbox.playAudio("QuickAdd", fileExtension: "mp3", repeatEnabled: false)
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        AudioToolbox.standardAudioToolbox.playAudio(QuickAddSound, repeatEnabled: false)
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
+        feedbackGenerator.notificationOccurred(.success)
         
         UIView.animate(withDuration: 0.1, delay: 0, options: .allowUserInteraction, animations: {
             self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)

@@ -102,15 +102,14 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     ///
     /// - parameter toValue:    Value of the border thickness to animate to
     /// - parameter isDelegate: Should the ending of the animation call the delegate to indicate that it is complete.
-    internal func animateBorder(toValue :CGFloat, isDelegate :Bool) {
-        entryAmountView.layer.borderWidth = toValue
-        
+    internal func animateBorder(toValue :CGFloat, isDelegate :Bool) {        
         let animationKeyValue = "borderWidth"
         
         let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
         borderAnimation.fromValue = (entryAmountView.layer.presentation()!.value(forKeyPath: animationKeyValue) as AnyObject).floatValue
         borderAnimation.toValue = toValue
         borderAnimation.duration = 0.3
+        borderAnimation.fillMode = kCAFillModeForwards
         borderAnimation.isRemovedOnCompletion = false
         
         if isDelegate {

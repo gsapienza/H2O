@@ -11,15 +11,22 @@ import CoreData
 
 
 class User: NSManagedObject {
-
-    class func loadUser() -> User? {
-        let managedContext = getAppDelegate().managedObjectContext
+    class func managedContext() -> NSManagedObjectContext {
+        #if os(iOS)
+            return getAppDelegate().managedObjectContext
+        #endif
         
+        #if os(watchOS)
+            return getWKExtensionDelegate().managedObjectContext
+        #endif
+    }
+    
+    class func loadUser() -> User? {
         let fetchRequest :NSFetchRequest<User> = NSFetchRequest(entityName: "User")
         
         do {
             let results =
-                try managedContext.fetch(fetchRequest)
+                try managedContext().fetch(fetchRequest)
             let users = results
             
             guard users.count != 0 else {
@@ -36,16 +43,14 @@ class User: NSManagedObject {
     }
     
     private class func createNewUser() -> User {
-        let managedContext = getAppDelegate().managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: "User", in:managedContext())
         
-        let entity = NSEntityDescription.entity(forEntityName: "User", in:managedContext)
-        
-        let user = NSManagedObject(entity: entity!, insertInto: managedContext) as! User
+        let user = NSManagedObject(entity: entity!, insertInto: managedContext()) as! User
         
         user.id = UUID().uuidString
         
         do {
-            try managedContext.save()
+            try managedContext().save()
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }
@@ -54,8 +59,6 @@ class User: NSManagedObject {
     }
     
     func addNewEntryToUser(_ amount :Float, date :Date?) {
-        let managedContext = getAppDelegate().managedObjectContext
-
         let entry = Entry.createNewEntry(amount, date :date)
         
         let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
@@ -64,7 +67,7 @@ class User: NSManagedObject {
         entries = mutableEntries.copy() as? NSOrderedSet
         
         do {
-            try managedContext.save()
+            try User.managedContext().save()
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }

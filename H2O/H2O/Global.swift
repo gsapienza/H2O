@@ -7,10 +7,7 @@
 //
 
 import UIKit
-
-
-/// Standard unit of measurement
-let standardUnit :Unit = .Oz
+import WatchKit
 
 /// Delays block of code from running by a specified amount of time
 ///- parameters:
@@ -21,7 +18,24 @@ func delay(delay: Double, closure: @escaping ()->()) {
     })
 }
 
-///- returns: Current AppDelegate
+#if os(iOS)
+
+/// Gets the current App Delegate.
+///
+///- returns: Current App Delegate.
 func getAppDelegate() -> AppDelegate {
     return (UIApplication.shared.delegate as? AppDelegate)!
 }
+    
+#endif
+
+#if os(watchOS)
+
+/// Gets the current Watch Extension Delegate.
+///
+/// - returns: Current Watch Extension Delegate.
+func getWKExtensionDelegate() -> ExtensionDelegate {
+    return WKExtension.shared().delegate as! ExtensionDelegate
+}
+
+#endif

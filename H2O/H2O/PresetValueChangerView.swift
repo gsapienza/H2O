@@ -107,7 +107,7 @@ class PresetValueChangerView: UIView {
         let screenWidth = getAppDelegate().window?.frame.width
         
         let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
-        if AppDelegate.isDarkModeEnabled() {
+        if AppUserDefaults.getDarkModeEnabled() {
             keyPadToolbar.barStyle = .blackTranslucent
         } else {
             keyPadToolbar.barStyle = .default

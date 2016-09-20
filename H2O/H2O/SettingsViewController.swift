@@ -41,35 +41,35 @@ protocol SettingsViewControllerProtocol {
 class SettingsViewController: UITableViewController {
     var delegate :SettingsViewControllerProtocol?
 
-        /// HealthKit static cell
+    /// HealthKit static cell
     @IBOutlet weak var healthKitCell: SettingsTableViewCell!
     
-        /// Goal static cell
+    /// Goal static cell
     @IBOutlet weak var goalCell: SettingsPresetTableViewCell!
     
     //MARK: - Preset Cells
     
-        /// Small preset static cell
+    /// Small preset static cell
     @IBOutlet weak var presetCell1: SettingsPresetTableViewCell!
     
-        /// Medium preset static cell
+    /// Medium preset static cell
     @IBOutlet weak var presetCell2: SettingsPresetTableViewCell!
     
-        /// Large preset static cell
+    /// Large preset static cell
     @IBOutlet weak var presetCell3: SettingsPresetTableViewCell!
     
     //MARK: - Theme Elements
     
-        /// Cell to toggle dark mode
+    /// Cell to toggle dark mode
     @IBOutlet weak var themeCell: SettingsTableViewCell!
     
-        /// Cell to toggle whether dark mode should turn on automatically later in the day
+    /// Cell to toggle whether dark mode should turn on automatically later in the day
     @IBOutlet weak var automaticThemeCell: SettingsTableViewCell!
     
-        /// Switch to control the apps current theme
+    /// Switch to control the apps current theme
     @IBOutlet weak var themeSwitch: UISwitch!
     
-        /// Switch to control the theme based on time of day
+    /// Switch to control the theme based on time of day
     @IBOutlet weak var automaticThemeSwitch: UISwitch!
     
     //MARK: - View Setup
@@ -95,10 +95,10 @@ class SettingsViewController: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = StandardColors.standardSecondaryColor
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = "Settings"
+        navigationItem.title = settings_navigation_title_localized_string
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
-        let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
+        let closeButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
         
         closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
         
@@ -110,52 +110,56 @@ class SettingsViewController: UITableViewController {
      */
     private func setupCells() {
         //Health cell config
-        healthKitCell.cellImageView.image = UIImage(named: "HealthKitCellImage")
+        healthKitCell.cellImageView.image = UIImage(assetIdentifier: .healthKitCellImage)
         updateHealthKitCell()
         
         //Goal cell config
-        goalCell.cellImageView.image = UIImage(named: "GoalCellImage")
-        goalCell.cellTextLabel.text = "Goal"
+        goalCell.cellImageView.image = UIImage(assetIdentifier: .goalCellImage)
+        goalCell.cellTextLabel.text = daily_goal_setting_localized_string
         
-        let goal = UserDefaults.standard.float(forKey: "GoalValue")
-        goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
-        goalCell.delegate = self
+        if let goal = AppUserDefaults.getDailyGoalValue() {
+            goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
+            goalCell.delegate = self
+        }
         
-        var imagePrefix = "Light" //Prefix to append to preset images depending if the theme is dark or light
+        var presetImages :[UIImage]! //Preset images based on light and dark modes.
         
-        if AppDelegate.isDarkModeEnabled() {
-            imagePrefix = "Dark"
+        if AppUserDefaults.getDarkModeEnabled() {
+            presetImages = [UIImage(assetIdentifier: .darkSmallPresetImage), UIImage(assetIdentifier: .darkMediumPresetImage), UIImage(assetIdentifier: .darkLargePresetImage)]
+        } else {
+            presetImages = [UIImage(assetIdentifier: .lightLargePresetImage), UIImage(assetIdentifier: .lightMediumPresetImage), UIImage(assetIdentifier: .lightLargePresetImage)]
+
         }
         
         //Preset cells config
-        let presetWaterValues = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float]
-        
-        //Small preset
-        presetCell1.cellImageView.image = UIImage(named: imagePrefix + "SmallPresetImage")
-        presetCell1.cellTextLabel.text = "Small Preset"
-        presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
-        presetCell1.delegate = self
-
-        //Medium preset
-        presetCell2.cellImageView.image = UIImage(named: imagePrefix + "MediumPresetImage")
-        presetCell2.cellTextLabel.text = "Medium Preset"
-        presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
-        presetCell2.delegate = self
-
-        //Large preset
-        presetCell3.cellImageView.image = UIImage(named: imagePrefix + "LargePresetImage")
-        presetCell3.cellTextLabel.text = "Large Preset"
-        presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
-        presetCell3.delegate = self
+        if let presetWaterValues = AppUserDefaults.getPresetWaterValues() {
+            //Small preset
+            presetCell1.cellImageView.image = presetImages[0]
+            presetCell1.cellTextLabel.text = small_preset_setting_localized_string
+            presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
+            presetCell1.delegate = self
+            
+            //Medium preset
+            presetCell2.cellImageView.image = presetImages[1]
+            presetCell2.cellTextLabel.text = medium_preset_setting_localized_string
+            presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
+            presetCell2.delegate = self
+            
+            //Large preset
+            presetCell3.cellImageView.image = presetImages[2]
+            presetCell3.cellTextLabel.text = large_preset_setting_localized_string
+            presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
+            presetCell3.delegate = self
+        }
         
         //Dark Mode cell config
-        themeCell.cellImageView.image = UIImage(named: "DarkModeCellImage")
-        themeCell.cellTextLabel.text = "Dark Mode"
+        themeCell.cellImageView.image = UIImage(assetIdentifier: .darkModeCellImage)
+        themeCell.cellTextLabel.text = dark_mode_setting_localized_string
         themeSwitch.onTintColor = StandardColors.waterColor
         
         //Automatic theme cell config
-        automaticThemeCell.cellImageView.image = UIImage(named: "AutomaticThemeChangeCellImage")
-        automaticThemeCell.cellTextLabel.text = "Automatically Switch Theme"
+        automaticThemeCell.cellImageView.image = UIImage(assetIdentifier: .automaticThemeChangeCellImage)
+        automaticThemeCell.cellTextLabel.text = auto_switch_themes_setting_localized_string
         automaticThemeSwitch.onTintColor = StandardColors.waterColor
     }
     
@@ -163,13 +167,13 @@ class SettingsViewController: UITableViewController {
      Sets up the toggles in settings
      */
     private func setupToggles() {
-        if AppDelegate.isDarkModeEnabled() { //Configure theme switch depeding on current color
+        if AppUserDefaults.getDarkModeEnabled() { //Configure theme switch depeding on current color
             themeSwitch.setOn(true, animated: false)
         } else {
             themeSwitch.setOn(false, animated: false)
         }
         
-        let automaticThemeChangeEnabled = UserDefaults.standard.bool(forKey: "AutomaticThemeChange")
+        let automaticThemeChangeEnabled = AppUserDefaults.getAutomaticThemeChangeEnabled()
         
         if automaticThemeChangeEnabled { //If automatic theme changer is on then disable the theme switch cell as it would intefere with the automatic changing
             automaticThemeSwitch.setOn(true, animated: false)
@@ -226,7 +230,7 @@ class SettingsViewController: UITableViewController {
      */
     @IBAction func onHealthKitButton( sender: AnyObject) {
         HealthManager.defaultManager.authorizeHealthKit { (success, error) in //Prompt user to enable healthkit using standard permissions modal
-            UserDefaults.standard.set(true, forKey: "HealthKitPermissionsWereShown") //Health permission were shown once (the limit to the amount of times they can be shown according to apple)
+            AppUserDefaults.setHealthKitPermissionsDisplayed(displayed: true) //Health permission were shown once (the limit to the amount of times they can be shown according to apple)
 
             DispatchQueue.main.async {
                 self.updateHealthKitCell() //Update healthkit cell to say to manage healthkit permissions through health app
@@ -244,15 +248,15 @@ class SettingsViewController: UITableViewController {
      When the health permissions prompt has come up once. Apple makes it so that it cant come up again in your app. So we disable it if it has already come up and tell the user to manage permission in the health app
      */
     private func updateHealthKitCell() {
-        let wereHealthKitPermissionsShown = UserDefaults.standard.bool(forKey: "HealthKitPermissionsWereShown") //If permissions were shown
+        let wereHealthKitPermissionsShown = AppUserDefaults.getHealthKitPermissionsDisplayed() //If permissions were shown
         
         if wereHealthKitPermissionsShown {
             healthKitCell.isUserInteractionEnabled = false //Disable cell interaction
-            healthKitCell.cellTextLabel.text = "Manage HealthKit in the Health app" //Change text because "Enable Healthkit" is not appropriate anymore
+            healthKitCell.cellTextLabel.text = manage_healthkit_setting_localized_string //Change text because "Enable Healthkit" is not appropriate anymore
             healthKitCell.cellTextLabel.alpha = 0.5 //Fade out text to make it look not enabled
             healthKitCell.fillCellWithTextLabel() //Fills the text label autolayout to fill entire cell since there are no other elements around
         } else { //If healthkit permissions have not been shown
-            healthKitCell.cellTextLabel.text = "Enable HealthKit" //Allow user to enable healthkit through permissions
+            healthKitCell.cellTextLabel.text = enable_healthkit_setting_localized_string //Allow user to enable healthkit through permissions
         }
     }
     
@@ -264,12 +268,12 @@ class SettingsViewController: UITableViewController {
      - parameter sender: Theme switch
      */
     @IBAction func onThemeSwitch( sender: UISwitch) {
-        AudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
+        AudioToolbox.standardAudioToolbox.playAudio(ClickSound, repeatEnabled: false)
 
-        AppDelegate.toggleDarkMode(sender.isOn) //Change theme based on switch state
+        AppUserDefaults.setDarkModeEnabled(enabled: sender.isOn) //Change theme based on switch state
         
         view.endEditing(true) //Dismisses keyboard... Too bad this doesnt work very well
-        NotificationCenter.default.post(name: NotificationConstants.DarkModeToggledNotification, object: nil)
+        NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil)
     }
     
     /**
@@ -278,8 +282,8 @@ class SettingsViewController: UITableViewController {
      - parameter sender: Automatic theme changer switch
      */
     @IBAction func onAutomaticThemeSwitch( sender: UISwitch) {
-        AudioToolbox.standardAudioToolbox.playAudio("Click", fileExtension: "wav", repeatEnabled: false)
-        UserDefaults.standard.set(sender.isOn, forKey: "AutomaticThemeChange")
+        AudioToolbox.standardAudioToolbox.playAudio(ClickSound, repeatEnabled: false)
+        AppUserDefaults.setAutomaticThemeChangeEnabled(enabled: sender.isOn)
         
         if sender.isOn { //If on then essentially disable the theme cell because it would intefere with the auto changes
             themeCell.cellTextLabel.alpha = 0.5
@@ -295,6 +299,7 @@ class SettingsViewController: UITableViewController {
 
 // MARK: - SettingsPresetTableViewCellProtocol
 extension SettingsViewController :SettingsPresetTableViewCellProtocol {
+    
     /**
      A preset value has been changed within a settings cell so update all values in NSUserDefaults
      
@@ -302,38 +307,38 @@ extension SettingsViewController :SettingsPresetTableViewCellProtocol {
      - parameter newValue:                    New value for the preset
      */
     func presetValueDidChange(settingsPresetTableViewCell: SettingsPresetTableViewCell, newValue :Float) {
-        /**
-         Sets the array in NSUserDefaults when modifiying one of the values
-         
-         - parameter array: Array to place in the PresetWaterValues spot in NSUserDefaults
-         */
-        func setArrayPreset( array :[Float]) {
-            UserDefaults.standard.set(array, forKey: "PresetWaterValues")
+        
+        /// What to call when a preset has been updated. Sets the user defaults, a message to the watch and changed the 3D touch shortcuts.
+        ///
+        /// - parameter presetWaterValues: Preset values to replace the ones in User Defaults
+        func updatePresets(presetWaterValues :[Float]) {
+            AppUserDefaults.setPresetWaterValues(presets: presetWaterValues)
+            WatchConnection.standardWatchConnection.sendPresetsUpdatedMessage(presets: presetWaterValues)
+            AppDelegate.createShortcuts() //Updates 3D touch shortcuts based on new presets
         }
         
-        var presetWaterValues = UserDefaults.standard.array(forKey: "PresetWaterValues") as! [Float] //Existing preset water values
-
-        switch settingsPresetTableViewCell {
-        case goalCell:
-            UserDefaults.standard.set(newValue, forKey: "GoalValue")
-            delegate?.goalUpdated(newValue: newValue) //Update goal in main view
-        case presetCell1:
-            presetWaterValues[0] = newValue
-            setArrayPreset(array: presetWaterValues) //Update NSUserDefaults
-            delegate?.presetUpdated(presetSize: .small, newValue: newValue) //Update preset in main view
-        case presetCell2:
-            presetWaterValues[1] = newValue
-            setArrayPreset(array: presetWaterValues) //Update NSUserDefaults
-            delegate?.presetUpdated(presetSize: .medium, newValue: newValue) //Update preset in main view
-        case presetCell3:
-            presetWaterValues[2] = newValue
-            setArrayPreset(array: presetWaterValues) //Update NSUserDefaults
-            delegate?.presetUpdated(presetSize: .large, newValue: newValue) //Update preset in mainview
-            return
-        default:
-            break
+        if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
+            switch settingsPresetTableViewCell {
+            case goalCell:
+                AppUserDefaults.setDailyGoalValue(goal: newValue)
+                delegate?.goalUpdated(newValue: newValue) //Update goal in main view
+                WatchConnection.standardWatchConnection.sendGoalUpdatedMessage(goal: newValue)
+            case presetCell1:
+                presetWaterValues[0] = newValue
+                delegate?.presetUpdated(presetSize: .small, newValue: newValue) //Update preset in main view
+                updatePresets(presetWaterValues: presetWaterValues)
+            case presetCell2:
+                presetWaterValues[1] = newValue
+                delegate?.presetUpdated(presetSize: .medium, newValue: newValue) //Update preset in main view
+                updatePresets(presetWaterValues: presetWaterValues)
+            case presetCell3:
+                presetWaterValues[2] = newValue
+                delegate?.presetUpdated(presetSize: .large, newValue: newValue) //Update preset in mainview
+                updatePresets(presetWaterValues: presetWaterValues)
+                return
+            default:
+                break
+            }
         }
-        
-        AppDelegate.createShortcuts() //Updates 3D touch shortcuts based on new presets
     }
 }
