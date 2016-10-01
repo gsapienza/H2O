@@ -29,6 +29,7 @@ class MainInterfaceController: WKInterfaceController {
         addNotificationObservers()
         updateTimeRelatedItems()
         
+        
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
         let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainInterfaceController.updateTimeRelatedItems), userInfo: nil, repeats: true)
         RunLoop.current.add(newDateTimer, forMode: RunLoopMode.commonModes)
@@ -39,7 +40,9 @@ class MainInterfaceController: WKInterfaceController {
     /// - parameter amount: Amount of water in fl oz.
     func addWaterToToday(amount :Float) {
         let beforeAmount = getWKExtensionDelegate().user?.amountOfWaterForToday() //Water drank before entering this latest entry
+       
         getWKExtensionDelegate().user!.addNewEntryToUser(amount, date: nil) //Add entry to database.
+
         let newAmount = beforeAmount! + amount
         h2Oscene.totalAmountLabel.text = "\(Int(newAmount))\(standardUnit.rawValue)"
         
@@ -48,6 +51,9 @@ class MainInterfaceController: WKInterfaceController {
         }
         
         updateFluidValue(current: newAmount, goal :goal)
+
+        WatchConnection.standardWatchConnection.requestSync(reply: { (replyHandler :[String : Any]) in
+        })
     }
     
     //MARK: - Private
@@ -64,6 +70,7 @@ class MainInterfaceController: WKInterfaceController {
         NotificationCenter.default.addObserver(self, selector: #selector(switchToForegroundState), name: WatchAppSwitchedToForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(presetValuesUpdated), name: PresetsUpdatedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(goalValueUpdated), name: GoalUpdatedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(syncCompleted), name: SyncCompletedNotification, object: nil)
     }
     
     /// Converts a point to a coordinate system from one beginning from the bottom left to one beginning with the top left.
@@ -203,6 +210,20 @@ fileprivate extension MainInterfaceController {
         let userInfo = notification.userInfo as! [String : Float]
         if let goal = userInfo[GoalValueNotificationInfo] {
             updateFluidValue(current: amount!, goal :goal)
+        }
+    }
+    
+    /// Refreshed view controller when a sync has been completed.
+    @objc func syncCompleted() {
+        DispatchQueue.main.async {
+            let amount = getWKExtensionDelegate().user?.amountOfWaterForToday()
+            self.h2Oscene.totalAmountLabel.text = "\(Int(amount!))\(standardUnit.rawValue)"
+            
+            guard let goal = AppUserDefaults.getDailyGoalValue() else {
+                return
+            }
+            
+            self.updateFluidValue(current: amount!, goal :goal)
         }
     }
 }

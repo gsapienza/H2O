@@ -21,6 +21,23 @@ class User: NSManagedObject {
         #endif
     }
     
+    func setDatabaseRevisionsToInitialState() {
+        //lastWatchSyncDate = Date.distantPast
+        
+        for entry in entries! {
+            let entryObject = entry as! Entry
+            entryObject.creationDate = entryObject.date
+            entryObject.modificationDate = entryObject.date
+        }
+        
+        do {
+            try User.managedContext().save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+    }
+    
     class func loadUser() -> User? {
         let fetchRequest :NSFetchRequest<User> = NSFetchRequest(entityName: "User")
         
@@ -32,7 +49,9 @@ class User: NSManagedObject {
             guard users.count != 0 else {
                 return createNewUser()
             }
+            
 
+            users.first!.setDatabaseRevisionsToInitialState()
             return users.first
             
         } catch let error as NSError {
@@ -48,6 +67,7 @@ class User: NSManagedObject {
         let user = NSManagedObject(entity: entity!, insertInto: managedContext()) as! User
         
         user.id = UUID().uuidString
+        user.lastWatchSyncDate = Date.init(timeIntervalSince1970: 0)
         
         do {
             try managedContext().save()
@@ -72,21 +92,40 @@ class User: NSManagedObject {
             print("Could not save \(error), \(error.userInfo)")
         }
     }
+    
+    func addEntry(entry :Entry) {
+        let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
+        mutableEntries.add(entry)
+        
+        entries = mutableEntries.copy() as? NSOrderedSet
+        
+        do {
+            try User.managedContext().save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
         
     func amountOfWaterForToday() -> Float {
         var todaysWaterAmount :Float = 0.0
         
         for entry in entries! {
-            let entryDate = (entry as! Entry).date
-            let todayDate = Date()
+            guard let entry = entry as? Entry else {
+                return 0
+            }
             
-            let calendar = Calendar.current //Calendar type
-            
-            let entryDateComponents = calendar.dateComponents([.day, .month, .year], from: entryDate!)
-            let todayDateComponents = calendar.dateComponents([.day, .month, .year], from: todayDate)
-
-            if entryDateComponents.month == todayDateComponents.month && entryDateComponents.day == todayDateComponents.day && entryDateComponents.year == todayDateComponents.year {
-                todaysWaterAmount += ((entry as! Entry).amount?.floatValue)!
+            if entry.wasDeleted == false {
+                let entryDate = entry.date
+                let todayDate = Date()
+                
+                let calendar = Calendar.current //Calendar type
+                
+                let entryDateComponents = calendar.dateComponents([.day, .month, .year], from: entryDate)
+                let todayDateComponents = calendar.dateComponents([.day, .month, .year], from: todayDate)
+                
+                if entryDateComponents.month == todayDateComponents.month && entryDateComponents.day == todayDateComponents.day && entryDateComponents.year == todayDateComponents.year {
+                    todaysWaterAmount += entry.amount.floatValue
+                }
             }
         }
         
@@ -99,28 +138,32 @@ class User: NSManagedObject {
         var lastCollection :[String :AnyObject]?
         
         for (i, entry) in entries!.enumerated() {
-            let entryObject = entry as! Entry
+            guard let entry = entry as? Entry else {
+                return []
+            }
             
             if lastCollection == nil {
-                lastCollection = ["date" : entryObject.date! as AnyObject, "entries" : [Entry]() as AnyObject]
+                lastCollection = ["date" : entry.date as AnyObject, "entries" : [Entry]() as AnyObject]
             }
-                        
+            
             let entriesArray = lastCollection!["entries"] as! [Entry]
             
-            let newEntries = NSArray(object: entryObject).addingObjects(from: entriesArray)
+            if entry.wasDeleted == false {
+                let newEntries = NSArray(object: entry).addingObjects(from: entriesArray)
+                lastCollection!["entries"] = newEntries as AnyObject
+            }
             
-           // print(entryObject)
-            lastCollection!["entries"] = newEntries as AnyObject
-                        
-            if entryObject == entries?.lastObject as! Entry { //if there is no next collection because we are at the end of the entries
-                dateCollections.insert(lastCollection!, at: 0) //Add the last collection the beginning so it can appear at the top of the list
+            if entry == entries?.lastObject as! Entry { //if there is no next collection because we are at the end of the entries
+                if lastCollection!["entries"]?.count != 0 {
+                    dateCollections.insert(lastCollection!, at: 0) //Add the last collection the beginning so it can appear at the top of the list
+                }
                 lastCollection = nil
             } else {
                 let nextEntry = entries![i + 1] as! Entry //Get the next entry from the current index
                 
                 let calendar = Calendar.current //Calendar type
                 
-                let nextEntryDateComponents = calendar.dateComponents([.day, .month, .year], from: nextEntry.date!) //Next entry from index date components
+                let nextEntryDateComponents = calendar.dateComponents([.day, .month, .year], from: nextEntry.date) //Next entry from index date components
                 let lastDateComponents = calendar.dateComponents([.day, .month, .year], from: (lastCollection!["date"] as! Date)) //The last entry from index date components
                 
                 if nextEntryDateComponents.month != lastDateComponents.month || nextEntryDateComponents.day != lastDateComponents.day || nextEntryDateComponents.year != lastDateComponents.year {
@@ -131,6 +174,24 @@ class User: NSManagedObject {
         }
         
         return dateCollections
+    }
+    
+    /// Gets an entry from database for its ID.
+    ///
+    /// - parameter id: Id for entry to find.
+    ///
+    /// - returns: Entry to represent Id from database.
+    func getEntryFor(id :String) -> Entry? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entry")
+        let resultPredicate = NSPredicate(format: "id = %@", id)
+        fetchRequest.predicate = resultPredicate
+        
+        do {
+            let results = try managedObjectContext?.fetch(fetchRequest)
+            return results?.first as! Entry
+        } catch _ {
+            return nil
+        }
     }
     
     /// Get the water values for a seven day week beginning on a Sunday
@@ -167,8 +228,10 @@ class User: NSManagedObject {
         
             //Add up all entries for date
             var totalDateEntryValue :Float = 0
-            for value in entries["entries"] as! [Entry] {
-                totalDateEntryValue += value.amount!.floatValue
+            for entry in entries["entries"] as! [Entry] {
+                if entry.wasDeleted == false {
+                    totalDateEntryValue += entry.amount.floatValue
+                }
             }
             
             lastWeekValues[lastDateComponents.weekday! - 1] = totalDateEntryValue //Value for that date of the week is the total amount of entries added up. We subtract 1 from weekday. Because Sunday is represented as 1 not 0.

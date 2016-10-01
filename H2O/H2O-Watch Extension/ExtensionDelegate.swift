@@ -18,6 +18,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
     
     func applicationDidFinishLaunching() {
+        if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
+            print("Documents Directory: " + documentsPath)
+        }
+        
         if !AppUserDefaults.getWasOpenedOnce() { //If the app was never opened. Load presets, if the phone has already changed these defaults, those changes will be reflected after the defaults are set.
             setDefaultPresets()
             setDefaultGoal()
@@ -32,7 +36,18 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
 
     func applicationDidBecomeActive() {
-        WatchConnection.standardWatchConnection.getDefaults() //Get defaults when the app has entered the foreground in case anything changed.
+        //Get defaults when the app has entered the foreground in case anything changed.
+        WatchConnection.standardWatchConnection.getDefaults { (reply :[String : Any]) in
+            let presets = reply[PresetValuesFromWatchMessage] as! [Float]
+            let goal = reply[GoalValueFromWatchMessage] as! Float
+            
+            NotificationCenter.default.post(name: PresetsUpdatedNotification, object: nil, userInfo: [PresetValuesNotificationInfo : presets])
+            NotificationCenter.default.post(name: GoalUpdatedNotification, object: nil, userInfo: [GoalValueNotificationInfo : goal])
+        }
+        
+        WatchConnection.standardWatchConnection.requestSync(reply: { (replyHandler :[String : Any]) in
+        })
+        
         NotificationCenter.default.post(name: WatchAppSwitchedToForegroundNotification, object: nil)
     }
 
@@ -107,7 +122,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

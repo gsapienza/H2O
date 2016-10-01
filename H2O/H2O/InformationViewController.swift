@@ -124,7 +124,7 @@ class InformationViewController: Popsicle {
             informationTableView.deleteRows(at: [indexPath!], with: .fade) //Delete the date row
         }
         
-        informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry!) //Call when entry was deleted
+        informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Call when entry was deleted
     }
 }
 
@@ -291,6 +291,6 @@ extension InformationViewController :WeekBarGraphViewProtocol {
     func weekBarGraphViewWeekValues() -> WeekValues {
         let lastWeekValues = getAppDelegate().user!.waterValuesThisWeek()
         
-        return WeekValues(sunday: 20, monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
+        return WeekValues(sunday: CGFloat(lastWeekValues[0]), monday: CGFloat(lastWeekValues[1]), tuesday: CGFloat(lastWeekValues[2]), wednesday: CGFloat(lastWeekValues[3]), thursday: CGFloat(lastWeekValues[4]), friday: CGFloat(lastWeekValues[5]), saturday: CGFloat(lastWeekValues[6]))
     }
 }

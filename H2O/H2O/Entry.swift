@@ -9,34 +9,44 @@
 import Foundation
 import CoreData
 
-
 class Entry: NSManagedObject {
 
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+       // creationDate = Date()
+    }
+    
     class func createNewEntry(_ amount :Float, date :Date?) -> Entry {
+        let id = UUID().uuidString
+        let entry = createNewEntry(id: id, amount: amount, date: date, creationDate :Date(), modificationDate :Date(), wasDeleted :false)
+        
+        return entry
+    }
+    
+    class func createNewEntry(id :String, amount :Float, date :Date?, creationDate :Date, modificationDate :Date, wasDeleted :NSNumber) -> Entry {
         let entity = NSEntityDescription.entity(forEntityName: "Entry", in:User.managedContext())
         
         let entry = NSManagedObject(entity: entity!, insertInto: User.managedContext()) as! Entry
         
-        entry.id = UUID().uuidString
         if date != nil {
             entry.date = date!
         } else {
             entry.date = Date()
         }
         
+        entry.id = id
         entry.amount = NSNumber(value: amount)
-        
-        do {
-            try User.managedContext().save()
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        }
+        entry.creationDate = creationDate
+        entry.modificationDate = modificationDate
+        entry.wasDeleted = wasDeleted
         
         return entry
     }
     
     func deleteEntry() {
-        User.managedContext().delete(self)
+        modificationDate = Date()
+        wasDeleted = true
         
         do {
             try User.managedContext().save()
@@ -44,5 +54,4 @@ class Entry: NSManagedObject {
             print("Could not save \(error), \(error.userInfo)")
         }
     }
-
 }

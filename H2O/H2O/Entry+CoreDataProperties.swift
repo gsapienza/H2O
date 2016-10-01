@@ -14,9 +14,11 @@ import CoreData
 
 extension Entry {
 
-    @NSManaged var id: String?
-    @NSManaged var date: Date?
-    @NSManaged var amount: NSNumber?
+    @NSManaged var id: String
+    @NSManaged var date: Date
+    @NSManaged var amount: NSNumber
     @NSManaged var user: User?
-
+    @NSManaged var creationDate: Date
+    @NSManaged var modificationDate: Date
+    @NSManaged var wasDeleted: NSNumber
 }

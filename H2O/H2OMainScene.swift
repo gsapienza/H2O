@@ -84,7 +84,7 @@ class H2OMainScene: SKScene {
             let totalAmountLabelPositionAction = SKAction.moveTo(y: size.height / 2, duration: animationDuration)
             totalAmountLabel.run(totalAmountLabelPositionAction)
             
-            let scaleToValue :CGFloat = 1.4 //Scale value of the total amount label.
+            let scaleToValue :CGFloat = 1.3 //Scale value of the total amount label.
             
             let totalAmountLabelScaleAction = SKAction.scale(to: scaleToValue, duration: animationDuration)
             totalAmountLabel.run(totalAmountLabelScaleAction)
@@ -118,7 +118,8 @@ class H2OMainScene: SKScene {
     private func layout() {
         let centerPoint = CGPoint(x: size.width / 2, y: size.height / 2) //Center point of scene.
         let entryButtonSize = CGSize(width: 65, height: 40) //Size of each entry button.
-        let verticalDistanceBetweenElements :CGFloat = 50 //Distance between each node.
+        let verticalDistanceBetweenTotalAndEntryButtons :CGFloat = 45 //Distance between the total amount label and the entry buttons.
+        let distanceBetweenEntryButtons :CGFloat = 6 //Horizontal and vertical distance between enrtry buttons.
         
         //---Fluid Node---
         fluidNode.position = CGPoint(x: 0, y: 0)
@@ -127,35 +128,35 @@ class H2OMainScene: SKScene {
         addChild(fluidNode)
         
         //---Total Amount Label---
-        totalAmountLabel.position = CGPoint(x: centerPoint.x, y: size.height - size.height / 5.2) //5.2 is decided based on aesthetic look of the position.
+        totalAmountLabel.position = CGPoint(x: centerPoint.x, y: size.height - 35) //35 is decided based on aesthetic look of the position.
         addChild(totalAmountLabel)
         
         //---Entry Button Container---
-        let entryButtonYValue = totalAmountLabel.position.y - verticalDistanceBetweenElements
+        let entryButtonYValue = totalAmountLabel.position.y - verticalDistanceBetweenTotalAndEntryButtons
         entryButtonContainer.position = CGPoint(x: 0, y: entryButtonYValue)
         entryButtonContainer.size = CGSize(width: size.width, height: size.height - entryButtonYValue)
         addChild(entryButtonContainer)
         
         //---Entry Button 1---
-        entryButton1.position = CGPoint(x: centerPoint.x / 2, y: 0)
+        entryButton1.position = CGPoint(x: centerPoint.x - entryButtonSize.width / 2 - distanceBetweenEntryButtons / 2, y: 0)
         entryButton1.size = entryButtonSize
         entryButtonContainer.addChild(entryButton1)
         entryButton1.layout()
         
         //---Entry Button 2---
-        entryButton2.position = CGPoint(x: centerPoint.x + centerPoint.x / 2, y: 0)
+        entryButton2.position = CGPoint(x: centerPoint.x + entryButtonSize.width / 2 + distanceBetweenEntryButtons / 2, y: 0)
         entryButton2.size = entryButtonSize
         entryButtonContainer.addChild(entryButton2)
         entryButton2.layout()
         
         //---Entry Button 3---
-        entryButton3.position = CGPoint(x: centerPoint.x / 2, y: entryButton1.position.y - verticalDistanceBetweenElements)
+        entryButton3.position = CGPoint(x: centerPoint.x - entryButtonSize.width / 2 - distanceBetweenEntryButtons / 2, y: entryButton1.position.y - entryButtonSize.height - distanceBetweenEntryButtons)
         entryButton3.size = entryButtonSize
         entryButtonContainer.addChild(entryButton3)
         entryButton3.layout()
         
         //---Custom Entry Button---
-        customEntryButton.position = CGPoint(x: centerPoint.x + centerPoint.x / 2, y: entryButton2.position.y - verticalDistanceBetweenElements)
+        customEntryButton.position = CGPoint(x: centerPoint.x + entryButtonSize.width / 2 + distanceBetweenEntryButtons / 2, y: entryButton2.position.y - entryButtonSize.height - distanceBetweenEntryButtons)
         customEntryButton.size = entryButtonSize
         entryButtonContainer.addChild(customEntryButton)
         customEntryButton.layout()

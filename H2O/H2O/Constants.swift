@@ -35,8 +35,9 @@ let WatchAppSwitchedToBackgroundNotification = Notification.Name("WATCH_APP_SWIT
 let WatchAppSwitchedToForegroundNotification = Notification.Name("WATCH_APP_SWITCHED_TO_FOREGROUND")
 let PresetsUpdatedNotification = Notification.Name("PRESETS_UPDATED")
 let GoalUpdatedNotification = Notification.Name("GOAL_UPDATED")
+let SyncCompletedNotification = Notification.Name("SYNC_COMPLETE")
 
-//MARK: - Notification Dict Contants
+//MARK: - Notification Dict Constants
 
 let PresetValuesNotificationInfo = "PRESET_VALUES"
 let GoalValueNotificationInfo = "GOAL_VALUE"
@@ -50,11 +51,33 @@ let AutomaticThemeChangeDefault = "AUTOMATIC_THEME_CHANGE"
 let DarkModeDefault = "DARK_MODE"
 let HealthKitPermissionsDisplayedDefault = "HEALTHKIT_PERMISSIONS_WERE_DISPLAYED"
 
-// MARK: - Watch Message Keys
+//MARK: - Watch Message Keys
 
 let PresetsUpdatedWatchMessage = "PRESETS_UPDATED"
 let GoalUpdatedWatchMessage = "GOAL_UPDATED"
 let GetDefaultsWatchMessage = "GET_DEFAULTS"
+let RequestSyncWatchMessage = "REQUEST_SYNC"
+let StartSyncWatchMessage = "START_SYNC"
+
+//MARK: - Watch Message Reply Handler Dict Constants
+
+let PresetValuesFromWatchMessage = "WATCH_PRESET_VALUES"
+let GoalValueFromWatchMessage = "WATCH_GOAL_VALUE"
+let EntriesToInsertFromWatchMessage = "WATCH_ENTRIES_TO_INSERT"
+let EntriesToModifyFromWatchMessage = "WATCH_ENTRIES_TO_MODIFY"
+let SyncDataWatchMessage = "WATCH_SYNC_DATA"
+
+//MARK: - Watch Sync Engine Data Keys
+
+let WatchDataSyncBeganDate = "WATCH_DATA_SYNC_BEGAN_DATE"
+let WatchDataLastWatchSyncDate = "WATCH_DATA_LAST_WATCH_SYNC_DATE"
+let WatchDateInsertedItems = "WATCH_DATA_INSERTED_ITEMS"
+let WatchDateModifiedItems = "WATCH_DATA_MODIFIED_ITEMS"
+
+//MARK: - Watch Message Contents Constants
+
+let UserRevisionWatchMessageContent = "USER_REVISION_FROM_WATCH_MESSAGE_CONTENTS"
+let LastRevisionSyncToWatchMessageContent = "LAST_REVISION_SYNC_TO_WATCH_MESSAGE_CONTENTS"
 
 //MARK: - Defaults
 
@@ -66,8 +89,8 @@ let defaultDailyGoal :Float = 87
 let congratulations_toast_notification_localized_string = "congratulations_toast_notification".localized
 let water_added_toast_notification_localized_string = "water_added_toast_notification".localized
 let custom_amount_cannot_be_empty_toast_notification_localized_string = "custom_amount_cannot_be_empty".localized
-let done_navigation_item_localized_string = "done".localized
-let cancel_navigation_item_localized_string = "cancel".localized
+let done_navigation_item_localized_string = "done_navigation_item".localized
+let cancel_navigation_item_localized_string = "cancel_navigation_item".localized
 let information_navigation_title_localized_string = "information_navigation_title".localized
 let no_water_date_logged_localized_string = "no_water_data_logged".localized
 let delete_water_entry_alert_title_localized_string = "delete_water_entry_alert_title".localized

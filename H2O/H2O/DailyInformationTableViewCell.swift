@@ -69,11 +69,11 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a" //Format into hour, minute, AM/PM
         
-        let timeString = dateFormatter.string(from: entryTimeDate! as Date) //Get the correct string from the date
+        let timeString = dateFormatter.string(from: entryTimeDate as Date) //Get the correct string from the date
         
         cell.timeLabel.text = timeString
         
-        let entryAmount = entry!.amount!.stringValue + standardUnit.rawValue //Entry amount
+        let entryAmount = entry!.amount.stringValue + standardUnit.rawValue //Entry amount
        
         cell.entryAmountLabel.text = entryAmount
         

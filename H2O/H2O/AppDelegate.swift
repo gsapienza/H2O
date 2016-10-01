@@ -38,6 +38,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
+            print("Documents Directory: " + documentsPath)
+        }
+        
         if !AppUserDefaults.getWasOpenedOnce() {
             setDefaultPresets()
             setDefaultGoal()
@@ -58,6 +62,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         //Set a timer to check the theme status so that if the app is open when the time changes, the theme will change
         let automaticThemeSwitcherTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(AppDelegate.checkToSwitchThemes), userInfo: nil, repeats: true)
         RunLoop.current.add(automaticThemeSwitcherTimer, forMode: RunLoopMode.commonModes)
+        
+        WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
+        }
         
         return true
     }
@@ -188,11 +195,11 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     class func createShortcuts() {
         if let presets = AppUserDefaults.getPresetWaterValues() {
-            let smallPresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.smallEntry.rawValue, localizedTitle: String(Int(presets[0])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkSmallPresetImage"), userInfo: nil)
+            let smallPresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.smallEntry.rawValue, localizedTitle: String(Int(presets[0])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "darkSmallPresetImage"), userInfo: nil)
             
-            let mediumPresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.mediumEntry.rawValue, localizedTitle: String(Int(presets[1])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkMediumPresetImage"), userInfo: nil)
+            let mediumPresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.mediumEntry.rawValue, localizedTitle: String(Int(presets[1])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "darkMediumPresetImage"), userInfo: nil)
             
-            let largePresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.largeEntry.rawValue, localizedTitle: String(Int(presets[2])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "DarkLargePresetImage"), userInfo: nil)
+            let largePresetShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.largeEntry.rawValue, localizedTitle: String(Int(presets[2])) + standardUnit.rawValue, localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "darkLargePresetImage"), userInfo: nil)
             
             let customShortcut = UIApplicationShortcutItem(type: ShortcutItemValue.customEntry.rawValue, localizedTitle: "Custom", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .add), userInfo: nil)
             
@@ -220,10 +227,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("H2O.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

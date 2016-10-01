@@ -141,6 +141,7 @@ class MainViewController: UIViewController {
     /// Adds notifications for view controller to observe.
     private func addNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(configureAccessibility), name: Notification.Name.UIAccessibilityReduceMotionStatusDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(syncCompleted), name: SyncCompletedNotification, object: nil)
     }
     
     /// Makes the interface suitable for users who have certain accessibility features enabled.
@@ -149,6 +150,15 @@ class MainViewController: UIViewController {
             fluidView.fluidLayout = GSFluidLayout(frame: view.bounds, fluidWidth: view.bounds.width * 3, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 5, minAmplitude: 0, numberOfWaves: 2)
         } else {
             fluidView.fluidLayout = GSFluidLayout(frame: view.bounds, fluidWidth: view.bounds.width * 3, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 40, minAmplitude: 5, numberOfWaves: 2)
+        }
+    }
+    
+    /// Refreshed view controller when a sync has been completed.
+    @objc private func syncCompleted() {
+        DispatchQueue.main.async {
+            self.dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+            let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+            self.updateFluidValue(current: currentAmount!)
         }
     }
     
@@ -232,7 +242,7 @@ private extension MainViewController {
         view.customButtonCornerRadius = customEntryButton.layer.cornerRadius
         view.circleDialFrame = dailyEntryDial.frame
         view.circleDialCornerRadius = dailyEntryDial.bounds.width / 2
-        view.dropletAtBottomFrame = CGRect(x: dailyEntryDial.frame.origin.x, y: view.frame.height, width: dailyEntryDial.frame.width, height: dailyEntryDial.frame.height)
+        view.dropletAtBottomFrame = CGRect(x: dailyEntryDial.frame.origin.x, y: self.view.frame.height, width: dailyEntryDial.frame.width, height: dailyEntryDial.frame.height)
         view.delegate = self
         
         return view
@@ -328,11 +338,14 @@ internal extension MainViewController {
         }
         
         getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
-        
+
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
         updateFluidValue(current: beforeAmount! + amount)
         
         HealthManager.defaultManager.saveWaterAmountToHealthKit(amount, date: Date())
+        
+        WatchConnection.standardWatchConnection.beginSync { ( replyHandler :[String : Any]) in
+        }
     }
     
     /// Settings bar button was tapped
@@ -486,6 +499,9 @@ extension MainViewController :InformationViewControllerProtocol {
         updateFluidValue(current: currentAmount!)
         
         HealthManager.defaultManager.deleteWaterEntry(dateOfEntry)
+        
+        WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
+        }
     }
     
     func informationViewControllerGoal() -> Float {
@@ -503,7 +519,6 @@ extension MainViewController :H2OFluidViewProtocol {
 // MARK: - CustomEntryViewProtocol
 extension MainViewController :CustomEntryViewProtocol {
     func dropletLayerDidUpdate(layer: GSAnimatingProgressLayer) {
-        
         
         lastCustomViewDropletPresentationLayerFrame = customEntryView.dropletShapeLayer.presentation()!.path?.boundingBoxOfPath
         
