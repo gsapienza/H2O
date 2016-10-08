@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="AGt-BP-fh4">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="AGt-BP-fh4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="J7r-ER-wQT"/>
+                <constraint firstAttribute="centerY" secondItem="AGt-BP-fh4" secondAttribute="centerY" id="XF1-QO-Hjb"/>
+                <constraint firstAttribute="trailing" secondItem="AGt-BP-fh4" secondAttribute="trailing" id="aQs-Nf-68S"/>
+                <constraint firstAttribute="bottom" secondItem="AGt-BP-fh4" secondAttribute="bottom" id="iYl-GO-1ii"/>
+                <constraint firstItem="AGt-BP-fh4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oBI-o4-XVt"/>
+                <constraint firstAttribute="centerX" secondItem="AGt-BP-fh4" secondAttribute="centerX" id="qu6-Ra-gKY"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="backgroundImage" width="600" height="600"/>
+    </resources>
+</document>

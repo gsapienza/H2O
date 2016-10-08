@@ -1,0 +1,8 @@
+H2O is a beautiful app that keeps track of your daily water intake and makes sure you are well hydrated.
+
+FEATURES
+◉ Quickly add entries with preset water amounts.
+◉ A graph of your weekly water intake.
+◉ A full history of water entries.
+◉ HealthKit intergration.
+◉ A beautiful and intuitive interface!

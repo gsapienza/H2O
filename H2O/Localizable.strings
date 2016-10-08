@@ -1,0 +1,32 @@
+/* 
+  Localizable.strings
+  H2O
+
+  Created by Gregory Sapienza on 9/18/16.
+  Copyright © 2016 The Oven. All rights reserved.
+*/
+
+custom_amount_cannot_be_empty_toast_notification = "Custom Amount Cannot Be Empty";
+
+///Congratulations! You drank 87 oz of water today
+congratulations_toast_notification = "Congratulations! You drank %i%@ of water today.";
+
+/// 12 oz added.
+water_added_toast_notification = "%i%@ added";
+done_navigation_item = "Done";
+cancel_navigation_item = "Cancel";
+information_navigation_title = "Information";
+no_water_data_logged = "No Water Data Logged";
+delete_water_entry_alert_title = "Delete Entry";
+delete_alert_button = "Delete";
+are_you_sure_you_want_to_delete_entry_alert_description = "Are you sure you want to delete this entry?";
+settings_navigation_title = "Settings";
+close_navigation_item = "Close";
+daily_goal_setting = "Daily Goal";
+small_preset_setting = "Small Preset";
+medium_preset_setting = "Medium Preset";
+large_preset_setting = "Large Preset";
+dark_mode_setting = "Dark Mode";
+auto_switch_themes_setting = "Automatically Switch Theme";
+enable_healthkit_setting = "Enable HealthKit";
+manage_healthkit_setting = "Manage HealthKit in the Health app";
