@@ -238,7 +238,7 @@ class WeekBarGraphDrawingView :UIView {
     ///Places x axis values horizontally on the bottom side of the x axis. Values come from the a set array with days of the week
     private func setupXAxisValues() {
         
-        let xAxisValues = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"] //Values to be places as label under x axis
+        let xAxisValues = ["S", "M", "T", "W", "T", "F", "S"] //Values to be places as label under x axis
         
         for i in 0 ... xAxisValues.count - 1 { //Goes through xAxisValues and places labels on screen
             let xLabel = UILabel() //Label to place

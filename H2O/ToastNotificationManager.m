@@ -20,9 +20,11 @@
                               kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeLinear),
                               kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionTop),
                               kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionTop),
+                              kCRToastAnimationInTypeKey :@(CRToastAnimationTypeGravity),
+                              kCRToastAnimationOutTypeKey :@(CRToastAnimationTypeGravity),
                               kCRToastNotificationTypeKey : @(CRToastTypeNavigationBar),
-                              kCRToastAnimationInTimeIntervalKey : @0.5,
-                              kCRToastAnimationOutTimeIntervalKey : @0.5,
+                              kCRToastAnimationInTimeIntervalKey : @0.2,
+                              kCRToastAnimationOutTimeIntervalKey : @0.2,
                               kCRToastTextAlignmentKey :@(NSTextAlignmentCenter),
                               kCRToastTimeIntervalKey : @1.0,
                               };

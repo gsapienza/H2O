@@ -21,6 +21,25 @@ platform :ios do
     
     carthage
   end
+  
+  desc "Responsible for building and signing the app"
+  private_lane :build_app do |options|
+    # Download the provisioning profile for the app
+    sigh(output_path: "./fastlane/profiles") # Distribution Profile
+  
+    # Download the provisioning profile
+    sigh(
+      output_path: "./fastlane/profiles",
+      app_identifier: "com.theoven.H2O"
+    )
+  
+    increment_build_number # version bump
+  
+    gym(
+      project: "H2O.xcodeproj",
+      scheme: "Release",
+    )
+  end
 
   desc "Runs all the tests"
   lane :test do

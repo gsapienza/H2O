@@ -161,6 +161,24 @@ class DailyEntryDial: UIView {
             CATransaction.commit()
         }
     }
+    
+    /// Toggle repeating beat animation for dial.
+    ///
+    /// - parameter toggle: Toggle determining if animation should be active or not.
+    func beatAnimation(toggle :Bool) {
+        let animationTime = 0.3
+        
+        if toggle {
+            UIView.animate(withDuration: animationTime, delay: 0, options: [.autoreverse, .repeat, .allowUserInteraction], animations: {
+                self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                }, completion: { (Bool) in
+            })
+        } else {
+            UIView.animate(withDuration: animationTime, animations: {
+                self.transform = CGAffineTransform.identity
+            })
+        }
+    }
 }
 
 // MARK: - Private Generators

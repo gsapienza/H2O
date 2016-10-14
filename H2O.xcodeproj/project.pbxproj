@@ -282,7 +282,6 @@
 				37C81B221D902FBA00B6DA9F /* WatchConnection.swift */,
 				37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */,
 				3741F5B11D8F119200F7598E /* Localizable.strings */,
-				37C81B351D918C3B00B6DA9F /* Main.storyboard */,
 				3763BDAA1D313CBD00FDEBD6 /* Defaults */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Main View */,
@@ -306,6 +305,7 @@
 		3763BDAA1D313CBD00FDEBD6 /* Defaults */ = {
 			isa = PBXGroup;
 			children = (
+				37C81B351D918C3B00B6DA9F /* Main.storyboard */,
 				3780931E1D7BD531007CF646 /* Global.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
 				3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */,
@@ -779,11 +779,12 @@
 		375F4FF11CEA91A6009C14AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -805,11 +806,12 @@
 		375F4FF21CEA91A6009C14AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

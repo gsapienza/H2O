@@ -45,6 +45,7 @@ let GoalValueNotificationInfo = "GOAL_VALUE"
 //MARK: - User Defaults Constants
 
 let AppOpenedForFirstTimeDefault = "APP_OPENED_FOR_FIRST_TIME"
+let InformationViewControllerOpenedBefore = "INFORMATION_VIEW_CONTROLLER_OPENED_BEFORE"
 let PresetWaterValuesDefault = "PRESET_WATER_VALUES"
 let DailyGoalValueDefault = "GOAL_VALUE"
 let AutomaticThemeChangeDefault = "AUTOMATIC_THEME_CHANGE"
@@ -82,13 +83,13 @@ let LastRevisionSyncToWatchMessageContent = "LAST_REVISION_SYNC_TO_WATCH_MESSAGE
 //MARK: - Defaults
 
 let defaultPresets :[Float] = [8.0, 17.0, 23.0]
-let defaultDailyGoal :Float = 87
+let defaultDailyGoal :Float = 64
 
 //MARK: - Localized String
 
 let congratulations_toast_notification_localized_string = "congratulations_toast_notification".localized
 let water_added_toast_notification_localized_string = "water_added_toast_notification".localized
-let custom_amount_cannot_be_empty_toast_notification_localized_string = "custom_amount_cannot_be_empty".localized
+let custom_amount_cannot_be_empty_toast_notification_localized_string = "custom_amount_cannot_be_empty_toast_notification".localized
 let done_navigation_item_localized_string = "done_navigation_item".localized
 let cancel_navigation_item_localized_string = "cancel_navigation_item".localized
 let information_navigation_title_localized_string = "information_navigation_title".localized

@@ -115,6 +115,7 @@ class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         customEntryView = generateCustomEntryView()
         layout()
+        indicateDialToOpenInformationViewController()
     }
     
     //MARK: - Private
@@ -162,12 +163,17 @@ class MainViewController: UIViewController {
         }
     }
     
-    //MARK: - Internal
+    /// Checks whether the dial should animate to draw attention to itself by determining if the user had opened the information view controller once before.
+    fileprivate func indicateDialToOpenInformationViewController() {
+        if getAppDelegate().user?.entries?.count != 0 && !AppUserDefaults.getInformationViewControllerWasOpenedOnce() {
+            dailyEntryDial.beatAnimation(toggle: true)
+        }
+    }
     
     /// Toggles all views on screen with a fancy animation. If false the subviews scale in otherwise they scale out
     ///
     /// - parameter hide: Should the views be hiddden
-    internal func toggleViewControllerViews( hide :Bool) {
+    fileprivate func toggleViewControllerViews(hide :Bool, completion :@escaping (Bool) -> Void) {
         //Original values
         var scale = CGAffineTransform(scaleX: 1, y: 1)
         var alpha :CGFloat = 1
@@ -184,22 +190,25 @@ class MainViewController: UIViewController {
             
             self.entryButton2.transform = scale
             self.entryButton2.alpha = alpha
-
+            
             self.entryButton3.transform = scale
             self.entryButton3.alpha = alpha
-
+            
             self.customEntryButton.transform = scale
             self.customEntryButton.alpha = alpha
-
+            
             self.dailyEntryDial.transform = scale
             self.dailyEntryDial.alpha = alpha
             
-        }) { (Bool) in
+        }) { (complete :Bool) in
+            completion(complete)
         }
     }
     
+    //MARK: - Internal
+    
     ///Called via timer to check if the day has changed while the app is opened and UI elements need updating
-    internal func updateTimeRelatedItems() {
+    func updateTimeRelatedItems() {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
@@ -209,7 +218,7 @@ class MainViewController: UIViewController {
     /// Updates the height of the fluid value by getting the ratio of amount of water drank and goal.
     ///
     /// - parameter currentValue: Current amount of water drank.
-    internal func updateFluidValue(current :Float) {
+    func updateFluidValue(current :Float) {
         var newFillValue :Float = Float((current / goal) * 1.0) //New ratio
         
         delay(delay: 0.2) { //Aesthetic delay
@@ -323,18 +332,10 @@ internal extension MainViewController {
     func addWaterToToday( amount :Float) {
         let beforeAmount = getAppDelegate().user?.amountOfWaterForToday() //Water drank before entering this latest entry
         
-        //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added
+        //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added.
         if beforeAmount! < goal && beforeAmount! + amount >= goal {
             confettiArea.burst(at: dailyEntryDial.center, confettiWidth: 15, numberOfConfetti: 50)
             AudioToolbox.standardAudioToolbox.playAudio(WellDoneSound, repeatEnabled: false)
-            
-            let message = String(format: congratulations_toast_notification_localized_string, Int(goal), standardUnit.rawValue)
-            ToastNotificationManager.postToastNotification(message, color: StandardColors.standardGreenColor, image: UIImage(assetIdentifier: .check), completionBlock: {
-            })
-        } else {
-            let message = String(format: water_added_toast_notification_localized_string, Int(amount), standardUnit.rawValue)
-            ToastNotificationManager.postToastNotification(message, color: StandardColors.waterColor, image: UIImage(assetIdentifier: .check), completionBlock: {
-            })
         }
         
         getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
@@ -346,6 +347,8 @@ internal extension MainViewController {
         
         WatchConnection.standardWatchConnection.beginSync { ( replyHandler :[String : Any]) in
         }
+
+        indicateDialToOpenInformationViewController()
     }
     
     /// Settings bar button was tapped
@@ -374,7 +377,10 @@ internal extension MainViewController {
             //self.customEntryView.removeFromSuperview()
         }
         
-        toggleViewControllerViews(hide: false) //Show all views on screen
+        //Show all views on screen
+        toggleViewControllerViews(hide: false) { (complete :Bool) in
+            self.indicateDialToOpenInformationViewController()
+        }
     }
     
     ///When the done bar button is tapped when the custom entry view is present
@@ -389,7 +395,10 @@ internal extension MainViewController {
             
             customEntryView.animateToDropletPathAndDrop(completionHandler: { (Bool) in
                 delay(delay: 0.5, closure: {
-                    self.toggleViewControllerViews(hide: false) //Show all views on screen
+                    //Show all views on screen
+                    self.toggleViewControllerViews(hide: false) { (complete :Bool) in
+                        self.indicateDialToOpenInformationViewController()
+                    }
                 })
             })
             
@@ -422,7 +431,9 @@ extension MainViewController :EntryButtonProtocol {
         customEntryView.animateFromCustomButtonPathToCirclePath { (Bool) in
         }
         
-        toggleViewControllerViews(hide: true) //Hide all other views on screen
+        //Hide all other views on screen.
+        toggleViewControllerViews(hide: true) { (complete :Bool) in
+        }
         
         //Navigation bar setup for controlling custom entry
         
@@ -480,6 +491,8 @@ extension MainViewController :DailyEntryDialProtocol {
     }
     
     func dailyEntryDialButtonTapped() {
+        AppUserDefaults.setInformationViewControllerWasOpenedOnce(openedOnce: true) //Set the information view controller opened user default value so that the dial will not animate to indicate that the user should tap the dial.
+        
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()

@@ -28,5 +28,5 @@ medium_preset_setting = "Medium Preset";
 large_preset_setting = "Large Preset";
 dark_mode_setting = "Dark Mode";
 auto_switch_themes_setting = "Automatically Switch Theme";
-enable_healthkit_setting = "Enable HealthKit";
-manage_healthkit_setting = "Manage HealthKit in the Health app";
+enable_healthkit_setting = "Enable Apple Health";
+manage_healthkit_setting = "Manage Apple Health in the Health app";

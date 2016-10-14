@@ -30,12 +30,17 @@ public class AudioToolbox: NSObject {
         backgroundQueue.async(execute: {
             let fileNameSeperated = fileName.components(separatedBy: ".")
             let url :URL = Bundle.main.url(forResource: fileNameSeperated.first, withExtension: fileNameSeperated.last)!
-            self.audioPlayer = try! AVAudioPlayer(contentsOf: url)
-            if repeatEnabled {
-                self.audioPlayer.numberOfLoops = -1
+            do {
+                self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                
+                if repeatEnabled {
+                    self.audioPlayer.numberOfLoops = -1
+                }
+                self.audioPlayer.prepareToPlay()
+                self.audioPlayer.play()
+            } catch {
+                NSLog("Audio player could not be initialized.")
             }
-            self.audioPlayer.prepareToPlay()
-            self.audioPlayer.play()
         })
     }
     

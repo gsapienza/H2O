@@ -24,6 +24,20 @@ class AppUserDefaults {
         return UserDefaults.standard.bool(forKey: AppOpenedForFirstTimeDefault)
     }
     
+    /// Write to user defaults if the information view controller was opened at least once.
+    ///
+    /// - parameter openedOnce: True if the information view controller was opened by a user once, false if they have not.
+    class func setInformationViewControllerWasOpenedOnce(openedOnce :Bool) {
+        UserDefaults.standard.set(openedOnce, forKey: InformationViewControllerOpenedBefore)
+    }
+    
+    /// Get the value of if the information view controller was opened at least once from User Defaults.
+    ///
+    /// - returns: True if the infomation view controller was opened once, false if it has not been.
+    class func getInformationViewControllerWasOpenedOnce() -> Bool {
+        return UserDefaults.standard.bool(forKey: InformationViewControllerOpenedBefore)
+    }
+    
     /// Write the water preset values to User Defaults.
     ///
     /// - parameter presets: An array of presets in the order of which to display.
@@ -53,7 +67,7 @@ class AppUserDefaults {
         UserDefaults.standard.set(goal, forKey: goalValueString)
     }
     
-    /// Get the daily goal value from User Daefaults.
+    /// Get the daily goal value from User Defaults.
     ///
     /// - returns: The daily goal value.
     class func getDailyGoalValue() -> Float? {
