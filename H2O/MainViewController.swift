@@ -56,16 +56,19 @@ class MainViewController: UIViewController {
     
     private let motionManager = CMMotionManager()
     
-    //MARK: - Internal iVars
+    /// Undo bar button item.
+    fileprivate var undoBarButtonItem :UndoBarButtonItem!
     
     /// View for confetti to burst at when the user hit their goal
-    internal var confettiArea :L360ConfettiArea!
+    fileprivate var confettiArea :L360ConfettiArea!
     
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
-    internal var customEntryView :CustomEntryView!
+    fileprivate var customEntryView :CustomEntryView!
+    
+    //MARK: - Internal iVars
     
     /// User set water goal (readonly)
-    internal var goal :Float {
+    var goal :Float {
         if let _goal = AppUserDefaults.getDailyGoalValue() {
             return _goal
         } else {
@@ -98,8 +101,10 @@ class MainViewController: UIViewController {
             backgroundImageView.image = UIImage(assetIdentifier: .lightModeBackground)
         }
         
+        undoBarButtonItem = UndoBarButtonItem(enabled: false)
+
         configureNavigationBar()
-        configureSettingsBarButton()
+        configureBarButtonItems()
         configureFluidView()
         configurePresetEntryCircles()
         configureBlurView()
@@ -114,6 +119,7 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         customEntryView = generateCustomEntryView()
+
         layout()
         indicateDialToOpenInformationViewController()
     }
@@ -268,13 +274,14 @@ private extension MainViewController {
         navigationBar.backgroundColor = UIColor.clear
     }
     
-    /// Configures the settings button for the navigation bar
-    func configureSettingsBarButton() {
+    /// Configures the bar button items for the navigation bar
+    func configureBarButtonItems() {
         let navigationItem = UINavigationItem()
         
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
+        navigationItem.leftBarButtonItem = undoBarButtonItem
         navigationItem.rightBarButtonItem = settingsBarButtonItem
         
         navigationBar.items = [navigationItem]
@@ -349,6 +356,7 @@ internal extension MainViewController {
         }
 
         indicateDialToOpenInformationViewController()
+        undoBarButtonItem.enable()
     }
     
     /// Settings bar button was tapped
@@ -370,7 +378,7 @@ internal extension MainViewController {
         
         AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
         
-        configureSettingsBarButton() //Restore settings button
+        configureBarButtonItems() //Restore bar buttons
         
         
         customEntryView.animateFromDialCirclePathToCustomButtonPath { (Bool) in
@@ -388,7 +396,7 @@ internal extension MainViewController {
         if customEntryView.amountTextField.text != "" { //If the text field is not blank
             monitoringCustomViewDropletMovements = true
             
-            configureSettingsBarButton() //Restore settings button
+            configureBarButtonItems() //Restore bar buttons
             
             let amount = NumberFormatter().number(from: customEntryView.amountTextField.text!)!.floatValue
             addWaterToToday(amount: amount)
