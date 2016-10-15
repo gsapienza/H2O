@@ -281,8 +281,12 @@ private extension MainViewController {
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
+        undoBarButtonItem.addTarget(target: self, action: #selector(onUndoButton))
+        
         navigationItem.leftBarButtonItem = undoBarButtonItem
         navigationItem.rightBarButtonItem = settingsBarButtonItem
+        
+        print(undoBarButtonItem.customView?.frame)
         
         navigationBar.items = [navigationItem]
     }
@@ -417,6 +421,10 @@ internal extension MainViewController {
             ToastNotificationManager.postToastNotification(custom_amount_cannot_be_empty_toast_notification_localized_string, color: StandardColors.standardRedColor, image: nil, completionBlock: {
             })
         }
+    }
+    
+    func onUndoButton() {
+        print("UNDO BUTTON PRESSED")
     }
 }
 

@@ -11,16 +11,10 @@ import UIKit
 class UndoBarButtonItem: UIBarButtonItem {
     
     /// View that will be contained in the custom view. This will contain all subviews because it is easier to animate because its lifecycle is more predictable than custom view.
-    private var view :UIView!
+    private var button :UndoButton!
     
     /// Leading constraint for view contained in custom view.
     private var viewLeadingConstraint :NSLayoutConstraint!
-    
-    /// Image view to display undo icon.
-    private var undoImageView :UIImageView!
-    
-    /// Text label to display undo text.
-    private var undoTextLabel :UILabel!
     
     override init() {
         super.init()
@@ -39,60 +33,52 @@ class UndoBarButtonItem: UIBarButtonItem {
         super.init()
         initialize()
         
-        if !enabled {
-            viewLeadingConstraint.constant = -100
-            customView?.layoutIfNeeded()
+        guard let customView = self.customView else {
+            print("Custom View is nil.")
+            return
         }
+        
+        if !enabled {
+            viewLeadingConstraint.constant = -customView.bounds.width
+            customView.layoutIfNeeded()
+        }
+    }
+    
+    //MARK: - Public
+    
+    func addTarget(target :Any?, action :Selector) {
+        button.addTarget(target, action: action, for: .touchUpInside)
     }
     
     //MARK: - Private
     
     private func initialize() {
         customView = UIView()
-        view = generateCustomView()
-        undoImageView = generateUndoImageView()
-        undoTextLabel = generateUndoTextLabel()
+        button = UndoButton()
         
         layout()
     }
     
     private func layout() {
-        //View
-        customView?.addSubview(view)
+        guard let customView = self.customView else {
+            print("Custom View is nil.")
+            return
+        }
         
-        view.translatesAutoresizingMaskIntoConstraints = false
+        customView.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
+        button.frame = customView.frame
         
-        customView?.addConstraint(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: customView, attribute: .top, multiplier: 1, constant: 0))
-        viewLeadingConstraint = NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: customView, attribute: .leading, multiplier: 1, constant: 0)
-        customView?.addConstraint(viewLeadingConstraint)
-        customView?.addConstraint(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: customView, attribute: .trailing, multiplier: 1, constant: 0))
-        customView?.addConstraint(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: customView, attribute: .bottom, multiplier: 1, constant: 0))
-
-
-        //Undo Image View
+        //Button
         
-        view?.addSubview(undoImageView!)
+        customView.addSubview(button)
         
-        let undoImageViewWidth :CGFloat = 22
-        let undoImageViewHeight :CGFloat = 25
+        button.translatesAutoresizingMaskIntoConstraints = false
         
-        undoImageView?.translatesAutoresizingMaskIntoConstraints = false
-        
-        view?.addConstraint(NSLayoutConstraint(item: undoImageView!, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0))
-        view?.addConstraint(NSLayoutConstraint(item: undoImageView!, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-        view?.addConstraint(NSLayoutConstraint(item: undoImageView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: undoImageViewWidth))
-        view?.addConstraint(NSLayoutConstraint(item: undoImageView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: undoImageViewHeight))
-        
-        //Undo Text Label
-        
-        view.addSubview(undoTextLabel!)
-        
-        let undoImageViewDistanceFromUndoLabel :CGFloat = 5
-        
-        undoTextLabel?.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addConstraint(NSLayoutConstraint(item: undoTextLabel!, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: undoTextLabel!, attribute: .leading, relatedBy: .equal, toItem: undoImageView!, attribute: .trailing, multiplier: 1, constant: undoImageViewDistanceFromUndoLabel))
+        customView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: customView, attribute: .top, multiplier: 1, constant: 0))
+        viewLeadingConstraint = NSLayoutConstraint(item: button, attribute: .leading, relatedBy: .equal, toItem: customView, attribute: .leading, multiplier: 1, constant: 0)
+        customView.addConstraint(viewLeadingConstraint)
+        customView.addConstraint(NSLayoutConstraint(item: button, attribute: .trailing, relatedBy: .equal, toItem: customView, attribute: .trailing, multiplier: 1, constant: 0))
+        customView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: customView, attribute: .bottom, multiplier: 1, constant: 0))
     }
     
     //MARK: - Public
@@ -108,7 +94,7 @@ class UndoBarButtonItem: UIBarButtonItem {
         
         viewLeadingConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
-            self.view.alpha = 1
+            self.button.alpha = 1
             customView.layoutIfNeeded()
         }
     }
@@ -124,25 +110,60 @@ class UndoBarButtonItem: UIBarButtonItem {
         
         viewLeadingConstraint.constant = -customView.frame.width
         UIView.animate(withDuration: 0.3) {
-            self.view.alpha = 0
+            self.button.alpha = 0
             customView.layoutIfNeeded()
         }
     }
 }
 
-// MARK: - Private Generators
-private extension UndoBarButtonItem {
+class UndoButton :UIButton {
+    /// Image view to display undo icon.
+    private var undoImageView :UIImageView!
     
-    /// Generates a custom view for bar button.
-    ///
-    /// - returns: Custom view to display in bar button.
-    func generateCustomView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = UIColor.clear
-        
-        return view
+    /// Text label to display undo text.
+    private var undoTextLabel :UILabel!
+    
+    
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                alpha = 0.5
+            } else {
+                alpha = 1
+            }
+        }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        undoImageView = generateUndoImageView()
+        undoTextLabel = generateUndoTextLabel()
+        
+        layout()
+    }
+    
+    //MARK: - Private
+    
+    private func layout() {
+        //Undo Image View
+        
+        let undoImageViewWidth :CGFloat = 22
+        let undoImageViewHeight :CGFloat = 25
+        let undoImageViewToTextLabelSpacing :CGFloat = 5
+        
+        undoImageView.frame = CGRect(x: 0, y: bounds.height / 2 - undoImageViewHeight / 2, width: undoImageViewWidth, height: undoImageViewHeight)
+        addSubview(undoImageView!)
+        
+        //Undo Text Label
+        
+        undoTextLabel.frame = CGRect(x: undoImageViewWidth + undoImageViewToTextLabelSpacing, y: 0, width: bounds.size.width - undoImageViewWidth - undoImageViewToTextLabelSpacing, height: bounds.height)
+        addSubview(undoTextLabel!)
+    }
+}
+
+// MARK: - Private Generators
+private extension UndoButton {
     /// Generates an image view to display an undo icon.
     ///
     /// - returns: Image view representing undo icon.
