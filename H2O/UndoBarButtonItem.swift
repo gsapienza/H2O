@@ -66,7 +66,6 @@ class UndoBarButtonItem: UIBarButtonItem {
         }
         
         customView.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
-        button.frame = customView.frame
         
         //Button
         
@@ -123,6 +122,8 @@ class UndoButton :UIButton {
     /// Text label to display undo text.
     private var undoTextLabel :UILabel!
     
+    /// Value determining if layout subviews has already been called once.
+    private var layoutSubviewsCalledOnce = false
     
     override var isHighlighted: Bool {
         didSet {
@@ -137,10 +138,14 @@ class UndoButton :UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        undoImageView = generateUndoImageView()
-        undoTextLabel = generateUndoTextLabel()
-        
-        layout()
+        if !layoutSubviewsCalledOnce { //Called once when this function is called. When animating this function will be called again and running the following code will make things look wacky.
+            undoImageView = generateUndoImageView()
+            undoTextLabel = generateUndoTextLabel()
+            
+            layout()
+            
+            layoutSubviewsCalledOnce = true
+        }
     }
     
     //MARK: - Private
