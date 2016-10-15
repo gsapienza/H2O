@@ -281,7 +281,7 @@ private extension MainViewController {
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
-        undoBarButtonItem.addTarget(target: self, action: #selector(onUndoButton))
+        undoBarButtonItem.addTarget(target: self, action: #selector(onUndoButtonBarButton))
         
         navigationItem.leftBarButtonItem = undoBarButtonItem
         navigationItem.rightBarButtonItem = settingsBarButtonItem
@@ -361,6 +361,7 @@ internal extension MainViewController {
 
         indicateDialToOpenInformationViewController()
         undoBarButtonItem.enable()
+        _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(onUndoDisabledTimer), userInfo: nil, repeats: false) //Timer to schedule when the undo button should disappear.
     }
     
     /// Settings bar button was tapped
@@ -379,8 +380,6 @@ internal extension MainViewController {
     func onCancelCustomEntryBarButton() {
         var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
-        
-        AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
         
         configureBarButtonItems() //Restore bar buttons
         
@@ -415,16 +414,27 @@ internal extension MainViewController {
             })
             
         } else {
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.error)
+
             AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
             
             customEntryView.invalidEntry()
-            ToastNotificationManager.postToastNotification(custom_amount_cannot_be_empty_toast_notification_localized_string, color: StandardColors.standardRedColor, image: nil, completionBlock: {
-            })
         }
     }
     
-    func onUndoButton() {
+    ///When the undo button was tapped.
+    func onUndoButtonBarButton() {
         print("UNDO BUTTON PRESSED")
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
+        feedbackGenerator.notificationOccurred(.success)
+    }
+    
+    ///When undo button becomes disabled.
+    func onUndoDisabledTimer() {
+        undoBarButtonItem.disable()
     }
 }
 
