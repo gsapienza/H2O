@@ -49,16 +49,21 @@ class InformationViewController: Popsicle {
     //MARK: - Internal iVars
     
     /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
-    internal var dateCollection :[[String : AnyObject]]?
+    var dateCollection :[[String : AnyObject]]?
     
     /// Date cell that containes an entry ready to be deleted
-    internal var cellToDeleteFrom :DailyInformationTableViewCell!
+    var cellToDeleteFrom :DailyInformationTableViewCell!
     
     /// Index of the entry within the date cell that will be deleted. This is used so that the user can select and item to delete then get a confirmation alert before the deletion takes place. This stores the index to delete so the confirmation alert can perform the actual delete action
-    internal var indexOfEntryToDelete = -1
+    var indexOfEntryToDelete = -1
     
     /// Weekly graph view in the header of the water data table view
-    internal var weeklyBarGraphView :WeekBarGraphView!
+    var weeklyBarGraphView :WeekBarGraphView!
+    
+    //MARK: - Private iVars
+    
+    /// State of the information table view.
+    private var state = State.viewing
     
     //MARK: - Public
     
@@ -73,6 +78,8 @@ class InformationViewController: Popsicle {
         configureBlurView()
         
         weeklyBarGraphView = generateWeeklyGraphView()
+        
+        stateDidChange()
         
         layout()
     }
@@ -94,10 +101,86 @@ class InformationViewController: Popsicle {
         tableHeaderView.addSubview(weeklyBarGraphView)
     }
     
+    private func stateDidChange() {
+        enum LeftBarButtonItem {
+            case close
+            case delete
+        }
+        
+        enum RightBarButtonItem {
+            case edit
+            case done
+        }
+
+        let leftBarButtonItem :LeftBarButtonItem?
+        let rightBarButtonItem :RightBarButtonItem?
+        
+        switch state {
+        case .viewing:
+            leftBarButtonItem = .close
+            rightBarButtonItem = .edit
+            break
+        case let .selecting(selectedRows):
+            leftBarButtonItem = .delete
+            rightBarButtonItem = .done
+            //leftBarButtonItem = (.done, enabled: !selectedRows.isEmpty)
+            break
+        case let .deleting(entries):
+            leftBarButtonItem = .delete
+            rightBarButtonItem = .done
+            break
+        }
+        
+        //Navigation item setup
+        let navigationItem = UINavigationItem()
+        
+        //Navigation Title
+        
+        navigationItem.title = information_navigation_title_localized_string
+        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
+        
+        
+        let normalTitleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)] as [String : Any]
+        let deleteTitleTextAttributes = [NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)] as [String : Any]
+        
+        //Left Bar Button
+        
+        let leftBarButton = leftBarButtonItem.map { enabled -> UIBarButtonItem in
+            switch leftBarButtonItem! {
+            case .close:
+                let barButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+                barButton.setTitleTextAttributes(normalTitleTextAttributes, for: UIControlState())
+                return barButton
+            case .delete:
+                let barButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+                barButton.setTitleTextAttributes(deleteTitleTextAttributes, for: UIControlState())
+                return barButton
+            }
+        }
+        
+        navigationItem.leftBarButtonItem = leftBarButton
+        
+        //Right Bar Button
+        
+        let rightBarButton = rightBarButtonItem.map { enabled -> UIBarButtonItem in
+            switch rightBarButtonItem! {
+            case .edit:
+                return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: nil)
+            case .done:
+                return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil)
+            }
+        }
+        
+        rightBarButton?.setTitleTextAttributes(normalTitleTextAttributes, for: UIControlState())
+        navigationItem.rightBarButtonItem = rightBarButton
+        
+        navigationBar.items = [navigationItem]
+    }
+    
     //MARK: - Internal
     
     /// When the user confirms a delete is allowed this will delete the entry from the database and table view
-    internal func onEntryDeletion() {
+    func onEntryDeletion() {
         let indexPath = informationTableView.indexPath(for: cellToDeleteFrom) //Index path for cell to delete entry from
         
         var dict = dateCollection![(indexPath! as NSIndexPath).row] //Dictionary of date and entry data
@@ -160,19 +243,6 @@ private extension InformationViewController {
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = true
         navigationBar.backgroundColor = UIColor.clear
-        
-        //Navigation item setup
-        let navigationItem = UINavigationItem()
-        navigationItem.title = information_navigation_title_localized_string
-        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
-        
-        let closeButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
-        
-        closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
-        
-        navigationItem.leftBarButtonItem = closeButton
-        
-        navigationBar.items = [navigationItem]
     }
     
     

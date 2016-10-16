@@ -110,6 +110,10 @@ class MainViewController: UIViewController {
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
         let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
         RunLoop.current.add(newDateTimer, forMode: RunLoopMode.commonModes)
+        
+        if traitCollection.forceTouchCapability == .available {
+            self.registerForPreviewing(with: self, sourceView: dailyEntryDial)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -548,5 +552,20 @@ extension MainViewController :CustomEntryViewProtocol {
 //            fluidView.phaseShiftDuration = 0.55
 //            fluidView.updateAmplitudeArray()
         }
+    }
+}
+
+extension MainViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let viewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+        viewController.informationViewControllerDelegate = self //Delegate to listen for events like deletion
+
+        viewController.preferredContentSize = CGSize(width: 0, height: 0)
+        
+        return viewController
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        show(viewControllerToCommit, sender: self)
     }
 }

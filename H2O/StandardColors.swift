@@ -16,7 +16,7 @@ import Foundation
     import WatchKit
 #endif
 
-class StandardColors: NSObject {
+class StandardColors {
      /// Standard dark blue background color
     static var backgroundColor :UIColor {
         set{}
