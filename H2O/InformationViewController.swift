@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum DayEntries {
+    case day
+    case entries(entries :[Entry])
+}
+
 protocol InformationViewControllerProtocol {
     /**
      Called when a water entry was deleted for any day
@@ -50,6 +55,8 @@ class InformationViewController: Popsicle {
     
     /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
     var dateCollection :[[String : AnyObject]]?
+    
+    var dayEntries :[DayEntries]?
     
     /// Date cell that containes an entry ready to be deleted
     var cellToDeleteFrom :DailyInformationTableViewCell!
