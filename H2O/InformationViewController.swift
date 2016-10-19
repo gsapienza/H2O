@@ -63,7 +63,7 @@ class InformationViewController: Popsicle {
     //MARK: - Private iVars
     
     /// State of the information table view.
-    private var state = State.viewing
+    fileprivate var state = State.viewing
     
     //MARK: - Public
     
@@ -101,33 +101,34 @@ class InformationViewController: Popsicle {
         tableHeaderView.addSubview(weeklyBarGraphView)
     }
     
-    private func stateDidChange() {
-        enum LeftBarButtonItem {
+    fileprivate func stateDidChange() {
+        enum LeftBarButton {
             case close
             case delete
         }
         
-        enum RightBarButtonItem {
+        enum RightBarButton {
             case edit
             case done
         }
 
-        let leftBarButtonItem :LeftBarButtonItem?
-        let rightBarButtonItem :RightBarButtonItem?
+        let leftBarItem :(style :LeftBarButton?, enabled: Bool)?
+        let rightBarItem :RightBarButton?
         
         switch state {
         case .viewing:
-            leftBarButtonItem = .close
-            rightBarButtonItem = .edit
+            leftBarItem = (.close, enabled: true)
+            rightBarItem = .edit
+            endSelecting()
             break
         case let .selecting(selectedRows):
-            leftBarButtonItem = .delete
-            rightBarButtonItem = .done
-            //leftBarButtonItem = (.done, enabled: !selectedRows.isEmpty)
+            leftBarItem = (.delete, enabled: !selectedRows.isEmpty)
+            rightBarItem = .done
+            beginSelecting()
             break
         case let .deleting(entries):
-            leftBarButtonItem = .delete
-            rightBarButtonItem = .done
+            leftBarItem = (.delete, enabled: true)
+            rightBarItem = .done
             break
         }
         
@@ -142,39 +143,82 @@ class InformationViewController: Popsicle {
         
         let normalTitleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)] as [String : Any]
         let deleteTitleTextAttributes = [NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)] as [String : Any]
+        let deleteDisabledTitleTextAttributes = [NSForegroundColorAttributeName: StandardColors.standardRedColor.withAlphaComponent(0.5), NSFontAttributeName: StandardFonts.regularFont(size: 18)] as [String : Any]
+
         
         //Left Bar Button
         
-        let leftBarButton = leftBarButtonItem.map { enabled -> UIBarButtonItem in
-            switch leftBarButtonItem! {
+        let leftBarButton = leftBarItem.map { buttonItem -> UIBarButtonItem? in
+            guard let leftBarItem = leftBarItem else {
+                print("Left Bar Item is nil")
+                return nil
+            }
+            
+            guard let leftBarItemStyle = leftBarItem.style else {
+                print("Left Bar Item style not set")
+                return nil
+            }
+            
+            switch leftBarItemStyle {
             case .close:
                 let barButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
-                barButton.setTitleTextAttributes(normalTitleTextAttributes, for: UIControlState())
+                barButton.setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
+                barButton.isEnabled = leftBarItem.enabled
                 return barButton
             case .delete:
-                let barButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
-                barButton.setTitleTextAttributes(deleteTitleTextAttributes, for: UIControlState())
+                let barButton = UIBarButtonItem(title: delete_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+                barButton.setTitleTextAttributes(deleteTitleTextAttributes, for: .normal)
+                barButton.setTitleTextAttributes(deleteDisabledTitleTextAttributes, for: .disabled)
+                barButton.isEnabled = leftBarItem.enabled
                 return barButton
             }
         }
         
-        navigationItem.leftBarButtonItem = leftBarButton
+        if let leftBarButton = leftBarButton {
+            navigationItem.leftBarButtonItem = leftBarButton
+        }
+        
         
         //Right Bar Button
         
-        let rightBarButton = rightBarButtonItem.map { enabled -> UIBarButtonItem in
-            switch rightBarButtonItem! {
+        let rightBarButton = rightBarItem.map { buttonItem -> UIBarButtonItem? in
+            guard let rightBarItem = rightBarItem else {
+                print("Right Bar Item is nil")
+                return nil
+            }
+            
+            switch rightBarItem {
             case .edit:
-                return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: nil)
+                return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(onEditButton))
             case .done:
-                return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil)
+                return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onDoneButton))
             }
         }
         
-        rightBarButton?.setTitleTextAttributes(normalTitleTextAttributes, for: UIControlState())
-        navigationItem.rightBarButtonItem = rightBarButton
+        if let rightBarButton = rightBarButton {
+            rightBarButton?.setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
+            navigationItem.rightBarButtonItem = rightBarButton
+        }
         
         navigationBar.items = [navigationItem]
+    }
+    
+    /// Begin selecing view arrangments daily information cells.
+    private func beginSelecting() {
+        for cell in informationTableView.visibleCells {
+            if let cell = cell as? DailyInformationTableViewCell {
+                cell.beginSelecting()
+            }
+        }
+    }
+    
+    /// End selecting view arrangments daily information cells.
+    private func endSelecting() {
+        for cell in informationTableView.visibleCells {
+            if let cell = cell as? DailyInformationTableViewCell {
+                cell.endSelecting()
+            }
+        }
     }
     
     //MARK: - Internal
@@ -273,9 +317,21 @@ private extension InformationViewController {
 
 //MARK: - Target Action
 internal extension InformationViewController {
-    /// When the close button is tapped
+    /// When the close bar button is tapped
     func onCloseButton() {
         dismissPopsicle()
+    }
+    
+    /// When edit button button is tapped in viewing state.
+    func onEditButton() {
+        state = .selecting(selectedRows: [])
+        stateDidChange()
+    }
+    
+    /// When done button is tapped in edit state.
+    func onDoneButton() {
+        state = .viewing
+        stateDidChange()
     }
 }
 
@@ -349,6 +405,10 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         
         alert.addAction(UIAlertAction(title: cancel_navigation_item_localized_string, style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    func getState() -> InformationViewController.State {
+        return state
     }
 }
 

@@ -15,13 +15,16 @@ extension InformationViewController {
         case deleting(entries: [Entry])
         
     }
-    
 }
 
 func ==(_ lhs :InformationViewController.State, _ rhs :InformationViewController.State) -> Bool {
     switch (lhs, rhs) {
     case (.viewing, .viewing):
         return true
+    case let (.selecting(leftRows), .selecting(rightRows)):
+        return leftRows == rightRows
+    case let (.deleting(leftObjects), .deleting(rightObjects)):
+        return leftObjects == rightObjects
     default:
         return false
     }

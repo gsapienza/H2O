@@ -92,6 +92,7 @@ let water_added_toast_notification_localized_string = "water_added_toast_notific
 let custom_amount_cannot_be_empty_toast_notification_localized_string = "custom_amount_cannot_be_empty_toast_notification".localized
 let done_navigation_item_localized_string = "done_navigation_item".localized
 let cancel_navigation_item_localized_string = "cancel_navigation_item".localized
+let delete_navigation_item_localized_string = "delete_navigation_item".localized
 let information_navigation_title_localized_string = "information_navigation_title".localized
 let no_water_date_logged_localized_string = "no_water_data_logged".localized
 let delete_water_entry_alert_title_localized_string = "delete_water_entry_alert_title".localized

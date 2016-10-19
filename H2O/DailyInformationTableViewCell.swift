@@ -22,6 +22,12 @@ protocol DailyInformationTableViewCellProtocol {
     /// - parameter cellToDeleteFrom: Cell to delete entry from
     /// - parameter index:            Index of entry to delete
     func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int)
+    
+    
+    /// Get the current state of the information view controller.
+    ///
+    /// - returns: Viewing, selecting or delete state.
+    func getState() -> InformationViewController.State
 }
 
 class DailyInformationTableViewCell: UITableViewCell {
@@ -43,6 +49,36 @@ class DailyInformationTableViewCell: UITableViewCell {
         super.awakeFromNib()
         dayEntriesCollectionView.delegate = self
         dayEntriesCollectionView.dataSource = self
+    }
+    
+    //MARK: - Internal
+    
+    /// Arrange cell view for selecting mode.
+    func beginSelecting() {
+        for cell in dayEntriesCollectionView.visibleCells {
+            guard let cell = cell as? InformationEntryInfoCollectionViewCell else {
+                return
+            }
+            
+            WobbleAnimation.start(view: cell, onSide: .left)
+            if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
+                longPressGestureRecognizer.isEnabled = false
+            }
+        }
+    }
+    
+    /// Arrange cell view when ending selection mode.
+    func endSelecting() {
+        for cell in dayEntriesCollectionView.visibleCells {
+            guard let cell = cell as? InformationEntryInfoCollectionViewCell else {
+                return
+            }
+            
+            WobbleAnimation.stop(view: cell)
+            if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
+                longPressGestureRecognizer.isEnabled = true
+            }
+        }
     }
 }
 
@@ -80,6 +116,50 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         cell.delegate = self //Set cell delegate so the user can interact with that cell and actions will call back here
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? InformationEntryInfoCollectionViewCell else {
+            return
+        }
+        
+        if let delegate = delegate {
+            switch delegate.getState() {
+            case InformationViewController.State.viewing:
+                WobbleAnimation.stop(view: cell)
+                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
+                    longPressGestureRecognizer.isEnabled = true
+                }
+                break
+            case InformationViewController.State.selecting(_):
+                WobbleAnimation.start(view: cell, onSide: .left)
+                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
+                    longPressGestureRecognizer.isEnabled = false
+                }
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? InformationEntryInfoCollectionViewCell else {
+            return
+        }
+        
+        if let delegate = delegate {
+            switch delegate.getState() {
+            case let InformationViewController.State.selecting(selectedRows):
+                if selectedRows.contains(indexPath.row) {
+                    
+                }
+                cell.animateBorder(toValue: 30, isDelegate: false)
+                break
+            default:
+                break
+            }
+        }
     }
 }
 

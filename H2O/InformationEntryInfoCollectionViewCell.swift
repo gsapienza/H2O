@@ -27,10 +27,14 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     /// Delegate to inform of events within an entry cell
     var delegate :InformationEntryInfoCollectionViewCellProtocol?
     
+    /// Long press gesture recognizer for deletion of an item.
+    var longPressGestureRecognizer :UILongPressGestureRecognizer?
+    
     //MARK: - Private iVars
     
     /// Circle view displaying the entry and the amount within
     private var entryAmountView :UIView!
+    
     
     //MARK: - Setup
     
@@ -50,7 +54,9 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         
         layout()
         
-        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(self.onLongPressGesture(_:)))) //Long press gesture will invoke a promptDelete from the delegate
+        longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.onLongPressGesture(_:)))
+        
+        addGestureRecognizer(longPressGestureRecognizer!) //Long press gesture will invoke a promptDelete from the delegate
     }
     
     /// View Layout
