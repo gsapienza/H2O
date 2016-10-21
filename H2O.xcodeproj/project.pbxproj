@@ -50,6 +50,7 @@
 		37C9683D1D5414DE000DE5C0 /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; };
 		37C9683E1D5414DE000DE5C0 /* CRToast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		37D13DE91DB7B2B200C850BA /* WobbleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */; };
+		37D13DEB1DBA5AF400C850BA /* InformationViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */; };
 		37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
@@ -164,6 +165,7 @@
 		37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WatchSyncEngine.swift; sourceTree = "<group>"; };
 		37C81B481D91DE9100B6DA9F /* H2O 1.02.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.02.xcdatamodel"; sourceTree = "<group>"; };
 		37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WobbleAnimation.swift; sourceTree = "<group>"; };
+		37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewControllerModel.swift; sourceTree = "<group>"; };
 		37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEntryView.swift; sourceTree = "<group>"; };
 		37E0D6EE1CED2D95004ABFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		37E0D6F01CEE2649004ABFAF /* Alert Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Alert Error.wav"; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
+				37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */,
 				375831261DB2D48200ED136E /* InformationViewControllerState.swift */,
 				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
 				37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */,
@@ -641,6 +644,7 @@
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
 				37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */,
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
+				37D13DEB1DBA5AF400C850BA /* InformationViewControllerModel.swift in Sources */,
 				3763BDAF1D313D8700FDEBD6 /* HealthManager.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,

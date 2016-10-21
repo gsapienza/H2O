@@ -11,7 +11,7 @@ import UIKit
 extension InformationViewController {
     enum State: Equatable {
         case viewing
-        case selecting(selectedEntries: DayEntries)
+        case selecting(selectedEntries: [DayEntry])
         case deleting(entries: [Entry])
         
     }

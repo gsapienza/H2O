@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum DayEntries {
-    case day
-    case entries(entries :[Entry])
-}
-
 protocol InformationViewControllerProtocol {
     /**
      Called when a water entry was deleted for any day
@@ -54,9 +49,9 @@ class InformationViewController: Popsicle {
     //MARK: - Internal iVars
     
     /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
-    var dateCollection :[[String : AnyObject]]?
+   // var dateCollection :[[String : AnyObject]]?
     
-    var dayEntries :[DayEntries]?
+    var dayEntries :[DayEntry]?
     
     /// Date cell that containes an entry ready to be deleted
     var cellToDeleteFrom :DailyInformationTableViewCell!
@@ -77,7 +72,9 @@ class InformationViewController: Popsicle {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dateCollection = getAppDelegate().user!.entriesForDates() //Populate the table from core data
+        let dateCollection = getAppDelegate().user!.entriesForDates() //Populate the table from core data
+        
+        dayEntries = populateEntriesForDates(collection: dateCollection)
         
         configureNavigationBar()
         configureTableView()
@@ -108,6 +105,19 @@ class InformationViewController: Popsicle {
         tableHeaderView.addSubview(weeklyBarGraphView)
     }
     
+    private func populateEntriesForDates(collection :[[String : AnyObject]]) -> [DayEntry]? {
+         return collection.map { (dateEntries :[String : AnyObject]) in
+            guard
+                let date = dateEntries["date"] as? Date,
+                let entries = dateEntries["entries"] as? [Entry]
+            else {
+                fatalError("Entry objects are not correct type")
+            }
+            
+            return DayEntry(date: date, entries: entries)
+        }
+    }
+    
     fileprivate func stateDidChange() {
         enum LeftBarButton {
             case close
@@ -128,8 +138,8 @@ class InformationViewController: Popsicle {
             rightBarItem = .edit
             endSelecting()
             break
-        case let .selecting(selectedRows):
-            leftBarItem = (.delete, enabled: !selectedRows.isEmpty)
+        case let .selecting(selectedEntries):
+            leftBarItem = (.delete, enabled: !selectedEntries.isEmpty)
             rightBarItem = .done
             beginSelecting()
             break
@@ -331,7 +341,7 @@ internal extension InformationViewController {
     
     /// When edit button button is tapped in viewing state.
     func onEditButton() {
-        state = .selecting(selectedRows: [])
+        state = .selecting(selectedEntries: [])
         stateDidChange()
     }
     

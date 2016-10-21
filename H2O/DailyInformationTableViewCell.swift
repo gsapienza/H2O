@@ -151,9 +151,7 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         if let delegate = delegate {
             switch delegate.getState() {
             case let InformationViewController.State.selecting(selectedRows):
-                if selectedRows.contains(indexPath.row) {
-                    
-                }
+                
                 cell.animateBorder(toValue: 30, isDelegate: false)
                 break
             default:
