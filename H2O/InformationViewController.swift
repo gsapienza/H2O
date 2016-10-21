@@ -47,10 +47,8 @@ class InformationViewController: Popsicle {
     var goal :Float!
     
     //MARK: - Internal iVars
-    
-    /// Array that contains dictionaries that contain dates as well as the water entry data entered for that day. Each dictionary contains a date and entries value
-   // var dateCollection :[[String : AnyObject]]?
-    
+
+    //Array of data for entries. Contains date and entries.
     var dayEntries :[DayEntry]?
     
     /// Date cell that containes an entry ready to be deleted
@@ -242,30 +240,30 @@ class InformationViewController: Popsicle {
     
     /// When the user confirms a delete is allowed this will delete the entry from the database and table view
     func onEntryDeletion() {
-        let indexPath = informationTableView.indexPath(for: cellToDeleteFrom) //Index path for cell to delete entry from
+        guard let indexPath = informationTableView.indexPath(for: cellToDeleteFrom) else {
+            return
+        }//Index path for cell to delete entry from
         
-        var dict = dateCollection![(indexPath! as NSIndexPath).row] //Dictionary of date and entry data
+        guard var dayEntry = dayEntries?[indexPath.row] else {
+            fatalError("Day entry not found for index path")
+        }
         
-        var entries = dict["entries"] as! [Entry] //Get the entries from the dictionary
+        guard let dateOfEntry = dayEntry.getDate() else {
+            fatalError("Date not found for entry not found for index path")
+        }
         
-        let entry = entries[indexOfEntryToDelete] //Entry to delete
+        dayEntry.removeEntry(at: indexOfEntryToDelete)
         
-        let dateOfEntry = entry.date
-        
-        entry.deleteEntry() //Perform the delete of entry
-        
-        entries.remove(at: indexOfEntryToDelete) //Remove the entry from the array just recovered
-        
-        dateCollection![(indexPath! as NSIndexPath).row]["entries"] = entries as AnyObject //Set the entries amount in the collection view to the new entries data set without the deleted entry
+        dayEntries?[indexPath.row] = dayEntry //Set value in array to new reference.
         
         let indexPathToDelete = IndexPath(item: indexOfEntryToDelete, section: 0) //Index path of entry in the collection view in the date cell
         
         cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: [indexPathToDelete]) //Delete the item from the collection view. Animated
         
-        if entries.count == 0 { //If there are no entries left
-            dateCollection?.remove(at: (indexPath! as NSIndexPath).row) //Remove the dictionary representing the date from the date collection
+        if dayEntry.entryCount() == 0 { //If there are no entries left
+            dayEntries?.remove(at: indexPath.row)
             
-            informationTableView.deleteRows(at: [indexPath!], with: .fade) //Delete the date row
+            informationTableView.deleteRows(at: [indexPath], with: .fade) //Delete the date row
         }
         
         informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Call when entry was deleted
@@ -357,7 +355,11 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
     
     /// Shows the no data label if not entries are present otherwise returns the amount of days of which entries were made
     func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows = (dateCollection?.count)!
+        guard let dayEntries = self.dayEntries else {
+            fatalError("Day entries should not be nil")
+        }
+        
+        let numberOfRows = dayEntries.count
         
         if numberOfRows == 0 {
             noDataLabel.isHidden = false
@@ -374,11 +376,15 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DAILY_INFO_CELL", for: indexPath) as! DailyInformationTableViewCell
         
-        let cellDateCollection = dateCollection![(indexPath as NSIndexPath).row] //Dictionary data for use in cell
+        let dayEntry = dayEntries?[indexPath.row]
+        
+        guard let dayEntryDate = dayEntry?.getDate() else {
+            fatalError("Day entry date is nil")
+        }
         
         let calendar = Calendar.current //Calendar type
         
-        let dateComponents = calendar.dateComponents([.day, .month, .year], from: cellDateCollection["date"] as! Date) //Get the date from the dictionary
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: dayEntryDate) //Get the date from the day entry
         
         let dateFormatter = DateFormatter()
         
@@ -396,14 +402,17 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
 
 // MARK: - DailyInformationTableViewCellProtocol
 extension InformationViewController :DailyInformationTableViewCellProtocol {
-    func getEntriesForDay(cell: DailyInformationTableViewCell) -> [Entry] {
-        let indexPathForCell = informationTableView.indexPathForRow(at: cell.center) //Get the cell by position because when trying to retreive it using the index path for cell, nil will be returned at times if the cell hasnt finished loading
+    func getEntriesForDay(cell: DailyInformationTableViewCell) -> [Entry]? {
         
-        let dict = dateCollection![((indexPathForCell as NSIndexPath?)?.row)!]
+        guard let indexPath = informationTableView.indexPathForRow(at: cell.center) else {
+            return nil
+        } //Get the cell by position because when trying to retreive it using the index path for cell, nil will be returned at times if the cell hasnt finished loading
         
-        let entries = dict["entries"] as! [Entry]
+        guard let dayEntry = dayEntries?[indexPath.row] else {
+            fatalError("Day entry not found for index path")
+        }
         
-        return entries
+        return dayEntry.getEntries()
     }
     
     func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {

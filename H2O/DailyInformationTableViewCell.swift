@@ -14,7 +14,7 @@ protocol DailyInformationTableViewCellProtocol {
     /// - parameter cell: Cell to to get entries for
     ///
     /// - returns: Array of entries associated with the cell
-    func getEntriesForDay(cell :DailyInformationTableViewCell) -> [Entry]
+    func getEntriesForDay(cell :DailyInformationTableViewCell) -> [Entry]?
     
     
     /// Prompt the user to confirm deletion of a particular entry
@@ -85,7 +85,11 @@ class DailyInformationTableViewCell: UITableViewCell {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (delegate?.getEntriesForDay(cell: self).count)!
+        guard let entriesForDay = delegate?.getEntriesForDay(cell: self) else {
+            return 0
+        }
+        
+        return entriesForDay.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -98,9 +102,13 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ENTRY_INFO_CELL", for: indexPath) as! InformationEntryInfoCollectionViewCell
         
-        let entry = delegate?.getEntriesForDay(cell: self)[(indexPath as NSIndexPath).row] //Get an entry from the delegate
+        guard let entriesForDay = delegate?.getEntriesForDay(cell: self) else {
+            fatalError("Entries not found for day.")
+        }
         
-        let entryTimeDate = entry!.date //The date of the entry
+        let entry = entriesForDay[(indexPath as NSIndexPath).row] //Get an entry from the delegate
+        
+        let entryTimeDate = entry.date //The date of the entry
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a" //Format into hour, minute, AM/PM
@@ -109,7 +117,7 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         
         cell.timeLabel.text = timeString
         
-        let entryAmount = entry!.amount.stringValue + standardUnit.rawValue //Entry amount
+        let entryAmount = entry.amount.stringValue + standardUnit.rawValue //Entry amount
        
         cell.entryAmountLabel.text = entryAmount
         

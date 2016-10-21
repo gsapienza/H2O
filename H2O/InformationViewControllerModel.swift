@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-class DayEntry {
+struct DayEntry {
     private var date :Date?
     private var entries :[Entry]?
     
@@ -18,7 +17,7 @@ class DayEntry {
         self.entries = entries
     }
     
-    func append(entry :Entry) {
+    mutating func append(entry :Entry) {
         if var entries = self.entries {
             entries.append(entry)
         } else {
@@ -27,11 +26,53 @@ class DayEntry {
         }
     }
     
-    func entry(atIndex :Int) -> Entry? {
+    func getDate() -> Date? {
+        guard let date = self.date else {
+            print("Date is nil")
+            return nil
+        }
+        
+        return date
+    }
+    
+    func getEntries() -> [Entry]? {
+        guard let entries = self.entries else {
+            print("Entries is nil")
+            return nil
+        }
+        
+        return entries
+    }
+    
+    func entry(at :Int) -> Entry? {
         guard let entries = self.entries else {
             return nil
         }
         
-        return entries[atIndex]
+        return entries[at]
     }
+    
+    func entryCount() -> Int {
+        guard let entries = self.entries else {
+            return 0
+        }
+        
+        return entries.count
+    }
+    
+    mutating func removeEntry(at :Int) {
+        guard var entries = self.entries else {
+            return
+        }
+        
+        let entry = entries[at]
+        entries.remove(at: at)
+        entry.deleteEntry()
+        
+        self.entries = entries //Set entries to new reference/
+    }
+}
+
+class InformationViewControllerModel {
+    
 }
