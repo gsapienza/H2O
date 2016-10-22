@@ -28,6 +28,8 @@ protocol DailyInformationTableViewCellProtocol {
     ///
     /// - returns: Viewing, selecting or delete state.
     func getState() -> InformationViewController.State
+    
+    func entrySelected(cell :DailyInformationTableViewCell, entryIndex :Int)
 }
 
 class DailyInformationTableViewCell: UITableViewCell {
@@ -159,8 +161,8 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         if let delegate = delegate {
             switch delegate.getState() {
             case let InformationViewController.State.selecting(selectedRows):
-                
                 cell.animateBorder(toValue: 30, isDelegate: false)
+                delegate.entrySelected(cell: self, entryIndex: indexPath.item)
                 break
             default:
                 break

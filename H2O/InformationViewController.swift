@@ -139,8 +139,6 @@ class InformationViewController: Popsicle {
             leftBarItem = nil
             rightBarItem = nil
             delete(entries: entries)
-            state = .viewing
-            stateDidChange()
             break
         }
         
@@ -178,7 +176,7 @@ class InformationViewController: Popsicle {
                 barButton.isEnabled = leftBarItem.enabled
                 return barButton
             case .delete:
-                let barButton = UIBarButtonItem(title: delete_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+                let barButton = UIBarButtonItem(title: delete_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onDeleteButton))
                 barButton.setTitleTextAttributes(deleteTitleTextAttributes, for: .normal)
                 barButton.setTitleTextAttributes(deleteDisabledTitleTextAttributes, for: .disabled)
                 barButton.isEnabled = leftBarItem.enabled
@@ -245,7 +243,7 @@ class InformationViewController: Popsicle {
             }
         }
         
-        let _ = indexPathsToRemoveFromCell.map { (dayPath: (key: Int, value: [Int])) in
+        for dayPath in indexPathsToRemoveFromCell {
             guard var dayEntry = dayEntries?[dayPath.key] else {
                 fatalError("Day entry not found for index path")
             }
@@ -275,7 +273,6 @@ class InformationViewController: Popsicle {
             
             informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Inform the delegate that an entry was deleted.
         }
-    
         
         weeklyBarGraphView.refreshBarGraph()
     }
@@ -359,6 +356,25 @@ extension InformationViewController {
         state = .viewing
         stateDidChange()
     }
+    
+    /// When delete button is tapped in selecting state.
+    func onDeleteButton() {
+        switch self.state {
+        case .viewing:
+            fatalError("Shouldn't get in this state.")
+        case let .selecting(selectedEntries): //When there have been items selected present an alert view to delete them.
+            displayDeleteAlert(title: delete_multiple_water_entries_alert_title_localized_string, message: String(format: are_you_sure_you_want_to_delete_multiple_entries_alert_description_localized_string, selectedEntries.count)) {
+                
+                self.state = .deleting(entries: selectedEntries)
+                self.stateDidChange()
+                
+                self.state = .viewing
+                self.stateDidChange()
+            }
+        case .deleting(_):
+            fatalError("Shouldn't get in this state.")
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -427,19 +443,12 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
     }
     
     func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {
-        
         if let dayIndexToDeleteFrom = informationTableView.indexPath(for: cellToDeleteFrom) {
             state = .selecting(selectedEntries: [(dayIndex :dayIndexToDeleteFrom.row, entryIndex :index)])
             stateDidChange()
         }
         
-        let feedbackGenerator = UINotificationFeedbackGenerator()
-        feedbackGenerator.prepare()
-        feedbackGenerator.notificationOccurred(.warning)
-        
-        let alert = UIAlertController(title: delete_water_entry_alert_title_localized_string, message: are_you_sure_you_want_to_delete_entry_alert_description_localized_string, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: delete_alert_button_localized_string, style: .destructive, handler: { (alert: UIAlertAction!) in
-            
+        displayDeleteAlert(title: delete_water_entry_alert_title_localized_string, message: are_you_sure_you_want_to_delete_entry_alert_description_localized_string) { 
             switch self.state {
             case .viewing:
                 fatalError("Shouldn't get in this state.")
@@ -450,14 +459,28 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
             }
             
             self.stateDidChange()
-        }))
-        
-        alert.addAction(UIAlertAction(title: cancel_navigation_item_localized_string, style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        }
     }
     
     func getState() -> InformationViewController.State {
         return state
+    }
+    
+    func entrySelected(cell: DailyInformationTableViewCell, entryIndex: Int) {
+        if let cellIndexPath = informationTableView.indexPath(for: cell) {
+            let dayEntryIndexPath = (dayIndex :cellIndexPath.row, entryIndex :entryIndex)
+            switch self.state {
+            case .viewing:
+                fatalError("Shouldn't get in this state.")
+            case let .selecting(selectedEntries):
+                var entries = selectedEntries
+                entries.append(dayEntryIndexPath)
+                self.state = .selecting(selectedEntries: entries)
+                stateDidChange()
+            case .deleting(_):
+                fatalError("Shouldn't get in this state.")
+            }
+        }
     }
 }
 
