@@ -59,13 +59,13 @@ class MainViewController: UIViewController {
     //MARK: - Internal iVars
     
     /// View for confetti to burst at when the user hit their goal
-    internal var confettiArea :L360ConfettiArea!
+    var confettiArea :L360ConfettiArea!
     
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
-    internal var customEntryView :CustomEntryView!
+    var customEntryView :CustomEntryView!
     
     /// User set water goal (readonly)
-    internal var goal :Float {
+    var goal :Float {
         if let _goal = AppUserDefaults.getDailyGoalValue() {
             return _goal
         } else {
@@ -329,7 +329,7 @@ private extension MainViewController {
 }
 
 // MARK: - Target Actions
-internal extension MainViewController {
+extension MainViewController {
     /// Adds water to user by using presets, custom amount or other means
     ///
     /// - parameter amount: Amount of water in fl oz

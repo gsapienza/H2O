@@ -108,7 +108,7 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     ///
     /// - parameter toValue:    Value of the border thickness to animate to
     /// - parameter isDelegate: Should the ending of the animation call the delegate to indicate that it is complete.
-    internal func animateBorder(toValue :CGFloat, isDelegate :Bool) {        
+    func animateBorder(toValue :CGFloat, isDelegate :Bool) {
         let animationKeyValue = "borderWidth"
         
         let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
@@ -172,7 +172,7 @@ private extension InformationEntryInfoCollectionViewCell {
 }
 
 // MARK: - Target Action
-internal extension InformationEntryInfoCollectionViewCell {
+extension InformationEntryInfoCollectionViewCell {
     /// When the cell is long pressed invoke the red border animation. PromptDelete happens when animation is complete
     ///
     /// - parameter gestureRecognizer: The long press gesture

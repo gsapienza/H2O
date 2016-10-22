@@ -92,10 +92,10 @@ class CustomEntryView: UIView {
     //MARK: - Internal iVars
     
     /// Unit of measurement label next to the amount text field
-    internal var unitLabel :UILabel!
+    var unitLabel :UILabel!
     
     /// Standard animation time for all animations in this view
-    internal let animationDuration = 0.25
+    let animationDuration = 0.25
     
     //MARK: - View Setup
     

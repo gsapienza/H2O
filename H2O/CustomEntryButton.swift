@@ -20,8 +20,8 @@ class CustomEntryButton: EntryButton {
     }
 }
 
-//MARK: - Targer Action
-internal extension CustomEntryButton {
+//MARK: - Target Action
+extension CustomEntryButton {
     ///When the user taps the custom button
     override func onTap() {
         AudioToolbox.standardAudioToolbox.playAudio(BubbleSound, repeatEnabled: false)

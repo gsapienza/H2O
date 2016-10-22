@@ -51,12 +51,6 @@ class InformationViewController: Popsicle {
     //Array of data for entries. Contains date and entries.
     var dayEntries :[DayEntry]?
     
-    /// Date cell that containes an entry ready to be deleted
-    var cellToDeleteFrom :DailyInformationTableViewCell!
-    
-    /// Index of the entry within the date cell that will be deleted. This is used so that the user can select and item to delete then get a confirmation alert before the deletion takes place. This stores the index to delete so the confirmation alert can perform the actual delete action
-    var indexOfEntryToDelete = -1
-    
     /// Weekly graph view in the header of the water data table view
     var weeklyBarGraphView :WeekBarGraphView!
     
@@ -142,8 +136,11 @@ class InformationViewController: Popsicle {
             beginSelecting()
             break
         case let .deleting(entries):
-            leftBarItem = (.delete, enabled: true)
-            rightBarItem = .done
+            leftBarItem = nil
+            rightBarItem = nil
+            delete(entries: entries)
+            state = .viewing
+            stateDidChange()
             break
         }
         
@@ -236,37 +233,51 @@ class InformationViewController: Popsicle {
         }
     }
     
-    //MARK: - Internal
-    
     /// When the user confirms a delete is allowed this will delete the entry from the database and table view
-    func onEntryDeletion() {
-        guard let indexPath = informationTableView.indexPath(for: cellToDeleteFrom) else {
-            return
-        }//Index path for cell to delete entry from
-        
-        guard var dayEntry = dayEntries?[indexPath.row] else {
-            fatalError("Day entry not found for index path")
-        }
-        
-        guard let dateOfEntry = dayEntry.getDate() else {
-            fatalError("Date not found for entry not found for index path")
-        }
-        
-        dayEntry.removeEntry(at: indexOfEntryToDelete)
-        
-        dayEntries?[indexPath.row] = dayEntry //Set value in array to new reference.
-        
-        let indexPathToDelete = IndexPath(item: indexOfEntryToDelete, section: 0) //Index path of entry in the collection view in the date cell
-        
-        cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: [indexPathToDelete]) //Delete the item from the collection view. Animated
-        
-        if dayEntry.entryCount() == 0 { //If there are no entries left
-            dayEntries?.remove(at: indexPath.row)
+    fileprivate func delete(entries :[DayEntryIndexPath]) {
+        var indexPathsToRemoveFromCell :[Int : [Int]] = [:]
             
-            informationTableView.deleteRows(at: [indexPath], with: .fade) //Delete the date row
+        let _ = entries.map { (dayEntryIndex: (dayIndex: Int, entryIndex: Int)) in
+            if indexPathsToRemoveFromCell.keys.contains(dayEntryIndex.dayIndex) {
+                indexPathsToRemoveFromCell[dayEntryIndex.dayIndex]?.append(dayEntryIndex.entryIndex)
+            } else {
+                indexPathsToRemoveFromCell[dayEntryIndex.dayIndex] = [dayEntryIndex.entryIndex]
+            }
         }
         
-        informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Call when entry was deleted
+        let _ = indexPathsToRemoveFromCell.map { (dayPath: (key: Int, value: [Int])) in
+            guard var dayEntry = dayEntries?[dayPath.key] else {
+                fatalError("Day entry not found for index path")
+            }
+            
+            guard let dateOfEntry = dayEntry.getDate() else {
+                fatalError("Date not found for entry not found for index path")
+            }
+            
+            var indexPathsToDelete :[IndexPath] = []
+            for index in dayPath.value {
+                dayEntry.removeEntry(at: index)
+                dayEntries?[dayPath.key] = dayEntry //Set value in array to new reference.
+                indexPathsToDelete.append(IndexPath(item: index, section: 0))
+            }
+            
+            guard let cellToDeleteFrom = informationTableView.cellForRow(at: IndexPath(row: dayPath.key, section: 0)) as? DailyInformationTableViewCell else {
+                fatalError("Cell is not correct type")
+            }
+            
+            cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: indexPathsToDelete) //Delete the item from the collection view. Animated
+            
+            if dayEntry.entryCount() == 0 { //If there are no entries left
+                dayEntries?.remove(at: dayPath.key)
+                
+                informationTableView.deleteRows(at: [IndexPath(row :dayPath.key, section :0)], with: .fade) //Delete the date row
+            }
+            
+            informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Inform the delegate that an entry was deleted.
+        }
+    
+        
+        weeklyBarGraphView.refreshBarGraph()
     }
 }
 
@@ -331,7 +342,7 @@ private extension InformationViewController {
 }
 
 //MARK: - Target Action
-internal extension InformationViewController {
+extension InformationViewController {
     /// When the close bar button is tapped
     func onCloseButton() {
         dismissPopsicle()
@@ -416,8 +427,11 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
     }
     
     func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {
-        self.cellToDeleteFrom = cellToDeleteFrom
-        indexOfEntryToDelete = index
+        
+        if let dayIndexToDeleteFrom = informationTableView.indexPath(for: cellToDeleteFrom) {
+            state = .selecting(selectedEntries: [(dayIndex :dayIndexToDeleteFrom.row, entryIndex :index)])
+            stateDidChange()
+        }
         
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.prepare()
@@ -425,8 +439,17 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         
         let alert = UIAlertController(title: delete_water_entry_alert_title_localized_string, message: are_you_sure_you_want_to_delete_entry_alert_description_localized_string, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: delete_alert_button_localized_string, style: .destructive, handler: { (alert: UIAlertAction!) in
-            self.onEntryDeletion()
-            self.weeklyBarGraphView.refreshBarGraph()
+            
+            switch self.state {
+            case .viewing:
+                fatalError("Shouldn't get in this state.")
+            case let .selecting(selectedEntries):
+                self.state = .deleting(entries: selectedEntries)
+            case .deleting(_):
+                fatalError("Shouldn't get in this state.")
+            }
+            
+            self.stateDidChange()
         }))
         
         alert.addAction(UIAlertAction(title: cancel_navigation_item_localized_string, style: .default, handler: nil))

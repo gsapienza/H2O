@@ -108,7 +108,7 @@ class WeekBarGraphView: UIView {
 }
 
 //MARK: - Private Generators
-internal extension WeekBarGraphView {
+extension WeekBarGraphView {
     
     /// Generates a layer that displays a customizable gradient
     ///

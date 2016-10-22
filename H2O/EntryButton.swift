@@ -34,7 +34,7 @@ class EntryButton: UIButton {
     //MARK: - Internal iVars
     
     /// Circle view outline surrounding the button
-    internal var circleView = UIView()
+    var circleView = UIView()
     
     //MARK: - Setup
     
@@ -100,7 +100,7 @@ private extension EntryButton {
 }
 
 //MARK: - Target Action
-internal extension EntryButton {
+extension EntryButton {
     ///Action on tap. Plays audio and animates the button tapped. Calls a delegate method to inform the delegate that the button was tapped
     func onTap() {
         AudioToolbox.standardAudioToolbox.playAudio(QuickAddSound, repeatEnabled: false)

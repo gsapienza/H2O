@@ -19,7 +19,7 @@ protocol PresetValueChangerViewProtocol {
 
 class PresetValueChangerView: UIView {
         /// Unit label at tail end of view
-    internal let unitLabel = UILabel()
+    let unitLabel = UILabel()
     
         /// Text view with preset value
     let presetValueTextField = UITextField()

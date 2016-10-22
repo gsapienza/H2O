@@ -8,11 +8,13 @@
 
 import UIKit
 
+typealias DayEntryIndexPath = (dayIndex: Int, entryIndex: Int)
+
 extension InformationViewController {
     enum State: Equatable {
         case viewing
-        case selecting(selectedEntries: [DayEntry])
-        case deleting(entries: [Entry])
+        case selecting(selectedEntries: [DayEntryIndexPath])
+        case deleting(entries: [DayEntryIndexPath])
         
     }
 }
@@ -23,8 +25,8 @@ func ==(_ lhs :InformationViewController.State, _ rhs :InformationViewController
         return true
     //case let (.selecting(leftRows), .selecting(rightRows)):
         //return leftRows == rightRows
-    case let (.deleting(leftObjects), .deleting(rightObjects)):
-        return leftObjects == rightObjects
+    //case let (.deleting(leftObjects), .deleting(rightObjects)):
+      //  return leftObjects == rightObjects
     default:
         return false
     }

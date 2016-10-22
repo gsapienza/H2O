@@ -50,21 +50,21 @@ class DailyEntryDial: UIView {
     //MARK: - Internal iVars
     
     /// Line width for the 2 overlapping circles in the gauge
-    internal var circleLineWidth :CGFloat {
+    var circleLineWidth :CGFloat {
         return frame.width / 15
     }
 
     /// Center label displaying the amount of water that the user drank
-    internal var currentAmountOfWaterDrankTodayLabel :UILabel!
+    var currentAmountOfWaterDrankTodayLabel :UILabel!
     
     /// Shape layer that displays in a circle form how much water the user drank
-    internal var outerCircleShapeLayer :CAShapeLayer!
+    var outerCircleShapeLayer :CAShapeLayer!
     
     /// Shape layer that displays in a circle form how much water the user drank
-    internal var innerCircleShapeLayer :CAShapeLayer!
+    var innerCircleShapeLayer :CAShapeLayer!
     
     /// Button in middle that displays how much water was drank
-    internal var dialButton :UIButton!
+    var dialButton :UIButton!
     
     //MARK: - Setup
     
@@ -126,7 +126,7 @@ class DailyEntryDial: UIView {
     /// - parameter degrees: Degrees value to convert
     ///
     /// - returns: Radian value converted from degrees
-    internal func degreesToRadians( degrees :CGFloat) -> CGFloat {
+    func degreesToRadians( degrees :CGFloat) -> CGFloat {
         return degrees * CGFloat(Float.pi) / 180
     }
     
@@ -250,7 +250,7 @@ private extension DailyEntryDial {
 }
 
 // MARK: - Target Actions
-internal extension DailyEntryDial {
+extension DailyEntryDial {
     
     /// Action that happens when dial button is tapped. Calls the implemented delegate function
     func onDialButton() {
