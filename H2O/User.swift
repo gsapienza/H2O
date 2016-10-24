@@ -167,7 +167,9 @@ class User: NSManagedObject {
                 let lastDateComponents = calendar.dateComponents([.day, .month, .year], from: (lastCollection!["date"] as! Date)) //The last entry from index date components
                 
                 if nextEntryDateComponents.month != lastDateComponents.month || nextEntryDateComponents.day != lastDateComponents.day || nextEntryDateComponents.year != lastDateComponents.year {
-                    dateCollections.insert(lastCollection!, at: 0)
+                    if lastCollection!["entries"]?.count != 0 {
+                        dateCollections.insert(lastCollection!, at: 0)
+                    }
                     lastCollection = nil //Setting lastCollection to nil will make the lastCollection reset on the next loop
                 }                
             }
