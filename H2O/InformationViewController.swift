@@ -259,11 +259,9 @@ class InformationViewController: Popsicle {
                 indexPathsToDelete.append(IndexPath(item: index, section: 0)) //Append the index path to the array of deletions so we can delete them from the UI.
             }
             
-            guard let cellToDeleteFrom = informationTableView.cellForRow(at: IndexPath(row: dayPath.key, section: 0)) as? DailyInformationTableViewCell else {
-                fatalError("Cell is not correct type")
+            if let cellToDeleteFrom = informationTableView.cellForRow(at: IndexPath(row: dayPath.key, section: 0)) as? DailyInformationTableViewCell {
+                cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: indexPathsToDelete) //Delete the item from the collection view. Animated
             }
-            
-            cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: indexPathsToDelete) //Delete the item from the collection view. Animated
             
             if dayEntry.entryCount() == 0 { //If there are no entries left
                 dayEntries?.remove(at: dayPath.key)

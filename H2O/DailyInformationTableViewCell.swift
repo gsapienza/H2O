@@ -57,28 +57,35 @@ class DailyInformationTableViewCell: UITableViewCell {
     
     /// Arrange cell view for selecting mode.
     func beginSelecting() {
-        for cell in dayEntriesCollectionView.visibleCells {
-            guard let cell = cell as? InformationEntryInfoCollectionViewCell else {
-                return
-            }
-            
-            WobbleAnimation.start(view: cell, onSide: .left)
-            if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
-                longPressGestureRecognizer.isEnabled = false
-            }
-        }
+        dayEntriesCollectionView.reloadData()
     }
     
     /// Arrange cell view when ending selection mode.
     func endSelecting() {
-        for cell in dayEntriesCollectionView.visibleCells {
-            guard let cell = cell as? InformationEntryInfoCollectionViewCell else {
-                return
-            }
-            
-            WobbleAnimation.stop(view: cell)
-            if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
-                longPressGestureRecognizer.isEnabled = true
+        dayEntriesCollectionView.reloadData()
+    }
+    
+    
+    /// Sets cell visual state to match the state of the parent view controller.
+    ///
+    /// - parameter cell: Cell to set visual state.
+    func refreshStateForCell(cell :InformationEntryInfoCollectionViewCell) {
+        if let delegate = delegate {
+            switch delegate.getState() {
+            case InformationViewController.State.viewing:
+                WobbleAnimation.stop(view: cell)
+                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
+                    longPressGestureRecognizer.isEnabled = true
+                }
+                break
+            case InformationViewController.State.selecting(_):
+                WobbleAnimation.start(view: cell, onSide: .left)
+                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
+                    longPressGestureRecognizer.isEnabled = false
+                }
+                break
+            default:
+                break
             }
         }
     }
@@ -125,32 +132,9 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         
         cell.delegate = self //Set cell delegate so the user can interact with that cell and actions will call back here
         
+        refreshStateForCell(cell: cell)
+
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? InformationEntryInfoCollectionViewCell else {
-            return
-        }
-        
-        if let delegate = delegate {
-            switch delegate.getState() {
-            case InformationViewController.State.viewing:
-                WobbleAnimation.stop(view: cell)
-                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
-                    longPressGestureRecognizer.isEnabled = true
-                }
-                break
-            case InformationViewController.State.selecting(_):
-                WobbleAnimation.start(view: cell, onSide: .left)
-                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
-                    longPressGestureRecognizer.isEnabled = false
-                }
-                break
-            default:
-                break
-            }
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
