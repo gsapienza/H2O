@@ -128,12 +128,12 @@ class InformationViewController: Popsicle {
         case .viewing:
             leftBarItem = (.close, enabled: true)
             rightBarItem = .edit
-            endSelecting()
+            informationTableView.reloadData() //Reload data to set table view cells to indicate viewing.
             break
         case let .selecting(selectedEntries):
             leftBarItem = (.delete, enabled: !selectedEntries.isEmpty)
             rightBarItem = .done
-            beginSelecting()
+            informationTableView.reloadData() //Reload data to set table view cells to indicate selection.
             break
         case let .deleting(entries):
             leftBarItem = nil
@@ -211,24 +211,6 @@ class InformationViewController: Popsicle {
         }
         
         navigationBar.items = [navigationItem]
-    }
-    
-    /// Begin selecing view arrangments daily information cells.
-    private func beginSelecting() {
-        for cell in informationTableView.visibleCells {
-            if let cell = cell as? DailyInformationTableViewCell {
-                cell.beginSelecting()
-            }
-        }
-    }
-    
-    /// End selecting view arrangments daily information cells.
-    private func endSelecting() {
-        for cell in informationTableView.visibleCells {
-            if let cell = cell as? DailyInformationTableViewCell {
-                cell.endSelecting()
-            }
-        }
     }
     
     /// When the user confirms a delete is allowed this will delete the entry from the database and table view
@@ -419,7 +401,8 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         
         cell.delegate = self //Delegate will allow the cell to recover entries on a particular date
         
-        cell.dayEntriesCollectionView.reloadData() //Reload collection view in cell because while reusing cells, it will not refresh automatically and may display inccorect data
+        cell.dayEntriesCollectionView.reloadData() //Reload collection view in cell because while reusing cells, it will not refresh automatically and may display incorect data
+        cell.dayEntriesCollectionView.layoutIfNeeded() //Required to start the wobble animation. //QUESTION - Not sure why this starts the animation. Seems it should work without this line. When the entry cells are reloaded.
         
         return cell
     }

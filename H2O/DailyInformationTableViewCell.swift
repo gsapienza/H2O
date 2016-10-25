@@ -29,6 +29,10 @@ protocol DailyInformationTableViewCellProtocol {
     /// - returns: Viewing, selecting or delete state.
     func getState() -> InformationViewController.State
     
+    /// Entry has been selected in selection state.
+    ///
+    /// - parameter cell:       Cell selected.
+    /// - parameter entryIndex: Index of entry selected within this cell.
     func entrySelected(cell :DailyInformationTableViewCell, entryIndex :Int)
 }
 
@@ -54,17 +58,6 @@ class DailyInformationTableViewCell: UITableViewCell {
     }
     
     //MARK: - Internal
-    
-    /// Arrange cell view for selecting mode.
-    func beginSelecting() {
-        dayEntriesCollectionView.reloadData()
-    }
-    
-    /// Arrange cell view when ending selection mode.
-    func endSelecting() {
-        dayEntriesCollectionView.reloadData()
-    }
-    
     
     /// Sets cell visual state to match the state of the parent view controller.
     ///
@@ -109,7 +102,9 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
     
     ///Entry cells
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ENTRY_INFO_CELL", for: indexPath) as! InformationEntryInfoCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ENTRY_INFO_CELL", for: indexPath) as? InformationEntryInfoCollectionViewCell else {
+            fatalError("Cell is not correct type")
+        }
         
         guard let entriesForDay = delegate?.getEntriesForDay(cell: self) else {
             fatalError("Entries not found for day.")
@@ -132,7 +127,7 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         
         cell.delegate = self //Set cell delegate so the user can interact with that cell and actions will call back here
         
-        refreshStateForCell(cell: cell)
+        refreshStateForCell(cell: cell) //Refresh state to animate if selecting.
 
         return cell
     }
