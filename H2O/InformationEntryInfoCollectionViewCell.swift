@@ -8,13 +8,6 @@
 
 import UIKit
 
-protocol InformationEntryInfoCollectionViewCellProtocol {
-    /// Send message that user has prompted deletion of an entry
-    ///
-    /// - parameter cell: Cell representing entry to delete
-    func promptEntryDeletion(cell :InformationEntryInfoCollectionViewCell)
-}
-
 class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     //MARK: - Public iVars
     
@@ -23,12 +16,6 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     
     /// Time that the entry was added
     var timeLabel :UILabel!
-    
-    /// Delegate to inform of events within an entry cell
-    var delegate :InformationEntryInfoCollectionViewCellProtocol?
-    
-    /// Long press gesture recognizer for deletion of an item.
-    var longPressGestureRecognizer :UILongPressGestureRecognizer?
     
     //MARK: - Private iVars
     
@@ -53,10 +40,6 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         entryAmountLabel = generateEntryAmountLabel()
         
         layout()
-        
-        longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.onLongPressGesture(_:)))
-        
-        addGestureRecognizer(longPressGestureRecognizer!) //Long press gesture will invoke a promptDelete from the delegate
     }
     
     /// View Layout
@@ -107,8 +90,7 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     /// Animates the border of the entry amount circle view to a value. When complete, it may call the animations delegate.
     ///
     /// - parameter toValue:    Value of the border thickness to animate to
-    /// - parameter isDelegate: Should the ending of the animation call the delegate to indicate that it is complete.
-    func animateBorder(toValue :CGFloat, isDelegate :Bool) {
+    func animateBorder(toValue :CGFloat) {
         let animationKeyValue = "borderWidth"
         
         let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
@@ -117,10 +99,6 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         borderAnimation.duration = 0.3
         borderAnimation.fillMode = kCAFillModeForwards
         borderAnimation.isRemovedOnCompletion = false
-        
-        if isDelegate {
-            borderAnimation.delegate = self
-        }
         
         entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)        
     }
@@ -168,27 +146,5 @@ private extension InformationEntryInfoCollectionViewCell {
         label.textAlignment = .center
         
         return label
-    }
-}
-
-// MARK: - Target Action
-extension InformationEntryInfoCollectionViewCell {
-    /// When the cell is long pressed invoke the red border animation. PromptDelete happens when animation is complete
-    ///
-    /// - parameter gestureRecognizer: The long press gesture
-    func onLongPressGesture(_ gestureRecognizer :UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            animateBorder(toValue: 30, isDelegate: true)
-        } else if gestureRecognizer.state == .ended {
-            animateBorder(toValue: 0, isDelegate: false)
-        }
-    }
-}
-
-// MARK: - CAAnimationDelegate
-extension InformationEntryInfoCollectionViewCell :CAAnimationDelegate {
-     func animationDidStop( _ anim: CAAnimation, finished flag: Bool) {
-        animateBorder(toValue: 0, isDelegate: false)
-        delegate?.promptEntryDeletion(cell: self)
     }
 }

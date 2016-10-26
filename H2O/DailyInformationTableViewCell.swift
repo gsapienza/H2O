@@ -67,15 +67,9 @@ class DailyInformationTableViewCell: UITableViewCell {
             switch delegate.getState() {
             case InformationViewController.State.viewing:
                 WobbleAnimation.stop(view: cell)
-                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
-                    longPressGestureRecognizer.isEnabled = true
-                }
                 break
             case InformationViewController.State.selecting(_):
                 WobbleAnimation.start(view: cell, onSide: .left)
-                if let longPressGestureRecognizer = cell.longPressGestureRecognizer {
-                    longPressGestureRecognizer.isEnabled = false
-                }
                 break
             default:
                 break
@@ -125,8 +119,6 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
        
         cell.entryAmountLabel.text = entryAmount
         
-        cell.delegate = self //Set cell delegate so the user can interact with that cell and actions will call back here
-        
         refreshStateForCell(cell: cell) //Refresh state to animate if selecting.
 
         return cell
@@ -140,21 +132,12 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         if let delegate = delegate {
             switch delegate.getState() {
             case let InformationViewController.State.selecting(selectedRows):
-                cell.animateBorder(toValue: 30, isDelegate: false)
+                cell.animateBorder(toValue: 30)
                 delegate.entrySelected(cell: self, entryIndex: indexPath.item)
                 break
             default:
                 break
             }
         }
-    }
-}
-
-// MARK: - InformationEntryInfoCollectionViewCellProtocol
-extension DailyInformationTableViewCell :InformationEntryInfoCollectionViewCellProtocol {
-    func promptEntryDeletion(cell: InformationEntryInfoCollectionViewCell) {
-        let indexPath = dayEntriesCollectionView.indexPath(for: cell)
-                
-        delegate?.promptEntryDeletion(cellToDeleteFrom: self, index: (indexPath! as NSIndexPath).row)
     }
 }
