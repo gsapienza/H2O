@@ -11,17 +11,17 @@ import UIKit
 protocol DailyInformationTableViewCellProtocol {
     /// Gets array of entries for the date in this cell
     ///
-    /// - parameter cell: Cell to to get entries for
+    /// - parameter dayIndex: The index of the day in day entries.
     ///
     /// - returns: Array of entries associated with the cell
-    func getEntriesForDay(cell :DailyInformationTableViewCell) -> [Entry]?
+    func getEntriesForDay(dayIndex: Int) -> [Entry]?
     
     
     /// Prompt the user to confirm deletion of a particular entry
     ///
-    /// - parameter cellToDeleteFrom: Cell to delete entry from
-    /// - parameter index:            Index of entry to delete
-    func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int)
+    /// - parameter dayIndex: The index of the day in day entries.
+    /// - parameter entryIdayIndex: Intndex:            Index of entry to delete
+    func promptEntryDeletion(dayIndex: Int, entryIndex :Int)
     
     
     /// Get the current state of the information view controller.
@@ -31,9 +31,23 @@ protocol DailyInformationTableViewCellProtocol {
     
     /// Entry has been selected in selection state.
     ///
-    /// - parameter cell:       Cell selected.
+    /// - parameter dayIndex: The index of the day in day entries.
     /// - parameter entryIndex: Index of entry selected within this cell.
-    func entrySelected(cell :DailyInformationTableViewCell, entryIndex :Int)
+    func entrySelected(dayIndex: Int, entryIndex :Int)
+    
+    /// Entry has been deselected in entry state.
+    ///
+    /// - parameter dayIndex: The index of the day in day entries.
+    /// - parameter entryIndex: Index of entry selected within this cell.
+    func entryDeselected(dayIndex :Int, entryIndex :Int)
+    
+    /// Return if the entry represented by an index has been previously marked as selected.
+    ///
+    /// - parameter dayIndex: The index of the day in day entries.
+    /// - parameter entryIndex: Index of entry in collection view.
+    ///
+    /// - returns: True if entry has been selected.
+    func isEntrySelected(dayIndex: Int, entryIndex :Int) -> Bool
 }
 
 class DailyInformationTableViewCell: UITableViewCell {
@@ -49,6 +63,9 @@ class DailyInformationTableViewCell: UITableViewCell {
     /// Delegate to communicate with this cell and the view controller containing it
     var delegate :DailyInformationTableViewCellProtocol?
     
+    /// Essentially the index path row number for this cell. Used to track the cell index because using 'indexPath row of cell' from the table view can be unreliable when reusing cells.
+    var dayIndex :Int!
+    
     //MARK: - Setup
     
     override func awakeFromNib() {
@@ -59,6 +76,17 @@ class DailyInformationTableViewCell: UITableViewCell {
     
     //MARK: - Internal
     
+    /// Refreshes the state for each currently visible cell.
+    func refreshCells() {
+        for cell in dayEntriesCollectionView.visibleCells {
+            guard let cell = cell as? InformationEntryInfoCollectionViewCell else {
+                fatalError("Cell is wrong type")
+            }
+            
+            refreshStateForCell(cell: cell)
+        }
+    }
+    
     /// Sets cell visual state to match the state of the parent view controller.
     ///
     /// - parameter cell: Cell to set visual state.
@@ -67,6 +95,7 @@ class DailyInformationTableViewCell: UITableViewCell {
             switch delegate.getState() {
             case InformationViewController.State.viewing:
                 WobbleAnimation.stop(view: cell)
+                cell.animateBorder(hidden: true, animated: false)
                 break
             case InformationViewController.State.selecting(_):
                 WobbleAnimation.start(view: cell, onSide: .left)
@@ -81,7 +110,7 @@ class DailyInformationTableViewCell: UITableViewCell {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let entriesForDay = delegate?.getEntriesForDay(cell: self) else {
+        guard let entriesForDay = delegate?.getEntriesForDay(dayIndex: dayIndex) else {
             return 0
         }
         
@@ -100,7 +129,7 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
             fatalError("Cell is not correct type")
         }
         
-        guard let entriesForDay = delegate?.getEntriesForDay(cell: self) else {
+        guard let entriesForDay = delegate?.getEntriesForDay(dayIndex: dayIndex) else {
             fatalError("Entries not found for day.")
         }
         
@@ -120,20 +149,33 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
         cell.entryAmountLabel.text = entryAmount
         
         refreshStateForCell(cell: cell) //Refresh state to animate if selecting.
+        
+        if let delegate = self.delegate {
+            if delegate.isEntrySelected(dayIndex :dayIndex, entryIndex: indexPath.item) {
+                cell.animateBorder(hidden: false, animated: false) //If the cell was selected then highlight it.
+            } else {
+                cell.animateBorder(hidden: true, animated: false) //If it has not been selected make sure it is not highlighted.
+            }
+        }
 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? InformationEntryInfoCollectionViewCell else {
-            return
+            fatalError("Cell is incorrect type")
         }
         
         if let delegate = delegate {
             switch delegate.getState() {
-            case let InformationViewController.State.selecting(selectedRows):
-                cell.animateBorder(toValue: 30)
-                delegate.entrySelected(cell: self, entryIndex: indexPath.item)
+            case InformationViewController.State.selecting(_):
+                if delegate.isEntrySelected(dayIndex :dayIndex, entryIndex: indexPath.item) {
+                    delegate.entryDeselected(dayIndex: dayIndex, entryIndex: indexPath.item)
+                    cell.animateBorder(hidden: true, animated: false) //If the cell was deselected then remove the highlight.
+                } else {
+                    delegate.entrySelected(dayIndex: dayIndex, entryIndex: indexPath.item)
+                    cell.animateBorder(hidden: false, animated: false) //If it has not been selected then highlight the cell.
+                }
                 break
             default:
                 break

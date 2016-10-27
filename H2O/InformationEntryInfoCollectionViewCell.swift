@@ -87,21 +87,31 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Internal
     
-    /// Animates the border of the entry amount circle view to a value. When complete, it may call the animations delegate.
+    /// Animates the border of the entry amount circle view to be shown or hidden. When complete, it may call the animations delegate.
     ///
-    /// - parameter toValue:    Value of the border thickness to animate to
-    func animateBorder(toValue :CGFloat) {
+    /// - parameter hidden: Should the border be shown or hidden.
+    /// - parameter animated: Should the border be animated.
+    func animateBorder(hidden :Bool, animated :Bool) {
+        let borderWidth :CGFloat = hidden ? 0 : 30
+        let duration = animated ? 0.3 : 0
         let animationKeyValue = "borderWidth"
         
-        let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
+       /* let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
         borderAnimation.fromValue = (entryAmountView.layer.presentation()!.value(forKeyPath: animationKeyValue) as AnyObject).floatValue
-        borderAnimation.toValue = toValue
-        borderAnimation.duration = 0.3
+        borderAnimation.toValue = borderWidth
+        borderAnimation.duration = duration
         borderAnimation.fillMode = kCAFillModeForwards
         borderAnimation.isRemovedOnCompletion = false
+
+        entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)*/
         
-        entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)        
+        if hidden {
+            entryAmountView.layer.borderWidth = 0
+        } else {
+            entryAmountView.layer.borderWidth = 30
+        }
     }
+    
 }
 
 //MARK: - Private Generators

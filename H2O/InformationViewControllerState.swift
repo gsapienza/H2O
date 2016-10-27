@@ -11,7 +11,7 @@ import UIKit
 typealias DayEntryIndexPath = (dayIndex: Int, entryIndex: Int)
 
 extension InformationViewController {
-    enum State: Equatable {
+    enum State {
         case viewing
         case selecting(selectedEntries: [DayEntryIndexPath])
         case deleting(entries: [DayEntryIndexPath])
@@ -36,12 +36,25 @@ extension InformationViewController {
         case .viewing:
             leftBarItem = (.close, enabled: true)
             rightBarItem = .edit
-            informationTableView.reloadData() //Reload data to set table view cells to indicate viewing.
+            for cell in informationTableView.visibleCells {
+                guard let cell = cell as? DailyInformationTableViewCell else {
+                    fatalError("Cell is wrong type")
+                }
+                
+                cell.refreshCells()
+            }
             break
         case let .selecting(selectedEntries):
             leftBarItem = (.delete, enabled: !selectedEntries.isEmpty)
             rightBarItem = .done
-            informationTableView.reloadData() //Reload data to set table view cells to indicate selection.
+            for cell in informationTableView.visibleCells {
+                guard let cell = cell as? DailyInformationTableViewCell else {
+                    fatalError("Cell is wrong type")
+                }
+                
+                cell.refreshCells()
+            }
+            
             break
         case let .deleting(entries):
             leftBarItem = nil
@@ -122,15 +135,10 @@ extension InformationViewController {
     }
 }
 
-func ==(_ lhs :InformationViewController.State, _ rhs :InformationViewController.State) -> Bool {
-    switch (lhs, rhs) {
-    case (.viewing, .viewing):
+func ==(_ lhs :DayEntryIndexPath, _ rhs :DayEntryIndexPath) -> Bool {
+    if lhs.dayIndex == rhs.dayIndex && lhs.entryIndex == rhs.entryIndex {
         return true
-    //case let (.selecting(leftRows), .selecting(rightRows)):
-        //return leftRows == rightRows
-    //case let (.deleting(leftObjects), .deleting(rightObjects)):
-      //  return leftObjects == rightObjects
-    default:
+    } else {
         return false
     }
 }

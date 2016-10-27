@@ -294,6 +294,8 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
         cell.dailyEntryDateView.monthLabel.text = dateFormatter.monthSymbols[dateComponents.month! - 1].lowercased()
         cell.dailyEntryDateView.dayLabel.text = String(dateComponents.day!)
         
+        cell.dayIndex = indexPath.row //Day index is simply the index path row.
+        
         cell.delegate = self //Delegate will allow the cell to recover entries on a particular date
         
         cell.dayEntriesCollectionView.reloadData() //Reload collection view in cell because while reusing cells, it will not refresh automatically and may display incorect data
@@ -305,24 +307,17 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
 
 // MARK: - DailyInformationTableViewCellProtocol
 extension InformationViewController :DailyInformationTableViewCellProtocol {
-    func getEntriesForDay(cell: DailyInformationTableViewCell) -> [Entry]? {
-        
-        guard let indexPath = informationTableView.indexPathForRow(at: cell.center) else {
-            return nil
-        } //Get the cell by position because when trying to retreive it using the index path for cell, nil will be returned at times if the cell hasnt finished loading
-        
-        guard let dayEntry = dayEntries?[indexPath.row] else {
+    func getEntriesForDay(dayIndex: Int) -> [Entry]? {
+        guard let dayEntry = dayEntries?[dayIndex] else {
             fatalError("Day entry not found for index path")
         }
         
         return dayEntry.getEntries()
     }
     
-    func promptEntryDeletion(cellToDeleteFrom: DailyInformationTableViewCell, index :Int) {
-        if let dayIndexToDeleteFrom = informationTableView.indexPath(for: cellToDeleteFrom) {
-            state = .selecting(selectedEntries: [(dayIndex :dayIndexToDeleteFrom.row, entryIndex :index)])
-            stateDidChange()
-        }
+    func promptEntryDeletion(dayIndex: Int, entryIndex :Int) {
+        state = .selecting(selectedEntries: [(dayIndex :dayIndex, entryIndex :entryIndex)])
+        stateDidChange()
         
         displayDeleteAlert(title: delete_water_entry_alert_title_localized_string, message: are_you_sure_you_want_to_delete_entry_alert_description_localized_string) { 
             switch self.state {
@@ -342,21 +337,53 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         return state
     }
     
-    func entrySelected(cell: DailyInformationTableViewCell, entryIndex: Int) {
-        if let cellIndexPath = informationTableView.indexPath(for: cell) {
-            let dayEntryIndexPath = (dayIndex :cellIndexPath.row, entryIndex :entryIndex)
-            switch self.state {
-            case .viewing:
-                fatalError("Shouldn't get in this state.")
-            case let .selecting(selectedEntries):
-                var entries = selectedEntries
-                entries.append(dayEntryIndexPath)
-                self.state = .selecting(selectedEntries: entries)
-                stateDidChange()
-            case .deleting(_):
-                fatalError("Shouldn't get in this state.")
-            }
+    func entrySelected(dayIndex: Int, entryIndex: Int) {
+        let dayEntryIndexPath = (dayIndex :dayIndex, entryIndex :entryIndex)
+        switch self.state {
+        case .viewing:
+            fatalError("Shouldn't get in this state.")
+        case let .selecting(selectedEntries):
+            var entries = selectedEntries
+            entries.append(dayEntryIndexPath)
+            self.state = .selecting(selectedEntries: entries)
+            stateDidChange()
+        case .deleting(_):
+            fatalError("Shouldn't get in this state.")
         }
+    }
+    
+    func entryDeselected(dayIndex: Int, entryIndex: Int) {
+        let dayEntryIndexPath = (dayIndex :dayIndex, entryIndex :entryIndex)
+        switch self.state {
+        case .viewing:
+            fatalError("Shouldn't get in this state.")
+        case let .selecting(selectedEntries):
+            var entries = selectedEntries
+            for (i, entry) in entries.enumerated() {
+                if entry == dayEntryIndexPath {
+                    entries.remove(at: i)
+                }
+            }
+            self.state = .selecting(selectedEntries: entries)
+            stateDidChange()
+        case .deleting(_):
+            fatalError("Shouldn't get in this state.")
+        }
+    }
+    
+    func isEntrySelected(dayIndex: Int, entryIndex: Int) -> Bool {
+        let dayEntryIndexPath = (dayIndex :dayIndex, entryIndex :entryIndex)
+        switch self.state {
+        case let .selecting(selectedEntries):
+            for entry in selectedEntries {
+                if entry == dayEntryIndexPath {
+                    return true
+                }
+            }
+            
+        default: break
+        }
+        return false
     }
 }
 
