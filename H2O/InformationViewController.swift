@@ -82,11 +82,11 @@ class InformationViewController: Popsicle {
     func delete(entries :[DayEntryIndexPath]) {
         var indexPathsToRemoveFromCell :[Int : [Int]] = [:]
         
-        let _ = entries.map { (dayEntryIndex: (dayIndex: Int, entryIndex: Int)) in //Takes all day entry index paths and creates a dictionary where the key is the index of the day and the values is the selected entries.
-            if indexPathsToRemoveFromCell.keys.contains(dayEntryIndex.dayIndex) { //If there is no array for the key.
-                indexPathsToRemoveFromCell[dayEntryIndex.dayIndex]?.append(dayEntryIndex.entryIndex) //Create one.
+        let _ = entries.map { (dayEntryIndex: (dayIndex: Int, entryIndex: Int)) in //Takes all day entry index paths and creates a dictionary where the key is the index of the day and the values are the selected entries.
+            if indexPathsToRemoveFromCell[dayEntryIndex.dayIndex] != nil { //If there is no array for the key.
+                indexPathsToRemoveFromCell[dayEntryIndex.dayIndex]?.append(dayEntryIndex.entryIndex) //Otherwise just append the entry value to the other entries in the value.
             } else {
-                indexPathsToRemoveFromCell[dayEntryIndex.dayIndex] = [dayEntryIndex.entryIndex] //Otherwise just append the entry value to the other entries in the value.
+                indexPathsToRemoveFromCell[dayEntryIndex.dayIndex] = [dayEntryIndex.entryIndex] //Create one.
             }
         }
         
@@ -102,7 +102,7 @@ class InformationViewController: Popsicle {
             var indexPathsToDelete :[IndexPath] = [] //Will be used as the arg to use to delete index paths from the collection view in the day cell.
             for index in dayPath.value { //For each entry
                 dayEntry.removeEntry(at: index) //Remove it from the table view backing.
-                dayEntries?[dayPath.key] = dayEntry //Set value in array to new reference.
+                dayEntries?[dayPath.key] = dayEntry //Set the value of the day manipulated in array to new value since it is not a reference type.
                 indexPathsToDelete.append(IndexPath(item: index, section: 0)) //Append the index path to the array of deletions so we can delete them from the UI.
             }
             

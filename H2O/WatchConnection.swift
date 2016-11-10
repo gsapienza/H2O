@@ -160,7 +160,7 @@ class WatchConnection: NSObject {
 // MARK: - WCSessionDelegate
 extension WatchConnection :WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("Is Activated")        
+        print("Watch Session is Activated")        
     }
     
     func sessionReachabilityDidChange(_ session: WCSession) {

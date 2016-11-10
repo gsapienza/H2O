@@ -171,10 +171,10 @@ extension DailyInformationTableViewCell: UICollectionViewDelegate, UICollectionV
             case InformationViewController.State.selecting(_):
                 if delegate.isEntrySelected(dayIndex :dayIndex, entryIndex: indexPath.item) {
                     delegate.entryDeselected(dayIndex: dayIndex, entryIndex: indexPath.item)
-                    cell.animateBorder(hidden: true, animated: false) //If the cell was deselected then remove the highlight.
+                    cell.animateBorder(hidden: true, animated: true) //If the cell was deselected then remove the highlight.
                 } else {
                     delegate.entrySelected(dayIndex: dayIndex, entryIndex: indexPath.item)
-                    cell.animateBorder(hidden: false, animated: false) //If it has not been selected then highlight the cell.
+                    cell.animateBorder(hidden: false, animated: true) //If it has not been selected then highlight the cell.
                 }
                 break
             default:

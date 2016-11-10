@@ -93,23 +93,20 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     /// - parameter animated: Should the border be animated.
     func animateBorder(hidden :Bool, animated :Bool) {
         let borderWidth :CGFloat = hidden ? 0 : 30
-        let duration = animated ? 0.3 : 0
-        let animationKeyValue = "borderWidth"
-        
-       /* let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
-        borderAnimation.fromValue = (entryAmountView.layer.presentation()!.value(forKeyPath: animationKeyValue) as AnyObject).floatValue
-        borderAnimation.toValue = borderWidth
-        borderAnimation.duration = duration
-        borderAnimation.fillMode = kCAFillModeForwards
-        borderAnimation.isRemovedOnCompletion = false
-
-        entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)*/
-        
-        if hidden {
-            entryAmountView.layer.borderWidth = 0
-        } else {
-            entryAmountView.layer.borderWidth = 30
+       
+        if let presentationLayer = entryAmountView.layer.presentation() {
+            if animated {
+                let animationKeyValue = "borderWidth"
+                
+                let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
+                borderAnimation.fromValue = (presentationLayer.value(forKeyPath: animationKeyValue) as AnyObject).floatValue
+                borderAnimation.toValue = borderWidth
+                borderAnimation.duration = 0.3                
+                entryAmountView.layer.add(borderAnimation, forKey: animationKeyValue)
+            }
         }
+        
+        entryAmountView.layer.borderWidth = borderWidth
     }
     
 }
