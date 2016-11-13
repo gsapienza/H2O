@@ -91,6 +91,7 @@ struct DayEntry {
         
         for index in indexes {
             let entry = entries[index]
+            HealthManager.defaultManager.deleteWaterEntry(entry.date)
             entry.deleteEntry()
         }
         

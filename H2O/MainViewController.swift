@@ -419,8 +419,6 @@ extension MainViewController {
             let feedbackGenerator = UINotificationFeedbackGenerator()
             feedbackGenerator.prepare()
             feedbackGenerator.notificationOccurred(.error)
-
-            AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
             
             customEntryView.invalidEntry()
         }
@@ -542,13 +540,11 @@ extension MainViewController :DailyEntryDialProtocol {
 
 // MARK: - InformationViewControllerProtocol
 extension MainViewController :InformationViewControllerProtocol {
-    func entryWasDeleted( dateOfEntry :Date) {
+    func entryWasDeleted() {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
-        
-        HealthManager.defaultManager.deleteWaterEntry(dateOfEntry)
-        
+                
         WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
         }
     }

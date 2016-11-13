@@ -82,7 +82,6 @@ class HealthManager: NSObject {
             
             //Query the health database
             let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query :HKSampleQuery, samples :[HKSample]?, error :Error?) in
-                
                 for sample in samples! { //For each entry created by app
                     let sampleDateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: sample.startDate) //Components of sample entry up to the second
                     

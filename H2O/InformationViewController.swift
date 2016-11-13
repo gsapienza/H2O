@@ -10,11 +10,9 @@ import UIKit
 
 protocol InformationViewControllerProtocol {
     /**
-     Called when a water entry was deleted for any day
-     
-     - parameter dateOfEntry: Date that the entry was created
+     Called when a water entry was deleted for any day     
      */
-    func entryWasDeleted( dateOfEntry :Date)
+    func entryWasDeleted()
     
     /**
      Determines the user set goal from NSUserDefaults
@@ -109,16 +107,12 @@ class InformationViewController: Popsicle {
                 fatalError("Day entry not found for index path")
             }
             
-            guard let dateOfEntry = dayEntry.getDate() else {
-                fatalError("Date not found for entry not found for index path")
-            }
             
             var entryIndexesToDelete :[Int] = [] //Will be used as arg to delete entry indexes from the day entry backing a cell collection view in the day cell.
             for index in dayPath.value { //For each entry
                 entryIndexesToDelete.append(index) //Append the index path to the array of deletions so we can delete them from the UI.
             }
 
-            
             if let cellToDeleteFrom = informationTableView.cellForRow(at: IndexPath(row: dayPath.key, section: 0)) as? DailyInformationTableViewCell {
                 cellToDeleteFrom.dayEntriesCollectionView.performBatchUpdates({
                     dayEntry.removeEntries(at: entryIndexesToDelete) //Remove it from the table view backing.
@@ -150,7 +144,7 @@ class InformationViewController: Popsicle {
                 deleteDayRows() //Delete day rows if possible.
             }
             
-            informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Inform the delegate that an entry was deleted.
+            informationViewControllerDelegate?.entryWasDeleted() //Inform the delegate that an entry was deleted.
         }
 
         weeklyBarGraphView.refreshBarGraph()
