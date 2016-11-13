@@ -426,10 +426,15 @@ internal extension MainViewController {
     
     ///When the undo button was tapped.
     func onUndoButtonBarButton() {
-        print("UNDO BUTTON PRESSED")
+        getAppDelegate().user?.deleteLatestEntry()
+        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
+        
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.prepare()
         feedbackGenerator.notificationOccurred(.success)
+        undoBarButtonItem.disable()
     }
     
     ///When undo button becomes disabled.

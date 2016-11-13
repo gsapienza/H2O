@@ -11,6 +11,8 @@ import CoreData
 
 
 class User: NSManagedObject {
+    private var latestEntry :Entry?
+    
     class func managedContext() -> NSManagedObjectContext {
         #if os(iOS)
             return getAppDelegate().managedObjectContext
@@ -80,11 +82,14 @@ class User: NSManagedObject {
     
     func addNewEntryToUser(_ amount :Float, date :Date?) {
         let entry = Entry.createNewEntry(amount, date :date)
-        
+        addEntry(entry: entry)
+    }
+    
+    func addEntry(entry :Entry) {
         let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
         mutableEntries.add(entry)
-        
         entries = mutableEntries.copy() as? NSOrderedSet
+        latestEntry = entry
         
         do {
             try User.managedContext().save()
@@ -93,17 +98,14 @@ class User: NSManagedObject {
         }
     }
     
-    func addEntry(entry :Entry) {
-        let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
-        mutableEntries.add(entry)
-        
-        entries = mutableEntries.copy() as? NSOrderedSet
-        
-        do {
-            try User.managedContext().save()
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+    func deleteLatestEntry() {
+        guard let entry = latestEntry else {
+            print("Latest entry has not been set.")
+            return
         }
+        
+        entry.deleteEntry()
+        latestEntry = nil
     }
         
     func amountOfWaterForToday() -> Float {
