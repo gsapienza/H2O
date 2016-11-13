@@ -107,6 +107,15 @@ class User: NSManagedObject {
         entry.deleteEntry()
         latestEntry = nil
     }
+    
+    func getLatestEntryDate() -> Date? {
+        guard let entry = latestEntry else {
+            print("Latest entry has not been set.")
+            return nil
+        }
+        
+        return entry.date
+    }
         
     func amountOfWaterForToday() -> Float {
         var todaysWaterAmount :Float = 0.0
@@ -192,7 +201,7 @@ class User: NSManagedObject {
         
         do {
             let results = try managedObjectContext?.fetch(fetchRequest)
-            return results?.first as! Entry
+            return results?.first as? Entry
         } catch _ {
             return nil
         }

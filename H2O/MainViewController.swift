@@ -289,9 +289,7 @@ private extension MainViewController {
         
         navigationItem.leftBarButtonItem = undoBarButtonItem
         navigationItem.rightBarButtonItem = settingsBarButtonItem
-        
-        print(undoBarButtonItem.customView?.frame)
-        
+                
         navigationBar.items = [navigationItem]
     }
     
@@ -430,6 +428,9 @@ extension MainViewController {
     
     ///When the undo button was tapped.
     func onUndoButtonBarButton() {
+        if let latestEntryDate = getAppDelegate().user?.getLatestEntryDate() {
+            HealthManager.defaultManager.deleteWaterEntry(latestEntryDate)
+        }
         getAppDelegate().user?.deleteLatestEntry()
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
