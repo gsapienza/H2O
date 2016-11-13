@@ -81,19 +81,20 @@ struct DayEntry {
         return entries.count
     }
     
-    /// Remove entry at index.
+    /// Remove entry at indexes.
     ///
-    /// - parameter at: Index to remove from entries array.
-    mutating func removeEntry(at :Int) {
+    /// - parameter indexes: Indexes to remove from entries array and backing database.
+    mutating func removeEntries(at indexes :[Int]) {
         guard var entries = self.entries else {
             return
         }
         
-        let entry = entries[at]
-        entries.remove(at: at)
-        entry.deleteEntry()
+        for index in indexes {
+            let entry = entries[index]
+            entry.deleteEntry()
+        }
         
-        self.entries = entries //Set entries to new reference.
+        self.entries = entries.enumerated().filter { !indexes.contains($0.offset) }.map { $0.element }
     }
 }
 

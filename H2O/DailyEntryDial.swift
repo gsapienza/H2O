@@ -51,7 +51,7 @@ class DailyEntryDial: UIView {
     
     /// Line width for the 2 overlapping circles in the gauge
     var circleLineWidth :CGFloat {
-        return frame.width / 15
+        return frame.width / 12
     }
 
     /// Center label displaying the amount of water that the user drank
@@ -226,7 +226,7 @@ private extension DailyEntryDial {
     func generateAmountLabel() -> UILabel {
         let label = UILabel()
         
-        label.font = StandardFonts.thinFont(size: 80)
+        label.font = StandardFonts.thinFont(size: 70)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         label.textAlignment = .center

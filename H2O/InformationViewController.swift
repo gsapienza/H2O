@@ -90,6 +90,20 @@ class InformationViewController: Popsicle {
             }
         }
         
+        var dayIndexesToDelete :[Int] = [] //Day indexes that will be deleted for empty days left after entries are deleted.
+        var cellsCompletedTheirDeletions = 0 //A count that will be increased by one after an entry is successfully deleted. Essentially this is here to ensure all entries are deleted before removing an entire day row.
+        
+        func deleteDayRows() {
+            if entries.count == cellsCompletedTheirDeletions { //If each entry has been deleted.
+                let dayIndexPathsToDelete :[IndexPath] = dayIndexesToDelete.map({ (index :Int) -> IndexPath in //Create a map of index paths to remove from days.
+                    return IndexPath(row: index, section: 0)
+                })
+
+                dayEntries = dayEntries?.enumerated().filter { !dayIndexesToDelete.contains($0.offset) }.map { $0.element } //Remove day entries by index.
+                informationTableView.deleteRows(at: dayIndexPathsToDelete, with: .fade) //Delete the day rows.
+                cellsCompletedTheirDeletions = 0 //Reset this to zero so the if statement wont pass through if another entry is completed deleting.
+            }
+        }
         for dayPath in indexPathsToRemoveFromCell { //Iterate through the days that have entries to remove.
             guard var dayEntry = dayEntries?[dayPath.key] else {
                 fatalError("Day entry not found for index path")
@@ -99,26 +113,46 @@ class InformationViewController: Popsicle {
                 fatalError("Date not found for entry not found for index path")
             }
             
-            var indexPathsToDelete :[IndexPath] = [] //Will be used as the arg to use to delete index paths from the collection view in the day cell.
+            var entryIndexesToDelete :[Int] = [] //Will be used as arg to delete entry indexes from the day entry backing a cell collection view in the day cell.
             for index in dayPath.value { //For each entry
-                dayEntry.removeEntry(at: index) //Remove it from the table view backing.
-                dayEntries?[dayPath.key] = dayEntry //Set the value of the day manipulated in array to new value since it is not a reference type.
-                indexPathsToDelete.append(IndexPath(item: index, section: 0)) //Append the index path to the array of deletions so we can delete them from the UI.
+                entryIndexesToDelete.append(index) //Append the index path to the array of deletions so we can delete them from the UI.
             }
+
             
             if let cellToDeleteFrom = informationTableView.cellForRow(at: IndexPath(row: dayPath.key, section: 0)) as? DailyInformationTableViewCell {
-                cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: indexPathsToDelete) //Delete the item from the collection view. Animated
-            }
-            
-            if dayEntry.entryCount() == 0 { //If there are no entries left
-                dayEntries?.remove(at: dayPath.key)
+                cellToDeleteFrom.dayEntriesCollectionView.performBatchUpdates({
+                    dayEntry.removeEntries(at: entryIndexesToDelete) //Remove it from the table view backing.
+                    self.dayEntries?[dayPath.key] = dayEntry //Set the value of the day manipulated in array to new value since it is not a reference type.
+                    
+                    let indexPathsToDelete :[IndexPath] = entryIndexesToDelete.map({ (index :Int) -> IndexPath in //Will be used as the arg to use to delete index paths from the collection view in the day cell.
+                        return IndexPath(row: index, section: 0)
+                    })
+
+                    cellToDeleteFrom.dayEntriesCollectionView.deleteItems(at: indexPathsToDelete) //Delete the item from the collection view. Animated
+                    cellsCompletedTheirDeletions += entryIndexesToDelete.count //Number of entries being deleted. If this is the last of the entries, then a day cell can be potentially deleted.
+                   
+                    if dayEntry.entryCount() == 0 { //If there are no entries left
+                        dayIndexesToDelete.append(dayPath.key)
+                    }
+                    
+                }, completion: { (Bool) in
+                    deleteDayRows() //Delete day rows if possible.
+                })
+            } else {
+                dayEntry.removeEntries(at: entryIndexesToDelete) //Remove it from the table view backing.
+                dayEntries?[dayPath.key] = dayEntry //Set the value of the day manipulated in array to new value since it is not a reference type.
+                cellsCompletedTheirDeletions += entryIndexesToDelete.count //Number of entries being deleted. If this is the last of the entries, then a day cell can be potentially deleted.
                 
-                informationTableView.deleteRows(at: [IndexPath(row :dayPath.key, section :0)], with: .fade) //Delete the date row
+                if dayEntry.entryCount() == 0 { //If there are no entries left
+                    dayIndexesToDelete.append(dayPath.key)
+                }
+                
+                deleteDayRows() //Delete day rows if possible.
             }
             
             informationViewControllerDelegate?.entryWasDeleted(dateOfEntry: dateOfEntry) //Inform the delegate that an entry was deleted.
         }
-        
+
         weeklyBarGraphView.refreshBarGraph()
     }
     
@@ -347,6 +381,10 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
             entries.append(dayEntryIndexPath)
             self.state = .selecting(selectedEntries: entries)
             stateDidChange()
+            
+            let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+            feedbackGenerator.prepare()
+            feedbackGenerator.impactOccurred()
         case .deleting(_):
             fatalError("Shouldn't get in this state.")
         }
@@ -366,6 +404,10 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
             }
             self.state = .selecting(selectedEntries: entries)
             stateDidChange()
+            
+            let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+            feedbackGenerator.prepare()
+            feedbackGenerator.impactOccurred()
         case .deleting(_):
             fatalError("Shouldn't get in this state.")
         }
