@@ -93,6 +93,7 @@ let custom_amount_cannot_be_empty_toast_notification_localized_string = "custom_
 let done_navigation_item_localized_string = "done_navigation_item".localized
 let cancel_navigation_item_localized_string = "cancel_navigation_item".localized
 let delete_navigation_item_localized_string = "delete_navigation_item".localized
+let undo_navigation_item_localized_string = "undo_navigation_item".localized
 let information_navigation_title_localized_string = "information_navigation_title".localized
 let no_water_date_logged_localized_string = "no_water_data_logged".localized
 let delete_water_entry_alert_title_localized_string = "delete_water_entry_alert_title".localized
@@ -125,7 +126,7 @@ let BubbleSound = "b4.wav"
 // MARK: - UIImage Extenstion
 extension UIImage {
     enum AssetIdentifier :String {
-        case calendarBackground, check, darkModeBackground, graphBackground, lightModeBackground, automaticThemeChangeCellImage, darkLargePresetImage, darkMediumPresetImage, darkSmallPresetImage, darkModeCellImage, goalCellImage, healthKitCellImage, lightLargePresetImage, lightMediumPresetImage, lightSmallPresetImage, settingsBarButtonItem
+        case calendarBackground, check, darkModeBackground, graphBackground, lightModeBackground, automaticThemeChangeCellImage, darkLargePresetImage, darkMediumPresetImage, darkSmallPresetImage, darkModeCellImage, goalCellImage, healthKitCellImage, lightLargePresetImage, lightMediumPresetImage, lightSmallPresetImage, settingsBarButtonItem, undoButtonItem
     }
     
     convenience init!(assetIdentifier: AssetIdentifier) {

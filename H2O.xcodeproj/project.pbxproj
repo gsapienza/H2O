@@ -52,6 +52,7 @@
 		37D13DE91DB7B2B200C850BA /* WobbleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */; };
 		37D13DEB1DBA5AF400C850BA /* InformationViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */; };
 		37D13DED1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DEC1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift */; };
+		37D7F9DF1DB1780200C94CB6 /* UndoBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7F9DE1DB1780200C94CB6 /* UndoBarButtonItem.swift */; };
 		37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
 		37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
 		37E0D6F11CEE2649004ABFAF /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
@@ -168,6 +169,7 @@
 		37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WobbleAnimation.swift; sourceTree = "<group>"; };
 		37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewControllerModel.swift; sourceTree = "<group>"; };
 		37D13DEC1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAlertExtension.swift; sourceTree = "<group>"; };
+		37D7F9DE1DB1780200C94CB6 /* UndoBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoBarButtonItem.swift; sourceTree = "<group>"; };
 		37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEntryView.swift; sourceTree = "<group>"; };
 		37E0D6EE1CED2D95004ABFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		37E0D6F01CEE2649004ABFAF /* Alert Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Alert Error.wav"; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
+				37D7F9DE1DB1780200C94CB6 /* UndoBarButtonItem.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
 				37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */,
 				37ADB1551CFBA33A00BE3711 /* GSFluidLayout.swift */,
@@ -635,6 +638,7 @@
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
 				37ADB1561CFBA33A00BE3711 /* GSFluidLayout.swift in Sources */,
+				37D7F9DF1DB1780200C94CB6 /* UndoBarButtonItem.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
 				378566651CEA9645003418C2 /* User.swift in Sources */,
 				37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */,

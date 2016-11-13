@@ -56,13 +56,16 @@ class MainViewController: UIViewController {
     
     private let motionManager = CMMotionManager()
     
-    //MARK: - Internal iVars
+    /// Undo bar button item.
+    fileprivate var undoBarButtonItem :UndoBarButtonItem!
     
     /// View for confetti to burst at when the user hit their goal
-    var confettiArea :L360ConfettiArea!
+    fileprivate var confettiArea :L360ConfettiArea!
     
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
-    var customEntryView :CustomEntryView!
+    fileprivate var customEntryView :CustomEntryView!
+    
+    //MARK: - Internal iVars
     
     /// User set water goal (readonly)
     var goal :Float {
@@ -98,8 +101,10 @@ class MainViewController: UIViewController {
             backgroundImageView.image = UIImage(assetIdentifier: .lightModeBackground)
         }
         
+        undoBarButtonItem = UndoBarButtonItem(enabled: false)
+
         configureNavigationBar()
-        configureSettingsBarButton()
+        configureBarButtonItems()
         configureFluidView()
         configurePresetEntryCircles()
         configureBlurView()
@@ -118,6 +123,7 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         customEntryView = generateCustomEntryView()
+
         layout()
         indicateDialToOpenInformationViewController()
     }
@@ -272,14 +278,19 @@ private extension MainViewController {
         navigationBar.backgroundColor = UIColor.clear
     }
     
-    /// Configures the settings button for the navigation bar
-    func configureSettingsBarButton() {
+    /// Configures the bar button items for the navigation bar
+    func configureBarButtonItems() {
         let navigationItem = UINavigationItem()
         
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
+        undoBarButtonItem.addTarget(target: self, action: #selector(onUndoButtonBarButton))
+        
+        navigationItem.leftBarButtonItem = undoBarButtonItem
         navigationItem.rightBarButtonItem = settingsBarButtonItem
+        
+        print(undoBarButtonItem.customView?.frame)
         
         navigationBar.items = [navigationItem]
     }
@@ -353,6 +364,8 @@ extension MainViewController {
         }
 
         indicateDialToOpenInformationViewController()
+        undoBarButtonItem.enable()
+        _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(onUndoDisabledTimer), userInfo: nil, repeats: false) //Timer to schedule when the undo button should disappear.
     }
     
     /// Settings bar button was tapped
@@ -372,9 +385,7 @@ extension MainViewController {
         var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
         
-        AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
-        
-        configureSettingsBarButton() //Restore settings button
+        configureBarButtonItems() //Restore bar buttons
         
         
         customEntryView.animateFromDialCirclePathToCustomButtonPath { (Bool) in
@@ -392,7 +403,7 @@ extension MainViewController {
         if customEntryView.amountTextField.text != "" { //If the text field is not blank
             monitoringCustomViewDropletMovements = true
             
-            configureSettingsBarButton() //Restore settings button
+            configureBarButtonItems() //Restore bar buttons
             
             let amount = NumberFormatter().number(from: customEntryView.amountTextField.text!)!.floatValue
             addWaterToToday(amount: amount)
@@ -407,12 +418,32 @@ extension MainViewController {
             })
             
         } else {
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.error)
+
             AudioToolbox.standardAudioToolbox.playAudio(ErrorSound, repeatEnabled: false)
             
             customEntryView.invalidEntry()
-            ToastNotificationManager.postToastNotification(custom_amount_cannot_be_empty_toast_notification_localized_string, color: StandardColors.standardRedColor, image: nil, completionBlock: {
-            })
         }
+    }
+    
+    ///When the undo button was tapped.
+    func onUndoButtonBarButton() {
+        getAppDelegate().user?.deleteLatestEntry()
+        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
+        
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
+        feedbackGenerator.notificationOccurred(.success)
+        undoBarButtonItem.disable()
+    }
+    
+    ///When undo button becomes disabled.
+    func onUndoDisabledTimer() {
+        undoBarButtonItem.disable()
     }
 }
 

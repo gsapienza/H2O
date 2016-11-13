@@ -16,6 +16,7 @@ water_added_toast_notification = "%i%@ added";
 done_navigation_item = "Done";
 cancel_navigation_item = "Cancel";
 delete_navigation_item = "Delete";
+undo_navigation_item = "Undo";
 information_navigation_title = "Information";
 no_water_data_logged = "No Water Data Logged";
 delete_water_entry_alert_title = "Delete Entry";
