@@ -37,7 +37,7 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
         if fluidLayout == nil {
             fluidLayout = GSFluidLayout(frame: frame, fluidWidth: liquidLayer.bounds.width, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 40, minAmplitude: 5, numberOfWaves: 2)
         }
-
+        
         startWaveAnimation() //Starts wave movement and horizontally animates the liquid layer
     }
     
@@ -67,11 +67,18 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
         
         let finalRatioYPosition = CGFloat((1.02 - fillPercentage)) * frame.height //Final Y value to fill to based on percentage. 1.02 is chosen instead of 1 to make it so that the waves can be seen even if the fill percentage is 1 and full
         
-        let liquidPresentationLayer = liquidLayer.presentation() //Liquid presentation layer. Presentation layer will give more accurate value to the current state of the liquid layer so we will animate this
+        var values :[CGFloat] = []
+        
+        if let liquidPresentationLayer = liquidLayer.presentation() { //Liquid presentation layer. Presentation layer will give more accurate value to the current state of the liquid layer so we will animate this
+            values = [liquidPresentationLayer.position.y, finalRatioYPosition]
+        } else {
+            values = [frame.height, finalRatioYPosition]
+            print("Liquid presentation layer is nil.")
+        }
         
         /// Vertical animation setup
         let verticalFillAnimation = CAKeyframeAnimation(keyPath: "position.y")
-        verticalFillAnimation.values = [(liquidPresentationLayer?.position.y)!, finalRatioYPosition]
+        verticalFillAnimation.values = values
         verticalFillAnimation.duration = fluidLayout.fillDuration * Double(fillDifference) //Duration calculated from fill duration that can be configured multiplied by the fill difference to give a nice effect
         verticalFillAnimation.isRemovedOnCompletion = false
         verticalFillAnimation.fillMode = kCAFillModeForwards

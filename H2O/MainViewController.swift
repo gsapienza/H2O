@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
         RunLoop.current.add(newDateTimer, forMode: RunLoopMode.commonModes)
         
         if traitCollection.forceTouchCapability == .available {
-            self.registerForPreviewing(with: self, sourceView: dailyEntryDial)
+           // self.registerForPreviewing(with: self, sourceView: dailyEntryDial)
         }
     }
     
@@ -126,6 +126,10 @@ class MainViewController: UIViewController {
 
         layout()
         indicateDialToOpenInformationViewController()
+        
+        if !AppUserDefaults.getBoardingWasDismissed() {
+            pushBoardingModal()
+        }
     }
     
     //MARK: - Private
@@ -215,6 +219,13 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func pushBoardingModal() {
+        let boardingViewController = BoardingViewController()
+        
+        present(boardingViewController, animated: true, completion: {
+        })
+    }
+    
     //MARK: - Internal
     
     ///Called via timer to check if the day has changed while the app is opened and UI elements need updating
@@ -298,8 +309,9 @@ private extension MainViewController {
         fluidView.liquidFillColor = StandardColors.waterColor //Water fill
         fluidView.h2OFluidViewDelegate = self
         
-        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
-        updateFluidValue(current: currentAmount!) //Update the fluid value to get a new height
+        if let currentAmount = getAppDelegate().user?.amountOfWaterForToday() {
+            updateFluidValue(current: currentAmount) //Update the fluid value to get a new height
+        }
     }
     
     /// Configures blur view overlaying the in fluid view

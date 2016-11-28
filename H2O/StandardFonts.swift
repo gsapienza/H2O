@@ -22,6 +22,10 @@ import UIKit
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
     }
     
+    class func ultraLightFont(size :CGFloat) -> UIFont {
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightUltraLight)
+    }
+    
     class func boldFont(size :CGFloat) -> UIFont {
         return UIFont.boldSystemFont(ofSize: size)
     }

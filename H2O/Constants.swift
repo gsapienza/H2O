@@ -45,7 +45,8 @@ let GoalValueNotificationInfo = "GOAL_VALUE"
 //MARK: - User Defaults Constants
 
 let AppOpenedForFirstTimeDefault = "APP_OPENED_FOR_FIRST_TIME"
-let InformationViewControllerOpenedBefore = "INFORMATION_VIEW_CONTROLLER_OPENED_BEFORE"
+let BoardingWasDismissedDefault = "BOARDING_WAS_DISMISSED"
+let InformationViewControllerOpenedBeforeDefault = "INFORMATION_VIEW_CONTROLLER_OPENED_BEFORE"
 let PresetWaterValuesDefault = "PRESET_WATER_VALUES"
 let DailyGoalValueDefault = "GOAL_VALUE"
 let AutomaticThemeChangeDefault = "AUTOMATIC_THEME_CHANGE"

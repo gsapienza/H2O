@@ -69,6 +69,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let mainViewController = window?.rootViewController as! MainViewController
         if let presets = AppUserDefaults.getPresetWaterValues() {
@@ -112,6 +113,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+        
     
     //MARK: - Default Settings
     

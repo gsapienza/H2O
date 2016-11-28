@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		370861401D17151F00C89394 /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3708613F1D17151F00C89394 /* Water.wav */; };
+		37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37263F931DEB629D0037D744 /* WaterBottleView.swift */; };
+		37355E851DDFB6690049B842 /* GSMagicTextMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37355E841DDFB6690049B842 /* GSMagicTextMove.swift */; };
 		3741F5A11D8B513E00F7598E /* Splash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3741F5A01D8B513E00F7598E /* Splash.mp3 */; };
 		3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */; };
 		3741F5B01D8F009200F7598E /* StoryBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */; };
@@ -111,6 +113,7 @@
 
 /* Begin PBXFileReference section */
 		3708613F1D17151F00C89394 /* Water.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Water.wav; sourceTree = "<group>"; };
+		37263F931DEB629D0037D744 /* WaterBottleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterBottleView.swift; sourceTree = "<group>"; };
 		372B3E2F1D895AF900730E4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		372B3E311D895AF900730E4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		372B3E331D895AF900730E4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,6 +121,7 @@
 		372B3E3F1D895AF900730E4F /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		372B3E411D895AF900730E4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		372B3E431D895AF900730E4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37355E841DDFB6690049B842 /* GSMagicTextMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSMagicTextMove.swift; sourceTree = "<group>"; };
 		3741F5A01D8B513E00F7598E /* Splash.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Splash.mp3; sourceTree = "<group>"; };
 		3741F5A21D8B703400F7598E /* EntryButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryButtonNode.swift; sourceTree = "<group>"; };
 		3741F5A71D8DCB5A00F7598E /* CustomPickerInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPickerInterfaceController.swift; path = "H2O-Watch Extension/CustomPickerInterfaceController.swift"; sourceTree = SOURCE_ROOT; };
@@ -279,6 +283,7 @@
 				37487FD01DDE04C00082DC27 /* WelcomeViewController.swift */,
 				37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */,
 				37487FD41DDE04D10082DC27 /* ConnectViewController.swift */,
+				37263F931DEB629D0037D744 /* WaterBottleView.swift */,
 			);
 			name = Boarding;
 			sourceTree = "<group>";
@@ -337,6 +342,7 @@
 				37C81B351D918C3B00B6DA9F /* Main.storyboard */,
 				37487FD61DDE04D90082DC27 /* Boarding */,
 				3780931E1D7BD531007CF646 /* Global.swift */,
+				37355E841DDFB6690049B842 /* GSMagicTextMove.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
 				3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */,
 				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
@@ -641,6 +647,7 @@
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
 				37487FCF1DDE04940082DC27 /* BoardingViewController.swift in Sources */,
 				37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */,
+				37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */,
 				3780931F1D7BD531007CF646 /* Global.swift in Sources */,
 				37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
@@ -673,6 +680,7 @@
 				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
 				37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */,
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
+				37355E851DDFB6690049B842 /* GSMagicTextMove.swift in Sources */,
 				37D13DEB1DBA5AF400C850BA /* InformationViewControllerModel.swift in Sources */,
 				3763BDAF1D313D8700FDEBD6 /* HealthManager.swift in Sources */,
 				37D13DED1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift in Sources */,
