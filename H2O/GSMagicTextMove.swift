@@ -26,7 +26,9 @@ protocol GSMagicTextMoveProtocol {
     func renderString(from text :String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer])
 }
 
-extension UILabel :GSMagicTextMoveProtocol {
+extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
+    private static let TextAnimationLayerKey = "TextAnimationLayerKey"
+    private static let OriginalColorKey = "OriginalColorKey"
     
     func animate(to newString: String) {
         guard let text = self.text else {
@@ -34,19 +36,27 @@ extension UILabel :GSMagicTextMoveProtocol {
             return
         }
         
+        let originalColor = textColor
         textColor = UIColor.clear
+        self.text = newString
+
+        let textAnimationLayer = CALayer()
+        textAnimationLayer.frame = bounds
+        layer.addSublayer(textAnimationLayer)
         
         let firstStringLayers = renderString(from: text, shapeLayer: { letterLayer in
-            layer.addSublayer(letterLayer)
+            textAnimationLayer.addSublayer(letterLayer)
         })
         
        let secondStringLayers = renderString(from: newString, shapeLayer: { letterLayer in
             letterLayer.transform = CATransform3DMakeScale(0, 0, 0)
-            layer.addSublayer(letterLayer)
+            textAnimationLayer.addSublayer(letterLayer)
         })
         
         let firstString = text.replacingOccurrences(of: " ", with: "")
         let secondString = newString.replacingOccurrences(of: " ", with: "")
+        
+        let animationDuration = 0.4
         
         getMatchingCharacters(firstString: firstString, secondString: secondString, matchingCharacterAction: { index in
             let firstStringLayer = firstStringLayers.glyphLayers[index.0]
@@ -54,41 +64,40 @@ extension UILabel :GSMagicTextMoveProtocol {
             
             let layerAnimation = CABasicAnimation(keyPath: "position")
             layerAnimation.beginTime = CACurrentMediaTime() + 1
-            layerAnimation.duration = 0.4
+            layerAnimation.duration = animationDuration
             layerAnimation.fromValue = firstStringLayer.position
             layerAnimation.toValue = newFirstStringLayerPosition
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
-            firstStringLayer.add(layerAnimation, forKey: "position")
+            firstStringLayer.add(layerAnimation, forKey: layerAnimation.keyPath)
             
-          //  firstStringLayer.position = newFirstStringLayerPosition
         }, nonMatchingSecondStringCharacterAction: { index in
             let secondStringLayer = secondStringLayers.1[index]
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale")
             layerAnimation.beginTime = CACurrentMediaTime() + 1
-            layerAnimation.duration = 0.4
+            layerAnimation.duration = animationDuration
             layerAnimation.fromValue = 0
             layerAnimation.toValue = 1
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
-            secondStringLayer.add(layerAnimation, forKey: "transform.scale")
+            secondStringLayer.add(layerAnimation, forKey: layerAnimation.keyPath)
             
         }, nonMatchingFirstStringCharacterAction: { index in
             let firstStringLayer = firstStringLayers.glyphLayers[index]
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale")
             layerAnimation.beginTime = CACurrentMediaTime() + 1
-            layerAnimation.duration = 0.4
+            layerAnimation.duration = animationDuration
             layerAnimation.fromValue = 1
             layerAnimation.toValue = 0
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
-            firstStringLayer.add(layerAnimation, forKey: "transform.scale")
+            layerAnimation.delegate = self
+            layerAnimation.setValue(textAnimationLayer, forKey: UILabel.TextAnimationLayerKey)
+            layerAnimation.setValue(originalColor, forKey: UILabel.OriginalColorKey)
+            firstStringLayer.add(layerAnimation, forKey: layerAnimation.keyPath)
         })
-        
-        
-       // self.text = newString
     }
     
     func renderString(from text: String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer]) {
@@ -190,6 +199,8 @@ extension UILabel :GSMagicTextMoveProtocol {
                     let secondStringIndex = i
                     
                     matchingCharacterAction(firstStringIndex, secondStringIndex)
+                } else {
+                    nonMatchingSecondStringCharacterAction(i)
                 }
             } else {
                 nonMatchingSecondStringCharacterAction(i)
@@ -217,5 +228,16 @@ extension UILabel :GSMagicTextMoveProtocol {
         }
         
         return characters
+    }
+    
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        guard let textAnimationLayer = anim.value(forKey: UILabel.TextAnimationLayerKey) as? CALayer,
+            let originalColor = anim.value(forKey: UILabel.OriginalColorKey) as? UIColor
+            else {
+                return
+        }
+        
+        textAnimationLayer.removeFromSuperlayer()
+        textColor = originalColor
     }
 }
