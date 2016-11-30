@@ -35,8 +35,10 @@ class WaterBottleView: UIView {
 
         layout()
         
-        waterView.fluidLayout = GSFluidLayout(frame: frame, fluidWidth: bounds.width * 2, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 10, minAmplitude: 5, numberOfWaves: 2)
-        waterView.layoutIfNeeded()
+        print(bounds.width)
+        
+        waterView.fluidLayout = GSFluidLayout(frame: frame, fluidWidth: bounds.width * 2.5, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 8, minAmplitude: 2, numberOfWaves: 2)
+        waterView.layoutIfNeeded() //Calls the water views layout subviews function since it is not called when adding the view as a subview for some reason :(
         waterView.layer.mask = bottleMaskLayer
         
         var fillValue :Float = 0.4
@@ -45,6 +47,7 @@ class WaterBottleView: UIView {
     
     private func layout() {
         //---Bottle Layer---
+        
         layer.addSublayer(bottleLayer)
         
         //---Water View---

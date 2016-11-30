@@ -13,141 +13,90 @@ class GSMagicLabel :UILabel {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
       
-        animate(to: "Set your daily")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        backgroundColor = UIColor.black
-
     }
 }
 
 protocol GSMagicTextMoveProtocol {
-    func animate(to secondString :String)
+    func animate(to newString :String)
     func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(Int, Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void)
-    func renderString(from text :String, shapeLayer :(CAShapeLayer) -> Void) -> ([CGPoint], [CAShapeLayer])
-    func testCoreText(text :String)
+    func renderString(from text :String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer])
 }
 
 extension UILabel :GSMagicTextMoveProtocol {
-    func testCoreText(text :String) {
-        let letters = CGMutablePath()
-        
-        let runFont = CTFontCreateWithName("Helvetica-Bold" as CFString?, 40.0, nil)//unsafeBitCast(CFDictionaryGetValue(CTRunGetAttributes(run), Unmanaged.passUnretained(kCTFontAttributeName).toOpaque()), to: CTFont.self)
-        let attributedString = NSAttributedString(string: text, attributes: [kCTFontAttributeName as String : runFont])
-
-        let line = CTLineCreateWithAttributedString(attributedString)
-        let runArray = CTLineGetGlyphRuns(line)
-        
-        for index in 0..<CFArrayGetCount(runArray) {
-            let run = unsafeBitCast(CFArrayGetValueAtIndex(runArray, index), to: CTRun.self)
-            for glyphIndex in 0..<CTRunGetGlyphCount(run) {
-                var glyph :CGGlyph = CGGlyph()
-                var position :CGPoint = CGPoint()
-                let range = CFRangeMake(glyphIndex, 1)
-                CTRunGetGlyphs(run, range, &glyph)
-                CTRunGetPositions(run, range, &position)
-                
-                if let letter = CTFontCreatePathForGlyph(runFont, glyph, nil) {
-                    print(position)
-                    
-                    let position = CGAffineTransform(translationX: position.x, y: position.y)
-                    
-                    letters.addPath(letter, transform: position)
-                } else {
-                    print("Letter is nil.")
-                }
-            }
-        }
-        
-        let layer = CAShapeLayer()
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint.zero)
-        path.append(UIBezierPath(cgPath: letters))
-        layer.path = path.cgPath
-        
-        layer.isGeometryFlipped = true
-        layer.lineWidth = 2
-        layer.strokeColor = UIColor.white.cgColor
-        layer.fillColor = UIColor.clear.cgColor
-        self.layer.addSublayer(layer)
-        
-        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        pathAnimation.duration = 5
-        pathAnimation.fromValue = 0.0
-        pathAnimation.toValue = 1
-        layer.add(pathAnimation, forKey: "strokeEnd")
-    }
     
-    func animate(to secondString: String) {
+    func animate(to newString: String) {
         guard let text = self.text else {
             print("Text is empty.")
             return
         }
         
+        textColor = UIColor.clear
+        
         let firstStringLayers = renderString(from: text, shapeLayer: { letterLayer in
             layer.addSublayer(letterLayer)
         })
         
-       /* let secondStringLayers = renderString(from: secondString, shapeLayer: { letterLayer in
+       let secondStringLayers = renderString(from: newString, shapeLayer: { letterLayer in
             letterLayer.transform = CATransform3DMakeScale(0, 0, 0)
             layer.addSublayer(letterLayer)
-        })*/
+        })
         
         let firstString = text.replacingOccurrences(of: " ", with: "")
-        let secondString = secondString.replacingOccurrences(of: " ", with: "")
+        let secondString = newString.replacingOccurrences(of: " ", with: "")
         
         getMatchingCharacters(firstString: firstString, secondString: secondString, matchingCharacterAction: { index in
-            let firstStringLayer = firstStringLayers.1[index.0]
-          //  let newFirstStringLayerPosition = secondStringLayers.0[index.1]
+            let firstStringLayer = firstStringLayers.glyphLayers[index.0]
+            let newFirstStringLayerPosition = secondStringLayers.positions[index.1]
             
             let layerAnimation = CABasicAnimation(keyPath: "position")
             layerAnimation.beginTime = CACurrentMediaTime() + 1
-            layerAnimation.duration = 0.7
+            layerAnimation.duration = 0.4
             layerAnimation.fromValue = firstStringLayer.position
-            //layerAnimation.toValue = newFirstStringLayerPosition
+            layerAnimation.toValue = newFirstStringLayerPosition
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
-            //firstStringLayer.add(layerAnimation, forKey: "position")
+            firstStringLayer.add(layerAnimation, forKey: "position")
             
-            // firstStringLayer.position = newFirstStringLayerPosition
+          //  firstStringLayer.position = newFirstStringLayerPosition
         }, nonMatchingSecondStringCharacterAction: { index in
-            //let secondStringLayer = secondStringLayers.1[index]
+            let secondStringLayer = secondStringLayers.1[index]
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale")
             layerAnimation.beginTime = CACurrentMediaTime() + 1
-            layerAnimation.duration = 0.5
+            layerAnimation.duration = 0.4
             layerAnimation.fromValue = 0
             layerAnimation.toValue = 1
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
-            //secondStringLayer.add(layerAnimation, forKey: "transform.scale")
+            secondStringLayer.add(layerAnimation, forKey: "transform.scale")
+            
         }, nonMatchingFirstStringCharacterAction: { index in
-            let firstStringLayer = firstStringLayers.1[index]
+            let firstStringLayer = firstStringLayers.glyphLayers[index]
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale")
             layerAnimation.beginTime = CACurrentMediaTime() + 1
-            layerAnimation.duration = 0.5
+            layerAnimation.duration = 0.4
             layerAnimation.fromValue = 1
             layerAnimation.toValue = 0
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
-           // firstStringLayer.add(layerAnimation, forKey: "transform.scale")
+            firstStringLayer.add(layerAnimation, forKey: "transform.scale")
         })
         
         
-        self.text = secondString
+       // self.text = newString
     }
     
-    func renderString(from text: String, shapeLayer :(CAShapeLayer) -> Void) -> ([CGPoint], [CAShapeLayer]) {
+    func renderString(from text: String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer]) {
         var letterLayers :[CAShapeLayer] = []
         var letterPositions :[CGPoint] = []
         
-        let runFont = CTFontCreateWithName(font.fontName as CFString?, font.pointSize, nil)//unsafeBitCast(CFDictionaryGetValue(CTRunGetAttributes(run), Unmanaged.passUnretained(kCTFontAttributeName).toOpaque()), to: CTFont.self)
-        var alignment = CTTextAlignment.left
+        let runFont = CTFontCreateWithName(font.fontName as CFString?, font.pointSize, nil)
+        var alignment = CTTextAlignment.center
         let alignmentSetting = [CTParagraphStyleSetting(spec: .alignment, valueSize: MemoryLayout.size(ofValue: alignment), value: &alignment)]
         let paragraphStyle = CTParagraphStyleCreate(alignmentSetting, alignmentSetting.count)
 
@@ -155,9 +104,15 @@ extension UILabel :GSMagicTextMoveProtocol {
         CFAttributedStringReplaceString(attributedString, CFRangeMake(0, 0), text as CFString!)
         CFAttributedStringSetAttribute(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), kCTFontAttributeName, runFont)
         CFAttributedStringSetAttribute(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), kCTParagraphStyleAttributeName, paragraphStyle)
+        CFAttributedStringSetAttribute(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), kCTKernAttributeName, 0.25 as CFTypeRef!)
         
         let framesetter = CTFramesetterCreateWithAttributedString(attributedString!)
-        let path = UIBezierPath(rect: bounds).cgPath
+        
+        let textSuggestedHeight = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), nil, CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude), nil).height
+        
+        let textFrame = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width, height: textSuggestedHeight)
+        
+        let path = UIBezierPath(rect: textFrame).cgPath
         let frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, nil)
         let lines = CTFrameGetLines(frame)
         
@@ -175,8 +130,6 @@ extension UILabel :GSMagicTextMoveProtocol {
             
             CTLineGetTypographicBounds(line, &ascent, &descent, &leading)
             
-            let lineHeight = ascent + descent + leading
-
             let runArray = CTLineGetGlyphRuns(line)
             
             for index in 0..<CFArrayGetCount(runArray) {
@@ -195,7 +148,6 @@ extension UILabel :GSMagicTextMoveProtocol {
                     let glyph = glyphs[glyphIndex]
                     let position = positions[glyphIndex]
                     let glyphBounds :CGRect = glyphBoundingRects[glyphIndex]
-                   // let offset = CTLineGetOffsetForStringIndex(line, glyphIndex, nil)
                     
                     if let letter = CTFontCreatePathForGlyph(runFont, glyph, nil) {
                         let letterLayer = CAShapeLayer()
@@ -205,14 +157,13 @@ extension UILabel :GSMagicTextMoveProtocol {
                         letterLayer.isGeometryFlipped = true
                         letterLayer.bounds = glyphBounds
                         let x = lineOrigin.x + position.x + glyphBounds.minX + glyphBounds.width / 2
-                        let y = position.y + lineHeight - lineOrigin.y - letterLayer.bounds.height / 2
-                        
+                        let y = ascent + position.y - glyphBounds.height / 2 - glyphBounds.minY
                         letterLayer.position = CGPoint(x: x, y: y)
-                       // letterLayer.backgroundColor = UIColor.red.cgColor
-                        letterLayer.fillColor = UIColor.green.cgColor
+                        //letterLayer.backgroundColor = UIColor.red.cgColor
+                        letterLayer.fillColor = UIColor.white.cgColor
                         
                         letterLayers.append(letterLayer)
-                        letterPositions.append(position)
+                        letterPositions.append(CGPoint(x: x, y: y))
                         
                         shapeLayer(letterLayer)
                     } else {
@@ -226,7 +177,7 @@ extension UILabel :GSMagicTextMoveProtocol {
     }
 
     
-    func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(Int, Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void) {
+    func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(_ firstStringIndex :Int, _ secondStringIndex :Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void) {
         var charactersFromFirstString = getCharacters(from: firstString)
         
         for (i, character) in secondString.characters.enumerated() {

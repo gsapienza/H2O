@@ -30,10 +30,15 @@ class WelcomeViewController: UIViewController {
         h2OLabel = generateH2OLabel()
         waterBottleView = generateWaterBottleView()
         
-        welcomeLabel.text = "Welcome To"
+        welcomeLabel.text = "Welcyome To"
+        
         h2OLabel.text = "H2O"
         
         layout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        welcomeLabel.animate(to: "Set your daily")
     }
     
     //MARK: - Private
@@ -62,10 +67,10 @@ class WelcomeViewController: UIViewController {
         
         waterBottleView.translatesAutoresizingMaskIntoConstraints = false
         
+        view.addConstraint(NSLayoutConstraint(item: waterBottleView, attribute: .top, relatedBy: .equal, toItem: h2OLabel, attribute: .bottom, multiplier: 1, constant: 100))
         view.addConstraint(NSLayoutConstraint(item: waterBottleView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -100))
         view.addConstraint(NSLayoutConstraint(item: waterBottleView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: waterBottleView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 119))
-        view.addConstraint(NSLayoutConstraint(item: waterBottleView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 326))
+        view.addConstraint(NSLayoutConstraint(item: waterBottleView, attribute: .width, relatedBy: .equal, toItem: waterBottleView, attribute: .height, multiplier: 119/326, constant: 0))
     }
 }
 
@@ -79,8 +84,8 @@ private extension WelcomeViewController {
     func generateWelcomeLabel() -> GSMagicLabel {
         let label = GSMagicLabel()
         
-        label.font = StandardFonts.regularFont(size: 54)
-        label.textAlignment = .left
+        label.font = StandardFonts.ultraLightFont(size: 54)
+        label.textAlignment = .center
         label.textColor = StandardColors.primaryColor
         
         return label
