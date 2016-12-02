@@ -25,7 +25,7 @@ class WaterBottleView: UIView {
         
         backgroundColor = UIColor.clear
         
-        let bottleMaskWidth = bounds.width * 0.92 //Width for bottle mask is defined as a smaller value than that of the bottleLayer so that the bottleLayer shows in the back as a sort of border.
+        let bottleMaskWidth = bounds.width * 0.92 //Width for bottle mask is defined as a smaller value than that of the bottleLayer so that the bottleLayer shows in the back as a sort of border 0.92 is used because it looked best to me.
         let bottleMaskWidthDifference = bounds.width - bottleMaskWidth //Difference in width between the main bottle and that of the bottle layer mask.
         let bottleMaskFrame = CGRect(x: bounds.width / 2 - bottleMaskWidth / 2, y: 0, width: bottleMaskWidth, height: bounds.height - bottleMaskWidthDifference / 2) //Final frame for the bottle mask. X value places the mask in the middle of the bottle layer and the height takes the half the width difference and subtracts it from the height to show the same amount of distance from the bottleLayer vertically as horizontally.
         
@@ -34,8 +34,6 @@ class WaterBottleView: UIView {
         waterView = generateLiquidView(color: StandardColors.waterColor)
 
         layout()
-        
-        print(bounds.width)
         
         waterView.fluidLayout = GSFluidLayout(frame: frame, fluidWidth: bounds.width * 2.5, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 8, minAmplitude: 2, numberOfWaves: 2)
         waterView.layoutIfNeeded() //Calls the water views layout subviews function since it is not called when adding the view as a subview for some reason :(

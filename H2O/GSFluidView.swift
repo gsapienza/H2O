@@ -38,7 +38,6 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
             fluidLayout = GSFluidLayout(frame: frame, fluidWidth: liquidLayer.bounds.width, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 40, minAmplitude: 5, numberOfWaves: 2)
         }
         
-        print(liquidLayer.bounds.width)
         startWaveAnimation() //Starts wave movement and horizontally animates the liquid layer
     }
     
