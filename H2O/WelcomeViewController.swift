@@ -13,7 +13,7 @@ class WelcomeViewController: UIViewController {
     //MARK: - Private iVars
     
     /// First label.
-    private var welcomeLabel :GSMagicLabel!
+    private var welcomeLabel :UILabel!
     
     /// Second label.
     private var h2OLabel :UILabel!
@@ -30,8 +30,7 @@ class WelcomeViewController: UIViewController {
         h2OLabel = generateH2OLabel()
         waterBottleView = generateWaterBottleView()
         
-        welcomeLabel.text = "Welcyome To"
-        
+        welcomeLabel.text = "Welcome To"
         h2OLabel.text = "H2O"
         
         layout()
@@ -81,8 +80,8 @@ private extension WelcomeViewController {
     /// Generates a welcome label.
     ///
     /// - Returns: A magic label to use for welcome title.
-    func generateWelcomeLabel() -> GSMagicLabel {
-        let label = GSMagicLabel()
+    func generateWelcomeLabel() -> UILabel {
+        let label = UILabel()
         
         label.font = StandardFonts.ultraLightFont(size: 54)
         label.textAlignment = .center
