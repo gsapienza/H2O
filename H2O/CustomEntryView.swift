@@ -249,34 +249,8 @@ class CustomEntryView: UIView {
     
     /// When an invalid entry is made, this will shake the circle path and the view container to indicate an incorrect entry
     func invalidEntry() {
-        let animationDuration :TimeInterval = 0.8
-        let moveValue :CGFloat = 20 //initial X translation to shake
-        
-        let shakeDuration = 0.2
-
-        ///Shake keyframe animation
-        UIView.animateKeyframes(withDuration: animationDuration, delay: 0, options: .allowUserInteraction, animations: { () -> Void in
-            ///Shake forward
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPoint(x: self.layer.position.x + moveValue, y: self.layer.position.y)
-            })
-            
-            ///Shake back
-            UIView.addKeyframe(withRelativeStartTime: shakeDuration, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPoint(x: self.layer.position.x - moveValue * 2, y: self.layer.position.y)
-            })
-            
-            ///Shake forward
-            UIView.addKeyframe(withRelativeStartTime: shakeDuration * 2, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPoint(x: self.layer.position.x + moveValue * 2, y: self.layer.position.y)
-            })
-            
-            ///Shake back
-            UIView.addKeyframe(withRelativeStartTime: shakeDuration * 3, relativeDuration: shakeDuration, animations: { () -> Void in
-                self.layer.position = CGPoint(x: self.layer.position.x - moveValue, y: self.layer.position.y)
-            })
-        }) { (Bool) -> Void in
-        }
+        GSAnimations.invalid(layer: layer, completion: { (Bool) in
+        })
     }
     
     //MARK: - Private

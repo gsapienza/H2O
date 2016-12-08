@@ -30,6 +30,10 @@ class PresetValueChangerView: UIView {
         /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
     var previousValue = String()
     
+    var fontSize :CGFloat = 18
+    
+    var toolbarEnabled = true
+    
     /**
      Permanent transparent background
      */
@@ -52,6 +56,12 @@ class PresetValueChangerView: UIView {
         setup()
     }
     
+    init(fontSize :CGFloat) {
+        super.init(frame: CGRect.zero)
+        self.fontSize = fontSize
+        setup()
+    }
+    
     /**
      Sets up basic properties for this view
      */
@@ -69,14 +79,12 @@ class PresetValueChangerView: UIView {
         unitLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let unit :NSString = standardUnit.rawValue as NSString
-        let font = StandardFonts.boldFont(size: 18)
+        let font = StandardFonts.regularFont(size: fontSize)
         
-        let textSize = unit.size(attributes: [NSFontAttributeName : font]) //Gets size of text based on font and string
-            
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: textSize.width + 1)) //Add a +1 because it is too small without it ¯\(ツ)/¯
+        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 1)) //Add a +1 because it is too small without it ¯\(ツ)/¯
 
         unitLabel.font = font
         unitLabel.text = unit as String
@@ -95,7 +103,7 @@ class PresetValueChangerView: UIView {
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        presetValueTextField.font = StandardFonts.boldFont(size: 18)
+        presetValueTextField.font = StandardFonts.boldFont(size: fontSize)
         presetValueTextField.textAlignment = .right
         presetValueTextField.keyboardType = .numberPad
         presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
@@ -104,22 +112,24 @@ class PresetValueChangerView: UIView {
         
         //Keyboard toolbar
         
-        let screenWidth = getAppDelegate().window?.frame.width
-        
-        let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
-        if AppUserDefaults.getDarkModeEnabled() {
-            keyPadToolbar.barStyle = .blackTranslucent
-        } else {
-            keyPadToolbar.barStyle = .default
+        if toolbarEnabled {
+            let screenWidth = getAppDelegate().window?.frame.width
+            
+            let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
+            if AppUserDefaults.getDarkModeEnabled() {
+                keyPadToolbar.barStyle = .blackTranslucent
+            } else {
+                keyPadToolbar.barStyle = .default
+            }
+            let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+            let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
+            doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
+            
+            keyPadToolbar.items = [flexibleBarButtonItem, doneBarButtonItem]
+            keyPadToolbar.sizeToFit()
+            
+            presetValueTextField.inputAccessoryView = keyPadToolbar
         }
-        let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
-        doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
-        
-        keyPadToolbar.items = [flexibleBarButtonItem, doneBarButtonItem]
-        keyPadToolbar.sizeToFit()
-        
-        presetValueTextField.inputAccessoryView = keyPadToolbar
     }
     
     /**
@@ -167,7 +177,13 @@ extension PresetValueChangerView :UITextFieldDelegate {
             textField.text = previousValue //Replace it with its previous value
         }
         
-        delegate?.valueDidChange(newValue: Float(presetValueTextField.text!)!)
+        if let delegate = self.delegate {
+            if let presetValueText = presetValueTextField.text {
+                if let presetValue = Float(presetValueText) {
+                    delegate.valueDidChange(newValue: presetValue)
+                }
+            }
+        }
     }
 }
 

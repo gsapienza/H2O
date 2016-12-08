@@ -126,10 +126,6 @@ class MainViewController: UIViewController {
 
         layout()
         indicateDialToOpenInformationViewController()
-        
-        if !AppUserDefaults.getBoardingWasDismissed() {
-            pushBoardingModal()
-        }
     }
     
     //MARK: - Private
@@ -217,13 +213,6 @@ class MainViewController: UIViewController {
         }) { (complete :Bool) in
             completion(complete)
         }
-    }
-    
-    private func pushBoardingModal() {
-        let boardingViewController = BoardingViewController()
-        
-        present(boardingViewController, animated: true, completion: {
-        })
     }
     
     //MARK: - Internal

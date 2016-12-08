@@ -8,28 +8,101 @@
 
 import UIKit
 
-class DailyGoalViewController: UIViewController {
-
+class DailyGoalViewController: UIViewController, BoardingProtocol {
+    var titleLabel: UILabel!
+    
+    private var presetChangerView :PresetValueChangerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        var navigationItem = self.navigationItem
+        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "Next")
+        
+        titleLabel = generateTitleLabel()
+        titleLabel.text = "Set your daily goal"
+        
+        presetChangerView = generateGoalPresetChangerView()
+        presetChangerView.presetValueTextField.becomeFirstResponder()
+        
+        layout()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func layout() {
+        //---Title Label---
+        view.addSubview(titleLabel)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 80))
+        view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        
+        //--Preset Value Changer---
+        view.addSubview(presetChangerView)
+        
+        presetChangerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addConstraint(NSLayoutConstraint(item: presetChangerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: presetChangerView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: -50))
+        view.addConstraint(NSLayoutConstraint(item: presetChangerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200))
+        view.addConstraint(NSLayoutConstraint(item: presetChangerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150))
     }
-    */
+    
+    func animateIn(completion: @escaping (Bool) -> Void) {
+        let duration = 0.5
+        
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: .allowUserInteraction, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0, animations: { 
+                self.presetChangerView.transform = CGAffineTransform(scaleX: 0, y: 0)
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: duration, animations: {
+                self.presetChangerView.transform = CGAffineTransform.identity
+            })
+        }) { (Bool) in
+            completion(true)
+        }
+    }
+    
+    func animateOut(completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    
+    func onRightBarButton() {
+        if let presetText = presetChangerView.presetValueTextField.text {
+            guard let presetValue = Float(presetText) else {
+                GSAnimations.invalid(layer: presetChangerView.layer, completion: { (Bool) in
+                })
+                return
+            }
+            
+            if presetValue != 0 {
+                AppUserDefaults.setDailyGoalValue(goal: presetValue)
+                let connectViewController = ConnectViewController()
+                navigationController?.pushViewController(connectViewController, animated: true)
+            } else {
+                GSAnimations.invalid(layer: presetChangerView.layer, completion: { (Bool) in
+                })
+            }
+        }
+    }
+}
 
+// MARK: - Private Generators
+private extension DailyGoalViewController {
+    func generateGoalPresetChangerView() -> PresetValueChangerView {
+        let view = PresetValueChangerView(fontSize: 50)
+        view.presetValueTextField.placeholder = "64"
+        view.delegate = self
+        view.toolbarEnabled = false
+        
+        return view
+    }
+}
+
+extension DailyGoalViewController :PresetValueChangerViewProtocol {
+    func valueDidChange(newValue: Float) {
+        onRightBarButton()
+    }
 }

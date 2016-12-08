@@ -66,6 +66,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
         }
         
+        if !AppUserDefaults.getBoardingWasDismissed() {
+            pushBoardingViewControllerOnRoot()
+        }
+        
         return true
     }
     
@@ -113,7 +117,30 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+    /// Makes the boarding navigation controller the root view controller.
+    private func pushBoardingViewControllerOnRoot() {
+        let boardingViewController = UINavigationController()
+        boardingViewController.view.backgroundColor = UIColor(patternImage: UIImage(assetIdentifier: .darkModeBackground))
         
+        var navBar = boardingViewController.navigationBar
+        configureNavigationBar(navigationBar: &navBar)
+        
+        let rootViewController = WelcomeViewController()
+        rootViewController.view.backgroundColor = UIColor.clear
+        
+        boardingViewController.setViewControllers([rootViewController], animated: false)
+        
+        window?.rootViewController = boardingViewController
+    }
+    
+    /// Configures the view controllers navigation bar.
+    private func configureNavigationBar(navigationBar :inout UINavigationBar) {
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.isTranslucent = true
+        navigationBar.backgroundColor = UIColor.clear
+    }
     
     //MARK: - Default Settings
     

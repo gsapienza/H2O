@@ -83,7 +83,6 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             let newFirstStringLayerPosition = secondStringLayers.positions[index.1] //New position of glyph coming from first string but now animating to second string.
             
             let layerAnimation = CABasicAnimation(keyPath: "position")
-            layerAnimation.beginTime = CACurrentMediaTime() + 1
             layerAnimation.duration = animationDuration
             layerAnimation.fromValue = firstStringLayer.position //Position in first string.
             layerAnimation.toValue = newFirstStringLayerPosition //Position in second string.
@@ -95,7 +94,6 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             let secondStringLayer = secondStringLayers.1[index] //Layer for glyphs not matching in the second string.
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale") //Animates glyphs by scaling them to 1.
-            layerAnimation.beginTime = CACurrentMediaTime() + 1
             layerAnimation.duration = animationDuration
             layerAnimation.fromValue = 0
             layerAnimation.toValue = 1
@@ -107,7 +105,6 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             let firstStringLayer = firstStringLayers.glyphLayers[index] //Layer for glyphs not matching in the first string.
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale") //Animates glyphs by scaling them to 0.
-            layerAnimation.beginTime = CACurrentMediaTime() + 1
             layerAnimation.duration = animationDuration
             layerAnimation.fromValue = 1
             layerAnimation.toValue = 0
