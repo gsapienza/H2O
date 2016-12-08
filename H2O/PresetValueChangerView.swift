@@ -43,6 +43,27 @@ class PresetValueChangerView: UIView {
         backgroundColor = UIColor.clear
         
         setupColors()
+        
+        //Keyboard toolbar
+        
+        if toolbarEnabled {
+            let screenWidth = getAppDelegate().window?.frame.width
+            
+            let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
+            if AppUserDefaults.getDarkModeEnabled() {
+                keyPadToolbar.barStyle = .blackTranslucent
+            } else {
+                keyPadToolbar.barStyle = .default
+            }
+            let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+            let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
+            doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
+            
+            keyPadToolbar.items = [flexibleBarButtonItem, doneBarButtonItem]
+            keyPadToolbar.sizeToFit()
+            
+            presetValueTextField.inputAccessoryView = keyPadToolbar
+        }
     }
     
     //MARK: - View Setup
@@ -109,27 +130,6 @@ class PresetValueChangerView: UIView {
         presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
         presetValueTextField.tintColor = StandardColors.waterColor
         presetValueTextField.delegate = self
-        
-        //Keyboard toolbar
-        
-        if toolbarEnabled {
-            let screenWidth = getAppDelegate().window?.frame.width
-            
-            let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
-            if AppUserDefaults.getDarkModeEnabled() {
-                keyPadToolbar.barStyle = .blackTranslucent
-            } else {
-                keyPadToolbar.barStyle = .default
-            }
-            let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-            let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
-            doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
-            
-            keyPadToolbar.items = [flexibleBarButtonItem, doneBarButtonItem]
-            keyPadToolbar.sizeToFit()
-            
-            presetValueTextField.inputAccessoryView = keyPadToolbar
-        }
     }
     
     /**

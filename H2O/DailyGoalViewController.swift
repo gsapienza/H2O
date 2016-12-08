@@ -66,7 +66,11 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
     }
     
     func animateOut(completion: @escaping (Bool) -> Void) {
-        completion(true)
+        UIView.animate(withDuration: 0.5, delay: 0, options: .allowUserInteraction, animations: {
+            self.presetChangerView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        }) { (Bool) in
+            completion(true)
+        }
     }
     
     func onRightBarButton() {
@@ -94,15 +98,9 @@ private extension DailyGoalViewController {
     func generateGoalPresetChangerView() -> PresetValueChangerView {
         let view = PresetValueChangerView(fontSize: 50)
         view.presetValueTextField.placeholder = "64"
-        view.delegate = self
+       // view.delegate = self
         view.toolbarEnabled = false
         
         return view
-    }
-}
-
-extension DailyGoalViewController :PresetValueChangerViewProtocol {
-    func valueDidChange(newValue: Float) {
-        onRightBarButton()
     }
 }
