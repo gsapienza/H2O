@@ -30,15 +30,19 @@ class PresetValueChangerView: UIView {
         /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
     var previousValue = String()
     
-    var fontSize :CGFloat = 18
+    var fontSize :CGFloat = 17
     
     var toolbarEnabled = true
+    
+    var alignment :NSTextAlignment = .center
     
     /**
      Permanent transparent background
      */
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        setup()
         
         backgroundColor = UIColor.clear
         
@@ -69,18 +73,37 @@ class PresetValueChangerView: UIView {
     //MARK: - View Setup
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        
+        presetValueTextField.font = StandardFonts.boldFont(size: fontSize)
+        presetValueTextField.textAlignment = .right
+        presetValueTextField.keyboardType = .numberPad
+        presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
+        presetValueTextField.tintColor = StandardColors.waterColor
+        presetValueTextField.delegate = self
     }
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        
+        presetValueTextField.font = StandardFonts.boldFont(size: fontSize)
+        presetValueTextField.textAlignment = .right
+        presetValueTextField.keyboardType = .numberPad
+        presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
+        presetValueTextField.tintColor = StandardColors.waterColor
+        presetValueTextField.delegate = self
     }
     
     init(fontSize :CGFloat) {
         super.init(frame: CGRect.zero)
         self.fontSize = fontSize
-        setup()
+        
+        presetValueTextField.font = StandardFonts.boldFont(size: fontSize)
+        presetValueTextField.textAlignment = .right
+        presetValueTextField.keyboardType = .numberPad
+        presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
+        presetValueTextField.tintColor = StandardColors.waterColor
+        presetValueTextField.delegate = self
+        
     }
     
     /**
@@ -101,12 +124,22 @@ class PresetValueChangerView: UIView {
         
         let unit :NSString = standardUnit.rawValue as NSString
         let font = StandardFonts.regularFont(size: fontSize)
+        let textSize = unit.size(attributes: [NSFontAttributeName : font]) //Gets size of text based on font and string
         
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 1)) //Add a +1 because it is too small without it ¯\(ツ)/¯
+        
+        var widthConstraint :NSLayoutConstraint!
+        
+        if alignment == .center {
+            widthConstraint = NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 1) //Add a +1 because it is too small without it ¯\(ツ)/¯
+        } else if alignment == .right {
+            widthConstraint = NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: textSize.width + 1) //Add a +1 because it is too small without it ¯\(ツ)/¯
+        }
 
+        addConstraint(widthConstraint)
+        
         unitLabel.font = font
         unitLabel.text = unit as String
     }
@@ -119,17 +152,11 @@ class PresetValueChangerView: UIView {
         
         presetValueTextField.translatesAutoresizingMaskIntoConstraints = false
         
+        addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .leading, relatedBy: .equal, toItem: self , attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .trailing, relatedBy: .equal, toItem: unitLabel , attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
         addConstraint(NSLayoutConstraint(item: presetValueTextField, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        presetValueTextField.font = StandardFonts.boldFont(size: fontSize)
-        presetValueTextField.textAlignment = .right
-        presetValueTextField.keyboardType = .numberPad
-        presetValueTextField.keyboardAppearance = StandardColors.standardKeyboardAppearance
-        presetValueTextField.tintColor = StandardColors.waterColor
-        presetValueTextField.delegate = self
     }
     
     /**

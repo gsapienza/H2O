@@ -56,6 +56,7 @@ private extension SettingsPresetTableViewCell {
     /// - returns: A preset value changer view
     func generatePresetValueChangerView() -> PresetValueChangerView {
         let view = PresetValueChangerView()
+        view.alignment = .right
         view.delegate = self
 
         return view

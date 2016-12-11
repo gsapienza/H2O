@@ -226,7 +226,7 @@ private extension DailyEntryDial {
     func generateAmountLabel() -> UILabel {
         let label = UILabel()
         
-        label.font = StandardFonts.thinFont(size: 70)
+        label.font = StandardFonts.boldFont(size: 70)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         label.textAlignment = .center
@@ -272,7 +272,7 @@ extension DailyEntryDial {
 extension DailyEntryDial :NightModeProtocol {
     func setupColors() {
         currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
-        outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.withAlphaComponent(0.2).cgColor //Color of border
+        outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.withAlphaComponent(0.1).cgColor //Color of border
         outerCircleShapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
         
         innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.cgColor //Color of border

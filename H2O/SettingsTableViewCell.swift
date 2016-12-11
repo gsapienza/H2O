@@ -89,7 +89,7 @@ private extension SettingsTableViewCell {
     func generateTextLabel() -> UILabel {
         let label = UILabel()
         
-        label.font = StandardFonts.regularFont(size: 18)
+        label.font = StandardFonts.regularFont(size: 17)
         label.minimumScaleFactor = 0.7
         label.adjustsFontSizeToFitWidth = true
         

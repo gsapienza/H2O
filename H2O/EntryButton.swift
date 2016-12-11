@@ -44,7 +44,7 @@ class EntryButton: UIButton {
         backgroundColor = UIColor.clear
         
         //Circular corner radius
-        layer.cornerRadius = bounds.height / 2
+        layer.cornerRadius = bounds.height / 2 //Without setting this, highlighting gets messed up.
         circleView.layer.cornerRadius = layer.cornerRadius
         
         setupColors()
@@ -57,7 +57,6 @@ class EntryButton: UIButton {
         configureTitleLabel()
         
         layout()
-        clipsToBounds = true
         addTarget(self, action: #selector(EntryButton.onTap), for: .touchUpInside)
     }
     
@@ -65,6 +64,7 @@ class EntryButton: UIButton {
     private func layout() {
         //---Circle View---
         addSubview(circleView)
+        sendSubview(toBack: circleView)
         circleView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(NSLayoutConstraint(item: circleView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
@@ -91,9 +91,12 @@ private extension EntryButton {
     func generateCircleView() -> UIView {
         let view = UIView()
         
-        view.backgroundColor = UIColor.clear
-        view.layer.borderWidth = 0.5
-        view.isUserInteractionEnabled = false
+        view.backgroundColor = StandardColors.primaryColor.withAlphaComponent(0.1)
+        view.isUserInteractionEnabled = false //To block to circle view from intercepting touches.
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.25
+        view.layer.shadowRadius = 0.5
+        view.layer.shadowOffset = CGSize(width: 0, height: 0.5)
         
         return view
     }
@@ -124,7 +127,7 @@ extension EntryButton {
 // MARK: - NightModeProtocol
 extension EntryButton :NightModeProtocol {
     func setupColors() {
-        circleView.layer.borderColor = StandardColors.primaryColor.cgColor
-        titleLabel?.textColor = StandardColors.primaryColor
+       // circleView.layer.borderColor = UIColor(white: 1, alpha: 0.2).cgColor//StandardColors.primaryColor.cgColor
+        setTitleColor(StandardColors.primaryColor, for: .normal)
     }
 }

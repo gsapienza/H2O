@@ -82,7 +82,7 @@ class SettingsViewController: UITableViewController {
         
         view.backgroundColor = StandardColors.backgroundColor
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: -1, width: 0, height: 1)) //Covers the bottom lines in the table view including the last cells line
-        tableView.separatorColor = StandardColors.primaryColor
+        tableView.separatorColor = StandardColors.primaryColor.withAlphaComponent(0.2)
         
         setupNavigationBar()
         setupCells()

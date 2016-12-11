@@ -20,6 +20,8 @@
 		375540681DF21A7700BAE413 /* BoardingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375540671DF21A7700BAE413 /* BoardingProtocol.swift */; };
 		3755406A1DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375540691DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift */; };
 		3755406C1DF2822600BAE413 /* GSAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3755406B1DF2822600BAE413 /* GSAnimations.swift */; };
+		375578471DF9C6D800BF8130 /* ServiceIntergrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */; };
+		375578491DFB245100BF8130 /* ConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375578481DFB245100BF8130 /* ConnectTableViewCell.swift */; };
 		375831271DB2D48200ED136E /* InformationViewControllerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375831261DB2D48200ED136E /* InformationViewControllerState.swift */; };
 		375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE01CEA91A6009C14AE /* MainViewController.swift */; };
 		375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
@@ -136,6 +138,8 @@
 		375540671DF21A7700BAE413 /* BoardingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingProtocol.swift; sourceTree = "<group>"; };
 		375540691DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		3755406B1DF2822600BAE413 /* GSAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAnimations.swift; sourceTree = "<group>"; };
+		375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIntergrationModel.swift; sourceTree = "<group>"; };
+		375578481DFB245100BF8130 /* ConnectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectTableViewCell.swift; sourceTree = "<group>"; };
 		375831261DB2D48200ED136E /* InformationViewControllerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewControllerState.swift; sourceTree = "<group>"; };
 		375F4FDB1CEA91A6009C14AE /* H2O.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H2O.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		375F4FE01CEA91A6009C14AE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 				37487FD01DDE04C00082DC27 /* WelcomeViewController.swift */,
 				37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */,
 				37487FD41DDE04D10082DC27 /* ConnectViewController.swift */,
+				375578481DFB245100BF8130 /* ConnectTableViewCell.swift */,
 				37263F931DEB629D0037D744 /* WaterBottleView.swift */,
 			);
 			name = Boarding;
@@ -321,6 +326,7 @@
 				37C81B221D902FBA00B6DA9F /* WatchConnection.swift */,
 				37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */,
 				3755406B1DF2822600BAE413 /* GSAnimations.swift */,
+				375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */,
 				3741F5B11D8F119200F7598E /* Localizable.strings */,
 				3763BDAA1D313CBD00FDEBD6 /* Defaults */,
 				3785666A1CEA9660003418C2 /* Core Data */,
@@ -651,6 +657,7 @@
 				37D13DE91DB7B2B200C850BA /* WobbleAnimation.swift in Sources */,
 				37C81B2B1D9189C100B6DA9F /* AppDelegate.swift in Sources */,
 				378566691CEA9645003418C2 /* Entry.swift in Sources */,
+				375578491DFB245100BF8130 /* ConnectTableViewCell.swift in Sources */,
 				37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */,
 				37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */,
 				3780931F1D7BD531007CF646 /* Global.swift in Sources */,
@@ -680,6 +687,7 @@
 				378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */,
 				3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */,
 				37487FD51DDE04D10082DC27 /* ConnectViewController.swift in Sources */,
+				375578471DF9C6D800BF8130 /* ServiceIntergrationModel.swift in Sources */,
 				37B5A4751D895D5D009857CF /* GSFluidNode.swift in Sources */,
 				3755406C1DF2822600BAE413 /* GSAnimations.swift in Sources */,
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,

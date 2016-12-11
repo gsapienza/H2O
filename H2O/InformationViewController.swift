@@ -229,8 +229,8 @@ private extension InformationViewController {
     func configureTableView() {
         informationTableView.dataSource = self
         informationTableView.delegate = self
-        
-        informationTableView.separatorColor = StandardColors.primaryColor //White or black seperator line
+        informationTableView.showsVerticalScrollIndicator = false
+        informationTableView.separatorColor = StandardColors.primaryColor.withAlphaComponent(0.5) //White or black seperator line
     }
     
     /// Configures the no data label that appears when no entries have been made

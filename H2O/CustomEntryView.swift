@@ -51,8 +51,6 @@ class CustomEntryView: UIView {
     /// Layer for the blue droplet that appears after the circle path transforms into the droplet path
     var dropletShapeLayer :GSAnimatingProgressLayer!
     
-    /// Standard outline width for shapes
-    private let lineWidth :CGFloat = 0.5
     
     /// Path for custom button
     private var customButtonPath :CGPath {
@@ -105,7 +103,7 @@ class CustomEntryView: UIView {
         viewContainer = generateViewContainer()
         unitLabel = generateUnitLabel()
         amountTextField = generateAmountTextField()
-        customButtonToDialCircleShapeLayer = generateCustomButtonToDialCircleShapeLayer(lineWidth: lineWidth)
+        customButtonToDialCircleShapeLayer = generateCustomButtonToDialCircleShapeLayer()
         dropletShapeLayer = generateDropletShapeLayer()
         
         layout()
@@ -196,6 +194,8 @@ class CustomEntryView: UIView {
         dialCircleToCustomButtonAnimation.isRemovedOnCompletion = false
         
         customButtonToDialCircleShapeLayer.add(dialCircleToCustomButtonAnimation, forKey: "path")
+        
+        customButtonToDialCircleShapeLayer.path = nil //Removes path so it doesnt show up on top of the custom button.
     }
     
     /**
@@ -324,17 +324,13 @@ extension CustomEntryView {
         return textField
     }
     
-    /// Generates the shape layer that will convert from custom button -> circle dial outling -> droplet
-    ///
-    /// - parameter lineWidth: Width of the stroke
+    /// Generates the shape layer that will convert from custom button -> circle dial outline -> droplet
     ///
     /// - returns: Shape layer to animate
-    func generateCustomButtonToDialCircleShapeLayer(lineWidth :CGFloat) -> CAShapeLayer {
+    func generateCustomButtonToDialCircleShapeLayer() -> CAShapeLayer {
         let shapeLayer = CAShapeLayer()
         
-        shapeLayer.lineWidth = lineWidth
-        shapeLayer.strokeColor = StandardColors.primaryColor.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.fillColor = StandardColors.primaryColor.withAlphaComponent(0.1).cgColor
         
         return shapeLayer
     }

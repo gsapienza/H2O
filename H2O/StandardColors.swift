@@ -34,7 +34,7 @@ class StandardColors {
         set{}
         get {
             if AppUserDefaults.getDarkModeEnabled() {
-                return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
+                return UIColor(red: 78/255, green: 170/255, blue: 186/255, alpha: 1)
             } else {
                 return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
             }
