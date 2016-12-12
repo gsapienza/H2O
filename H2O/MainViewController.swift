@@ -25,9 +25,6 @@ class MainViewController: UIViewController {
 
     //MARK: - Public iVars
     
-    /// Navigation bar to contain settings button
-    @IBOutlet weak var navigationBar: UINavigationBar!
-    
     /// First Entry Button
     @IBOutlet weak var entryButton1: EntryButton!
     
@@ -93,7 +90,7 @@ class MainViewController: UIViewController {
         configureAccessibility()
         addNotificationObservers()
     
-        view.backgroundColor = StandardColors.backgroundColor
+       // view.backgroundColor = StandardColors.backgroundColor
         
         if AppUserDefaults.getDarkModeEnabled() {
             backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
@@ -272,25 +269,22 @@ private extension MainViewController {
 private extension MainViewController {
     /// Configures the view controllers navigation bar
     func configureNavigationBar() {
-        navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationBar.shadowImage = UIImage()
-        navigationBar.isTranslucent = true
-        navigationBar.backgroundColor = UIColor.clear
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = UIColor.clear
     }
     
     /// Configures the bar button items for the navigation bar
     func configureBarButtonItems() {
-        let navigationItem = UINavigationItem()
-        
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
         settingsBarButtonItem.tintColor = StandardColors.primaryColor
         
         undoBarButtonItem.addTarget(target: self, action: #selector(onUndoButtonBarButton))
         
+        navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = undoBarButtonItem
-        navigationItem.rightBarButtonItem = settingsBarButtonItem
-                
-        navigationBar.items = [navigationItem]
+        navigationItem.rightBarButtonItem = settingsBarButtonItem                
     }
     
     /// Configures the fluid view in background
@@ -335,6 +329,8 @@ private extension MainViewController {
     /// Configures the daily entry of water dial
     func configureDailyEntryDial() {
         dailyEntryDial.delegate = self
+        dailyEntryDial.innerCircleColor = StandardColors.primaryColor
+        dailyEntryDial.outerCircleColor = UIColor(red: 27/255, green: 119/255, blue: 135/255, alpha: 0.3)
     }
 }
 
@@ -480,11 +476,8 @@ extension MainViewController :EntryButtonProtocol {
         
         doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.boldFont(size: 18)], for: UIControlState()) //Done button view properties
         
-        let navigationItem = UINavigationItem()
         navigationItem.leftBarButtonItem = cancelBarButton
         navigationItem.rightBarButtonItem = doneBarButton
-        
-        navigationBar.items = [navigationItem]
     }
 }
 
@@ -584,6 +577,7 @@ extension MainViewController :CustomEntryViewProtocol {
     }
 }
 
+// MARK: - UIViewControllerPreviewingDelegate
 extension MainViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let viewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
@@ -596,5 +590,24 @@ extension MainViewController: UIViewControllerPreviewingDelegate {
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         show(viewControllerToCommit, sender: self)
+    }
+}
+
+// MARK: - BoardingProtocol
+extension MainViewController :BoardingProtocol {
+    func animateIn(completion: @escaping (Bool) -> Void) {
+        view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        view.alpha = 0
+        
+        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .allowUserInteraction, animations: {
+            self.view.transform = CGAffineTransform.identity
+            self.view.alpha = 1
+        }, completion: { _ in
+            completion(true)
+        })
+    }
+    
+    func animateOut(completion: @escaping (Bool) -> Void) {
+        
     }
 }

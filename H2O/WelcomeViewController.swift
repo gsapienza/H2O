@@ -77,7 +77,7 @@ class WelcomeViewController: UIViewController, BoardingProtocol {
     func animateOut(completion: @escaping (Bool) -> Void) {
         UIView.animate(withDuration: 0.5, animations: {
             self.h2OLabel.alpha = 0
-            self.waterBottleView.bounds = self.waterBottleView.bounds.offsetBy(dx: 0, dy: -700)
+            self.waterBottleView.bounds = self.waterBottleView.bounds.offsetBy(dx: 0, dy: -self.view.bounds.height)
             self.waterBottleView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         }) { (Bool) in
             completion(true)

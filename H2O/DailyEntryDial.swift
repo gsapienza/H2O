@@ -51,8 +51,14 @@ class DailyEntryDial: UIView {
     
     /// Line width for the 2 overlapping circles in the gauge
     var circleLineWidth :CGFloat {
-        return frame.width / 12
+        return frame.width / 8
     }
+    
+    /// Color of unfilled progress circle path.
+    var outerCircleColor = UIColor.black
+    
+    /// Color of filled progress circle path.
+    var innerCircleColor = UIColor.white
 
     /// Center label displaying the amount of water that the user drank
     var currentAmountOfWaterDrankTodayLabel :UILabel!
@@ -74,8 +80,8 @@ class DailyEntryDial: UIView {
         
         backgroundColor = UIColor.clear
         
-        outerCircleShapeLayer = generateOuterCircleShapeLayer()
-        innerCircleShapeLayer = generateInnerCircleShapeLayer()
+        outerCircleShapeLayer = generateOuterCircleShapeLayer(color :outerCircleColor)
+        innerCircleShapeLayer = generateInnerCircleShapeLayer(color: innerCircleColor)
         currentAmountOfWaterDrankTodayLabel = generateAmountLabel()
         dialButton = generateDialButton()
         
@@ -184,11 +190,11 @@ class DailyEntryDial: UIView {
 // MARK: - Private Generators
 private extension DailyEntryDial {
     
-    /// Generates an outer circle to use to display full unfilled progress
-    
+    /// Generates an outer circle to use to display full unfilled progress.
     ///
-    /// - returns: Layer containing the circle
-    func generateOuterCircleShapeLayer() -> CAShapeLayer {
+    /// - Parameter color: Color of the path.
+    /// - Returns: Layer containing circle path.
+    func generateOuterCircleShapeLayer(color :UIColor) -> CAShapeLayer {
         let shapeLayer = CAShapeLayer()
         
         let rect = bounds.insetBy(dx: circleLineWidth / 2, dy: circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
@@ -196,14 +202,15 @@ private extension DailyEntryDial {
         let circlePath = UIBezierPath(ovalIn: rect) //Circle path
         shapeLayer.path = circlePath.cgPath
         shapeLayer.lineWidth = circleLineWidth //Size of the border width
+        shapeLayer.strokeColor = color.cgColor //Color of border
+        shapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
         
         return shapeLayer
     }
     
-    /// Generates an inner circle path that will represent how much water was drank today. Starts at 0
-    ///
-    /// - returns: Layer containing the circle
-    func generateInnerCircleShapeLayer() -> CAShapeLayer {
+    
+    
+    func generateInnerCircleShapeLayer(color :UIColor) -> CAShapeLayer {
         let shapeLayer = CAShapeLayer()
         
         let rect = bounds.insetBy(dx: circleLineWidth / 2, dy: circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
@@ -214,6 +221,9 @@ private extension DailyEntryDial {
         
         shapeLayer.lineWidth = circleLineWidth //Size of the border width
         shapeLayer.lineCap = kCALineCapRound //Rounds out the edges
+        
+        shapeLayer.strokeColor = color.cgColor //Color of border
+        shapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
         
         shapeLayer.transform = CATransform3DMakeRotation(degreesToRadians(degrees: 270), 0, 0, 1.0) //Rotation used to get the starting point at the top center and turn clockwise
         
@@ -272,10 +282,5 @@ extension DailyEntryDial {
 extension DailyEntryDial :NightModeProtocol {
     func setupColors() {
         currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
-        outerCircleShapeLayer.strokeColor = StandardColors.primaryColor.withAlphaComponent(0.1).cgColor //Color of border
-        outerCircleShapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
-        
-        innerCircleShapeLayer.strokeColor = StandardColors.primaryColor.cgColor //Color of border
-        innerCircleShapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
     }
 }

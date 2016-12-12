@@ -11,13 +11,13 @@ import Foundation
 @objc protocol BoardingProtocol {
     var view :UIView! { set get }
     
-    var titleLabel :UILabel! { set get }
-    
     func animateOut(completion :@escaping (Bool) -> Void)
     
     func animateIn(completion :@escaping (Bool) -> Void)
     
-    func onRightBarButton()
+    @objc optional var titleLabel :UILabel! { set get }
+
+    @objc optional func onRightBarButton()
 }
 
 extension BoardingProtocol where Self :UIViewController {

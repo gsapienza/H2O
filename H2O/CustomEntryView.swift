@@ -317,7 +317,7 @@ extension CustomEntryView {
         textField.keyboardAppearance = StandardColors.standardKeyboardAppearance
         textField.delegate = self
         textField.tintColor = StandardColors.waterColor
-        textField.placeholder = "12"
+        textField.attributedPlaceholder = NSAttributedString(string: "12", attributes: [NSForegroundColorAttributeName : UIColor(white: 1, alpha: 0.2)])
         textField.adjustsFontSizeToFitWidth = true
         textField.minimumFontSize = 30
         

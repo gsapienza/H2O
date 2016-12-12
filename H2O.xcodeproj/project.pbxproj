@@ -53,6 +53,7 @@
 		37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
 		37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */; };
 		37B5A4751D895D5D009857CF /* GSFluidNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5A4741D895D5D009857CF /* GSFluidNode.swift */; };
+		37BA747F1DFDF1D800221C40 /* CompleteBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */; };
 		37C81B231D902FBA00B6DA9F /* WatchConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C81B221D902FBA00B6DA9F /* WatchConnection.swift */; };
 		37C81B2B1D9189C100B6DA9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C81B2A1D9189C100B6DA9F /* AppDelegate.swift */; };
 		37C81B371D918C3B00B6DA9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37C81B351D918C3B00B6DA9F /* Main.storyboard */; };
@@ -179,6 +180,7 @@
 		37B5A4741D895D5D009857CF /* GSFluidNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GSFluidNode.swift; path = "H2O-Watch Extension/GSFluidNode.swift"; sourceTree = SOURCE_ROOT; };
 		37B5A47A1D898191009857CF /* H2OMainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H2OMainScene.swift; sourceTree = SOURCE_ROOT; };
 		37B5A4801D898274009857CF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/SpriteKit.framework; sourceTree = DEVELOPER_DIR; };
+		37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBoardingViewController.swift; sourceTree = "<group>"; };
 		37C81B1C1D902BCF00B6DA9F /* H2O 1.01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.01.xcdatamodel"; sourceTree = "<group>"; };
 		37C81B221D902FBA00B6DA9F /* WatchConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConnection.swift; sourceTree = "<group>"; };
 		37C81B2A1D9189C100B6DA9F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -287,12 +289,14 @@
 		37487FD61DDE04D90082DC27 /* Boarding */ = {
 			isa = PBXGroup;
 			children = (
+				37355E841DDFB6690049B842 /* GSMagicTextMove.swift */,
 				375540671DF21A7700BAE413 /* BoardingProtocol.swift */,
 				375540691DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift */,
 				37487FD01DDE04C00082DC27 /* WelcomeViewController.swift */,
 				37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */,
 				37487FD41DDE04D10082DC27 /* ConnectViewController.swift */,
 				375578481DFB245100BF8130 /* ConnectTableViewCell.swift */,
+				37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */,
 				37263F931DEB629D0037D744 /* WaterBottleView.swift */,
 			);
 			name = Boarding;
@@ -325,9 +329,6 @@
 				37C81B2A1D9189C100B6DA9F /* AppDelegate.swift */,
 				37C81B221D902FBA00B6DA9F /* WatchConnection.swift */,
 				37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */,
-				3755406B1DF2822600BAE413 /* GSAnimations.swift */,
-				375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */,
-				3741F5B11D8F119200F7598E /* Localizable.strings */,
 				3763BDAA1D313CBD00FDEBD6 /* Defaults */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Main View */,
@@ -353,13 +354,6 @@
 			children = (
 				37C81B351D918C3B00B6DA9F /* Main.storyboard */,
 				37487FD61DDE04D90082DC27 /* Boarding */,
-				3780931E1D7BD531007CF646 /* Global.swift */,
-				37355E841DDFB6690049B842 /* GSMagicTextMove.swift */,
-				3785665C1CEA941A003418C2 /* StandardColors.swift */,
-				3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */,
-				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
-				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
-				3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */,
 			);
 			name = Defaults;
 			sourceTree = "<group>";
@@ -382,6 +376,15 @@
 		3785665A1CEA93BC003418C2 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				3741F5B11D8F119200F7598E /* Localizable.strings */,
+				375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */,
+				3780931E1D7BD531007CF646 /* Global.swift */,
+				3755406B1DF2822600BAE413 /* GSAnimations.swift */,
+				3785665C1CEA941A003418C2 /* StandardColors.swift */,
+				3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */,
+				37EA8E611CEB738300E2B332 /* StandardFonts.swift */,
+				37E0D6EE1CED2D95004ABFAF /* Constants.swift */,
+				3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */,
 				37E0D7641CF22F5D004ABFAF /* Popsicle.swift */,
 				37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */,
 				37A1825F1CEB942E0055DA02 /* AudioToolbox.swift */,
@@ -664,6 +667,7 @@
 				37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
 				378093241D7D254B007CF646 /* H2OFluidView.swift in Sources */,
+				37BA747F1DFDF1D800221C40 /* CompleteBoardingViewController.swift in Sources */,
 				37E0D71D1CEFE9B1004ABFAF /* DateExtension.swift in Sources */,
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,

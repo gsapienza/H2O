@@ -26,17 +26,17 @@ class BoardingAnimatingTransitioning :NSObject, UIViewControllerAnimatedTransiti
         
         toViewController.view.frame = CGRect(x: 0, y: 0, width: fromViewController.view.bounds.width, height: fromViewController.view.bounds.height)
         containerView.insertSubview(toViewController.view, belowSubview: fromViewController.view)
-        toViewController.titleLabel.isHidden = true
+        toViewController.titleLabel?.isHidden = true
         
-        guard let toViewControllerTitleLabelText = toViewController.titleLabel.text else {
+        if let toViewControllerTitleLabelText = toViewController.titleLabel?.text {
+            fromViewController.titleLabel?.animate(to: toViewControllerTitleLabelText, completion: { _ in
+            })
+        } else {
             print("To View Controller title text is nil.")
-            return
         }
         
-        fromViewController.titleLabel.animate(to: toViewControllerTitleLabelText)
-        
         fromViewController.animateOut { (complete :Bool) in
-            toViewController.titleLabel.isHidden = false
+            toViewController.titleLabel?.isHidden = false
             fromViewController.view.removeFromSuperview()
         }
         

@@ -67,7 +67,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if !AppUserDefaults.getBoardingWasDismissed() {
-            //pushBoardingViewControllerOnRoot()
+         //  pushBoardingViewControllerOnRoot()
         }
         
         return true
@@ -121,7 +121,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Makes the boarding navigation controller the root view controller.
     private func pushBoardingViewControllerOnRoot() {
         let boardingViewController = UINavigationController()
-        boardingViewController.view.backgroundColor = UIColor(patternImage: UIImage(assetIdentifier: .darkModeBackground))
+        //boardingViewController.view.backgroundColor = UIColor(patternImage: UIImage(assetIdentifier: .darkModeBackground))
         
         var navBar = boardingViewController.navigationBar
         configureNavigationBar(navigationBar: &navBar)

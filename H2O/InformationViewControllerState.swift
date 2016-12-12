@@ -107,6 +107,7 @@ extension InformationViewController {
         }
         
         if let leftBarButton = leftBarButton {
+            leftBarButton?.imageInsets = UIEdgeInsetsMake(0, 20, 0, 0)
             navigationItem.leftBarButtonItem = leftBarButton
         }
         

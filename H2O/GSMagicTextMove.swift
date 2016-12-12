@@ -14,7 +14,8 @@ protocol GSMagicTextMoveProtocol {
     /// Animates string of label to a new string.
     ///
     /// - Parameter newString: String to show after animation.
-    func animate(to newString :String)
+    /// - Parameter completion: Animation completion block.
+    func animate(to newString :String, completion :(Bool) -> Void)
     
     /// Finds matching characters for two different strings and tracks their index.
     ///
@@ -33,6 +34,8 @@ protocol GSMagicTextMoveProtocol {
     ///   - shapeLayer: Callback containing a layer of a glyph path when it is created..
     /// - Returns: Array of positions for each glyph and array of glyphs whose path is set in a CAShapeLayer.
     func renderString(from text :String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer])?
+    
+    //var animationCompletionBlock :(Bool) -> Void! { get set }
 }
 
 extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
@@ -45,7 +48,7 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
     
     //MARK: - GSMagicTextMoveProtocol
     
-    func animate(to newString: String) {
+    func animate(to newString: String, completion :(Bool) -> Void) {
         guard let text = self.text else {
             print("Text is empty.")
             return

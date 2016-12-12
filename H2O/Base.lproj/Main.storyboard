@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C53a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C63a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8ra-hb-0eu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -16,10 +16,26 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="ze1-4B-q4Z">
+            <objects>
+                <navigationController id="8ra-hb-0eu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mnv-Mr-Nbg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="q2r-PN-tOe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rCI-Vk-Gdn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-431" y="386"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="H2O" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="H2O" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -28,7 +44,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darkModeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="fSB-1S-zFO">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darkModeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="fSB-1S-zFO">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIN-vY-GFh" customClass="H2OFluidView" customModule="H2O" customModuleProvider="target">
@@ -47,7 +63,7 @@
                                 <rect key="frame" x="0.0" y="413.5" width="375" height="93.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyK-Wa-Gte" customClass="EntryButton" customModule="H2O" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="0.0" width="94" height="93.5"/>
+                                        <rect key="frame" x="20" y="0.0" width="94.5" height="93.5"/>
                                         <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="WyK-Wa-Gte" secondAttribute="height" multiplier="1:1" id="1od-e0-jjW"/>
@@ -129,20 +145,10 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTO-cM-a51">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="MRs-Op-TJ7"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem id="JrF-Te-J7w"/>
-                                </items>
-                            </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" red="0.090196078431372548" green="0.090196078431372548" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fSB-1S-zFO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0Wz-RY-9S5"/>
-                            <constraint firstItem="YTO-cM-a51" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="11Q-Is-2ec"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8Pc-zd-9hT" secondAttribute="bottom" id="3iR-ko-PSF"/>
                             <constraint firstItem="I6X-Es-J7b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7LU-IY-dcR"/>
                             <constraint firstItem="1oe-5i-0N5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9el-xw-IiV"/>
@@ -154,16 +160,14 @@
                             <constraint firstAttribute="trailing" secondItem="1oe-5i-0N5" secondAttribute="trailing" id="Oga-Kq-PII"/>
                             <constraint firstAttribute="trailing" secondItem="fSB-1S-zFO" secondAttribute="trailing" id="RNj-lS-aEN"/>
                             <constraint firstItem="8Pc-zd-9hT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Tdv-OA-zoa"/>
+                            <constraint firstItem="I6X-Es-J7b" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="URl-Gg-R0K"/>
                             <constraint firstItem="iEf-Hb-nAI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vzs-82-OF5"/>
                             <constraint firstItem="I6X-Es-J7b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="100" id="YGL-Qb-rdI"/>
-                            <constraint firstItem="YTO-cM-a51" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="c8M-Ee-Vs5"/>
-                            <constraint firstAttribute="trailing" secondItem="YTO-cM-a51" secondAttribute="trailing" id="fAh-ej-X80"/>
                             <constraint firstItem="iEf-Hb-nAI" firstAttribute="top" secondItem="1oe-5i-0N5" secondAttribute="bottom" constant="50" id="fqd-Zn-t77"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1oe-5i-0N5" secondAttribute="bottom" constant="160" id="h2a-c6-QuM"/>
                             <constraint firstAttribute="trailing" secondItem="8Pc-zd-9hT" secondAttribute="trailing" id="m77-ei-nLt"/>
                             <constraint firstItem="I6X-Es-J7b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="n86-j9-Eur"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="aIN-vY-GFh" secondAttribute="bottom" id="ond-dM-dHa"/>
-                            <constraint firstItem="I6X-Es-J7b" firstAttribute="top" secondItem="YTO-cM-a51" secondAttribute="bottom" constant="16" id="szF-ST-BVf"/>
                             <constraint firstItem="fSB-1S-zFO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xB3-CE-j74"/>
                             <constraint firstItem="8Pc-zd-9hT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xXR-II-8aI"/>
                             <constraint firstItem="aIN-vY-GFh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="yWz-uQ-G6I"/>
@@ -176,15 +180,6 @@
                                 <exclude reference="I6X-Es-J7b"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="3iR-ko-PSF"/>
-                                <exclude reference="EyL-sx-Efp"/>
-                                <exclude reference="ond-dM-dHa"/>
-                                <exclude reference="7LU-IY-dcR"/>
-                                <exclude reference="AKV-6O-pek"/>
-                                <exclude reference="JlW-ym-GrA"/>
-                                <exclude reference="YGL-Qb-rdI"/>
-                                <exclude reference="n86-j9-Eur"/>
-                                <exclude reference="szF-ST-BVf"/>
                                 <exclude reference="Tdv-OA-zoa"/>
                                 <exclude reference="m77-ei-nLt"/>
                                 <exclude reference="xXR-II-8aI"/>
@@ -194,6 +189,14 @@
                                 <exclude reference="0Wz-RY-9S5"/>
                                 <exclude reference="RNj-lS-aEN"/>
                                 <exclude reference="xB3-CE-j74"/>
+                                <exclude reference="7LU-IY-dcR"/>
+                                <exclude reference="AKV-6O-pek"/>
+                                <exclude reference="JlW-ym-GrA"/>
+                                <exclude reference="YGL-Qb-rdI"/>
+                                <exclude reference="n86-j9-Eur"/>
+                                <exclude reference="3iR-ko-PSF"/>
+                                <exclude reference="EyL-sx-Efp"/>
+                                <exclude reference="ond-dM-dHa"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -204,15 +207,6 @@
                                 <include reference="I6X-Es-J7b"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="3iR-ko-PSF"/>
-                                <include reference="EyL-sx-Efp"/>
-                                <include reference="ond-dM-dHa"/>
-                                <include reference="7LU-IY-dcR"/>
-                                <exclude reference="AKV-6O-pek"/>
-                                <include reference="JlW-ym-GrA"/>
-                                <exclude reference="YGL-Qb-rdI"/>
-                                <include reference="n86-j9-Eur"/>
-                                <include reference="szF-ST-BVf"/>
                                 <include reference="Tdv-OA-zoa"/>
                                 <include reference="m77-ei-nLt"/>
                                 <include reference="xXR-II-8aI"/>
@@ -222,9 +216,18 @@
                                 <include reference="0Wz-RY-9S5"/>
                                 <include reference="RNj-lS-aEN"/>
                                 <include reference="xB3-CE-j74"/>
+                                <include reference="7LU-IY-dcR"/>
+                                <exclude reference="AKV-6O-pek"/>
+                                <include reference="JlW-ym-GrA"/>
+                                <exclude reference="YGL-Qb-rdI"/>
+                                <include reference="n86-j9-Eur"/>
+                                <include reference="3iR-ko-PSF"/>
+                                <include reference="EyL-sx-Efp"/>
+                                <include reference="ond-dM-dHa"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="LWD-EV-0tn"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="fSB-1S-zFO" id="1oW-4v-AmU"/>
                         <outlet property="customEntryButton" destination="iEf-Hb-nAI" id="MS2-Qh-jnq"/>
@@ -234,7 +237,6 @@
                         <outlet property="entryButton3" destination="vNo-5S-rta" id="3IA-tj-piZ"/>
                         <outlet property="fluidBlurView" destination="8Pc-zd-9hT" id="9X3-F2-p39"/>
                         <outlet property="fluidView" destination="aIN-vY-GFh" id="WLV-sL-Yww"/>
-                        <outlet property="navigationBar" destination="YTO-cM-a51" id="Zss-Pg-3FI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -271,7 +273,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-1F-3RI">
-                                                                <rect key="frame" x="126" y="0.0" width="250" height="120"/>
+                                                                <rect key="frame" x="125" y="0.0" width="251" height="119"/>
                                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YZJ-Mb-iCu">
                                                                     <size key="itemSize" width="50" height="50"/>
@@ -292,7 +294,7 @@
                                                                 </cells>
                                                             </collectionView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8J1-tc-mz9" customClass="DailyEntryDateView" customModule="H2O" customModuleProvider="target">
-                                                                <rect key="frame" x="5" y="0.0" width="121" height="121"/>
+                                                                <rect key="frame" x="5" y="0.0" width="120" height="120"/>
                                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="8J1-tc-mz9" secondAttribute="height" multiplier="1:1" id="aWq-aw-joB"/>
@@ -358,7 +360,7 @@
                                             </prototypes>
                                         </tableView>
                                         <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sE-vG-8Hd">
-                                            <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                            <rect key="frame" x="10" y="20" width="355" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="MdW-nP-gDp"/>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="x5o-4T-Beg"/>
@@ -385,7 +387,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="5sE-vG-8Hd" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" id="185-dd-VOq"/>
+                                        <constraint firstItem="5sE-vG-8Hd" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" constant="10" id="185-dd-VOq"/>
                                         <constraint firstAttribute="bottom" secondItem="FKn-1s-VXD" secondAttribute="bottom" id="2jn-Zg-poZ"/>
                                         <constraint firstItem="FKn-1s-VXD" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" id="RR3-DT-CXT"/>
                                         <constraint firstItem="hzY-jB-DOk" firstAttribute="leading" secondItem="kgT-vF-Qrr" secondAttribute="leading" id="RpY-j2-SAl"/>
@@ -395,7 +397,7 @@
                                         <constraint firstItem="hzY-jB-DOk" firstAttribute="top" secondItem="5sE-vG-8Hd" secondAttribute="bottom" id="nvv-3h-PGs"/>
                                         <constraint firstItem="FKn-1s-VXD" firstAttribute="top" secondItem="kgT-vF-Qrr" secondAttribute="top" id="o1h-G6-b93"/>
                                         <constraint firstAttribute="bottom" secondItem="hzY-jB-DOk" secondAttribute="bottom" id="sB4-6R-HLv"/>
-                                        <constraint firstAttribute="trailing" secondItem="5sE-vG-8Hd" secondAttribute="trailing" id="wDg-df-Q2w"/>
+                                        <constraint firstAttribute="trailing" secondItem="5sE-vG-8Hd" secondAttribute="trailing" constant="10" id="wDg-df-Q2w"/>
                                         <constraint firstItem="5sE-vG-8Hd" firstAttribute="top" secondItem="kgT-vF-Qrr" secondAttribute="top" constant="20" id="zGn-11-G3e"/>
                                         <constraint firstItem="hzY-jB-DOk" firstAttribute="height" secondItem="kgT-vF-Qrr" secondAttribute="height" multiplier="0.6" id="zqi-7L-rkE"/>
                                     </constraints>
@@ -502,7 +504,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ztn-oT-QCy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                                                     <connections>
                                                         <action selector="onHealthKitButtonWithSender:" destination="aQN-Mt-cvV" eventType="touchUpInside" id="7mQ-uj-BTN"/>
                                                     </connections>
@@ -595,7 +597,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mX1-hA-j1E">
-                                                    <rect key="frame" x="311" y="10" width="51" height="31"/>
+                                                    <rect key="frame" x="311" y="9" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="SPY-W1-BAA"/>
                                                         <constraint firstAttribute="height" constant="31" id="mBB-TE-m3S"/>
@@ -650,7 +652,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YKd-ob-PKE">
-                                                    <rect key="frame" x="311" y="10" width="51" height="31"/>
+                                                    <rect key="frame" x="311" y="9" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="BwL-kR-DXf"/>
                                                         <constraint firstAttribute="height" constant="31" id="KhA-4G-4oq"/>
@@ -724,6 +726,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="darkModeBackground" width="414" height="736"/>
+        <image name="darkModeBackground" width="136" height="243"/>
     </resources>
 </document>
