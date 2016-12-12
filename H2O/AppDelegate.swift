@@ -67,7 +67,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if !AppUserDefaults.getBoardingWasDismissed() {
-         //  pushBoardingViewControllerOnRoot()
+           pushBoardingViewControllerOnRoot()
         }
         
         return true

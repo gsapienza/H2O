@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-class User: NSManagedObject {
+public class User: NSManagedObject {
     private var latestEntry :Entry?
     
     class func managedContext() -> NSManagedObjectContext {
@@ -90,6 +90,18 @@ class User: NSManagedObject {
         mutableEntries.add(entry)
         entries = mutableEntries.copy() as? NSOrderedSet
         latestEntry = entry
+        
+        do {
+            try User.managedContext().save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
+    
+    func addService(service :Service) {
+        let mutableServices = self.services as! NSMutableOrderedSet
+        mutableServices.add(service)
+        services = mutableServices
         
         do {
             try User.managedContext().save()

@@ -8,20 +8,20 @@
 
 import Foundation
 
-enum SupportedServices {
-    case healthkit
-    
-    func string() -> String {
-        switch self {
-        case .healthkit:
-            return "HealthKit"
-        }
-    }
+enum SupportedServices :String {
+    case healthkit = "HealthKit"
     
     func image() -> UIImage {
         switch self {
         case .healthkit:
             return UIImage(assetIdentifier: .healthKitCellImage)
+        }
+    }
+    
+    func model() -> ServiceIntergrationProtocol {
+        switch self {
+        case .healthkit:
+            return HealthKitService()
         }
     }
     
@@ -31,6 +31,35 @@ enum SupportedServices {
 }
 
 class ServiceIntergrationModel {
+    func addEntryToAuthorizedServices(amount :Float, date :Date) {
+        guard let services = getAppDelegate().user?.services else {
+            print("No services.")
+            return
+        }
+        
+        for service in services {
+            guard let service = service as? Service else {
+                return
+            }
+            
+            let supportedService = SupportedServices(rawValue: service.name)
+            supportedService?.model().addEntry(amount: amount, date: date)
+        }
+    }
     
+    func deleteEntryFromAuthorizedServices(date :Date) {
+        guard let services = getAppDelegate().user?.services else {
+            print("No services.")
+            return
+        }
+        
+        for service in services {
+            guard let service = service as? Service else {
+                return
+            }
+                        
+            let supportedService = SupportedServices(rawValue: service.name)
+            supportedService?.model().deleteEntry(date: date)
+        }
+    }
 }
-

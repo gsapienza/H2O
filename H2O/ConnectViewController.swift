@@ -11,7 +11,7 @@ import UIKit
 class ConnectViewController: UIViewController, BoardingProtocol {
     var titleLabel: UILabel!
     var connectTableView :UITableView!
-    fileprivate var servicesModel :ServiceIntergrationModel!
+    fileprivate let serviceIntergrationModel = ServiceIntergrationModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,19 +77,33 @@ extension ConnectViewController :UITableViewDataSource, UITableViewDelegate {
         
         let service = SupportedServices.allSupportedServices()[indexPath.row]
         
-        cell.titleLabel.text = "Enable " + service.string()
+        cell.titleLabel.text = "Enable " + service.rawValue
         cell.iconImageView.image = service.image()
    
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? ConnectTableViewCell else {
+            fatalError("Cell is not correct type.")
+        }
+        
         cell.frame = cell.frame.offsetBy(dx: 0, dy: view.bounds.height)
         
         UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0.1, options: .allowUserInteraction, animations: {
             cell.frame = cell.frame.offsetBy(dx: 0, dy: -self.view.bounds.height)
         }, completion: { Bool in
         })
+        
+        let service = SupportedServices.allSupportedServices()[indexPath.row]
+        
+        if service.model().isAuthorized() {
+            cell.setSelected(true, animated: true)
+            cell.titleLabel.text = service.rawValue + " Enabled"
+        } else {
+            cell.setSelected(false, animated: true)
+            cell.titleLabel.text = "Enable " + service.rawValue
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -102,6 +116,25 @@ extension ConnectViewController :UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = UIColor.clear
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? ConnectTableViewCell else {
+            fatalError("Cell is incorrect type.")
+        }
+        
+        let service = SupportedServices.allSupportedServices()[indexPath.row]
+        
+        service.model().authorize { (success :Bool, error :Error?, token :String?) in
+            if success {
+                cell.setSelected(true, animated: true)
+                cell.titleLabel.text = service.rawValue + " Enabled"
+                
+                if let service = Service.create(name: service.rawValue, token: token, isAuthorized: true) {
+                    getAppDelegate().user?.addService(service: service)
+                }
+            }
+        }
     }
 }
 

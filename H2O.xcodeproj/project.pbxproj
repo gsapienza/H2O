@@ -14,6 +14,14 @@
 		3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */; };
 		3741F5B01D8F009200F7598E /* StoryBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */; };
 		3741F5B21D8F119200F7598E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3741F5B11D8F119200F7598E /* Localizable.strings */; };
+		37487B451DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B441DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift */; };
+		37487B471DFF3C7E00539EA5 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B461DFF3C7E00539EA5 /* HealthKitService.swift */; };
+		37487B4B1DFF454E00539EA5 /* Service+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B491DFF454E00539EA5 /* Service+CoreDataClass.swift */; };
+		37487B4C1DFF454E00539EA5 /* Service+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B4A1DFF454E00539EA5 /* Service+CoreDataProperties.swift */; };
+		37487B571DFF462100539EA5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B551DFF462100539EA5 /* User.swift */; };
+		37487B5B1DFF462D00539EA5 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B591DFF462D00539EA5 /* Entry.swift */; };
+		37487B5C1DFF462D00539EA5 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B5A1DFF462D00539EA5 /* Entry+CoreDataProperties.swift */; };
+		37487B5E1DFF466000539EA5 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B5D1DFF466000539EA5 /* User+CoreDataProperties.swift */; };
 		37487FD11DDE04C00082DC27 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487FD01DDE04C00082DC27 /* WelcomeViewController.swift */; };
 		37487FD31DDE04CA0082DC27 /* DailyGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */; };
 		37487FD51DDE04D10082DC27 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487FD41DDE04D10082DC27 /* ConnectViewController.swift */; };
@@ -33,10 +41,6 @@
 		378093241D7D254B007CF646 /* H2OFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093231D7D254B007CF646 /* H2OFluidView.swift */; };
 		3784BD041D86369D00DB581D /* QuickAdd.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3784BD031D86369C00DB581D /* QuickAdd.mp3 */; };
 		3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
-		378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */; };
-		378566651CEA9645003418C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665F1CEA9645003418C2 /* User.swift */; };
-		378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378566621CEA9645003418C2 /* Entry+CoreDataProperties.swift */; };
-		378566691CEA9645003418C2 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378566631CEA9645003418C2 /* Entry.swift */; };
 		3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666B1CEAA161003418C2 /* EntryButton.swift */; };
 		3785666E1CEAA16C003418C2 /* CustomEntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666D1CEAA16C003418C2 /* CustomEntryButton.swift */; };
 		378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666F1CEAA190003418C2 /* DailyEntryDial.swift */; };
@@ -133,6 +137,15 @@
 		3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoryBoardExtension.swift; path = ../StoryBoardExtension.swift; sourceTree = "<group>"; };
 		3741F5B11D8F119200F7598E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		37487B441DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIntergrationProtocol.swift; sourceTree = "<group>"; };
+		37487B461DFF3C7E00539EA5 /* HealthKitService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
+		37487B481DFF440400539EA5 /* H2O 1.05.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.05.xcdatamodel"; sourceTree = "<group>"; };
+		37487B491DFF454E00539EA5 /* Service+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Service+CoreDataClass.swift"; sourceTree = "<group>"; };
+		37487B4A1DFF454E00539EA5 /* Service+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Service+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37487B551DFF462100539EA5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		37487B591DFF462D00539EA5 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		37487B5A1DFF462D00539EA5 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37487B5D1DFF466000539EA5 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37487FD01DDE04C00082DC27 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyGoalViewController.swift; sourceTree = "<group>"; };
 		37487FD41DDE04D10082DC27 /* ConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
@@ -155,10 +168,6 @@
 		378109091D981E67006EA496 /* H2O 1.04.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.04.xcdatamodel"; sourceTree = "<group>"; };
 		3784BD031D86369C00DB581D /* QuickAdd.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = QuickAdd.mp3; sourceTree = "<group>"; };
 		3785665C1CEA941A003418C2 /* StandardColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardColors.swift; sourceTree = "<group>"; };
-		3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3785665F1CEA9645003418C2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		378566621CEA9645003418C2 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		378566631CEA9645003418C2 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		3785666B1CEAA161003418C2 /* EntryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryButton.swift; sourceTree = "<group>"; };
 		3785666D1CEAA16C003418C2 /* CustomEntryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEntryButton.swift; sourceTree = "<group>"; };
 		3785666F1CEAA190003418C2 /* DailyEntryDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyEntryDial.swift; sourceTree = "<group>"; };
@@ -378,6 +387,8 @@
 			children = (
 				3741F5B11D8F119200F7598E /* Localizable.strings */,
 				375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */,
+				37487B441DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift */,
+				37487B461DFF3C7E00539EA5 /* HealthKitService.swift */,
 				3780931E1D7BD531007CF646 /* Global.swift */,
 				3755406B1DF2822600BAE413 /* GSAnimations.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
@@ -426,10 +437,12 @@
 			isa = PBXGroup;
 			children = (
 				375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */,
-				3785665E1CEA9645003418C2 /* User+CoreDataProperties.swift */,
-				3785665F1CEA9645003418C2 /* User.swift */,
-				378566621CEA9645003418C2 /* Entry+CoreDataProperties.swift */,
-				378566631CEA9645003418C2 /* Entry.swift */,
+				37487B551DFF462100539EA5 /* User.swift */,
+				37487B5D1DFF466000539EA5 /* User+CoreDataProperties.swift */,
+				37487B591DFF462D00539EA5 /* Entry.swift */,
+				37487B5A1DFF462D00539EA5 /* Entry+CoreDataProperties.swift */,
+				37487B491DFF454E00539EA5 /* Service+CoreDataClass.swift */,
+				37487B4A1DFF454E00539EA5 /* Service+CoreDataProperties.swift */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -658,8 +671,10 @@
 				3741F5B01D8F009200F7598E /* StoryBoardExtension.swift in Sources */,
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
 				37D13DE91DB7B2B200C850BA /* WobbleAnimation.swift in Sources */,
+				37487B571DFF462100539EA5 /* User.swift in Sources */,
 				37C81B2B1D9189C100B6DA9F /* AppDelegate.swift in Sources */,
-				378566691CEA9645003418C2 /* Entry.swift in Sources */,
+				37487B451DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift in Sources */,
+				37487B4C1DFF454E00539EA5 /* Service+CoreDataProperties.swift in Sources */,
 				375578491DFB245100BF8130 /* ConnectTableViewCell.swift in Sources */,
 				37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */,
 				37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */,
@@ -675,6 +690,7 @@
 				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
 				375540681DF21A7700BAE413 /* BoardingProtocol.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
+				37487B5E1DFF466000539EA5 /* User+CoreDataProperties.swift in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
 				37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */,
@@ -685,10 +701,8 @@
 				37ADB1561CFBA33A00BE3711 /* GSFluidLayout.swift in Sources */,
 				37D7F9DF1DB1780200C94CB6 /* UndoBarButtonItem.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
-				378566651CEA9645003418C2 /* User.swift in Sources */,
 				37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */,
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
-				378566641CEA9645003418C2 /* User+CoreDataProperties.swift in Sources */,
 				3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */,
 				37487FD51DDE04D10082DC27 /* ConnectViewController.swift in Sources */,
 				375578471DF9C6D800BF8130 /* ServiceIntergrationModel.swift in Sources */,
@@ -696,7 +710,8 @@
 				3755406C1DF2822600BAE413 /* GSAnimations.swift in Sources */,
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
 				37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */,
-				378566681CEA9645003418C2 /* Entry+CoreDataProperties.swift in Sources */,
+				37487B4B1DFF454E00539EA5 /* Service+CoreDataClass.swift in Sources */,
+				37487B5C1DFF462D00539EA5 /* Entry+CoreDataProperties.swift in Sources */,
 				37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */,
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
 				37355E851DDFB6690049B842 /* GSMagicTextMove.swift in Sources */,
@@ -706,8 +721,10 @@
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				3755406A1DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift in Sources */,
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
+				37487B471DFF3C7E00539EA5 /* HealthKitService.swift in Sources */,
 				375831271DB2D48200ED136E /* InformationViewControllerState.swift in Sources */,
 				37487FD11DDE04C00082DC27 /* WelcomeViewController.swift in Sources */,
+				37487B5B1DFF462D00539EA5 /* Entry.swift in Sources */,
 				378093211D7D1916007CF646 /* GSAnimatingProgressLayer.swift in Sources */,
 				37A182661CEBC2190055DA02 /* SettingsViewController.swift in Sources */,
 				37487FD31DDE04CA0082DC27 /* DailyGoalViewController.swift in Sources */,
@@ -969,13 +986,14 @@
 		375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				37487B481DFF440400539EA5 /* H2O 1.05.xcdatamodel */,
 				378109091D981E67006EA496 /* H2O 1.04.xcdatamodel */,
 				37B165351D96CBA000702A94 /* H2O 1.03.xcdatamodel */,
 				37C81B481D91DE9100B6DA9F /* H2O 1.02.xcdatamodel */,
 				37C81B1C1D902BCF00B6DA9F /* H2O 1.01.xcdatamodel */,
 				375F4FE61CEA91A6009C14AE /* H2O.xcdatamodel */,
 			);
-			currentVersion = 378109091D981E67006EA496 /* H2O 1.04.xcdatamodel */;
+			currentVersion = 37487B481DFF440400539EA5 /* H2O 1.05.xcdatamodel */;
 			path = H2O.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

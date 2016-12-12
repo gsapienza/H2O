@@ -44,7 +44,11 @@ class ConnectTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        if selected {
+            buttonBackgroundView.backgroundColor = UIColor(colorLiteralRed: 24/255, green: 179/255, blue: 106/255, alpha: 1)
+        } else {
+            buttonBackgroundView.backgroundColor = StandardColors.primaryColor.withAlphaComponent(0.1)
+        }
     }
 
     private func layout() {
