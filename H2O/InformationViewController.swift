@@ -235,7 +235,7 @@ private extension InformationViewController {
     
     /// Configures the no data label that appears when no entries have been made
     func configureNoDataLabel() {
-        noDataLabel.text = no_water_date_logged_localized_string
+        noDataLabel.text = "no_water_data_logged".localized
         noDataLabel.textColor = StandardColors.primaryColor
         noDataLabel.font = StandardFonts.boldFont(size: 24)
     }
@@ -266,7 +266,24 @@ extension InformationViewController {
         case .viewing:
             fatalError("Shouldn't get in this state.")
         case let .selecting(selectedEntries): //When there have been items selected present an alert view to delete them.
-            displayDeleteAlert(title: delete_multiple_water_entries_alert_title_localized_string, message: String(format: are_you_sure_you_want_to_delete_multiple_entries_alert_description_localized_string, selectedEntries.count)) {
+            
+            //Localized for singlular and plural text.
+            
+            let localizedAlertTitleFormat = NSLocalizedString("delete_water_entry_alert_title", comment: "")
+            var localizedAlertTitle :String!
+            
+            let localizedAlertMessageFormat = NSLocalizedString("delete_water_entry_alert_message", comment: "")
+            var localizedAlertMessage :String!
+            
+            if selectedEntries.count == 1 {
+                localizedAlertTitle = String.localizedStringWithFormat(localizedAlertTitleFormat, 1)
+                localizedAlertMessage = String.localizedStringWithFormat(localizedAlertMessageFormat, 1)
+            } else {
+                localizedAlertTitle = String.localizedStringWithFormat(localizedAlertTitleFormat, 2)
+                localizedAlertMessage = String.localizedStringWithFormat(localizedAlertMessageFormat, selectedEntries.count)
+            }
+            
+            displayDeleteAlert(title: localizedAlertTitle, message: localizedAlertMessage) {
                 
                 self.state = .deleting(entries: selectedEntries)
                 self.stateDidChange()
@@ -341,24 +358,6 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
         }
         
         return dayEntry.getEntries()
-    }
-    
-    func promptEntryDeletion(dayIndex: Int, entryIndex :Int) {
-        state = .selecting(selectedEntries: [(dayIndex :dayIndex, entryIndex :entryIndex)])
-        stateDidChange()
-        
-        displayDeleteAlert(title: delete_water_entry_alert_title_localized_string, message: are_you_sure_you_want_to_delete_entry_alert_description_localized_string) { 
-            switch self.state {
-            case .viewing:
-                fatalError("Shouldn't get in this state.")
-            case let .selecting(selectedEntries):
-                self.state = .deleting(entries: selectedEntries)
-            case .deleting(_):
-                fatalError("Shouldn't get in this state.")
-            }
-            
-            self.stateDidChange()
-        }
     }
     
     func getState() -> InformationViewController.State {

@@ -62,6 +62,9 @@ class MainViewController: UIViewController {
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
     fileprivate var customEntryView :CustomEntryView!
     
+    /// Model for intergrating services.
+    fileprivate var serviceIntergrationModel :ServiceIntergrationModel = ServiceIntergrationModel()
+    
     //MARK: - Internal iVars
     
     /// User set water goal (readonly)
@@ -353,7 +356,7 @@ extension MainViewController {
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
         updateFluidValue(current: beforeAmount! + amount)
         
-        HealthManager.defaultManager.saveWaterAmountToHealthKit(amount, date: Date())
+        serviceIntergrationModel.addEntryToAuthorizedServices(amount: amount, date: Date())
         
         WatchConnection.standardWatchConnection.beginSync { ( replyHandler :[String : Any]) in
         }
@@ -424,7 +427,7 @@ extension MainViewController {
     ///When the undo button was tapped.
     func onUndoButtonBarButton() {
         if let latestEntryDate = getAppDelegate().user?.getLatestEntryDate() {
-            HealthManager.defaultManager.deleteWaterEntry(latestEntryDate)
+            serviceIntergrationModel.deleteEntryFromAuthorizedServices(date: latestEntryDate)
         }
         getAppDelegate().user?.deleteLatestEntry()
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
@@ -468,11 +471,11 @@ extension MainViewController :EntryButtonProtocol {
         
         //Navigation bar setup for controlling custom entry
         
-        let cancelBarButton = UIBarButtonItem(title: cancel_navigation_item_localized_string, style: .plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
+        let cancelBarButton = UIBarButtonItem(title: "cancel_navigation_item".localized, style: .plain, target: self, action: #selector(MainViewController.onCancelCustomEntryBarButton))
         
         cancelBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.standardRedColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Cancel button view properties
         
-        let doneBarButton = UIBarButtonItem(title: done_navigation_item_localized_string, style: .plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
+        let doneBarButton = UIBarButtonItem(title: "done_navigation_item".localized, style: .plain, target: self, action: #selector(MainViewController.onDoneCustomEntryBarButton))
         
         doneBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.boldFont(size: 18)], for: UIControlState()) //Done button view properties
         

@@ -95,10 +95,10 @@ class SettingsViewController: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = StandardColors.standardSecondaryColor
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = settings_navigation_title_localized_string
+        navigationItem.title = "settings_navigation_title".localized
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
-        let closeButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
+        let closeButton = UIBarButtonItem(title: "close_navigation_item".localized, style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
         
         closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
         
@@ -115,7 +115,7 @@ class SettingsViewController: UITableViewController {
         
         //Goal cell config
         goalCell.cellImageView.image = UIImage(assetIdentifier: .goalCellImage)
-        goalCell.cellTextLabel.text = daily_goal_setting_localized_string
+        goalCell.cellTextLabel.text = "daily_goal_setting".localized
         
         if let goal = AppUserDefaults.getDailyGoalValue() {
             goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
@@ -135,31 +135,31 @@ class SettingsViewController: UITableViewController {
         if let presetWaterValues = AppUserDefaults.getPresetWaterValues() {
             //Small preset
             presetCell1.cellImageView.image = presetImages[0]
-            presetCell1.cellTextLabel.text = small_preset_setting_localized_string
+            presetCell1.cellTextLabel.text = "small_preset_setting".localized
             presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
             presetCell1.delegate = self
             
             //Medium preset
             presetCell2.cellImageView.image = presetImages[1]
-            presetCell2.cellTextLabel.text = medium_preset_setting_localized_string
+            presetCell2.cellTextLabel.text = "medium_preset_setting".localized
             presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
             presetCell2.delegate = self
             
             //Large preset
             presetCell3.cellImageView.image = presetImages[2]
-            presetCell3.cellTextLabel.text = large_preset_setting_localized_string
+            presetCell3.cellTextLabel.text = "large_preset_setting".localized
             presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
             presetCell3.delegate = self
         }
         
         //Dark Mode cell config
         themeCell.cellImageView.image = UIImage(assetIdentifier: .darkModeCellImage)
-        themeCell.cellTextLabel.text = dark_mode_setting_localized_string
+        themeCell.cellTextLabel.text = "dark_mode_setting".localized
         themeSwitch.onTintColor = StandardColors.waterColor
         
         //Automatic theme cell config
         automaticThemeCell.cellImageView.image = UIImage(assetIdentifier: .automaticThemeChangeCellImage)
-        automaticThemeCell.cellTextLabel.text = auto_switch_themes_setting_localized_string
+        automaticThemeCell.cellTextLabel.text = "auto_switch_themes_setting".localized
         automaticThemeSwitch.onTintColor = StandardColors.waterColor
     }
     
@@ -209,31 +209,23 @@ class SettingsViewController: UITableViewController {
     //MARK: - Health Actions
     
     /**
-     Action when the HealthKit switch is toggled
-     
-     - parameter sender: HealthKit Switch
-     */
-    @IBAction func onHealthKitSwitch( sender: AnyObject) {
-        HealthManager.defaultManager.authorizeHealthKit { (success, error) in
-            if success {
-                print("HealthKit authorization successful")
-            } else {
-                print("Could not authorize HealthKit")
-            }
-        }
-    }
-    
-    /**
      Action when the "Enable HealthKit" button that fills the cell is tapped. Shows modal so user can toggle healthkit permissions
      
      - parameter sender: Button in cell
      */
     @IBAction func onHealthKitButton( sender: AnyObject) {
-        HealthManager.defaultManager.authorizeHealthKit { (success, error) in //Prompt user to enable healthkit using standard permissions modal
-            AppUserDefaults.setHealthKitPermissionsDisplayed(displayed: true) //Health permission were shown once (the limit to the amount of times they can be shown according to apple)
-
+        SupportedServices.healthkit.model().authorize { (success :Bool, error :Error?, token :String?) in
+            
             DispatchQueue.main.async {
                 self.updateHealthKitCell() //Update healthkit cell to say to manage healthkit permissions through health app
+            }
+            
+            let healthKitService = Service.serviceForName(managedObjectContext: getAppDelegate().managedObjectContext, serviceName: SupportedServices.healthkit.rawValue)
+
+            if healthKitService == nil {
+                if let service = Service.create(name: SupportedServices.healthkit.rawValue, token: token, isAuthorized: true) {
+                    getAppDelegate().user?.addService(service: service)
+                }
             }
             
             if success {
@@ -248,15 +240,14 @@ class SettingsViewController: UITableViewController {
      When the health permissions prompt has come up once. Apple makes it so that it cant come up again in your app. So we disable it if it has already come up and tell the user to manage permission in the health app
      */
     private func updateHealthKitCell() {
-        let wereHealthKitPermissionsShown = AppUserDefaults.getHealthKitPermissionsDisplayed() //If permissions were shown
         
-        if wereHealthKitPermissionsShown {
+        if SupportedServices.healthkit.model().isAuthorized() {
             healthKitCell.isUserInteractionEnabled = false //Disable cell interaction
-            healthKitCell.cellTextLabel.text = manage_healthkit_setting_localized_string //Change text because "Enable Healthkit" is not appropriate anymore
+            healthKitCell.cellTextLabel.text = "manage_healthkit_setting".localized //Change text because "Enable Healthkit" is not appropriate anymore
             healthKitCell.cellTextLabel.alpha = 0.5 //Fade out text to make it look not enabled
             healthKitCell.fillCellWithTextLabel() //Fills the text label autolayout to fill entire cell since there are no other elements around
         } else { //If healthkit permissions have not been shown
-            healthKitCell.cellTextLabel.text = enable_healthkit_setting_localized_string //Allow user to enable healthkit through permissions
+            healthKitCell.cellTextLabel.text = "enable_healthkit_setting".localized //Allow user to enable healthkit through permissions
         }
     }
     

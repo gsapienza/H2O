@@ -11,7 +11,7 @@ import HealthKit
 
 class HealthKitService :ServiceIntergrationProtocol {
     /// Place to save and manage objects
-    private var healthKitStore :HKHealthStore?
+    private let healthKitStore :HKHealthStore = HKHealthStore()
     
     func authorize(completion: @escaping ((_ success :Bool, _ error :Error?, _ token :String?) -> Void)) {
         let healthKitTypesToWrite :Set = [HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!] //Write to water type (read is not available)
@@ -23,10 +23,8 @@ class HealthKitService :ServiceIntergrationProtocol {
             // completion(success: false, error: error) //Return false
         }
         
-        healthKitStore = HKHealthStore()
-        
         //Request authorization
-        healthKitStore?.requestAuthorization(toShare: healthKitTypesToWrite, read: nil) { (success :Bool, error :Error?) in
+        healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite, read: nil) { (success :Bool, error :Error?) in
             if success {
                 self.addPreviousHealthKitData() //If authorized see if any previous data was entered in health from previous installs and add it to the apps database
             }
@@ -40,7 +38,7 @@ class HealthKitService :ServiceIntergrationProtocol {
         let waterQuantity = HKQuantity(unit: HKUnit.fluidOunceUS(), doubleValue: Double(amount)) //Quantity of water with the unit of measurement
         let waterSample = HKQuantitySample(type: waterType!, quantity: waterQuantity, start: date, end: date) //HKObject with appropriate water data and date so it can now be saved
         
-        healthKitStore?.save(waterSample) { (success :Bool, error :Error?) in //Save the object to the health app
+        healthKitStore.save(waterSample) { (success :Bool, error :Error?) in //Save the object to the health app
             if success {
                 print("Health Data Saved Successfully")
             } else {
@@ -67,7 +65,7 @@ class HealthKitService :ServiceIntergrationProtocol {
                     if calendar.date(from: entryDateComponents)?.compare(calendar.date(from: sampleDateComponents)!) == .orderedSame { //Compare dates without the milliseconds
                         
                         //If found delete the item from Health Kit
-                        self.healthKitStore?.delete(sample, withCompletion: { (success :Bool, error :Error?) in
+                        self.healthKitStore.delete(sample, withCompletion: { (success :Bool, error :Error?) in
                             if success {
                                 print("Health Data Deleted Successfully")
                             } else {
@@ -78,17 +76,15 @@ class HealthKitService :ServiceIntergrationProtocol {
                 }
             }
             
-            healthKitStore?.execute(healthSampleQuery) //Execute the query on health kit database
+            healthKitStore.execute(healthSampleQuery) //Execute the query on health kit database
         } else { //Water cannot be written to healthkit
             print("Water not authorized to write in HealthKit")
         }
     }
     
     func isAuthorized() -> Bool {
-        healthKitStore = HKHealthStore()
-
         let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)! //Type of health data to look at
-        let authStatus = healthKitStore?.authorizationStatus(for: waterType) //Status of water permission in health
+        let authStatus = healthKitStore.authorizationStatus(for: waterType) //Status of water permission in health
         
         if authStatus == .sharingAuthorized { //If authorized to share return true
             return true
@@ -119,6 +115,6 @@ class HealthKitService :ServiceIntergrationProtocol {
             }
         }
         
-        healthKitStore?.execute(healthSampleQuery) //Execute the query on health kit database
+        healthKitStore.execute(healthSampleQuery) //Execute the query on health kit database
     }
 }

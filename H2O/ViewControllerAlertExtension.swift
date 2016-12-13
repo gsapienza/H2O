@@ -21,11 +21,11 @@ extension UIViewController {
         feedbackGenerator.notificationOccurred(.warning)
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: delete_alert_button_localized_string, style: .destructive, handler: { (alert: UIAlertAction!) in
+        alert.addAction(UIAlertAction(title: "delete_alert_button".localized, style: .destructive, handler: { (alert: UIAlertAction!) in
             deleteAction()
         }))
         
-        alert.addAction(UIAlertAction(title: cancel_navigation_item_localized_string, style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "cancel_navigation_item".localized, style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }

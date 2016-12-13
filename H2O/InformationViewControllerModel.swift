@@ -16,6 +16,9 @@ struct DayEntry {
     /// Entries added on date.
     private var entries :[Entry]?
     
+    /// Model for intergrating services.
+    fileprivate var serviceIntergrationModel :ServiceIntergrationModel = ServiceIntergrationModel()
+    
     init(date :Date?, entries :[Entry]?) {
         self.date = date
         self.entries = entries
@@ -91,7 +94,7 @@ struct DayEntry {
         
         for index in indexes {
             let entry = entries[index]
-            HealthManager.defaultManager.deleteWaterEntry(entry.date)
+            serviceIntergrationModel.deleteEntryFromAuthorizedServices(date: entry.date)
             entry.deleteEntry()
         }
         

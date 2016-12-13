@@ -17,10 +17,10 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         super.viewDidLoad()
 
         var navigationItem = self.navigationItem
-        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "Done")
+        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "done_navigation_item".localized)
         
         titleLabel = generateTitleLabel()
-        titleLabel.text = "Connect"
+        titleLabel.text = "connect".localized
         
         connectTableView = generateConnectTableView()
         

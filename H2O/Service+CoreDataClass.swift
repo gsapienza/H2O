@@ -27,4 +27,30 @@ public class Service: NSManagedObject {
         
         return service
     }
+    
+    class func serviceForName(managedObjectContext :NSManagedObjectContext, serviceName :String) -> Service? {
+        let request: NSFetchRequest = Service.fetchRequest()
+        request.entity = NSEntityDescription.entity(forEntityName: "Service", in: User.managedContext())
+        
+        let pred = NSPredicate(format: "(name = %@)", serviceName)
+        request.predicate = pred
+        
+        do {
+            let results = try managedObjectContext.fetch(request as! NSFetchRequest<NSFetchRequestResult>)
+            
+            if results.count == 0 {
+                return nil
+            } else {
+                guard let service = results.first as? Service else {
+                    fatalError("Service is not correct type.")
+                }
+                
+                return service
+            }
+            
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
 }

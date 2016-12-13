@@ -86,33 +86,6 @@ let LastRevisionSyncToWatchMessageContent = "LAST_REVISION_SYNC_TO_WATCH_MESSAGE
 let defaultPresets :[Float] = [8.0, 17.0, 23.0]
 let defaultDailyGoal :Float = 64
 
-//MARK: - Localized String
-
-let congratulations_toast_notification_localized_string = "congratulations_toast_notification".localized
-let water_added_toast_notification_localized_string = "water_added_toast_notification".localized
-let custom_amount_cannot_be_empty_toast_notification_localized_string = "custom_amount_cannot_be_empty_toast_notification".localized
-let done_navigation_item_localized_string = "done_navigation_item".localized
-let cancel_navigation_item_localized_string = "cancel_navigation_item".localized
-let delete_navigation_item_localized_string = "delete_navigation_item".localized
-let undo_navigation_item_localized_string = "undo_navigation_item".localized
-let information_navigation_title_localized_string = "information_navigation_title".localized
-let no_water_date_logged_localized_string = "no_water_data_logged".localized
-let delete_water_entry_alert_title_localized_string = "delete_water_entry_alert_title".localized
-let delete_multiple_water_entries_alert_title_localized_string = "delete_multiple_water_entries_alert_title".localized
-let delete_alert_button_localized_string = "delete_alert_button".localized
-let are_you_sure_you_want_to_delete_entry_alert_description_localized_string = "are_you_sure_you_want_to_delete_entry_alert_description".localized
-let are_you_sure_you_want_to_delete_multiple_entries_alert_description_localized_string = "are_you_sure_you_want_to_delete_multiple_entries_alert_description".localized
-let settings_navigation_title_localized_string = "settings_navigation_title".localized
-let close_navigation_item_localized_string = "close_navigation_item".localized
-let daily_goal_setting_localized_string = "daily_goal_setting".localized
-let small_preset_setting_localized_string = "small_preset_setting".localized
-let medium_preset_setting_localized_string = "medium_preset_setting".localized
-let large_preset_setting_localized_string = "large_preset_setting".localized
-let dark_mode_setting_localized_string = "dark_mode_setting".localized
-let auto_switch_themes_setting_localized_string = "auto_switch_themes_setting".localized
-let enable_healthkit_setting_localized_string = "enable_healthkit_setting".localized
-let manage_healthkit_setting_localized_string = "manage_healthkit_setting".localized
-
 //MARK: - Audio Files
 
 let SplashSound = "Splash.mp3"

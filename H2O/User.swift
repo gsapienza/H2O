@@ -99,9 +99,9 @@ public class User: NSManagedObject {
     }
     
     func addService(service :Service) {
-        let mutableServices = self.services as! NSMutableOrderedSet
+        let mutableServices = self.services!.mutableCopy() as! NSMutableSet
         mutableServices.add(service)
-        services = mutableServices
+        services = mutableServices.copy() as? NSSet
         
         do {
             try User.managedContext().save()

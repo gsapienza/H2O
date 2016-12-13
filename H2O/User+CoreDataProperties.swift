@@ -17,5 +17,5 @@ extension User {
     @NSManaged var id: String?
     @NSManaged var entries: NSOrderedSet?
     @NSManaged var lastWatchSyncDate: Date
-    @NSManaged var services: NSOrderedSet?
+    @NSManaged var services: NSSet?
 }

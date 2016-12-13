@@ -17,10 +17,10 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         super.viewDidLoad()
 
         var navigationItem = self.navigationItem
-        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "Next")
+        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "next_navigation_item".localized)
         
         titleLabel = generateTitleLabel()
-        titleLabel.text = "Set your daily goal"
+        titleLabel.text = "set_your_daily_goal".localized
         
         presetChangerView = generateGoalPresetChangerView()
         presetChangerView.presetValueTextField.becomeFirstResponder()
@@ -98,7 +98,6 @@ private extension DailyGoalViewController {
     func generateGoalPresetChangerView() -> PresetValueChangerView {
         let view = PresetValueChangerView(fontSize: 50)
         view.presetValueTextField.placeholder = "64"
-       // view.delegate = self
         view.toolbarEnabled = false
         
         return view

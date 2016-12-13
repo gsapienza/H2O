@@ -57,6 +57,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         _user = User.loadUser() //Loads user data from database
         
+        checkHealthKitStatus()
+
         checkToSwitchThemes() //Check theme status on launch if automatic theme change is enabled
         
         //Set a timer to check the theme status so that if the app is open when the time changes, the theme will change
@@ -105,7 +107,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     public func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        checkHealthKitStatus()
     }
 
     public func applicationDidBecomeActive(_ application: UIApplication) {
@@ -118,10 +120,32 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     
+    private func checkHealthKitStatus() {
+        let healthKitService = Service.serviceForName(managedObjectContext: managedObjectContext, serviceName: SupportedServices.healthkit.rawValue)
+        
+        if healthKitService == nil {
+            if SupportedServices.healthkit.model().isAuthorized() {
+                if let service = Service.create(name: SupportedServices.healthkit.rawValue, token: nil, isAuthorized: true) {
+                    getAppDelegate().user?.addService(service: service)
+                }
+            }
+        } else {
+            if SupportedServices.healthkit.model().isAuthorized() {
+                healthKitService?.isAuthorized = true
+            } else {
+                healthKitService?.isAuthorized = false
+            }
+            
+            saveContext()
+        }
+    
+    }
+    
+    //MARK: - UI
+    
     /// Makes the boarding navigation controller the root view controller.
     private func pushBoardingViewControllerOnRoot() {
         let boardingViewController = UINavigationController()
-        //boardingViewController.view.backgroundColor = UIColor(patternImage: UIImage(assetIdentifier: .darkModeBackground))
         
         var navBar = boardingViewController.navigationBar
         configureNavigationBar(navigationBar: &navBar)

@@ -22,7 +22,7 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
         waterBottleView = generateWaterBottleView()
         
         titleLabel = generateTitleLabel()
-        titleLabel.text = "All Done"
+        titleLabel.text = "all_done".localized
         
         layout()
     }

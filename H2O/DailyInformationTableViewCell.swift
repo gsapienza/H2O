@@ -17,13 +17,6 @@ protocol DailyInformationTableViewCellProtocol {
     func getEntriesForDay(dayIndex: Int) -> [Entry]?
     
     
-    /// Prompt the user to confirm deletion of a particular entry
-    ///
-    /// - parameter dayIndex: The index of the day in day entries.
-    /// - parameter entryIdayIndex: Intndex:            Index of entry to delete
-    func promptEntryDeletion(dayIndex: Int, entryIndex :Int)
-    
-    
     /// Get the current state of the information view controller.
     ///
     /// - returns: Viewing, selecting or delete state.

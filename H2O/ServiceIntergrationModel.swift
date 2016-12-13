@@ -43,7 +43,10 @@ class ServiceIntergrationModel {
             }
             
             let supportedService = SupportedServices(rawValue: service.name)
-            supportedService?.model().addEntry(amount: amount, date: date)
+            
+            if service.isAuthorized.boolValue {
+                supportedService?.model().addEntry(amount: amount, date: date)
+            }
         }
     }
     
@@ -59,7 +62,10 @@ class ServiceIntergrationModel {
             }
                         
             let supportedService = SupportedServices(rawValue: service.name)
-            supportedService?.model().deleteEntry(date: date)
+            
+            if service.isAuthorized.boolValue {
+                supportedService?.model().deleteEntry(date: date)
+            }
         }
     }
 }

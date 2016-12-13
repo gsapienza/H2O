@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+
+<dict>
+	<key>delete_water_entry_alert_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Delete Entry</string>
+			<key>other</key>
+			<string>Delete Entries</string>
+		</dict>
+	</dict>
+    
+	<key>delete_water_entry_alert_message</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>Are you sure you want to delete %#@entries@?</string>
+        <key>entries</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>this entry</string>
+            <key>other</key>
+            <string>%d entries</string>
+        </dict>
+	</dict>
+</dict>
+</plist>

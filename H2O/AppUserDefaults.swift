@@ -123,18 +123,4 @@ class AppUserDefaults {
     class func getDarkModeEnabled() -> Bool {
         return UserDefaults.standard.bool(forKey: DarkModeDefault)
     }
-    
-    /// Write the to user defaults if HealthKit permissions have been displayed to the user.
-    ///
-    /// - parameter displayed: True if they have been displayed, false if they have not.
-    class func setHealthKitPermissionsDisplayed(displayed :Bool) {
-        UserDefaults.standard.set(displayed, forKey: HealthKitPermissionsDisplayedDefault)
-    }
-    
-    /// Get the value of whether the HealthKit permission were displayed to the user.
-    ///
-    /// - returns: True is already displayed, false if they have not been displayed.
-    class func getHealthKitPermissionsDisplayed() -> Bool {
-        return UserDefaults.standard.bool(forKey: HealthKitPermissionsDisplayedDefault)
-    }
 }

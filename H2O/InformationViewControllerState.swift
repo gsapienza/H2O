@@ -68,7 +68,7 @@ extension InformationViewController {
         
         //Navigation Title
         
-        navigationItem.title = information_navigation_title_localized_string
+        navigationItem.title = "information_navigation_title".localized
         navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
         let buttonTitleFontSize :CGFloat = 18
@@ -93,12 +93,12 @@ extension InformationViewController {
             
             switch leftBarItemStyle {
             case .close:
-                let barButton = UIBarButtonItem(title: close_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
+                let barButton = UIBarButtonItem(title: "close_navigation_item".localized, style: .plain, target: self, action: #selector(InformationViewController.onCloseButton))
                 barButton.setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
                 barButton.isEnabled = leftBarItem.enabled
                 return barButton
             case .delete:
-                let barButton = UIBarButtonItem(title: delete_navigation_item_localized_string, style: .plain, target: self, action: #selector(InformationViewController.onDeleteButton))
+                let barButton = UIBarButtonItem(title: "delete_navigation_item".localized, style: .plain, target: self, action: #selector(InformationViewController.onDeleteButton))
                 barButton.setTitleTextAttributes(deleteTitleTextAttributes, for: .normal)
                 barButton.setTitleTextAttributes(deleteDisabledTitleTextAttributes, for: .disabled)
                 barButton.isEnabled = leftBarItem.enabled

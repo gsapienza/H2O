@@ -17,29 +17,11 @@ import Foundation
 #endif
 
 class StandardColors {
-     /// Standard dark blue background color
-    static var backgroundColor :UIColor {
-        set{}
-        get {
-            if AppUserDefaults.getDarkModeEnabled() {
-                return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
-            } else {
-                return UIColor.white
-            }
-        }
-    }
+    /// Standard dark blue background color
+    static var backgroundColor = UIColor.black
     
      /// Color of water images found through the app
-    static var waterColor :UIColor {
-        set{}
-        get {
-            if AppUserDefaults.getDarkModeEnabled() {
-                return UIColor(red: 78/255, green: 170/255, blue: 186/255, alpha: 1)
-            } else {
-                return UIColor(red: 55/255, green: 187/255, blue: 216/255, alpha: 1)
-            }
-        }
-    }
+    static var waterColor = UIColor(red: 78/255, green: 170/255, blue: 186/255, alpha: 1)
     
      /// Standard red color to use throughout the app in destructive instances
     static let standardRedColor = UIColor(red: 230/255, green: 76/255, blue: 12/255, alpha: 1)
@@ -48,54 +30,18 @@ class StandardColors {
     static let standardGreenColor = UIColor(red: 26/255, green: 181/255, blue: 138/255, alpha: 1)
     
      /// Secondary color to use with background color
-    static var standardSecondaryColor :UIColor {
-        set{}
-        get {
-            if AppUserDefaults.getDarkModeEnabled() {
-                return UIColor(red: 2/255, green: 30/255, blue: 42/255, alpha: 1)
-            } else {
-                return UIColor(white: 0.95, alpha: 0.5)
-            }
-        }
-    }
+    static var standardSecondaryColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
     
-        /// Color for things like test and other indicative elements
-    static var primaryColor :UIColor {
-        set{}
-        get {            
-            if AppUserDefaults.getDarkModeEnabled() {
-                return UIColor.white
-            } else {
-                return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
-            }
-        }
-    }
+    /// Color for things like buttons and other indicative elements
+    static var primaryColor = UIColor.white
     
         /// Reversed primary color
-    static var inversedPrimaryColor :UIColor {
-        set{}
-        get {
-            if AppUserDefaults.getDarkModeEnabled() {
-                return UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
-            } else {
-                return UIColor.white
-            }
-        }
-    }
+    static var inversedPrimaryColor = UIColor(red: 1/255, green: 23/255, blue: 31/255, alpha: 1)
     
     #if os(iOS)
     
-        /// Keyboard color to use depending on theme
-    static var standardKeyboardAppearance :UIKeyboardAppearance {
-        set{}
-        get {
-            if AppUserDefaults.getDarkModeEnabled() {
-                return .dark
-            } else {
-                return .light
-            }
-        }
-    }
+    /// Keyboard color to use depending on theme
+    static var standardKeyboardAppearance = UIKeyboardAppearance.dark
     
     #endif
 }

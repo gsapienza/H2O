@@ -184,7 +184,7 @@ private extension UndoButton {
     /// - returns: Text label displaying undo text.
     func generateUndoTextLabel() -> UILabel {
         let label = UILabel()
-        label.text = undo_navigation_item_localized_string
+        label.text = "undo_navigation_item".localized
         label.textColor = UIColor.white
         
         return label
