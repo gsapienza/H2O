@@ -30,7 +30,7 @@ class StandardColors {
     static let standardGreenColor = UIColor(red: 26/255, green: 181/255, blue: 138/255, alpha: 1)
     
      /// Secondary color to use with background color
-    static var standardSecondaryColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
+    static var standardSecondaryColor = UIColor(red: 15/255, green: 15/255, blue: 15/255, alpha: 1)
     
     /// Color for things like buttons and other indicative elements
     static var primaryColor = UIColor.white

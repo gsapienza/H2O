@@ -24,7 +24,7 @@ class CustomEntryButton: EntryButton {
 extension CustomEntryButton {
     ///When the user taps the custom button
     override func onTap() {
-        AudioToolbox.standardAudioToolbox.playAudio(BubbleSound, repeatEnabled: false)
+        AudioToolbox.standardAudioToolbox.playAudio(LightClickSound, repeatEnabled: false)
         
         delegate?.customEntryButtonTapped(customButton: self) //Tell the delegate that custom button was tapped
     }

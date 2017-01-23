@@ -9,71 +9,141 @@
 import UIKit
 import CoreText
 
-protocol GSMagicTextMoveProtocol {
+class GSMagicTextLabel :UIView, CAAnimationDelegate {
+    
+    //MARK: - Public iVars
+    
+    /// Text to display with label.
+    var text :String? {
+        set {
+            if text != newValue {
+                _text = newValue
+                needsTextRender = true
+                layoutIfNeeded()
+            }
+        }
+        
+        get {
+            return self._text
+        }
+    }
+    
+    /// Label text color.
+    var textColor = UIColor.black {
+        didSet {
+            needsTextRender = true
+            layoutIfNeeded()
+        }
+    }
+
+    /// Label font.
+    var font = UIFont.systemFont(ofSize: 17) {
+        didSet {
+            needsTextRender = true
+            layoutIfNeeded()
+        }
+    }
+    
+    /// Label text alignment.
+    var textAlignment = NSTextAlignment.left {
+        didSet {
+            needsTextRender = true
+            layoutIfNeeded()
+        }
+    }
+    
+    //MARK: - Private iVars
+    
+    /// Backing text string.
+    private var _text: String?
+    
+    /// Array of CAShapeLayers to store glyph path layers that are displayed as sublayers.
+    private var glyphLayers :[CAShapeLayer] = []
+    
+    /// Array of rects to use for glyph layers displayed as sublayers.
+    private var glyphRects :[CGRect] = []
+    
+    /// Does a call to layoutSubviews need to reset the text displayed in view.
+    private var needsTextRender = true
+    
+    //MARK: - Public
+    
+    /// Glyph layers must be added here because in order to render the glyphs. The text frame is needed and it is only set by this point.
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard needsTextRender == true else { //If the text needs to be redisplayed.
+            return
+        }
+        
+        guard let text = self.text else {
+            print("Text is nil.")
+            return
+        }
+        
+        for glyphLayer in glyphLayers { //Remove all glyph layers on screen.
+            glyphLayer.removeFromSuperlayer()
+        }
+        
+        glyphLayers.removeAll() //Clear the array.
+        
+        guard let glyphLayers = getGlyphLayers(text: text, color: textColor) else { //New glyphs.
+            print("Glyph layers are nil.")
+            return
+        }
+        
+        self.glyphLayers = glyphLayers
+
+        for glyphLayer in glyphLayers { //Add the glyph layers to layer.
+            layer.addSublayer(glyphLayer)
+        }
+        
+       //backgroundColor = UIColor.red
+       
+        glyphRects.removeAll() //Clear the previous rects from the array.
+        
+        guard let glyphRects = getGlyphRects(text: text) else { //New rects.
+            print("Glyph rects are nil.")
+            return
+        }
+        
+        self.glyphRects = glyphRects
+        
+        for (i, rect) in glyphRects.enumerated() {
+            glyphLayers[i].position = CGPoint(x: rect.origin.x, y: rect.origin.y) //Set the position for the layers on screen.
+        }
+        
+        needsTextRender = false //We don't need a text rerender next time this function is called.
+    }
     
     /// Animates string of label to a new string.
     ///
     /// - Parameter newString: String to show after animation.
     /// - Parameter completion: Animation completion block.
-    func animate(to newString :String, completion :(Bool) -> Void)
-    
-    /// Finds matching characters for two different strings and tracks their index.
-    ///
-    /// - Parameters:
-    ///   - firstString: First string to compare.
-    ///   - secondString: Second string to compare.
-    ///   - matchingCharacterAction: Callback containing an index for first and second string when a match is found.
-    ///   - nonMatchingSecondStringCharacterAction: Callback containing an index in the second string when a match is not found.
-    ///   - nonMatchingFirstStringCharacterAction:  Callback containing an index in the first string when a match is not found.
-    func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(Int, Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void)
-    
-    /// Renders paths for each glpyh of string using core text on top of the label text.
-    ///
-    /// - Parameters:
-    ///   - text: Text to render.
-    ///   - shapeLayer: Callback containing a layer of a glyph path when it is created..
-    /// - Returns: Array of positions for each glyph and array of glyphs whose path is set in a CAShapeLayer.
-    func renderString(from text :String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer])?
-    
-    //var animationCompletionBlock :(Bool) -> Void! { get set }
-}
-
-extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
-    
-    /// Animation key used to pass the master text layer to the animation delegate.
-    private static let TextAnimationLayerKey = "TextAnimationLayerKey"
-    
-    /// Animation key used to pass the original color to the animation delegate.
-    private static let OriginalColorKey = "OriginalColorKey"
-    
-    //MARK: - GSMagicTextMoveProtocol
-    
     func animate(to newString: String, completion :(Bool) -> Void) {
         guard let text = self.text else {
             print("Text is empty.")
             return
         }
         
-        let originalColor = textColor //Copies original label color.
-        textColor = UIColor.clear //Sets the text label color to clear, so we can overlay it and make the rendered text look like it is part of the label.
-        self.text = newString //Text in label is set to new string.
-
-        let textAnimationLayer = CALayer() //Layer where glyph shape layers are rendered on.
-        textAnimationLayer.frame = bounds
-        layer.addSublayer(textAnimationLayer)
-        
-        guard let firstStringLayers = renderString(from: text, shapeLayer: { letterLayer in //Renders first string glyphs.
-            textAnimationLayer.addSublayer(letterLayer) //Adds sublayer every time a new shape layer has been created for a glyph in the first string.
-        }) else {
+        guard let secondStringGlyphLayers = getGlyphLayers(text: newString, color: textColor) else { //Second string glyph layers.
+            print("Second string glyph layers are nil.")
             return
         }
         
-       guard let secondStringLayers = renderString(from: newString, shapeLayer: { letterLayer in //Renders second string glyphs.
-            letterLayer.transform = CATransform3DMakeScale(0, 0, 0) //Sets the scale to 0. When animating the layers in, the nonmatching glyph layers will animate their scale to 1.
-            textAnimationLayer.addSublayer(letterLayer) //Adds sublayer every time a new shape layer has been created for a glyph in the second string.
-        }) else {
+        guard let secondStringGlyphRects = getGlyphRects(text: newString) else { //Second string glyph rects.
+            print("Second string glyph rects are nil.")
             return
         }
+        
+        for (i, glyphLayer) in secondStringGlyphLayers.enumerated() { //For each glyph layer, set properties and add as a subblayer.
+            let rect = secondStringGlyphRects[i]
+            glyphLayer.position = CGPoint(x: rect.origin.x, y: rect.origin.y)
+            glyphLayer.bounds = CGRect(x: glyphLayer.bounds.origin.x, y: glyphLayer.bounds.origin.y, width: rect.width, height: rect.height)
+            glyphLayer.transform = CATransform3DMakeScale(0, 0, 0) //Sets the scale to 0. When animating the layers in, the nonmatching glyph layers will animate their scale to 1.
+            layer.addSublayer(glyphLayer) //Adds sublayer every time a new shape layer has been created for a glyph in the second string.
+        }
+        
         
         //Removes spaces for first and second string.
         let firstString = text.replacingOccurrences(of: " ", with: "")
@@ -82,19 +152,19 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
         let animationDuration = 0.4 //Duration for all animations involved.
         
         getMatchingCharacters(firstString: firstString, secondString: secondString, matchingCharacterAction: { index in
-            let firstStringLayer = firstStringLayers.glyphLayers[index.0] //Layer for matching character.
-            let newFirstStringLayerPosition = secondStringLayers.positions[index.1] //New position of glyph coming from first string but now animating to second string.
+            let firstStringLayer = self.glyphLayers[index.0] //Layer for matching character.
+            let newFirstStringLayerPosition = secondStringGlyphRects[index.1] //New position of glyph coming from first string but now animating to second string.
             
             let layerAnimation = CABasicAnimation(keyPath: "position")
             layerAnimation.duration = animationDuration
             layerAnimation.fromValue = firstStringLayer.position //Position in first string.
-            layerAnimation.toValue = newFirstStringLayerPosition //Position in second string.
+            layerAnimation.toValue = newFirstStringLayerPosition.origin //Position in second string.
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
             firstStringLayer.add(layerAnimation, forKey: layerAnimation.keyPath)
             
         }, nonMatchingSecondStringCharacterAction: { index in
-            let secondStringLayer = secondStringLayers.1[index] //Layer for glyphs not matching in the second string.
+            let secondStringLayer = secondStringGlyphLayers[index] //Layer for glyphs not matching in the second string.
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale") //Animates glyphs by scaling them to 1.
             layerAnimation.duration = animationDuration
@@ -105,7 +175,7 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             secondStringLayer.add(layerAnimation, forKey: layerAnimation.keyPath)
             
         }, nonMatchingFirstStringCharacterAction: { index in
-            let firstStringLayer = firstStringLayers.glyphLayers[index] //Layer for glyphs not matching in the first string.
+            let firstStringLayer = self.glyphLayers[index] //Layer for glyphs not matching in the first string.
             
             let layerAnimation = CABasicAnimation(keyPath: "transform.scale") //Animates glyphs by scaling them to 0.
             layerAnimation.duration = animationDuration
@@ -114,16 +184,19 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             layerAnimation.fillMode = kCAFillModeForwards
             layerAnimation.isRemovedOnCompletion = false
             layerAnimation.delegate = self
-            layerAnimation.setValue(textAnimationLayer, forKey: UILabel.TextAnimationLayerKey) //Gives the animation the layer that the text is rendered on so the delegate function can handle it.
-            layerAnimation.setValue(originalColor, forKey: UILabel.OriginalColorKey) //Gives the original color of the label so the delegate function can handle it.
             firstStringLayer.add(layerAnimation, forKey: layerAnimation.keyPath)
         })
     }
     
-    func renderString(from text: String, shapeLayer :(CAShapeLayer) -> Void) -> (positions :[CGPoint], glyphLayers :[CAShapeLayer])? {
-        var glyphLayers :[CAShapeLayer] = [] //Array of glyph layers to return.
-        var glyphPositions :[CGPoint] = [] //Array of glyph positions to return.
-        
+    //MARK: - Private
+    
+    /// Get glyph bound rects for a string.
+    ///
+    /// - Parameter text: String to get glyph rects for.
+    /// - Returns: An optional array of CGRects, one for each glyph to display.
+    private func getGlyphRects(text :String) -> [CGRect]? {
+        var glyphRects :[CGRect] = [] //Array of glyph positions to return.
+
         guard let attributedString = getTextAttributes(text :text) else { //Create attributed string from label text.
             print("Attributed String is nil.")
             return nil
@@ -143,6 +216,8 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             
             CTLineGetTypographicBounds(line, &ascent, &descent, &leading) //Get the ascent, descent and leading values for the line.
             
+            //let lineHeight = ascent + descent + leading
+
             let runArray = CTLineGetGlyphRuns(line) //Get runs from the line.
             
             for index in 0..<CFArrayGetCount(runArray) {
@@ -150,7 +225,7 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
                 
                 var glyphs = [CGGlyph](repeating: CGGlyph(), count: text.characters.count) //Allocated space for array of glyphs.
                 var positions = [CGPoint](repeating: CGPoint(), count: text.characters.count) //Allocated space for array of positions of glyphs.
-
+                
                 CTRunGetGlyphs(run, CFRangeMake(0, 0), &glyphs) //Get array of glyphs in run.
                 CTRunGetPositions(run, CFRangeMake(0, 0), &positions) //Get array of positions of glyphs in run.
                 
@@ -163,9 +238,63 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
                 CTFontGetBoundingRectsForGlyphs(font, .default, glyphs, &glyphBoundingRects, text.characters.count) //Get array of bounding boxes of glyphs in run.
                 
                 for glyphIndex in 0..<glyphs.count { //For each glyph in run.
-                    let glyph = glyphs[glyphIndex] //Glyph for index.
                     let position = positions[glyphIndex] //Position of glyph for index.
                     let glyphBounds :CGRect = glyphBoundingRects[glyphIndex] //Bounding box of glyph for index.
+                    
+                    let x = lineOrigin.x + position.x + glyphBounds.minX + glyphBounds.width / 2 //Sets the x origin to the line origin (text alignment) + the x position of the glyph + the glyphBounds x origin (addresses minor offsets) + half the width of the bounds since the anchor point is set in the middle of the layer.
+                    
+                    let y = bounds.height - glyphBounds.height / 2 - glyphBounds.minY //This displays the text at the bottom of the view. I want this in the middle 😡
+                    
+                    let rect = CGRect(x: x, y: y, width: glyphBounds.width, height: glyphBounds.height)
+                    
+                    if rect.width != 0 && rect.height != 0 { //If the rect has a width and height then add it to avoid spaces.
+                        glyphRects.append(rect)
+                    }
+                }
+            }
+        }
+        
+        return glyphRects
+    }
+    
+    /// Get CAShapeLayers with paths set a glyphs from a string.
+    ///
+    /// - Parameters:
+    ///   - text: String to create layers from.
+    ///   - color: Color of glyphs.
+    /// - Returns:  An optional array of CAShapeLayers, one for each glyph to display.
+    private func getGlyphLayers(text :String, color :UIColor) -> [CAShapeLayer]? {
+        var glyphLayers :[CAShapeLayer] = [] //Array of glyph layers to return.
+        
+        guard let attributedString = getTextAttributes(text :text) else { //Create attributed string from label text.
+            print("Attributed String is nil.")
+            return nil
+        }
+        
+        let linesInFrame = getLinesForAttributedString(attributedString: attributedString) //Get a frame of lines for the string as well as the lines themselves.
+        
+        for index in 0..<CFArrayGetCount(linesInFrame.lines) {
+            let line = unsafeBitCast(CFArrayGetValueAtIndex(linesInFrame.lines, index), to: CTLine.self) //Line for index
+            
+            let runArray = CTLineGetGlyphRuns(line) //Get runs from the line.
+            
+            for index in 0..<CFArrayGetCount(runArray) {
+                let run = unsafeBitCast(CFArrayGetValueAtIndex(runArray, index), to: CTRun.self) //Run for index in line.
+                
+                var glyphs = [CGGlyph](repeating: CGGlyph(), count: text.characters.count) //Allocated space for array of glyphs.
+                
+                CTRunGetGlyphs(run, CFRangeMake(0, 0), &glyphs) //Get array of glyphs in run.
+                
+                guard let font = CFAttributedStringGetAttribute(attributedString, 0, kCTFontAttributeName, nil) as! CTFont? else { //Get the font from the attributed string.
+                    print("Font is nil.")
+                    return nil
+                }
+                
+                var glyphBoundingRects = [CGRect](repeating: CGRect(), count: text.characters.count) //Allocated space for array of bounding boxes of glyphs.
+                CTFontGetBoundingRectsForGlyphs(font, .default, glyphs, &glyphBoundingRects, text.characters.count) //Get array of bounding boxes of glyphs in run.
+                
+                for glyphIndex in 0..<glyphs.count { //For each glyph in run.
+                    let glyph = glyphs[glyphIndex] //Glyph for index.
                     
                     if let glyphPath = CTFontCreatePathForGlyph(font, glyph, nil) { //Creates a cgpath for glyph.
                         let glyphLayer = CAShapeLayer()
@@ -173,17 +302,16 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
                         
                         glyphLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
                         glyphLayer.isGeometryFlipped = true //Glyph is normally displayed upside down.
-                        glyphLayer.bounds = glyphBounds
-                        let x = lineOrigin.x + position.x + glyphBounds.minX + glyphBounds.width / 2 //Sets the x origin to the line origin (text alignment) + the x position of the glyph + the glyphBounds x origin (addresses minor offsets) + half the width of the bounds since the anchor point is set in the middle of the layer.
-                        let y = ascent + position.y - glyphBounds.minY - glyphBounds.height / 2 //Sets the y origin to the ascent of the line + the y position of the glyph - the glyphBounds y origin (addresses minor offsets and the descent for a glyph - half the height of the bounds since the anchor point is set in the middle of the layer.
-                        glyphLayer.position = CGPoint(x: x, y: y)
-                        //letterLayer.backgroundColor = UIColor.red.cgColor
-                        glyphLayer.fillColor = UIColor.white.cgColor
+                        glyphLayer.fillColor = color.cgColor
                         
-                        glyphLayers.append(glyphLayer)
-                        glyphPositions.append(CGPoint(x: x, y: y))
+                       // glyphLayer.backgroundColor = UIColor.blue.cgColor
                         
-                        shapeLayer(glyphLayer)
+                        glyphLayer.bounds = glyphBoundingRects[glyphIndex]
+                        
+                        if Array(text.characters)[glyphIndex] != " " { //Avoid the spaces.
+                            glyphLayers.append(glyphLayer)
+                        }
+                        
                     } else {
                         print("Glyph is nil.")
                     }
@@ -191,11 +319,18 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
             }
         }
         
-        return (glyphPositions, glyphLayers)
+        return glyphLayers
     }
     
-    
-    func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(_ firstStringIndex :Int, _ secondStringIndex :Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void) {
+    /// Finds matching characters for two different strings and tracks their index.
+    ///
+    /// - Parameters:
+    ///   - firstString: First string to compare.
+    ///   - secondString: Second string to compare.
+    ///   - matchingCharacterAction: Callback containing an index for first and second string when a match is found.
+    ///   - nonMatchingSecondStringCharacterAction: Callback containing an index in the second string when a match is not found.
+    ///   - nonMatchingFirstStringCharacterAction:  Callback containing an index in the first string when a match is not found.
+    private func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(_ firstStringIndex :Int, _ secondStringIndex :Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void) {
         var charactersFromFirstString = getCharacters(from: firstString) //Dictionary of characters and how many times they appear within the first string.
         
         for (i, character) in secondString.characters.enumerated() { //Look through each character of the second string to compare.
@@ -223,9 +358,6 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
         }
     }
     
-    //MARK: - Private
-    
-    
     /// Creates an attributed string matching the display of the UILabel for the render method to use to draw text paths.
     ///
     /// - Parameter text: The returned attributed strings text.
@@ -241,7 +373,7 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
         CFAttributedStringSetAttribute(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), kCTFontAttributeName, runFont)
 
         //Paragraph style.
-        var alignment = CTTextAlignment.center
+        var alignment = NSTextAlignmentToCTTextAlignment(textAlignment)
         let alignmentSetting = [CTParagraphStyleSetting(spec: .alignment, valueSize: MemoryLayout.size(ofValue: alignment), value: &alignment)]
         let paragraphStyle = CTParagraphStyleCreate(alignmentSetting, alignmentSetting.count)
         CFAttributedStringSetAttribute(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), kCTParagraphStyleAttributeName, paragraphStyle)
@@ -293,13 +425,7 @@ extension UILabel :GSMagicTextMoveProtocol, CAAnimationDelegate {
     //MARK: - CAAnimation Protocol
     
     public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        guard let textAnimationLayer = anim.value(forKey: UILabel.TextAnimationLayerKey) as? CALayer, //Layer where all text paths have been rendered in.
-            let originalColor = anim.value(forKey: UILabel.OriginalColorKey) as? UIColor //Original color of the label text.
-            else {
-                return
-        }
-        
-        textAnimationLayer.removeFromSuperlayer() //Removes the layer containing all text paths.
-        textColor = originalColor //Returns the label text to its original color.
+        //text = tempString //Text in label is set to new string.
+        //tempString = nil
     }
 }

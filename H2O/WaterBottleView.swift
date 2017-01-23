@@ -11,51 +11,55 @@ import UIKit
 class WaterBottleView: UIView {
     
     /// White bottle used as background where it looks as if water is displayed in.
-    private var bottleLayer :CAShapeLayer!
+    private lazy var bottleLayer :CAShapeLayer = self.generateWaterBottleLayer(fillColor: UIColor.white)
     
     /// Mask layer of bottle to use for water view.
-    private var bottleMaskLayer :CAShapeLayer!
+    private lazy var bottleMaskLayer :CAShapeLayer = self.generateWaterBottleLayer(fillColor: UIColor.white)
     
     /// Water view inside of bottle.
-    private var waterView :GSFluidView!
+    private lazy var waterView :GSFluidView = self.generateLiquidView(color: StandardColors.waterColor)
     
-    private var layoutComplete = false
-
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubviews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addSubviews()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if !layoutComplete {
-            backgroundColor = UIColor.clear
-            
-            let bottleMaskWidth = bounds.width * 0.92 //Width for bottle mask is defined as a smaller value than that of the bottleLayer so that the bottleLayer shows in the back as a sort of border 0.92 is used because it looked best to me.
-            let bottleMaskWidthDifference = bounds.width - bottleMaskWidth //Difference in width between the main bottle and that of the bottle layer mask.
-            let bottleMaskFrame = CGRect(x: bounds.width / 2 - bottleMaskWidth / 2, y: 0, width: bottleMaskWidth, height: bounds.height - bottleMaskWidthDifference / 2) //Final frame for the bottle mask. X value places the mask in the middle of the bottle layer and the height takes the half the width difference and subtracts it from the height to show the same amount of distance from the bottleLayer vertically as horizontally.
-            
-            bottleLayer = generateWaterBottleLayer(fillColor: UIColor.white, frame :bounds)
-            bottleMaskLayer = generateWaterBottleLayer(fillColor: UIColor.white, frame : bottleMaskFrame)
-            waterView = generateLiquidView(color: StandardColors.waterColor)
-            
-            layout()
-            
-            waterView.fluidLayout = GSFluidLayout(frame: frame, fluidWidth: bounds.width * 2.5, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 8, minAmplitude: 2, numberOfWaves: 2)
-            waterView.layoutIfNeeded() //Calls the water views layout subviews function since it is not called when adding the view as a subview for some reason :(
-            waterView.layer.mask = bottleMaskLayer
-            
-            var fillValue :Float = 0.4
-            waterView.fillTo(&fillValue)
-            
-            layoutComplete = true
-        }
+        backgroundColor = UIColor.clear
+        
+        //---Bottle Layer---//
+
+        let bottleLayerPath = generateBottlePath(frame: bounds)
+        bottleLayer.path = bottleLayerPath.cgPath
+        
+        //---Bottle Mask---//
+        
+        let bottleMaskWidth = bounds.width * 0.92 //Width for bottle mask is defined as a smaller value than that of the bottleLayer so that the bottleLayer shows in the back as a sort of border 0.92 is used because it looked best to me.
+        let bottleMaskWidthDifference = bounds.width - bottleMaskWidth //Difference in width between the main bottle and that of the bottle layer mask.
+        let bottleMaskFrame = CGRect(x: bounds.width / 2 - bottleMaskWidth / 2, y: 0, width: bottleMaskWidth, height: bounds.height - bottleMaskWidthDifference / 2) //Final frame for the bottle mask. X value places the mask in the middle of the bottle layer and the height takes the half the width difference and subtracts it from the height to show the same amount of distance from the bottleLayer vertically as horizontally.
+        
+        let bottleMaskPath = generateBottlePath(frame: bottleMaskFrame)
+        bottleMaskLayer.path = bottleMaskPath.cgPath
+        
+        //---Water View---//
+
+        waterView.frame = bounds
+        waterView.fluidLayout = GSFluidLayout(frame: frame, fluidWidth: bounds.width * 2.5, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 8, minAmplitude: 2, numberOfWaves: 2)
+        waterView.layer.mask = bottleMaskLayer
+        
+        var fillValue :Float = 0.4
+        waterView.fillTo(&fillValue)
     }
     
-    private func layout() {
-        //---Bottle Layer---
-        
+    private func addSubviews() {
         layer.addSublayer(bottleLayer)
-        
-        //---Water View---
-        
-        waterView.frame = bounds
         addSubview(waterView)
     }
 }
@@ -75,13 +79,25 @@ private extension WaterBottleView {
         return liquidView
     }
     
-    /// Generates a water bottle layer with a bottle as a path.
+    /// Generates a water bottle layer.
     ///
     /// - Parameters:
-    ///   - fillColor: Color of the bottle within the oath.
-    ///   - frame: Frame containing bottle.
-    /// - Returns: Water bottle path layer.
-    func generateWaterBottleLayer(fillColor :UIColor, frame :CGRect) -> CAShapeLayer {
+    ///   - fillColor: Color of the bottle.
+    /// - Returns: Water bottle layer.
+    func generateWaterBottleLayer(fillColor :UIColor) -> CAShapeLayer {
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.fillColor = fillColor.cgColor
+        
+        return shapeLayer
+    }
+    
+    /// Generates a water bottle path.
+    ///
+    /// - Parameters:
+    ///   - frame: Frame where path will be contained.
+    /// - Returns: Water bottle shaped bezier path.
+    func generateBottlePath(frame :CGRect) -> UIBezierPath {
         //// WaterBottleLayer
         //// Bottle Drawing
         let bottlePath = UIBezierPath()
@@ -173,12 +189,7 @@ private extension WaterBottleView {
         bottlePath.addLine(to: CGPoint(x: frame.minX + 0.72708 * frame.width, y: frame.minY + 0.07061 * frame.height))
         bottlePath.addLine(to: CGPoint(x: frame.minX + 0.50102 * frame.width, y: frame.minY + 0.07096 * frame.height))
         bottlePath.addCurve(to: CGPoint(x: frame.minX + 0.27312 * frame.width, y: frame.minY + 0.07038 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.37685 * frame.width, y: frame.minY + 0.07107 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.27404 * frame.width, y: frame.minY + 0.07084 * frame.height))
-
         
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = bottlePath.cgPath
-        shapeLayer.fillColor = fillColor.cgColor
-        
-        return shapeLayer
+        return bottlePath
     }
 }

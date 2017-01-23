@@ -32,6 +32,7 @@ public class AudioToolbox: NSObject {
             let url :URL = Bundle.main.url(forResource: fileNameSeperated.first, withExtension: fileNameSeperated.last)!
             do {
                 self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                self.audioPlayer.volume = 0.4
                 
                 if repeatEnabled {
                     self.audioPlayer.numberOfLoops = -1

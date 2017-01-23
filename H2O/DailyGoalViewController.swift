@@ -9,7 +9,15 @@
 import UIKit
 
 class DailyGoalViewController: UIViewController, BoardingProtocol {
-    var titleLabel: UILabel!
+    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    
+    /// First label.
+    var titleLabel :GSMagicTextLabel {
+        get {
+            return _titleLabel
+        }
+    }
     
     private var presetChangerView :PresetValueChangerView!
     
@@ -19,7 +27,6 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         var navigationItem = self.navigationItem
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "next_navigation_item".localized)
         
-        titleLabel = generateTitleLabel()
         titleLabel.text = "set_your_daily_goal".localized
         
         presetChangerView = generateGoalPresetChangerView()
@@ -37,7 +44,8 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 80))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-        
+        view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
+
         //--Preset Value Changer---
         view.addSubview(presetChangerView)
         

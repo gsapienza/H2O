@@ -88,6 +88,8 @@ let defaultDailyGoal :Float = 64
 
 //MARK: - Audio Files
 
+let WaterDrop1Sound = "WaterDrop1.wav"
+let LightClickSound = "LightClick.wav"
 let SplashSound = "Splash.mp3"
 let QuickAddSound = "QuickAdd.mp3"
 let WaterSound = "Water.wav"

@@ -9,14 +9,17 @@
 import Foundation
 
 @objc protocol BoardingProtocol {
+    ///View where boarding subviews are contained.
     var view :UIView! { set get }
     
+    func animateIn(completion :@escaping (Bool) -> Void)
+
     func animateOut(completion :@escaping (Bool) -> Void)
     
-    func animateIn(completion :@escaping (Bool) -> Void)
-    
-    @objc optional var titleLabel :UILabel! { set get }
+    ///Boarding screen title label.
+    @objc optional var titleLabel :GSMagicTextLabel { get }
 
+    ///Action when right bar button is tapped.
     @objc optional func onRightBarButton()
 }
 
@@ -24,10 +27,11 @@ extension BoardingProtocol where Self :UIViewController {
     /// Generates a title label.
     ///
     /// - Returns: A magic label to use for title.
-    func generateTitleLabel() -> UILabel {
-        let label = UILabel()
+    func generateTitleLabel() -> GSMagicTextLabel {
+        let label = GSMagicTextLabel()
         
-        label.font = StandardFonts.ultraLightFont(size: 48)
+        let fontSize = UIScreen.main.bounds.width / 9
+        label.font = StandardFonts.ultraLightFont(size: fontSize) //48
         label.textAlignment = .center
         label.textColor = StandardColors.primaryColor
         

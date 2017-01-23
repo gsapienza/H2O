@@ -12,14 +12,21 @@ class WelcomeViewController: UIViewController, BoardingProtocol {
 
     //MARK: - Private iVars
     
+    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    
     /// First label.
-    var titleLabel :UILabel!
+    var titleLabel :GSMagicTextLabel {
+        get {
+            return _titleLabel
+        }
+    }
     
     /// Second label.
-    private var h2OLabel :UILabel!
+    private lazy var h2OLabel :UILabel = self.generateH2OLabel()
     
     /// View displaying water bottle animation.
-    private var waterBottleView :WaterBottleView!
+    private lazy var waterBottleView :WaterBottleView = self.generateWaterBottleView()
     
     //MARK: - Public
     
@@ -28,9 +35,6 @@ class WelcomeViewController: UIViewController, BoardingProtocol {
         
         var navigationItem = self.navigationItem
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "Next")
-        titleLabel = generateTitleLabel()
-        h2OLabel = generateH2OLabel()
-        waterBottleView = generateWaterBottleView()
         
         titleLabel.text = "Welcome To"
         h2OLabel.text = "H2O"
@@ -53,6 +57,7 @@ class WelcomeViewController: UIViewController, BoardingProtocol {
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 80))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
         
         //---H2O Label---
         view.addSubview(h2OLabel)
@@ -77,8 +82,7 @@ class WelcomeViewController: UIViewController, BoardingProtocol {
     func animateOut(completion: @escaping (Bool) -> Void) {
         UIView.animate(withDuration: 0.5, animations: {
             self.h2OLabel.alpha = 0
-            self.waterBottleView.bounds = self.waterBottleView.bounds.offsetBy(dx: 0, dy: -self.view.bounds.height)
-            self.waterBottleView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            self.waterBottleView.transform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
         }) { (Bool) in
             completion(true)
         }

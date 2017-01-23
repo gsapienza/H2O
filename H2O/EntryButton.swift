@@ -106,19 +106,20 @@ private extension EntryButton {
 extension EntryButton {
     ///Action on tap. Plays audio and animates the button tapped. Calls a delegate method to inform the delegate that the button was tapped
     func onTap() {
-        AudioToolbox.standardAudioToolbox.playAudio(QuickAddSound, repeatEnabled: false)
+        AudioToolbox.standardAudioToolbox.playAudio(WaterDrop1Sound, repeatEnabled: false)
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.prepare()
         feedbackGenerator.notificationOccurred(.success)
         
-        UIView.animate(withDuration: 0.1, delay: 0, options: .allowUserInteraction, animations: {
-            self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
+            self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
         }) { (Bool) in
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .allowUserInteraction, animations: {
-                self.transform = CGAffineTransform.identity
-                }, completion: { (Bool) in
-            })
         }
+        
+        UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: .curveEaseOut, animations: {
+            self.transform = CGAffineTransform.identity
+        }, completion: { (Bool) in
+        })
         
         delegate?.entryButtonTapped(amount: amount)
     }

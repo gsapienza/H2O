@@ -9,7 +9,15 @@
 import UIKit
 
 class ConnectViewController: UIViewController, BoardingProtocol {
-    var titleLabel: UILabel!
+    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    
+    /// First label.
+    var titleLabel :GSMagicTextLabel {
+        get {
+            return _titleLabel
+        }
+    }
     var connectTableView :UITableView!
     fileprivate let serviceIntergrationModel = ServiceIntergrationModel()
 
@@ -19,7 +27,6 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         var navigationItem = self.navigationItem
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "done_navigation_item".localized)
         
-        titleLabel = generateTitleLabel()
         titleLabel.text = "connect".localized
         
         connectTableView = generateConnectTableView()
@@ -36,7 +43,8 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 80))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-        
+        view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
+
         //---Connect Table View---
         view.addSubview(connectTableView)
         
@@ -124,14 +132,16 @@ extension ConnectViewController :UITableViewDataSource, UITableViewDelegate {
         }
         
         let service = SupportedServices.allSupportedServices()[indexPath.row]
-        
-        service.model().authorize { (success :Bool, error :Error?, token :String?) in
-            if success {
-                cell.setSelected(true, animated: true)
-                cell.titleLabel.text = service.rawValue + " Enabled"
-                
-                if let service = Service.create(name: service.rawValue, token: token, isAuthorized: true) {
-                    getAppDelegate().user?.addService(service: service)
+
+        if !service.model().isAuthorized() {
+            service.model().authorize { (success :Bool, error :Error?, token :String?) in
+                if success {
+                    cell.setSelected(true, animated: true)
+                    cell.titleLabel.text = service.rawValue + " Enabled"
+                    
+                    if let service = Service.create(name: service.rawValue, token: token, isAuthorized: true) {
+                        getAppDelegate().user?.addService(service: service)
+                    }
                 }
             }
         }
