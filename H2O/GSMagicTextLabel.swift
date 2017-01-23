@@ -313,7 +313,7 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
                         }
                         
                     } else {
-                        print("Glyph is nil.")
+                        print("Glyph for index " + String(glyphIndex) + " is nil.")
                     }
                 }
             }
