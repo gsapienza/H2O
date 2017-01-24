@@ -46,7 +46,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             setDefaultPresets()
             setDefaultGoal()
             setDefaultTheme()
-            AppDelegate.createShortcuts() //Creates 3D touch shortcuts
             
             AppUserDefaults.setAppWasOpenedOnce(openedOnce: true)
         }
@@ -70,6 +69,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !AppUserDefaults.getBoardingWasDismissed() {
            pushBoardingViewControllerOnRoot()
+        } else {
+            AppDelegate.createShortcuts() //Creates 3D touch shortcuts
         }
         
         return true
@@ -77,7 +78,14 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        let mainViewController = window?.rootViewController as! MainViewController
+        guard let navigationController = window?.rootViewController as? UINavigationController else {
+            return
+        }
+        
+        guard let mainViewController = navigationController.viewControllers.first as? MainViewController else {
+            return
+        }
+        
         if let presets = AppUserDefaults.getPresetWaterValues() {
             delay(delay: 0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
                 switch shortcutItem.type {

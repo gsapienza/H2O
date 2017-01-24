@@ -78,6 +78,7 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
         UIView.animate(withDuration: 0.5, animations: {
             self.titleLabel.alpha = 0
         }, completion: { _ in
+            AppDelegate.createShortcuts() //Creates 3D touch shortcuts
             AppUserDefaults.setBoardingWasDismissed(dismissed: true)
             completion(true)
         })
