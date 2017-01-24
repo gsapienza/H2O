@@ -896,7 +896,7 @@
 		375F4FF11CEA91A6009C14AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -923,7 +923,7 @@
 		375F4FF21CEA91A6009C14AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
