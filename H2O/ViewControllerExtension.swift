@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/21/16.
-//  Copyright © 2016 The Oven. All rights reserved.
+//  Copyright © 2016 Midnite. All rights reserved.
 //
 
 import UIKit

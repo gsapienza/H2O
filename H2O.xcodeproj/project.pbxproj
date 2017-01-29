@@ -32,6 +32,94 @@
 		375578471DF9C6D800BF8130 /* ServiceIntergrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */; };
 		375578491DFB245100BF8130 /* ConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375578481DFB245100BF8130 /* ConnectTableViewCell.swift */; };
 		375831271DB2D48200ED136E /* InformationViewControllerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375831261DB2D48200ED136E /* InformationViewControllerState.swift */; };
+		3759F0231E3E46E8002C0AFD /* EntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666B1CEAA161003418C2 /* EntryButton.swift */; };
+		3759F0241E3E46E8002C0AFD /* StoryBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */; };
+		3759F0251E3E46E8002C0AFD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
+		3759F0261E3E46E8002C0AFD /* WobbleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */; };
+		3759F0271E3E46E8002C0AFD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B551DFF462100539EA5 /* User.swift */; };
+		3759F0281E3E46E8002C0AFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C81B2A1D9189C100B6DA9F /* AppDelegate.swift */; };
+		3759F0291E3E46E8002C0AFD /* ServiceIntergrationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B441DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift */; };
+		3759F02A1E3E46E8002C0AFD /* Service+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B4A1DFF454E00539EA5 /* Service+CoreDataProperties.swift */; };
+		3759F02B1E3E46E8002C0AFD /* ConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375578481DFB245100BF8130 /* ConnectTableViewCell.swift */; };
+		3759F02C1E3E46E8002C0AFD /* ToastNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7271CF0C181004ABFAF /* ToastNotificationManager.m */; };
+		3759F02D1E3E46E8002C0AFD /* WaterBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37263F931DEB629D0037D744 /* WaterBottleView.swift */; };
+		3759F02E1E3E46E8002C0AFD /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780931E1D7BD531007CF646 /* Global.swift */; };
+		3759F02F1E3E46E8002C0AFD /* Popsicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7641CF22F5D004ABFAF /* Popsicle.swift */; };
+		3759F0301E3E46E8002C0AFD /* CustomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EA1CECF3B3004ABFAF /* CustomEntryView.swift */; };
+		3759F0311E3E46E8002C0AFD /* H2OFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093231D7D254B007CF646 /* H2OFluidView.swift */; };
+		3759F0321E3E46E8002C0AFD /* CompleteBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */; };
+		3759F0331E3E46E8002C0AFD /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */; };
+		3759F0341E3E46E8002C0AFD /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
+		3759F0351E3E46E8002C0AFD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE01CEA91A6009C14AE /* MainViewController.swift */; };
+		3759F0361E3E46E8002C0AFD /* WatchSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */; };
+		3759F0371E3E46E8002C0AFD /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */; };
+		3759F0381E3E46E8002C0AFD /* BoardingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375540671DF21A7700BAE413 /* BoardingProtocol.swift */; };
+		3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
+		3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B5D1DFF466000539EA5 /* User+CoreDataProperties.swift */; };
+		3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */; };
+		3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7591CF11561004ABFAF /* L360ConfettiObject.m */; };
+		3759F03D1E3E46E8002C0AFD /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
+		3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */; };
+		3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D75B1CF11561004ABFAF /* L360ConfettiView.m */; };
+		3759F0401E3E46E8002C0AFD /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */; };
+		3759F0411E3E46E8002C0AFD /* DailyEntryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7681CF274E9004ABFAF /* DailyEntryDateView.swift */; };
+		3759F0421E3E46E8002C0AFD /* GSFluidLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1551CFBA33A00BE3711 /* GSFluidLayout.swift */; };
+		3759F0431E3E46E8002C0AFD /* UndoBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7F9DE1DB1780200C94CB6 /* UndoBarButtonItem.swift */; };
+		3759F0441E3E46E8002C0AFD /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
+		3759F0451E3E46E8002C0AFD /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		3759F0461E3E46E8002C0AFD /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
+		3759F0471E3E46E8002C0AFD /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */; };
+		3759F0481E3E46E8002C0AFD /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487FD41DDE04D10082DC27 /* ConnectViewController.swift */; };
+		3759F0491E3E46E8002C0AFD /* ServiceIntergrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */; };
+		3759F04A1E3E46E8002C0AFD /* GSFluidNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5A4741D895D5D009857CF /* GSFluidNode.swift */; };
+		3759F04B1E3E46E8002C0AFD /* GSAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3755406B1DF2822600BAE413 /* GSAnimations.swift */; };
+		3759F04C1E3E46E8002C0AFD /* DailyEntryDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666F1CEAA190003418C2 /* DailyEntryDial.swift */; };
+		3759F04D1E3E46E8002C0AFD /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */; };
+		3759F04E1E3E46E8002C0AFD /* Service+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B491DFF454E00539EA5 /* Service+CoreDataClass.swift */; };
+		3759F04F1E3E46E8002C0AFD /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B5A1DFF462D00539EA5 /* Entry+CoreDataProperties.swift */; };
+		3759F0501E3E46E8002C0AFD /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
+		3759F0511E3E46E8002C0AFD /* InformationEntryInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D76A1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift */; };
+		3759F0521E3E46E8002C0AFD /* GSMagicTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37355E841DDFB6690049B842 /* GSMagicTextLabel.swift */; };
+		3759F0531E3E46E8002C0AFD /* InformationViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */; };
+		3759F0541E3E46E8002C0AFD /* ViewControllerAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D13DEC1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift */; };
+		3759F0551E3E46E8002C0AFD /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */; };
+		3759F0561E3E46E8002C0AFD /* BoardingAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375540691DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift */; };
+		3759F0571E3E46E8002C0AFD /* WeekBarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */; };
+		3759F0581E3E46E8002C0AFD /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B461DFF3C7E00539EA5 /* HealthKitService.swift */; };
+		3759F0591E3E46E8002C0AFD /* InformationViewControllerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375831261DB2D48200ED136E /* InformationViewControllerState.swift */; };
+		3759F05A1E3E46E8002C0AFD /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487FD01DDE04C00082DC27 /* WelcomeViewController.swift */; };
+		3759F05B1E3E46E8002C0AFD /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B591DFF462D00539EA5 /* Entry.swift */; };
+		3759F05C1E3E46E8002C0AFD /* GSAnimatingProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */; };
+		3759F05D1E3E46E8002C0AFD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182651CEBC2190055DA02 /* SettingsViewController.swift */; };
+		3759F05E1E3E46E8002C0AFD /* DailyGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */; };
+		3759F05F1E3E46E8002C0AFD /* PresetValueChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */; };
+		3759F0601E3E46E8002C0AFD /* CustomEntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666D1CEAA16C003418C2 /* CustomEntryButton.swift */; };
+		3759F0611E3E46E8002C0AFD /* AudioToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A1825F1CEB942E0055DA02 /* AudioToolbox.swift */; };
+		3759F0621E3E46E8002C0AFD /* WatchConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C81B221D902FBA00B6DA9F /* WatchConnection.swift */; };
+		3759F0641E3E46E8002C0AFD /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7791CF94DAB004ABFAF /* CoreMotion.framework */; };
+		3759F0651E3E46E8002C0AFD /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; };
+		3759F0661E3E46E8002C0AFD /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D77B1CF955C5004ABFAF /* HealthKit.framework */; };
+		3759F0671E3E46E8002C0AFD /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3785667A1CEAA29C003418C2 /* CoreText.framework */; };
+		3759F0691E3E46E8002C0AFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */; };
+		3759F06A1E3E46E8002C0AFD /* Bariol_Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566721CEAA27E003418C2 /* Bariol_Light.otf */; };
+		3759F06B1E3E46E8002C0AFD /* Splash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3741F5A01D8B513E00F7598E /* Splash.mp3 */; };
+		3759F06C1E3E46E8002C0AFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FE81CEA91A6009C14AE /* Assets.xcassets */; };
+		3759F06D1E3E46E8002C0AFD /* Bariol_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566731CEAA27E003418C2 /* Bariol_Regular.otf */; };
+		3759F06E1E3E46E8002C0AFD /* Pop_A.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37A182611CEB94A80055DA02 /* Pop_A.wav */; };
+		3759F06F1E3E46E8002C0AFD /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 374C3BD41E008D3500095AD5 /* Localizable.stringsdict */; };
+		3759F0701E3E46E8002C0AFD /* Well done.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D75F1CF11870004ABFAF /* Well done.wav */; };
+		3759F0711E3E46E8002C0AFD /* Click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D72D1CF0FDF0004ABFAF /* Click.wav */; };
+		3759F0721E3E46E8002C0AFD /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3708613F1D17151F00C89394 /* Water.wav */; };
+		3759F0731E3E46E8002C0AFD /* LightClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 376BAC331E00D78600E4E394 /* LightClick.wav */; };
+		3759F0741E3E46E8002C0AFD /* QuickAdd.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3784BD031D86369C00DB581D /* QuickAdd.mp3 */; };
+		3759F0751E3E46E8002C0AFD /* Alert Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F01CEE2649004ABFAF /* Alert Error.wav */; };
+		3759F0761E3E46E8002C0AFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37C81B351D918C3B00B6DA9F /* Main.storyboard */; };
+		3759F0771E3E46E8002C0AFD /* Bariol_Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566741CEAA27E003418C2 /* Bariol_Thin.otf */; };
+		3759F0781E3E46E8002C0AFD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3741F5B11D8F119200F7598E /* Localizable.strings */; };
+		3759F0791E3E46E8002C0AFD /* WaterDrop1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 376BAC371E00DD0600E4E394 /* WaterDrop1.wav */; };
+		3759F07A1E3E46E8002C0AFD /* Bariol_Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378566711CEAA27E003418C2 /* Bariol_Bold.otf */; };
+		3759F07B1E3E46E8002C0AFD /* b4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D6F21CEE26E9004ABFAF /* b4.wav */; };
+		3759F07D1E3E46E8002C0AFD /* CRToast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0D7211CF0C164004ABFAF /* CRToast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE01CEA91A6009C14AE /* MainViewController.swift */; };
 		375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
 		375F4FE91CEA91A6009C14AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 375F4FE81CEA91A6009C14AE /* Assets.xcassets */; };
@@ -109,6 +197,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		3759F07C1E3E46E8002C0AFD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3759F07D1E3E46E8002C0AFD /* CRToast.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		37C9683F1D5414DE000DE5C0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,6 +257,8 @@
 		375578461DF9C6D800BF8130 /* ServiceIntergrationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIntergrationModel.swift; sourceTree = "<group>"; };
 		375578481DFB245100BF8130 /* ConnectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectTableViewCell.swift; sourceTree = "<group>"; };
 		375831261DB2D48200ED136E /* InformationViewControllerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewControllerState.swift; sourceTree = "<group>"; };
+		3759F0821E3E46E8002C0AFD /* H2O-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "H2O-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3759F0831E3E46E8002C0AFD /* H2O Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "H2O Dev-Info.plist"; path = "/Users/Greg/Developer/The Oven/H2O/H2O Dev-Info.plist"; sourceTree = "<absolute>"; };
 		375F4FDB1CEA91A6009C14AE /* H2O.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H2O.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		375F4FE01CEA91A6009C14AE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		375F4FE61CEA91A6009C14AE /* H2O.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = H2O.xcdatamodel; sourceTree = "<group>"; };
@@ -242,6 +343,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3759F0631E3E46E8002C0AFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3759F0641E3E46E8002C0AFD /* CoreMotion.framework in Frameworks */,
+				3759F0651E3E46E8002C0AFD /* CRToast.framework in Frameworks */,
+				3759F0661E3E46E8002C0AFD /* HealthKit.framework in Frameworks */,
+				3759F0671E3E46E8002C0AFD /* CoreText.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		375F4FD81CEA91A6009C14AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -344,6 +456,7 @@
 				37E0D77D1CF955C5004ABFAF /* H2O.entitlements */,
 				375F4FEA1CEA91A6009C14AE /* LaunchScreen.storyboard */,
 				375F4FED1CEA91A6009C14AE /* Info.plist */,
+				3759F0831E3E46E8002C0AFD /* H2O Dev-Info.plist */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -365,6 +478,7 @@
 			children = (
 				375F4FDB1CEA91A6009C14AE /* H2O.app */,
 				37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */,
+				3759F0821E3E46E8002C0AFD /* H2O-Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -550,6 +664,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3759F0211E3E46E8002C0AFD /* H2O-Dev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3759F07F1E3E46E8002C0AFD /* Build configuration list for PBXNativeTarget "H2O-Dev" */;
+			buildPhases = (
+				3759F0221E3E46E8002C0AFD /* Sources */,
+				3759F0631E3E46E8002C0AFD /* Frameworks */,
+				3759F0681E3E46E8002C0AFD /* Resources */,
+				3759F07C1E3E46E8002C0AFD /* Embed Frameworks */,
+				3759F07E1E3E46E8002C0AFD /* Carthage */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "H2O-Dev";
+			productName = H2O;
+			productReference = 3759F0821E3E46E8002C0AFD /* H2O-Dev.app */;
+			productType = "com.apple.product-type.application";
+		};
 		375F4FDA1CEA91A6009C14AE /* H2O */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 375F4FF01CEA91A6009C14AE /* Build configuration list for PBXNativeTarget "H2O" */;
@@ -595,8 +728,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = "The Oven";
+				ORGANIZATIONNAME = Midnite;
 				TargetAttributes = {
+					3759F0211E3E46E8002C0AFD = {
+						DevelopmentTeam = G898DU57KC;
+					};
 					375F4FDA1CEA91A6009C14AE = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = G898DU57KC;
@@ -628,12 +764,39 @@
 			projectRoot = "";
 			targets = (
 				375F4FDA1CEA91A6009C14AE /* H2O */,
+				3759F0211E3E46E8002C0AFD /* H2O-Dev */,
 				37E0D6FA1CEF66A7004ABFAF /* H2OTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3759F0681E3E46E8002C0AFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3759F0691E3E46E8002C0AFD /* LaunchScreen.storyboard in Resources */,
+				3759F06A1E3E46E8002C0AFD /* Bariol_Light.otf in Resources */,
+				3759F06B1E3E46E8002C0AFD /* Splash.mp3 in Resources */,
+				3759F06C1E3E46E8002C0AFD /* Assets.xcassets in Resources */,
+				3759F06D1E3E46E8002C0AFD /* Bariol_Regular.otf in Resources */,
+				3759F06E1E3E46E8002C0AFD /* Pop_A.wav in Resources */,
+				3759F06F1E3E46E8002C0AFD /* Localizable.stringsdict in Resources */,
+				3759F0701E3E46E8002C0AFD /* Well done.wav in Resources */,
+				3759F0711E3E46E8002C0AFD /* Click.wav in Resources */,
+				3759F0721E3E46E8002C0AFD /* Water.wav in Resources */,
+				3759F0731E3E46E8002C0AFD /* LightClick.wav in Resources */,
+				3759F0741E3E46E8002C0AFD /* QuickAdd.mp3 in Resources */,
+				3759F0751E3E46E8002C0AFD /* Alert Error.wav in Resources */,
+				3759F0761E3E46E8002C0AFD /* Main.storyboard in Resources */,
+				3759F0771E3E46E8002C0AFD /* Bariol_Thin.otf in Resources */,
+				3759F0781E3E46E8002C0AFD /* Localizable.strings in Resources */,
+				3759F0791E3E46E8002C0AFD /* WaterDrop1.wav in Resources */,
+				3759F07A1E3E46E8002C0AFD /* Bariol_Bold.otf in Resources */,
+				3759F07B1E3E46E8002C0AFD /* b4.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		375F4FD91CEA91A6009C14AE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -685,9 +848,95 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		3759F07E1E3E46E8002C0AFD /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/CRToast.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3759F0221E3E46E8002C0AFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3759F0231E3E46E8002C0AFD /* EntryButton.swift in Sources */,
+				3759F0241E3E46E8002C0AFD /* StoryBoardExtension.swift in Sources */,
+				3759F0251E3E46E8002C0AFD /* Constants.swift in Sources */,
+				3759F0261E3E46E8002C0AFD /* WobbleAnimation.swift in Sources */,
+				3759F0271E3E46E8002C0AFD /* User.swift in Sources */,
+				3759F0281E3E46E8002C0AFD /* AppDelegate.swift in Sources */,
+				3759F0291E3E46E8002C0AFD /* ServiceIntergrationProtocol.swift in Sources */,
+				3759F02A1E3E46E8002C0AFD /* Service+CoreDataProperties.swift in Sources */,
+				3759F02B1E3E46E8002C0AFD /* ConnectTableViewCell.swift in Sources */,
+				3759F02C1E3E46E8002C0AFD /* ToastNotificationManager.m in Sources */,
+				3759F02D1E3E46E8002C0AFD /* WaterBottleView.swift in Sources */,
+				3759F02E1E3E46E8002C0AFD /* Global.swift in Sources */,
+				3759F02F1E3E46E8002C0AFD /* Popsicle.swift in Sources */,
+				3759F0301E3E46E8002C0AFD /* CustomEntryView.swift in Sources */,
+				3759F0311E3E46E8002C0AFD /* H2OFluidView.swift in Sources */,
+				3759F0321E3E46E8002C0AFD /* CompleteBoardingViewController.swift in Sources */,
+				3759F0331E3E46E8002C0AFD /* DateExtension.swift in Sources */,
+				3759F0341E3E46E8002C0AFD /* SettingsTableViewCell.swift in Sources */,
+				3759F0351E3E46E8002C0AFD /* MainViewController.swift in Sources */,
+				3759F0361E3E46E8002C0AFD /* WatchSyncEngine.swift in Sources */,
+				3759F0371E3E46E8002C0AFD /* ViewControllerExtension.swift in Sources */,
+				3759F0381E3E46E8002C0AFD /* BoardingProtocol.swift in Sources */,
+				3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */,
+				3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */,
+				3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */,
+				3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */,
+				3759F03D1E3E46E8002C0AFD /* NightModeProtocol.swift in Sources */,
+				3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */,
+				3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */,
+				3759F0401E3E46E8002C0AFD /* UIColor+ColorWithHex.m in Sources */,
+				3759F0411E3E46E8002C0AFD /* DailyEntryDateView.swift in Sources */,
+				3759F0421E3E46E8002C0AFD /* GSFluidLayout.swift in Sources */,
+				3759F0431E3E46E8002C0AFD /* UndoBarButtonItem.swift in Sources */,
+				3759F0441E3E46E8002C0AFD /* StandardFonts.swift in Sources */,
+				3759F0451E3E46E8002C0AFD /* GSFluidView.swift in Sources */,
+				3759F0461E3E46E8002C0AFD /* StandardColors.swift in Sources */,
+				3759F0471E3E46E8002C0AFD /* AppUserDefaults.swift in Sources */,
+				3759F0481E3E46E8002C0AFD /* ConnectViewController.swift in Sources */,
+				3759F0491E3E46E8002C0AFD /* ServiceIntergrationModel.swift in Sources */,
+				3759F04A1E3E46E8002C0AFD /* GSFluidNode.swift in Sources */,
+				3759F04B1E3E46E8002C0AFD /* GSAnimations.swift in Sources */,
+				3759F04C1E3E46E8002C0AFD /* DailyEntryDial.swift in Sources */,
+				3759F04D1E3E46E8002C0AFD /* SettingsPresetTableViewCell.swift in Sources */,
+				3759F04E1E3E46E8002C0AFD /* Service+CoreDataClass.swift in Sources */,
+				3759F04F1E3E46E8002C0AFD /* Entry+CoreDataProperties.swift in Sources */,
+				3759F0501E3E46E8002C0AFD /* GSFluidLayoutProtocol.swift in Sources */,
+				3759F0511E3E46E8002C0AFD /* InformationEntryInfoCollectionViewCell.swift in Sources */,
+				3759F0521E3E46E8002C0AFD /* GSMagicTextLabel.swift in Sources */,
+				3759F0531E3E46E8002C0AFD /* InformationViewControllerModel.swift in Sources */,
+				3759F0541E3E46E8002C0AFD /* ViewControllerAlertExtension.swift in Sources */,
+				3759F0551E3E46E8002C0AFD /* InformationViewController.swift in Sources */,
+				3759F0561E3E46E8002C0AFD /* BoardingAnimatedTransitioning.swift in Sources */,
+				3759F0571E3E46E8002C0AFD /* WeekBarGraphView.swift in Sources */,
+				3759F0581E3E46E8002C0AFD /* HealthKitService.swift in Sources */,
+				3759F0591E3E46E8002C0AFD /* InformationViewControllerState.swift in Sources */,
+				3759F05A1E3E46E8002C0AFD /* WelcomeViewController.swift in Sources */,
+				3759F05B1E3E46E8002C0AFD /* Entry.swift in Sources */,
+				3759F05C1E3E46E8002C0AFD /* GSAnimatingProgressLayer.swift in Sources */,
+				3759F05D1E3E46E8002C0AFD /* SettingsViewController.swift in Sources */,
+				3759F05E1E3E46E8002C0AFD /* DailyGoalViewController.swift in Sources */,
+				3759F05F1E3E46E8002C0AFD /* PresetValueChangerView.swift in Sources */,
+				3759F0601E3E46E8002C0AFD /* CustomEntryButton.swift in Sources */,
+				3759F0611E3E46E8002C0AFD /* AudioToolbox.swift in Sources */,
+				3759F0621E3E46E8002C0AFD /* WatchConnection.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		375F4FD71CEA91A6009C14AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -806,6 +1055,64 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3759F0801E3E46E8002C0AFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = DevAppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = G898DU57KC;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/H2O/L360Confetti",
+				);
+				INFOPLIST_FILE = "H2O Dev-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.theoven.H2O-Dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "H2O/H2O-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "H2O-Swift.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		3759F0811E3E46E8002C0AFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = DevAppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = G898DU57KC;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/H2O/L360Confetti",
+				);
+				INFOPLIST_FILE = "H2O Dev-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.theoven.H2O-Dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "H2O/H2O-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "H2O-Swift.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		375F4FEE1CEA91A6009C14AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -977,6 +1284,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3759F07F1E3E46E8002C0AFD /* Build configuration list for PBXNativeTarget "H2O-Dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3759F0801E3E46E8002C0AFD /* Debug */,
+				3759F0811E3E46E8002C0AFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		375F4FD61CEA91A6009C14AE /* Build configuration list for PBXProject "H2O" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

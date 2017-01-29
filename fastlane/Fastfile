@@ -63,6 +63,10 @@ platform :ios do
     add_git_tag(tag: "testflight-#{build_number}")
   
     push_to_git_remote
+
+    slack(
+       message: "Successfully deployed new Testflight Beta Update."
+     )
   
   end
 
@@ -72,6 +76,10 @@ platform :ios do
     # snapshot
     gym(scheme: "H2O") # Build your app - more options available
     deliver(force: true)
+
+    slack(
+       message: "Successfully deployed new App Update."
+     )
     # frameit
   end
 
@@ -80,9 +88,6 @@ platform :ios do
   after_all do |lane|
     # This block is called, only if the executed lane was successful
 
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
   end
 
   error do |lane, exception|
