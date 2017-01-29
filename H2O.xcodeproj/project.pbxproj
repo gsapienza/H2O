@@ -137,7 +137,7 @@
 		3741F5A21D8B703400F7598E /* EntryButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryButtonNode.swift; sourceTree = "<group>"; };
 		3741F5A71D8DCB5A00F7598E /* CustomPickerInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPickerInterfaceController.swift; path = "H2O-Watch Extension/CustomPickerInterfaceController.swift"; sourceTree = SOURCE_ROOT; };
 		3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
-		3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoryBoardExtension.swift; path = ../StoryBoardExtension.swift; sourceTree = "<group>"; };
+		3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryBoardExtension.swift; sourceTree = "<group>"; };
 		3741F5B11D8F119200F7598E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		37487B441DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIntergrationProtocol.swift; sourceTree = "<group>"; };
 		37487B461DFF3C7E00539EA5 /* HealthKitService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 		37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekBarGraphView.swift; sourceTree = "<group>"; };
 		37B165351D96CBA000702A94 /* H2O 1.03.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.03.xcdatamodel"; sourceTree = "<group>"; };
 		37B5A4741D895D5D009857CF /* GSFluidNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GSFluidNode.swift; path = "H2O-Watch Extension/GSFluidNode.swift"; sourceTree = SOURCE_ROOT; };
-		37B5A47A1D898191009857CF /* H2OMainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H2OMainScene.swift; sourceTree = SOURCE_ROOT; };
+		37B5A47A1D898191009857CF /* H2OMainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = H2OMainScene.swift; path = "H2O-Watch Extension/H2OMainScene.swift"; sourceTree = SOURCE_ROOT; };
 		37B5A4801D898274009857CF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.0.sdk/System/Library/Frameworks/SpriteKit.framework; sourceTree = DEVELOPER_DIR; };
 		37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBoardingViewController.swift; sourceTree = "<group>"; };
 		37C81B1C1D902BCF00B6DA9F /* H2O 1.01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.01.xcdatamodel"; sourceTree = "<group>"; };
