@@ -195,8 +195,22 @@ private extension InformationViewController {
         let bottomGradientColor = StandardColors.waterColor.cgColor
         view.gradientColors = [topGradientColor, bottomGradientColor]
         
+        let lastWeekValues = getAppDelegate().user!.waterValuesThisWeek()
+        
+        guard var highestWeekValue = informationViewControllerDelegate?.informationViewControllerGoal() else {
+            fatalError("No goal value started.")
+        }
+        
+        for value in lastWeekValues { //If there is a value that higher than the goal. Then scale the chart accordingly. By doing this we avoid the chart from getting cut off if a value is really high.
+            if value > highestWeekValue {
+                highestWeekValue = value
+            }
+        }
+        
+        let roundValue: Float = 50.0 //Value to round to nearest of.
+        
         //Goal line setup
-        let roundedUpToNearestFiftyGoal = 50.0 * ceil((informationViewControllerDelegate!.informationViewControllerGoal() / 50.0)) //Rounded goal to the next 50 ex: 87 becomes 100
+        let roundedUpToNearestFiftyGoal = roundValue * ceil((highestWeekValue / roundValue)) //Rounded goal to the next 50 ex: 87 becomes 100
         view.yAxisRange = (0, Double(roundedUpToNearestFiftyGoal))
         view.delegate = self
 
