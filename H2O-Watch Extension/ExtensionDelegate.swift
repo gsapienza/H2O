@@ -94,11 +94,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         AppUserDefaults.setDailyGoalValue(goal: defaultDailyGoal)
     }
     
-    /// Sets default theme if none exists
-    private func setDefaultTheme() {
-        AppUserDefaults.setDarkModeEnabled(enabled: true)
-    }
-    
     // MARK: - Core Data stack
     
     lazy var applicationDocumentsDirectory: URL = {

@@ -93,13 +93,7 @@ class MainViewController: UIViewController {
         configureAccessibility()
         addNotificationObservers()
     
-       // view.backgroundColor = StandardColors.backgroundColor
-        
-        if AppUserDefaults.getDarkModeEnabled() {
-            backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
-        } else {
-            backgroundImageView.image = UIImage(assetIdentifier: .lightModeBackground)
-        }
+        backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
         
         undoBarButtonItem = UndoBarButtonItem(enabled: false)
 
@@ -126,6 +120,10 @@ class MainViewController: UIViewController {
 
         layout()
         indicateDialToOpenInformationViewController()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     //MARK: - Private
@@ -302,11 +300,7 @@ private extension MainViewController {
     
     /// Configures blur view overlaying the in fluid view
     func configureBlurView() {
-        if AppUserDefaults.getDarkModeEnabled() {
-            fluidBlurView.effect = UIBlurEffect(style: .dark)
-        } else {
-            fluidBlurView.effect = UIBlurEffect(style: .light)
-        }
+        fluidBlurView.effect = UIBlurEffect(style: .dark)
     }
     
     /// Configures the preset buttons

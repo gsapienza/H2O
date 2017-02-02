@@ -86,7 +86,7 @@ class DailyEntryDial: UIView {
         dialButton = generateDialButton()
         
         updateAmountOfWaterDrankToday(animated: false)
-        setupColors()
+        currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
         
         layout()
     }
@@ -275,12 +275,5 @@ extension DailyEntryDial {
             self.transform = CGAffineTransform.identity
             }, completion: { (Bool) in
         })
-    }
-}
-
-// MARK: - NightModeProtocol
-extension DailyEntryDial :NightModeProtocol {
-    func setupColors() {
-        currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
     }
 }

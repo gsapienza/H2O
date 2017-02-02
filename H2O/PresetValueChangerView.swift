@@ -46,7 +46,8 @@ class PresetValueChangerView: UIView {
         
         backgroundColor = UIColor.clear
         
-        setupColors()
+        unitLabel.textColor = StandardColors.primaryColor
+        presetValueTextField.textColor = StandardColors.primaryColor
         
         //Keyboard toolbar
         
@@ -54,11 +55,8 @@ class PresetValueChangerView: UIView {
             let screenWidth = getAppDelegate().window?.frame.width
             
             let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
-            if AppUserDefaults.getDarkModeEnabled() {
-                keyPadToolbar.barStyle = .blackTranslucent
-            } else {
-                keyPadToolbar.barStyle = .default
-            }
+            keyPadToolbar.barStyle = .blackTranslucent
+
             let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
             let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
             doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
@@ -211,13 +209,5 @@ extension PresetValueChangerView :UITextFieldDelegate {
                 }
             }
         }
-    }
-}
-
-// MARK: - NightModeProtocol
-extension PresetValueChangerView :NightModeProtocol {
-    func setupColors() {
-        unitLabel.textColor = StandardColors.primaryColor
-        presetValueTextField.textColor = StandardColors.primaryColor
     }
 }

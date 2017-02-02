@@ -52,13 +52,11 @@
 		3759F0341E3E46E8002C0AFD /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
 		3759F0351E3E46E8002C0AFD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE01CEA91A6009C14AE /* MainViewController.swift */; };
 		3759F0361E3E46E8002C0AFD /* WatchSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */; };
-		3759F0371E3E46E8002C0AFD /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */; };
 		3759F0381E3E46E8002C0AFD /* BoardingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375540671DF21A7700BAE413 /* BoardingProtocol.swift */; };
 		3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
 		3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B5D1DFF466000539EA5 /* User+CoreDataProperties.swift */; };
 		3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */; };
 		3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7591CF11561004ABFAF /* L360ConfettiObject.m */; };
-		3759F03D1E3E46E8002C0AFD /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
 		3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */; };
 		3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D75B1CF11561004ABFAF /* L360ConfettiView.m */; };
 		3759F0401E3E46E8002C0AFD /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7771CF89538004ABFAF /* UIColor+ColorWithHex.m */; };
@@ -144,7 +142,6 @@
 		37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */; };
 		37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */; };
 		37ADB1561CFBA33A00BE3711 /* GSFluidLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1551CFBA33A00BE3711 /* GSFluidLayout.swift */; };
-		37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */; };
 		37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */; };
 		37B5A4751D895D5D009857CF /* GSFluidNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B5A4741D895D5D009857CF /* GSFluidNode.swift */; };
 		37BA747F1DFDF1D800221C40 /* CompleteBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */; };
@@ -166,7 +163,6 @@
 		37E0D71D1CEFE9B1004ABFAF /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */; };
 		37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */; };
 		37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7271CF0C181004ABFAF /* ToastNotificationManager.m */; };
-		37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */; };
 		37E0D72E1CF0FDF0004ABFAF /* Click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37E0D72D1CF0FDF0004ABFAF /* Click.wav */; };
 		37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */; };
 		37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D7591CF11561004ABFAF /* L360ConfettiObject.m */; };
@@ -288,7 +284,6 @@
 		37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetValueChangerView.swift; sourceTree = "<group>"; };
 		37ADB1551CFBA33A00BE3711 /* GSFluidLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayout.swift; sourceTree = "<group>"; };
-		37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeProtocol.swift; sourceTree = "<group>"; };
 		37ADB1591CFFB27900BE3711 /* WeekBarGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekBarGraphView.swift; sourceTree = "<group>"; };
 		37B165351D96CBA000702A94 /* H2O 1.03.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "H2O 1.03.xcdatamodel"; sourceTree = "<group>"; };
 		37B5A4741D895D5D009857CF /* GSFluidNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GSFluidNode.swift; path = "H2O-Watch Extension/GSFluidNode.swift"; sourceTree = SOURCE_ROOT; };
@@ -318,7 +313,6 @@
 		37E0D7211CF0C164004ABFAF /* CRToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CRToast.framework; path = Carthage/Build/iOS/CRToast.framework; sourceTree = SOURCE_ROOT; };
 		37E0D7261CF0C181004ABFAF /* ToastNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastNotificationManager.h; sourceTree = "<group>"; };
 		37E0D7271CF0C181004ABFAF /* ToastNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationManager.m; sourceTree = "<group>"; };
-		37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		37E0D72D1CF0FDF0004ABFAF /* Click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Click.wav; sourceTree = "<group>"; };
 		37E0D7561CF11561004ABFAF /* L360ConfettiArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L360ConfettiArea.h; sourceTree = "<group>"; };
 		37E0D7571CF11561004ABFAF /* L360ConfettiArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L360ConfettiArea.m; sourceTree = "<group>"; };
@@ -502,15 +496,6 @@
 			path = H2O;
 			sourceTree = "<group>";
 		};
-		3763BDA91D313BB200FDEBD6 /* Night Mode Support */ = {
-			isa = PBXGroup;
-			children = (
-				37E0D72B1CF0F033004ABFAF /* ViewControllerExtension.swift */,
-				37ADB1571CFCCFEC00BE3711 /* NightModeProtocol.swift */,
-			);
-			name = "Night Mode Support";
-			sourceTree = "<group>";
-		};
 		3763BDAB1D313D0200FDEBD6 /* Information View */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,7 +526,6 @@
 				37D13DE81DB7B2B200C850BA /* WobbleAnimation.swift */,
 				37A1825F1CEB942E0055DA02 /* AudioToolbox.swift */,
 				374FF4E31E35B23600ED42E3 /* Extensions */,
-				3763BDA91D313BB200FDEBD6 /* Night Mode Support */,
 				37E0D7611CF210D2004ABFAF /* Sounds */,
 				378566791CEAA281003418C2 /* Fonts */,
 				374FF4E51E35BCCA00ED42E3 /* Other */,
@@ -890,13 +874,11 @@
 				3759F0341E3E46E8002C0AFD /* SettingsTableViewCell.swift in Sources */,
 				3759F0351E3E46E8002C0AFD /* MainViewController.swift in Sources */,
 				3759F0361E3E46E8002C0AFD /* WatchSyncEngine.swift in Sources */,
-				3759F0371E3E46E8002C0AFD /* ViewControllerExtension.swift in Sources */,
 				3759F0381E3E46E8002C0AFD /* BoardingProtocol.swift in Sources */,
 				3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */,
 				3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */,
 				3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */,
 				3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */,
-				3759F03D1E3E46E8002C0AFD /* NightModeProtocol.swift in Sources */,
 				3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */,
 				3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */,
 				3759F0401E3E46E8002C0AFD /* UIColor+ColorWithHex.m in Sources */,
@@ -961,13 +943,11 @@
 				37A182681CEBC8170055DA02 /* SettingsTableViewCell.swift in Sources */,
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				37C81B3B1D91C81700B6DA9F /* WatchSyncEngine.swift in Sources */,
-				37E0D72C1CF0F033004ABFAF /* ViewControllerExtension.swift in Sources */,
 				375540681DF21A7700BAE413 /* BoardingProtocol.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				37487B5E1DFF466000539EA5 /* User+CoreDataProperties.swift in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
-				37ADB1581CFCCFEC00BE3711 /* NightModeProtocol.swift in Sources */,
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,

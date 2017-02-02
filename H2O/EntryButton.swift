@@ -47,7 +47,7 @@ class EntryButton: UIButton {
         layer.cornerRadius = bounds.height / 2 //Without setting this, highlighting gets messed up.
         circleView.layer.cornerRadius = layer.cornerRadius
         
-        setupColors()
+        setTitleColor(StandardColors.primaryColor, for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,13 +122,5 @@ extension EntryButton {
         })
         
         delegate?.entryButtonTapped(amount: amount)
-    }
-}
-
-// MARK: - NightModeProtocol
-extension EntryButton :NightModeProtocol {
-    func setupColors() {
-       // circleView.layer.borderColor = UIColor(white: 1, alpha: 0.2).cgColor//StandardColors.primaryColor.cgColor
-        setTitleColor(StandardColors.primaryColor, for: .normal)
     }
 }

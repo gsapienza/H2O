@@ -30,7 +30,6 @@ let standardUnit :Unit = .oz
 
 //MARK: - Notification Constants
 
-let DarkModeToggledNotification = Notification.Name("DARK_MODE_TOGGLED")
 let WatchAppSwitchedToBackgroundNotification = Notification.Name("WATCH_APP_SWITCHED_TO_BACKGROUND")
 let WatchAppSwitchedToForegroundNotification = Notification.Name("WATCH_APP_SWITCHED_TO_FOREGROUND")
 let PresetsUpdatedNotification = Notification.Name("PRESETS_UPDATED")
@@ -49,8 +48,6 @@ let BoardingWasDismissedDefault = "BOARDING_WAS_DISMISSED"
 let InformationViewControllerOpenedBeforeDefault = "INFORMATION_VIEW_CONTROLLER_OPENED_BEFORE"
 let PresetWaterValuesDefault = "PRESET_WATER_VALUES"
 let DailyGoalValueDefault = "GOAL_VALUE"
-let AutomaticThemeChangeDefault = "AUTOMATIC_THEME_CHANGE"
-let DarkModeDefault = "DARK_MODE"
 let HealthKitPermissionsDisplayedDefault = "HEALTHKIT_PERMISSIONS_WERE_DISPLAYED"
 
 //MARK: - Watch Message Keys

@@ -86,7 +86,6 @@ class SettingsViewController: UITableViewController {
         
         setupNavigationBar()
         setupCells()
-        setupToggles()
     }
     
     /**
@@ -121,15 +120,9 @@ class SettingsViewController: UITableViewController {
             goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
             goalCell.delegate = self
         }
-        
-        var presetImages :[UIImage]! //Preset images based on light and dark modes.
-        
-        if AppUserDefaults.getDarkModeEnabled() {
-            presetImages = [UIImage(assetIdentifier: .darkSmallPresetImage), UIImage(assetIdentifier: .darkMediumPresetImage), UIImage(assetIdentifier: .darkLargePresetImage)]
-        } else {
-            presetImages = [UIImage(assetIdentifier: .lightLargePresetImage), UIImage(assetIdentifier: .lightMediumPresetImage), UIImage(assetIdentifier: .lightLargePresetImage)]
+                
+        let presetImages = [UIImage(assetIdentifier: .darkSmallPresetImage), UIImage(assetIdentifier: .darkMediumPresetImage), UIImage(assetIdentifier: .darkLargePresetImage)]
 
-        }
         
         //Preset cells config
         if let presetWaterValues = AppUserDefaults.getPresetWaterValues() {
@@ -150,37 +143,6 @@ class SettingsViewController: UITableViewController {
             presetCell3.cellTextLabel.text = "large_preset_setting".localized
             presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
             presetCell3.delegate = self
-        }
-        
-        //Dark Mode cell config
-        themeCell.cellImageView.image = UIImage(assetIdentifier: .darkModeCellImage)
-        themeCell.cellTextLabel.text = "dark_mode_setting".localized
-        themeSwitch.onTintColor = StandardColors.waterColor
-        
-        //Automatic theme cell config
-        automaticThemeCell.cellImageView.image = UIImage(assetIdentifier: .automaticThemeChangeCellImage)
-        automaticThemeCell.cellTextLabel.text = "auto_switch_themes_setting".localized
-        automaticThemeSwitch.onTintColor = StandardColors.waterColor
-    }
-    
-    /**
-     Sets up the toggles in settings
-     */
-    private func setupToggles() {
-        if AppUserDefaults.getDarkModeEnabled() { //Configure theme switch depeding on current color
-            themeSwitch.setOn(true, animated: false)
-        } else {
-            themeSwitch.setOn(false, animated: false)
-        }
-        
-        let automaticThemeChangeEnabled = AppUserDefaults.getAutomaticThemeChangeEnabled()
-        
-        if automaticThemeChangeEnabled { //If automatic theme changer is on then disable the theme switch cell as it would intefere with the automatic changing
-            automaticThemeSwitch.setOn(true, animated: false)
-            themeCell.cellTextLabel.alpha = 0.5
-            themeSwitch.isEnabled = false
-        } else {
-            automaticThemeSwitch.setOn(false, animated: false)
         }
     }
     
@@ -249,42 +211,6 @@ class SettingsViewController: UITableViewController {
         } else { //If healthkit permissions have not been shown
             healthKitCell.cellTextLabel.text = "enable_healthkit_setting".localized //Allow user to enable healthkit through permissions
         }
-    }
-    
-    //MARK: - Theme Actions
-    
-    /**
-     Action when the theme switch is toggled
-     
-     - parameter sender: Theme switch
-     */
-    @IBAction func onThemeSwitch( sender: UISwitch) {
-        AudioToolbox.standardAudioToolbox.playAudio(ClickSound, repeatEnabled: false)
-
-        AppUserDefaults.setDarkModeEnabled(enabled: sender.isOn) //Change theme based on switch state
-        
-        view.endEditing(true) //Dismisses keyboard... Too bad this doesnt work very well
-        NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil)
-    }
-    
-    /**
-     Action when the automatic theme switch is toggled
-     
-     - parameter sender: Automatic theme changer switch
-     */
-    @IBAction func onAutomaticThemeSwitch( sender: UISwitch) {
-        AudioToolbox.standardAudioToolbox.playAudio(ClickSound, repeatEnabled: false)
-        AppUserDefaults.setAutomaticThemeChangeEnabled(enabled: sender.isOn)
-        
-        if sender.isOn { //If on then essentially disable the theme cell because it would intefere with the auto changes
-            themeCell.cellTextLabel.alpha = 0.5
-            themeSwitch.isEnabled = false
-        } else { //If its off then reenable the theme cell
-            themeCell.cellTextLabel.alpha = 1
-            themeSwitch.isEnabled = true
-        }
-        
-        getAppDelegate().checkToSwitchThemes() //Switch themes if necessary based on time of day
     }
 }
 

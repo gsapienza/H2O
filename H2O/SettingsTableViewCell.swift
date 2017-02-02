@@ -36,7 +36,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        setupColors()
+        cellTextLabel.textColor = StandardColors.primaryColor
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,12 +105,5 @@ private extension SettingsTableViewCell {
         imageView.contentMode = .center
         
         return imageView
-    }
-}
-
-// MARK: - NightModeProtocol
-extension SettingsTableViewCell :NightModeProtocol {
-    func setupColors() {
-        cellTextLabel.textColor = StandardColors.primaryColor
     }
 }

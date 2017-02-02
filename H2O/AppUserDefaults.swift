@@ -94,33 +94,4 @@ class AppUserDefaults {
         
         return goalValue
     }
-    
-    /// Write the to user defaults if automatic theme change should be enabled.
-    ///
-    /// - parameter enabled: True for enabled, false for disabled.
-    class func setAutomaticThemeChangeEnabled(enabled :Bool) {
-        UserDefaults.standard.set(enabled, forKey: AutomaticThemeChangeDefault)
-    }
-    
-    
-    /// Get the value of whether automatic theme changes are enabled.
-    ///
-    /// - returns: True for enabled, false for disabled.
-    class func getAutomaticThemeChangeEnabled() -> Bool {
-        return UserDefaults.standard.bool(forKey: AutomaticThemeChangeDefault)
-    }
-    
-    /// Write the to user defaults if dark mode should be enabled.
-    ///
-    /// - parameter enabled: True for enabled, false for disabled.
-    class func setDarkModeEnabled(enabled :Bool) {
-        UserDefaults.standard.set(enabled, forKey: DarkModeDefault)
-    }
-    
-    /// Get the value of whether dark mode is enabled.
-    ///
-    /// - returns: True for enabled, false for disabled.
-    class func getDarkModeEnabled() -> Bool {
-        return UserDefaults.standard.bool(forKey: DarkModeDefault)
-    }
 }

@@ -232,11 +232,7 @@ private extension InformationViewController {
     
     /// Configures the background blur view
     func configureBlurView() {
-        if AppUserDefaults.getDarkModeEnabled() {
-            blurView.effect = UIBlurEffect(style: .dark)
-        } else {
-            blurView.effect = UIBlurEffect(style: .light)
-        }
+        blurView.effect = UIBlurEffect(style: .dark)
     }
     
     /// Configures the table view
