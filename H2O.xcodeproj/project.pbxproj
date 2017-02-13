@@ -752,7 +752,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = Midnite;
+				ORGANIZATIONNAME = Skyscrapers.IO;
 				TargetAttributes = {
 					3759F0211E3E46E8002C0AFD = {
 						DevelopmentTeam = G898DU57KC;

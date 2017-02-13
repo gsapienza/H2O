@@ -3,7 +3,7 @@
 //  H2O-Watch Extension
 //
 //  Created by Gregory Sapienza on 9/14/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import WatchKit
