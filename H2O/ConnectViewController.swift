@@ -10,7 +10,7 @@ import UIKit
 
 class ConnectViewController: UIViewController, BoardingProtocol {
     /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: "connect".localized)
     
     /// First label.
     var titleLabel :GSMagicTextLabel {
@@ -27,7 +27,6 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         var navigationItem = self.navigationItem
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "done_navigation_item".localized)
         
-        titleLabel.text = "connect".localized
         
         connectTableView = generateConnectTableView()
         

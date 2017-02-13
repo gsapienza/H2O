@@ -50,9 +50,19 @@ class EntryButton: UIButton {
         setTitleColor(StandardColors.primaryColor, for: .normal)
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        customInit()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        customInit()
+    }
+    
+    func customInit() {
         circleView = generateCircleView()
         configureTitleLabel()
         

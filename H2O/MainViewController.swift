@@ -21,7 +21,7 @@ protocol EntryButtonProtocol {
     func customEntryButtonTapped(customButton :EntryButton)
 }
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, NavigationThemeProtocol {
 
     //MARK: - Public iVars
     
@@ -64,6 +64,8 @@ class MainViewController: UIViewController {
     
     /// Model for intergrating services.
     fileprivate var serviceIntergrationModel :ServiceIntergrationModel = ServiceIntergrationModel()
+    
+    var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)?
     
     //MARK: - Internal iVars
     
@@ -113,6 +115,12 @@ class MainViewController: UIViewController {
         if traitCollection.forceTouchCapability == .available {
            // self.registerForPreviewing(with: self, sourceView: dailyEntryDial)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateNavigationBar(navigationTheme: .hidden)
     }
     
     override func viewDidAppear(_ animated: Bool) {

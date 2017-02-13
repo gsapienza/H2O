@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		370861401D17151F00C89394 /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3708613F1D17151F00C89394 /* Water.wav */; };
+		371898DF1E4802AA0005E17C /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371898DE1E4802AA0005E17C /* UINavigationBarExtension.swift */; };
+		371898E01E4802AA0005E17C /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371898DE1E4802AA0005E17C /* UINavigationBarExtension.swift */; };
+		371C696B1E47F1EF009BD4FF /* NavigationThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C696A1E47F1EF009BD4FF /* NavigationThemeProtocol.swift */; };
+		371C696C1E47F1EF009BD4FF /* NavigationThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C696A1E47F1EF009BD4FF /* NavigationThemeProtocol.swift */; };
+		371C696E1E47F2CB009BD4FF /* NavigationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C696D1E47F2CB009BD4FF /* NavigationTheme.swift */; };
+		371C696F1E47F2CB009BD4FF /* NavigationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C696D1E47F2CB009BD4FF /* NavigationTheme.swift */; };
 		37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37263F931DEB629D0037D744 /* WaterBottleView.swift */; };
 		37355E851DDFB6690049B842 /* GSMagicTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37355E841DDFB6690049B842 /* GSMagicTextLabel.swift */; };
 		3741F5A11D8B513E00F7598E /* Splash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3741F5A01D8B513E00F7598E /* Splash.mp3 */; };
@@ -180,6 +186,16 @@
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 		37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
 		37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		F33F8B4C1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
+		F33F8B4D1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
+		F33F8B4F1E5137D8008E951F /* SettingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4E1E5137D8008E951F /* SettingLayout.swift */; };
+		F33F8B501E5137D8008E951F /* SettingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4E1E5137D8008E951F /* SettingLayout.swift */; };
+		F33F8B521E5138C1008E951F /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B511E5138C1008E951F /* Layout.swift */; };
+		F33F8B531E5138C1008E951F /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B511E5138C1008E951F /* Layout.swift */; };
+		F33F8B581E514606008E951F /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B571E514606008E951F /* UIView+Layout.swift */; };
+		F33F8B591E514606008E951F /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B571E514606008E951F /* UIView+Layout.swift */; };
+		F361E8901E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
+		F361E8911E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +235,9 @@
 
 /* Begin PBXFileReference section */
 		3708613F1D17151F00C89394 /* Water.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Water.wav; sourceTree = "<group>"; };
+		371898DE1E4802AA0005E17C /* UINavigationBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationBarExtension.swift; sourceTree = "<group>"; };
+		371C696A1E47F1EF009BD4FF /* NavigationThemeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationThemeProtocol.swift; sourceTree = "<group>"; };
+		371C696D1E47F2CB009BD4FF /* NavigationTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTheme.swift; sourceTree = "<group>"; };
 		37263F931DEB629D0037D744 /* WaterBottleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterBottleView.swift; sourceTree = "<group>"; };
 		372B3E2F1D895AF900730E4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		372B3E311D895AF900730E4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -334,6 +353,11 @@
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 		37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayoutProtocol.swift; sourceTree = "<group>"; };
 		37FD2DF21D87767B00D8C239 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
+		F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		F33F8B4E1E5137D8008E951F /* SettingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLayout.swift; sourceTree = "<group>"; };
+		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		F33F8B571E514606008E951F /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,6 +448,7 @@
 		374FF4E31E35B23600ED42E3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				371898DE1E4802AA0005E17C /* UINavigationBarExtension.swift */,
 				3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */,
 				37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */,
 			);
@@ -488,6 +513,7 @@
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Main View */,
 				3763BDAB1D313D0200FDEBD6 /* Information View */,
+				F361E8921E4F771600E06BC0 /* Settings */,
 				37E0D6F41CEE2803004ABFAF /* Settings View */,
 				374FF4E41E35BCAE00ED42E3 /* Service Intergration */,
 				3785665A1CEA93BC003418C2 /* Supporting */,
@@ -516,6 +542,8 @@
 			children = (
 				3741F5B11D8F119200F7598E /* Localizable.strings */,
 				374C3BD41E008D3500095AD5 /* Localizable.stringsdict */,
+				371C696A1E47F1EF009BD4FF /* NavigationThemeProtocol.swift */,
+				371C696D1E47F2CB009BD4FF /* NavigationTheme.swift */,
 				3780931E1D7BD531007CF646 /* Global.swift */,
 				3755406B1DF2822600BAE413 /* GSAnimations.swift */,
 				3785665C1CEA941A003418C2 /* StandardColors.swift */,
@@ -643,6 +671,18 @@
 				37E0D6F21CEE26E9004ABFAF /* b4.wav */,
 			);
 			name = Sounds;
+			sourceTree = "<group>";
+		};
+		F361E8921E4F771600E06BC0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */,
+				F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */,
+				F33F8B571E514606008E951F /* UIView+Layout.swift */,
+				F33F8B4E1E5137D8008E951F /* SettingLayout.swift */,
+				F33F8B511E5138C1008E951F /* Layout.swift */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -867,6 +907,7 @@
 				3759F02D1E3E46E8002C0AFD /* WaterBottleView.swift in Sources */,
 				3759F02E1E3E46E8002C0AFD /* Global.swift in Sources */,
 				3759F02F1E3E46E8002C0AFD /* Popsicle.swift in Sources */,
+				F361E8911E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */,
 				3759F0301E3E46E8002C0AFD /* CustomEntryView.swift in Sources */,
 				3759F0311E3E46E8002C0AFD /* H2OFluidView.swift in Sources */,
 				3759F0321E3E46E8002C0AFD /* CompleteBoardingViewController.swift in Sources */,
@@ -875,6 +916,7 @@
 				3759F0351E3E46E8002C0AFD /* MainViewController.swift in Sources */,
 				3759F0361E3E46E8002C0AFD /* WatchSyncEngine.swift in Sources */,
 				3759F0381E3E46E8002C0AFD /* BoardingProtocol.swift in Sources */,
+				F33F8B501E5137D8008E951F /* SettingLayout.swift in Sources */,
 				3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */,
 				3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */,
 				3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */,
@@ -892,18 +934,24 @@
 				3759F0481E3E46E8002C0AFD /* ConnectViewController.swift in Sources */,
 				3759F0491E3E46E8002C0AFD /* ServiceIntergrationModel.swift in Sources */,
 				3759F04A1E3E46E8002C0AFD /* GSFluidNode.swift in Sources */,
+				F33F8B591E514606008E951F /* UIView+Layout.swift in Sources */,
 				3759F04B1E3E46E8002C0AFD /* GSAnimations.swift in Sources */,
+				371898E01E4802AA0005E17C /* UINavigationBarExtension.swift in Sources */,
 				3759F04C1E3E46E8002C0AFD /* DailyEntryDial.swift in Sources */,
 				3759F04D1E3E46E8002C0AFD /* SettingsPresetTableViewCell.swift in Sources */,
 				3759F04E1E3E46E8002C0AFD /* Service+CoreDataClass.swift in Sources */,
 				3759F04F1E3E46E8002C0AFD /* Entry+CoreDataProperties.swift in Sources */,
 				3759F0501E3E46E8002C0AFD /* GSFluidLayoutProtocol.swift in Sources */,
 				3759F0511E3E46E8002C0AFD /* InformationEntryInfoCollectionViewCell.swift in Sources */,
+				F33F8B4D1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */,
 				3759F0521E3E46E8002C0AFD /* GSMagicTextLabel.swift in Sources */,
 				3759F0531E3E46E8002C0AFD /* InformationViewControllerModel.swift in Sources */,
+				371C696C1E47F1EF009BD4FF /* NavigationThemeProtocol.swift in Sources */,
 				3759F0541E3E46E8002C0AFD /* ViewControllerAlertExtension.swift in Sources */,
 				3759F0551E3E46E8002C0AFD /* InformationViewController.swift in Sources */,
 				3759F0561E3E46E8002C0AFD /* BoardingAnimatedTransitioning.swift in Sources */,
+				371C696F1E47F2CB009BD4FF /* NavigationTheme.swift in Sources */,
+				F33F8B531E5138C1008E951F /* Layout.swift in Sources */,
 				3759F0571E3E46E8002C0AFD /* WeekBarGraphView.swift in Sources */,
 				3759F0581E3E46E8002C0AFD /* HealthKitService.swift in Sources */,
 				3759F0591E3E46E8002C0AFD /* InformationViewControllerState.swift in Sources */,
@@ -936,6 +984,7 @@
 				37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */,
 				3780931F1D7BD531007CF646 /* Global.swift in Sources */,
 				37E0D7651CF22F5D004ABFAF /* Popsicle.swift in Sources */,
+				F361E8901E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */,
 				37E0D6EB1CECF3B3004ABFAF /* CustomEntryView.swift in Sources */,
 				378093241D7D254B007CF646 /* H2OFluidView.swift in Sources */,
 				37BA747F1DFDF1D800221C40 /* CompleteBoardingViewController.swift in Sources */,
@@ -944,6 +993,7 @@
 				375F4FE11CEA91A6009C14AE /* MainViewController.swift in Sources */,
 				37C81B3B1D91C81700B6DA9F /* WatchSyncEngine.swift in Sources */,
 				375540681DF21A7700BAE413 /* BoardingProtocol.swift in Sources */,
+				F33F8B4F1E5137D8008E951F /* SettingLayout.swift in Sources */,
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				37487B5E1DFF466000539EA5 /* User+CoreDataProperties.swift in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
@@ -961,18 +1011,24 @@
 				37487FD51DDE04D10082DC27 /* ConnectViewController.swift in Sources */,
 				375578471DF9C6D800BF8130 /* ServiceIntergrationModel.swift in Sources */,
 				37B5A4751D895D5D009857CF /* GSFluidNode.swift in Sources */,
+				F33F8B581E514606008E951F /* UIView+Layout.swift in Sources */,
 				3755406C1DF2822600BAE413 /* GSAnimations.swift in Sources */,
+				371898DF1E4802AA0005E17C /* UINavigationBarExtension.swift in Sources */,
 				378566701CEAA190003418C2 /* DailyEntryDial.swift in Sources */,
 				37E0D7201CF01F22004ABFAF /* SettingsPresetTableViewCell.swift in Sources */,
 				37487B4B1DFF454E00539EA5 /* Service+CoreDataClass.swift in Sources */,
 				37487B5C1DFF462D00539EA5 /* Entry+CoreDataProperties.swift in Sources */,
 				37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */,
 				37E0D76B1CF52814004ABFAF /* InformationEntryInfoCollectionViewCell.swift in Sources */,
+				F33F8B4C1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */,
 				37355E851DDFB6690049B842 /* GSMagicTextLabel.swift in Sources */,
 				37D13DEB1DBA5AF400C850BA /* InformationViewControllerModel.swift in Sources */,
+				371C696B1E47F1EF009BD4FF /* NavigationThemeProtocol.swift in Sources */,
 				37D13DED1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift in Sources */,
 				37E0D7631CF22E9F004ABFAF /* InformationViewController.swift in Sources */,
 				3755406A1DF2226E00BAE413 /* BoardingAnimatedTransitioning.swift in Sources */,
+				371C696E1E47F2CB009BD4FF /* NavigationTheme.swift in Sources */,
+				F33F8B521E5138C1008E951F /* Layout.swift in Sources */,
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
 				37487B471DFF3C7E00539EA5 /* HealthKitService.swift in Sources */,
 				375831271DB2D48200ED136E /* InformationViewControllerState.swift in Sources */,

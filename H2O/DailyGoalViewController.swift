@@ -9,8 +9,16 @@
 import UIKit
 
 class DailyGoalViewController: UIViewController, BoardingProtocol {
-    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    
+    //MARK: - Strings
+    
+    /// String for title label.
+    private static let titleString = "set_your_daily_goal".localized
+    
+    /// String for next button.
+    private static let nextButtonString = "next_navigation_item".localized
+    
+    //MARK: - Public iVars
     
     /// First label.
     var titleLabel :GSMagicTextLabel {
@@ -19,24 +27,28 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         }
     }
     
-    private var presetChangerView :PresetValueChangerView!
+    //MARK: - Private iVars
+    
+    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: titleString)
+    
+    /// View for preset changer text field.
+    private lazy var presetChangerView :PresetValueChangerView = self.generateGoalPresetChangerView()
+    
+    //MARK: - Public
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         var navigationItem = self.navigationItem
-        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "next_navigation_item".localized)
+        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: DailyGoalViewController.nextButtonString)
         
-        titleLabel.text = "set_your_daily_goal".localized
+        titleLabel.text = DailyGoalViewController.titleString
         
-        presetChangerView = generateGoalPresetChangerView()
         presetChangerView.presetValueTextField.becomeFirstResponder()
         
-        layout()
-    }
-    
-    private func layout() {
-        //---Title Label---
+        //---Title Label---//
+        
         view.addSubview(titleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +57,9 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
-
-        //--Preset Value Changer---
+        
+        //--Preset Value Changer---//
+        
         view.addSubview(presetChangerView)
         
         presetChangerView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,6 +69,8 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         view.addConstraint(NSLayoutConstraint(item: presetChangerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200))
         view.addConstraint(NSLayoutConstraint(item: presetChangerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150))
     }
+    
+    //MARK: - BoardingProtocol
     
     func animateIn(completion: @escaping (Bool) -> Void) {
         let duration = 0.5

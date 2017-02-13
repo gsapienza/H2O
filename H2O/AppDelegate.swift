@@ -16,6 +16,31 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var window: UIWindow?
     private var _user :User?
     
+    var navigationController: UINavigationController {
+        return window!.rootViewController as! UINavigationController
+    }
+    
+    lazy var primaryViewController: UIViewController = {
+        
+        if !AppUserDefaults.getBoardingWasDismissed() {
+            let viewController = WelcomeViewController()
+            viewController.navigationThemeDidChangeHandler = { [weak self] theme in
+                if let navigationController = self?.navigationController {
+                    navigationController.navigationBar.applyTheme(navigationTheme: theme)
+                }
+            }
+            return viewController
+        } else {
+            let viewController: MainViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+            viewController.navigationThemeDidChangeHandler = { [weak self] theme in
+                if let navigationController = self?.navigationController {
+                    navigationController.navigationBar.applyTheme(navigationTheme: theme)
+                }
+            }
+            return viewController
+        }
+    }()
+    
     var user :User? {
         return _user
     }
@@ -60,11 +85,16 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
         }
         
+        primaryViewController.view.backgroundColor = UIColor.clear
+        
+        navigationController.setViewControllers([primaryViewController], animated: false)
+        
         if !AppUserDefaults.getBoardingWasDismissed() {
            pushBoardingViewControllerOnRoot()
         } else {
             AppDelegate.createShortcuts() //Creates 3D touch shortcuts
         }
+        
         
         return true
     }
@@ -146,17 +176,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// Makes the boarding navigation controller the root view controller.
     private func pushBoardingViewControllerOnRoot() {
-        let boardingViewController = UINavigationController()
+       
         
-        var navBar = boardingViewController.navigationBar
-        configureNavigationBar(navigationBar: &navBar)
-        
-        let rootViewController = WelcomeViewController()
-        rootViewController.view.backgroundColor = UIColor.clear
-        
-        boardingViewController.setViewControllers([rootViewController], animated: false)
-        
-        window?.rootViewController = boardingViewController
+        //window?.rootViewController = primaryViewController
     }
     
     /// Configures the view controllers navigation bar.
