@@ -94,9 +94,9 @@ class SettingsViewController: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = StandardColors.standardSecondaryColor
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = "settings_navigation_title".localized
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
+        navigationItem.title = "settings_navigation_title".localized
         let closeButton = UIBarButtonItem(title: "close_navigation_item".localized, style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
         
         closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties

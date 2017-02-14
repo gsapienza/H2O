@@ -372,12 +372,16 @@ extension MainViewController {
     ///
     /// - parameter sender: Settings bar button
     @IBAction func onSettingsBarButton(_ sender: AnyObject) {
-        let navigationViewController :UINavigationController = UIStoryboard(storyboard: .Main).instantiateViewController()
+        let navigationController: UINavigationController = UIStoryboard(storyboard: .Main).instantiateViewController()
         
-        let settingsViewController = navigationViewController.viewControllers.first as! SettingsViewController
-        settingsViewController.delegate = self
+        navigationController.navigationBar.barTintColor = StandardColors.standardSecondaryColor
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
-        self.present(navigationViewController, animated: true, completion: nil)
+        let settingsViewController = navigationController.viewControllers.first as! AppSettingsViewController
+        //settingsViewController.delegate = self
+        
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     ///When the cancel bar button is tapped when the custom entry view is present

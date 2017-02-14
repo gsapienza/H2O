@@ -194,6 +194,8 @@
 		F33F8B531E5138C1008E951F /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B511E5138C1008E951F /* Layout.swift */; };
 		F33F8B581E514606008E951F /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B571E514606008E951F /* UIView+Layout.swift */; };
 		F33F8B591E514606008E951F /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B571E514606008E951F /* UIView+Layout.swift */; };
+		F33F8B5B1E515EC5008E951F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B5A1E515EC5008E951F /* Setting.swift */; };
+		F33F8B5C1E515EC5008E951F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B5A1E515EC5008E951F /* Setting.swift */; };
 		F361E8901E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
 		F361E8911E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -357,6 +359,7 @@
 		F33F8B4E1E5137D8008E951F /* SettingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLayout.swift; sourceTree = "<group>"; };
 		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		F33F8B571E514606008E951F /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		F33F8B5A1E515EC5008E951F /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -509,6 +512,7 @@
 				37C81B2A1D9189C100B6DA9F /* AppDelegate.swift */,
 				37C81B221D902FBA00B6DA9F /* WatchConnection.swift */,
 				37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */,
+				F33F8B511E5138C1008E951F /* Layout.swift */,
 				37487FD61DDE04D90082DC27 /* Boarding */,
 				3785666A1CEA9660003418C2 /* Core Data */,
 				3785665B1CEA93C5003418C2 /* Main View */,
@@ -680,7 +684,7 @@
 				F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */,
 				F33F8B571E514606008E951F /* UIView+Layout.swift */,
 				F33F8B4E1E5137D8008E951F /* SettingLayout.swift */,
-				F33F8B511E5138C1008E951F /* Layout.swift */,
+				F33F8B5A1E515EC5008E951F /* Setting.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -928,6 +932,7 @@
 				3759F0421E3E46E8002C0AFD /* GSFluidLayout.swift in Sources */,
 				3759F0431E3E46E8002C0AFD /* UndoBarButtonItem.swift in Sources */,
 				3759F0441E3E46E8002C0AFD /* StandardFonts.swift in Sources */,
+				F33F8B5C1E515EC5008E951F /* Setting.swift in Sources */,
 				3759F0451E3E46E8002C0AFD /* GSFluidView.swift in Sources */,
 				3759F0461E3E46E8002C0AFD /* StandardColors.swift in Sources */,
 				3759F0471E3E46E8002C0AFD /* AppUserDefaults.swift in Sources */,
@@ -1005,6 +1010,7 @@
 				37ADB1561CFBA33A00BE3711 /* GSFluidLayout.swift in Sources */,
 				37D7F9DF1DB1780200C94CB6 /* UndoBarButtonItem.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
+				F33F8B5B1E515EC5008E951F /* Setting.swift in Sources */,
 				37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */,
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
 				3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */,

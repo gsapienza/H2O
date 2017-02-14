@@ -31,7 +31,7 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         
         let decorationSize = rect.height
         let decorationMargin: CGFloat = 15
-        let decorationFrame = CGRect(x: decorationMargin, y: decorationMargin, width: decorationSize, height: decorationSize - decorationMargin)
+        let decorationFrame = CGRect(x: decorationMargin, y: decorationMargin, width: decorationSize, height: decorationSize - (decorationMargin * 2))
         
         decoration.layout(in: decorationFrame)
         
@@ -46,8 +46,8 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         //---Title---//
         
         let titleMargin: CGFloat = 15
-        let titleXOrigin = decorationFrame.origin.x + decorationFrame.width + titleMargin
-        let titleFrame = CGRect(x: titleXOrigin, y: 0, width: controlFrame.origin.x - titleXOrigin, height: rect.height)
+        let titleXOrigin = decorationFrame.origin.x + decorationFrame.width
+        let titleFrame = CGRect(x: titleXOrigin, y: 0, width: rect.width - controlFrame.origin.x - titleXOrigin, height: rect.height)
         
         title.layout(in: titleFrame)
     }

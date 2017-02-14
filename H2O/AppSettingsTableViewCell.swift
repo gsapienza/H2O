@@ -13,7 +13,13 @@ class AppSettingsTableViewCell: UITableViewCell {
     // MARK: - Public iVars
 
     /// Image view representing setting.
-    let decorationView = UIImageView()
+    let decorationView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
     
     /// Label for setting
     let titleLabel: UILabel = {
@@ -53,6 +59,8 @@ class AppSettingsTableViewCell: UITableViewCell {
     // MARK: - Private
 
     private func customInit() {
+        selectionStyle = .none
+        
         addSubview(decorationView)
         addSubview(titleLabel)
         addSubview(controlView)
