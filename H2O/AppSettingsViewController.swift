@@ -78,15 +78,28 @@ class AppSettingsViewController: UIViewController {
     
     /// Sets up settings to use in view controller.
     private func configureSettings() {
-        settings = []
         
         var firstSectionSettings: [Setting] = []
         
-        let setting = Setting(imageName: "goalCellImage", title: "Text", type: .button)
+        let healthKitSetting = Setting(imageName: "healthKitCellImage", title: "Enable HealthKit", type: .button)
         
-        firstSectionSettings.append(setting)
+        firstSectionSettings.append(healthKitSetting)
         
-        settings?.append(firstSectionSettings)
+        var secondSectionSettings: [Setting] = []
+        
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", type: .button)
+        
+        secondSectionSettings.append(goalSetting)
+        
+        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", type: .button)
+        
+        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", type: .button)
+
+        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", type: .button)
+
+        let thirdSectionSettings = [smallPresetSetting, mediumPresetSetting, largePresetSetting]
+        
+        settings = [firstSectionSettings, secondSectionSettings, thirdSectionSettings]
     }
     
     //MARK: - Actions

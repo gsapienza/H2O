@@ -20,26 +20,28 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
     /// Control for setting.
     var control: Control
     
-    init(decoration: Decoration, title: Title, control: Control) {
+    var controlSize: CGSize
+    
+    init(decoration: Decoration, title: Title, control: Control, controlSize: CGSize) {
         self.decoration = decoration
         self.title = title
         self.control = control
+        self.controlSize = controlSize
     }
     
     mutating func layout(in rect: CGRect) {
         //---Decoration---//
         
-        let decorationSize = rect.height
-        let decorationMargin: CGFloat = 15
-        let decorationFrame = CGRect(x: decorationMargin, y: decorationMargin, width: decorationSize, height: decorationSize - (decorationMargin * 2))
+        let decorationSize = rect.height / 2
+        let decorationMargin: CGFloat = 10
+        let decorationFrame = CGRect(x: decorationMargin, y: rect.height / 2 - decorationSize / 2, width: decorationSize, height: decorationSize)
         
         decoration.layout(in: decorationFrame)
         
         //---Control---//
         
-        let controlSize = rect.height
         let controlMargin: CGFloat = 15
-        let controlFrame = CGRect(x: rect.height - controlSize - controlMargin, y: controlMargin, width: controlSize, height: controlSize - controlMargin)
+        let controlFrame = CGRect(x: rect.width - controlSize.width - controlMargin, y: rect.height / 2 - controlSize.height / 2, width: controlSize.width, height: controlSize.height)
         
         control.layout(in: controlFrame)
 
@@ -47,7 +49,7 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         
         let titleMargin: CGFloat = 15
         let titleXOrigin = decorationFrame.origin.x + decorationFrame.width
-        let titleFrame = CGRect(x: titleXOrigin, y: 0, width: rect.width - controlFrame.origin.x - titleXOrigin, height: rect.height)
+        let titleFrame = CGRect(x: titleXOrigin + titleMargin, y: 0, width: controlFrame.origin.x - titleXOrigin, height: rect.height)
         
         title.layout(in: titleFrame)
     }

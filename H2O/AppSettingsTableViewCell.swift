@@ -52,7 +52,7 @@ class AppSettingsTableViewCell: UITableViewCell {
         
         backgroundColor = StandardColors.standardSecondaryColor
         
-        var layout = SettingLayout(decoration: decorationView, title: titleLabel, control: controlView)
+        var layout = SettingLayout(decoration: decorationView, title: titleLabel, control: controlView, controlSize: controlView.bounds.size)
         layout.layout(in: bounds)
     }
     
