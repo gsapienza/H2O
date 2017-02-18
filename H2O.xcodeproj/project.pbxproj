@@ -186,6 +186,8 @@
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 		37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
 		37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		F32B26601E533BD6000AD5ED /* SettingControlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32B265F1E533BD6000AD5ED /* SettingControlProtocol.swift */; };
+		F32B26611E533BD6000AD5ED /* SettingControlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32B265F1E533BD6000AD5ED /* SettingControlProtocol.swift */; };
 		F33F8B4C1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
 		F33F8B4D1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
 		F33F8B4F1E5137D8008E951F /* SettingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4E1E5137D8008E951F /* SettingLayout.swift */; };
@@ -355,6 +357,7 @@
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 		37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayoutProtocol.swift; sourceTree = "<group>"; };
 		37FD2DF21D87767B00D8C239 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
+		F32B265F1E533BD6000AD5ED /* SettingControlProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingControlProtocol.swift; sourceTree = "<group>"; };
 		F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		F33F8B4E1E5137D8008E951F /* SettingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLayout.swift; sourceTree = "<group>"; };
 		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
@@ -682,6 +685,7 @@
 			children = (
 				F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */,
 				F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */,
+				F32B265F1E533BD6000AD5ED /* SettingControlProtocol.swift */,
 				F33F8B571E514606008E951F /* UIView+Layout.swift */,
 				F33F8B4E1E5137D8008E951F /* SettingLayout.swift */,
 				F33F8B5A1E515EC5008E951F /* Setting.swift */,
@@ -938,6 +942,7 @@
 				3759F0471E3E46E8002C0AFD /* AppUserDefaults.swift in Sources */,
 				3759F0481E3E46E8002C0AFD /* ConnectViewController.swift in Sources */,
 				3759F0491E3E46E8002C0AFD /* ServiceIntergrationModel.swift in Sources */,
+				F32B26611E533BD6000AD5ED /* SettingControlProtocol.swift in Sources */,
 				3759F04A1E3E46E8002C0AFD /* GSFluidNode.swift in Sources */,
 				F33F8B591E514606008E951F /* UIView+Layout.swift in Sources */,
 				3759F04B1E3E46E8002C0AFD /* GSAnimations.swift in Sources */,
@@ -1016,6 +1021,7 @@
 				3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */,
 				37487FD51DDE04D10082DC27 /* ConnectViewController.swift in Sources */,
 				375578471DF9C6D800BF8130 /* ServiceIntergrationModel.swift in Sources */,
+				F32B26601E533BD6000AD5ED /* SettingControlProtocol.swift in Sources */,
 				37B5A4751D895D5D009857CF /* GSFluidNode.swift in Sources */,
 				F33F8B581E514606008E951F /* UIView+Layout.swift in Sources */,
 				3755406C1DF2822600BAE413 /* GSAnimations.swift in Sources */,

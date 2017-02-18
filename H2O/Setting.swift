@@ -9,9 +9,7 @@
 import Foundation
 
 enum SettingType {
-    case button
-    case toggleSwitch(onAction: () -> Void, offAction: () -> Void)
-    case presetValue
+    case toggleSwitch(onAction: (Void) -> (), offAction: (Void) -> ())
 }
 
 struct Setting {
@@ -22,6 +20,12 @@ struct Setting {
     /// Title of setting.
     var title: String
     
-    /// Type of setting.
-    var type: SettingType
+    /// Control of setting.
+    var controlType: SettingType
+    
+    init(imageName: String, title: String, controlType: SettingType) {
+        self.imageName = imageName
+        self.title = title
+        self.controlType = controlType
+    }
 }

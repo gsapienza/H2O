@@ -12,8 +12,22 @@ class AppSettingsTableViewCell: UITableViewCell {
     
     // MARK: - Public iVars
 
+    var setting: Setting? {
+        didSet {
+            //---Title Label---//
+            
+            titleLabel.text = setting?.title
+            
+            //---Decorator---//
+            
+            if let imageName = setting?.imageName {
+                decorationView.image = UIImage(named: imageName)
+            }
+        }
+    }
+    
     /// Image view representing setting.
-    let decorationView: UIImageView = {
+    private let decorationView: UIImageView = {
         let imageView = UIImageView()
         
         imageView.contentMode = .scaleAspectFit
@@ -22,7 +36,7 @@ class AppSettingsTableViewCell: UITableViewCell {
     }()
     
     /// Label for setting
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
     
         label.textColor = StandardColors.primaryColor
@@ -33,7 +47,7 @@ class AppSettingsTableViewCell: UITableViewCell {
     // MARK: - Private iVars
 
     /// Control for setting.
-    private let controlView = UISwitch()
+    var controlView: UISwitch = UISwitch()
     
     // MARK: - Public
 
@@ -50,16 +64,24 @@ class AppSettingsTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = StandardColors.standardSecondaryColor
+        //---Layout---//
         
         var layout = SettingLayout(decoration: decorationView, title: titleLabel, control: controlView, controlSize: controlView.bounds.size)
         layout.layout(in: bounds)
+        
+        //---View---//
+        
+        backgroundColor = StandardColors.standardSecondaryColor
     }
     
     // MARK: - Private
 
     private func customInit() {
+        //---Seperator---//
+        
         selectionStyle = .none
+        
+        //---View---//
         
         addSubview(decorationView)
         addSubview(titleLabel)

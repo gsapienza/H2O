@@ -81,21 +81,41 @@ class AppSettingsViewController: UIViewController {
         
         var firstSectionSettings: [Setting] = []
         
-        let healthKitSetting = Setting(imageName: "healthKitCellImage", title: "Enable HealthKit", type: .button)
+        let healthKitSetting = Setting(imageName: "healthKitCellImage", title: "Enable HealthKit", controlType: .toggleSwitch(onAction: { (Void) in
+            
+        }, offAction: { (Void) in
+            
+        }))
         
         firstSectionSettings.append(healthKitSetting)
         
         var secondSectionSettings: [Setting] = []
         
-        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", type: .button)
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", controlType: .toggleSwitch(onAction: { (Void) in
+            
+        }, offAction: { (Void) in
+            
+        }))
         
         secondSectionSettings.append(goalSetting)
         
-        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", type: .button)
+        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", controlType: .toggleSwitch(onAction: { (Void) in
+            
+        }, offAction: { (Void) in
+            
+        }))
         
-        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", type: .button)
+        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", controlType: .toggleSwitch(onAction: { (Void) in
+            
+        }, offAction: { (Void) in
+            
+        }))
 
-        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", type: .button)
+        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", controlType: .toggleSwitch(onAction: { (Void) in
+            
+        }, offAction: { (Void) in
+            
+        }))
 
         let thirdSectionSettings = [smallPresetSetting, mediumPresetSetting, largePresetSetting]
         
@@ -134,19 +154,18 @@ extension AppSettingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? AppSettingsTableViewCell else {
-            fatalError("Cell is incorrect type.")
-        }
-        
         guard let settings = settings else {
             fatalError("Settings were not set.")
         }
         
         let setting = settings[indexPath.section][indexPath.row]
         
-        cell.titleLabel.text = setting.title
-        cell.decorationView.image = UIImage(named: setting.imageName)
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? AppSettingsTableViewCell else {
+            fatalError("Cell is incorrect type.")
+        }
+    
+        cell.setting = setting
+            
         return cell
     }
 }
