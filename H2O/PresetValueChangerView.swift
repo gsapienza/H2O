@@ -17,7 +17,7 @@ protocol PresetValueChangerViewProtocol {
     func valueDidChange( newValue :Float)
 }
 
-class PresetValueChangerView: UIView {
+class PresetValueChangerView: UIControl {
         /// Unit label at tail end of view
     let unitLabel = UILabel()
     
@@ -201,6 +201,8 @@ extension PresetValueChangerView :UITextFieldDelegate {
         if textField.text?.characters.count == 0 { //If the preset text field is empty
             textField.text = previousValue //Replace it with its previous value
         }
+        
+        sendActions(for: .editingDidEnd)
         
         if let delegate = self.delegate {
             if let presetValueText = presetValueTextField.text {

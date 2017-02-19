@@ -14,17 +14,24 @@ class AppSettingsTableViewCell: UITableViewCell {
 
     var setting: Setting? {
         didSet {
+            guard let setting = setting else {
+                return
+            }
+            
             //---Title Label---//
             
-            titleLabel.text = setting?.title
+            titleLabel.text = setting.title
             
             //---Decorator---//
             
-            if let imageName = setting?.imageName {
-                decorationView.image = UIImage(named: imageName)
+            decorationView.image = UIImage(named: setting.imageName)
+            
+            if let controlView = setting.getControl() {
+                self.controlView = controlView
             }
         }
     }
+
     
     /// Image view representing setting.
     private let decorationView: UIImageView = {
@@ -47,7 +54,12 @@ class AppSettingsTableViewCell: UITableViewCell {
     // MARK: - Private iVars
 
     /// Control for setting.
-    var controlView: UISwitch = UISwitch()
+    private var controlView: UIControl = UIControl() {
+        didSet {
+            addSubview(controlView)
+            setNeedsLayout()
+        }
+    }
     
     // MARK: - Public
 

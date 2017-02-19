@@ -128,6 +128,16 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
 
         layout()
         indicateDialToOpenInformationViewController()
+        
+        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
+        
+        if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
+            entryButton1.amount = presetWaterValues[0]
+            entryButton2.amount = presetWaterValues[1]
+            entryButton3.amount = presetWaterValues[2]
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -300,10 +310,6 @@ private extension MainViewController {
     func configureFluidView() {
         fluidView.liquidFillColor = StandardColors.waterColor //Water fill
         fluidView.h2OFluidViewDelegate = self
-        
-        if let currentAmount = getAppDelegate().user?.amountOfWaterForToday() {
-            updateFluidValue(current: currentAmount) //Update the fluid value to get a new height
-        }
     }
     
     /// Configures blur view overlaying the in fluid view

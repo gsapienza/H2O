@@ -82,39 +82,50 @@ class AppSettingsViewController: UIViewController {
         var firstSectionSettings: [Setting] = []
         
         let healthKitSetting = Setting(imageName: "healthKitCellImage", title: "Enable HealthKit", controlType: .toggleSwitch(onAction: { (Void) in
-            
+            print("On")
         }, offAction: { (Void) in
-            
+            print("off")
         }))
         
         firstSectionSettings.append(healthKitSetting)
         
         var secondSectionSettings: [Setting] = []
         
-        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", controlType: .toggleSwitch(onAction: { (Void) in
-            
-        }, offAction: { (Void) in
-            
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+            AppUserDefaults.setDailyGoalValue(goal: 70)
         }))
         
         secondSectionSettings.append(goalSetting)
         
-        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", controlType: .toggleSwitch(onAction: { (Void) in
-            
-        }, offAction: { (Void) in
-            
+        
+        /// What to call when a preset has been updated. Sets the user defaults, a message to the watch and changed the 3D touch shortcuts.
+        ///
+        /// - parameter presetWaterValues: Preset values to replace the ones in User Defaults
+        func updatePresets(presetWaterValues :[Float]) {
+            AppUserDefaults.setPresetWaterValues(presets: presetWaterValues)
+            AppDelegate.createShortcuts() //Updates 3D touch shortcuts based on new presets
+        }
+        
+        
+        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+            if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
+                presetWaterValues[0] = 11
+                updatePresets(presetWaterValues: presetWaterValues)
+            }
         }))
         
-        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", controlType: .toggleSwitch(onAction: { (Void) in
-            
-        }, offAction: { (Void) in
-            
+        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+            if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
+                presetWaterValues[1] = 12
+                updatePresets(presetWaterValues: presetWaterValues)
+            }
         }))
 
-        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", controlType: .toggleSwitch(onAction: { (Void) in
-            
-        }, offAction: { (Void) in
-            
+        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+            if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
+                presetWaterValues[2] = 13
+                updatePresets(presetWaterValues: presetWaterValues)
+            }
         }))
 
         let thirdSectionSettings = [smallPresetSetting, mediumPresetSetting, largePresetSetting]

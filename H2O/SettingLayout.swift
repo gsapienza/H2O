@@ -34,14 +34,15 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         
         let decorationSize = rect.height / 2
         let decorationMargin: CGFloat = 10
-        let decorationFrame = CGRect(x: decorationMargin, y: rect.height / 2 - decorationSize / 2, width: decorationSize, height: decorationSize)
+        let decorationFrame = CGRect(x: rect.origin.y + decorationMargin, y: rect.origin.y, width: decorationSize, height: decorationSize)
         
         decoration.layout(in: decorationFrame)
         
         //---Control---//
         
         let controlMargin: CGFloat = 15
-        let controlFrame = CGRect(x: rect.width - controlSize.width - controlMargin, y: rect.height / 2 - controlSize.height / 2, width: controlSize.width, height: controlSize.height)
+        let controlWidth = rect.width / 5
+        let controlFrame = CGRect(x: rect.width - controlWidth - controlMargin, y: rect.origin.y, width: controlWidth, height: rect.height)
         
         control.layout(in: controlFrame)
 
@@ -49,7 +50,7 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         
         let titleMargin: CGFloat = 15
         let titleXOrigin = decorationFrame.origin.x + decorationFrame.width
-        let titleFrame = CGRect(x: titleXOrigin + titleMargin, y: 0, width: controlFrame.origin.x - titleXOrigin, height: rect.height)
+        let titleFrame = CGRect(x: titleXOrigin + titleMargin, y: rect.origin.y, width: controlFrame.origin.x - titleXOrigin, height: rect.height)
         
         title.layout(in: titleFrame)
     }

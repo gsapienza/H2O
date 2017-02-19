@@ -9,10 +9,12 @@
 import Foundation
 
 enum SettingType {
-    case toggleSwitch(onAction: (Void) -> (), offAction: (Void) -> ())
+    case toggleSwitch(onAction: () -> (), offAction: () -> ())
+    case presetValueChanger(labelValue: String, doneAction: () -> ())
+    case button
 }
 
-struct Setting {
+class Setting {
     
     /// Image name for image representing setting.
     var imageName: String

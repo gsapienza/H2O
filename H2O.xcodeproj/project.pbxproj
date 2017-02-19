@@ -200,6 +200,8 @@
 		F33F8B5C1E515EC5008E951F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B5A1E515EC5008E951F /* Setting.swift */; };
 		F361E8901E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
 		F361E8911E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
+		F37A75411E58C6A400822854 /* SettingControlAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A75401E58C6A400822854 /* SettingControlAction.swift */; };
+		F37A75421E58C6AA00822854 /* SettingControlAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A75401E58C6A400822854 /* SettingControlAction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -364,6 +366,7 @@
 		F33F8B571E514606008E951F /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		F33F8B5A1E515EC5008E951F /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
+		F37A75401E58C6A400822854 /* SettingControlAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingControlAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -689,6 +692,7 @@
 				F33F8B571E514606008E951F /* UIView+Layout.swift */,
 				F33F8B4E1E5137D8008E951F /* SettingLayout.swift */,
 				F33F8B5A1E515EC5008E951F /* Setting.swift */,
+				F37A75401E58C6A400822854 /* SettingControlAction.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -928,6 +932,7 @@
 				3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */,
 				3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */,
 				3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */,
+				F37A75421E58C6AA00822854 /* SettingControlAction.swift in Sources */,
 				3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */,
 				3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */,
 				3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */,
@@ -1007,6 +1012,7 @@
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				37487B5E1DFF466000539EA5 /* User+CoreDataProperties.swift in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
+				F37A75411E58C6A400822854 /* SettingControlAction.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
@@ -1106,7 +1112,7 @@
 		3759F0801E3E46E8002C0AFD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = DevAppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1135,7 +1141,7 @@
 		3759F0811E3E46E8002C0AFD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = DevAppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
