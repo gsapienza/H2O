@@ -54,13 +54,11 @@ extension Setting {
         }
     }
     
-    func presetValueChangerAction(_ sender: AnyObject, doneAction:() -> Void) {
+    func presetValueChangerAction(_ sender: AnyObject, doneAction:(_ value: Float) -> Void) {
         guard let presetValueChanger = sender as? PresetValueChangerView else {
             return
         }
         
-        //let presetValue = presetValueChanger.
-        
-        doneAction()
+        doneAction(presetValueChanger.currentValue)
     }
 }

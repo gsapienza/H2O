@@ -57,19 +57,8 @@ private extension SettingsPresetTableViewCell {
     func generatePresetValueChangerView() -> PresetValueChangerView {
         let view = PresetValueChangerView()
         view.alignment = .right
-        view.delegate = self
 
         return view
     }
 }
 
-// MARK: - PresetValueChangerViewProtocol
-extension SettingsPresetTableViewCell :PresetValueChangerViewProtocol {
-
-    /// Called by the preset value changer. Will call the delegate for this cell to updates the settings view controller on changes to the preset value
-    ///
-    /// - parameter newValue: New preset value for this cell
-    func valueDidChange( newValue: Float) {
-        delegate?.presetValueDidChange(settingsPresetTableViewCell: self, newValue: newValue)
-    }
-}

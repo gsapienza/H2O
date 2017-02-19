@@ -91,8 +91,8 @@ class AppSettingsViewController: UIViewController {
         
         var secondSectionSettings: [Setting] = []
         
-        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
-            AppUserDefaults.setDailyGoalValue(goal: 70)
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
+            AppUserDefaults.setDailyGoalValue(goal: value)
         }))
         
         secondSectionSettings.append(goalSetting)
@@ -107,23 +107,23 @@ class AppSettingsViewController: UIViewController {
         }
         
         
-        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
             if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
-                presetWaterValues[0] = 11
+                presetWaterValues[0] = value
                 updatePresets(presetWaterValues: presetWaterValues)
             }
         }))
         
-        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
             if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
-                presetWaterValues[1] = 12
+                presetWaterValues[1] = value
                 updatePresets(presetWaterValues: presetWaterValues)
             }
         }))
 
-        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: {
+        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
             if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
-                presetWaterValues[2] = 13
+                presetWaterValues[2] = value
                 updatePresets(presetWaterValues: presetWaterValues)
             }
         }))

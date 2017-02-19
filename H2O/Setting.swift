@@ -10,7 +10,7 @@ import Foundation
 
 enum SettingType {
     case toggleSwitch(onAction: () -> (), offAction: () -> ())
-    case presetValueChanger(labelValue: String, doneAction: () -> ())
+    case presetValueChanger(labelValue: String, doneAction: (_ value :Float) -> ())
     case button
 }
 

@@ -117,7 +117,7 @@ class SettingsViewController: UITableViewController {
         goalCell.cellTextLabel.text = "daily_goal_setting".localized
         
         if let goal = AppUserDefaults.getDailyGoalValue() {
-            goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
+          //  goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
             goalCell.delegate = self
         }
                 
@@ -129,19 +129,19 @@ class SettingsViewController: UITableViewController {
             //Small preset
             presetCell1.cellImageView.image = presetImages[0]
             presetCell1.cellTextLabel.text = "small_preset_setting".localized
-            presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
+           // presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
             presetCell1.delegate = self
             
             //Medium preset
             presetCell2.cellImageView.image = presetImages[1]
             presetCell2.cellTextLabel.text = "medium_preset_setting".localized
-            presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
+            //presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
             presetCell2.delegate = self
             
             //Large preset
             presetCell3.cellImageView.image = presetImages[2]
             presetCell3.cellTextLabel.text = "large_preset_setting".localized
-            presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
+           // presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
             presetCell3.delegate = self
         }
     }

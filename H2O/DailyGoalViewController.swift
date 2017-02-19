@@ -45,7 +45,7 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         
         titleLabel.text = DailyGoalViewController.titleString
         
-        presetChangerView.presetValueTextField.becomeFirstResponder()
+        presetChangerView.becomeFirstResponder()
         
         //---Title Label---//
         
@@ -97,21 +97,15 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
     }
     
     func onRightBarButton() {
-        if let presetText = presetChangerView.presetValueTextField.text {
-            guard let presetValue = Float(presetText) else {
-                GSAnimations.invalid(layer: presetChangerView.layer, completion: { (Bool) in
-                })
-                return
-            }
-            
-            if presetValue != 0 {
-                AppUserDefaults.setDailyGoalValue(goal: presetValue)
-                let connectViewController = ConnectViewController()
-                navigationController?.pushViewController(connectViewController, animated: true)
-            } else {
-                GSAnimations.invalid(layer: presetChangerView.layer, completion: { (Bool) in
-                })
-            }
+        let presetValue = presetChangerView.currentValue
+        
+        if presetValue != 0 {
+            AppUserDefaults.setDailyGoalValue(goal: presetValue)
+            let connectViewController = ConnectViewController()
+            navigationController?.pushViewController(connectViewController, animated: true)
+        } else {
+            GSAnimations.invalid(layer: presetChangerView.layer, completion: { (Bool) in
+            })
         }
     }
 }
@@ -120,7 +114,7 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
 private extension DailyGoalViewController {
     func generateGoalPresetChangerView() -> PresetValueChangerView {
         let view = PresetValueChangerView(fontSize: 50)
-        view.presetValueTextField.placeholder = "64"
+        view.placeholder = "64"
         view.toolbarEnabled = false
         
         return view

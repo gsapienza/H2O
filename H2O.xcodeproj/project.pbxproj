@@ -630,7 +630,6 @@
 				37A182651CEBC2190055DA02 /* SettingsViewController.swift */,
 				37A182671CEBC8170055DA02 /* SettingsTableViewCell.swift */,
 				37E0D71F1CF01F22004ABFAF /* SettingsPresetTableViewCell.swift */,
-				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
 			);
 			name = "Settings View";
 			sourceTree = "<group>";
@@ -693,6 +692,7 @@
 				F33F8B4E1E5137D8008E951F /* SettingLayout.swift */,
 				F33F8B5A1E515EC5008E951F /* Setting.swift */,
 				F37A75401E58C6A400822854 /* SettingControlAction.swift */,
+				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";

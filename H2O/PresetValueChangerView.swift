@@ -8,32 +8,51 @@
 
 import UIKit
 
-protocol PresetValueChangerViewProtocol {
-    /**
-     Called when value in textfield is changed by ending editing
-     
-     - parameter newValue: New preset value
-     */
-    func valueDidChange( newValue :Float)
-}
-
 class PresetValueChangerView: UIControl {
-        /// Unit label at tail end of view
+    /// Unit label at tail end of view
     let unitLabel = UILabel()
     
-        /// Text view with preset value
-    let presetValueTextField = UITextField()
+    /// Current value contained in text field.
+    var currentValue: Float {
+        set {
+            self.presetValueTextField.text = String(describing: currentValue)
+        }
+        
+        get {
+            if let presetValueText = presetValueTextField.text {
+                if let presetValue = Float(presetValueText) {
+                    return presetValue
+                }
+            }
+            
+            return 0
+        }
+    }
     
-        /// Delegate to update when a new value is declared
-    var delegate :PresetValueChangerViewProtocol?
+    var placeholder: String? {
+        set {
+            self.presetValueTextField.placeholder = placeholder
+        }
+        
+        get {
+            return self.presetValueTextField.placeholder
+        }
+    }
     
-        /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
+    /// Text view with preset value
+    private let presetValueTextField = UITextField()
+    
+    
+    /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
     var previousValue = String()
     
+    /// Font size for label and text field.
     var fontSize :CGFloat = 17
     
+    /// Is the keyboard toolbar enabled.
     var toolbarEnabled = true
     
+    /// Alignment of text field and label combination
     var alignment :NSTextAlignment = .center
     
     /**
@@ -66,6 +85,14 @@ class PresetValueChangerView: UIControl {
             
             presetValueTextField.inputAccessoryView = keyPadToolbar
         }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return presetValueTextField.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        return presetValueTextField.resignFirstResponder()
     }
     
     //MARK: - View Setup
@@ -203,13 +230,5 @@ extension PresetValueChangerView :UITextFieldDelegate {
         }
         
         sendActions(for: .editingDidEnd)
-        
-        if let delegate = self.delegate {
-            if let presetValueText = presetValueTextField.text {
-                if let presetValue = Float(presetValueText) {
-                    delegate.valueDidChange(newValue: presetValue)
-                }
-            }
-        }
     }
 }
