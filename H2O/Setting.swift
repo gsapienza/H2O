@@ -8,12 +8,6 @@
 
 import Foundation
 
-enum SettingType {
-    case toggleSwitch(onAction: () -> (), offAction: () -> ())
-    case presetValueChanger(labelValue: String, doneAction: (_ value :Float) -> ())
-    case button
-}
-
 class Setting {
     
     /// Image name for image representing setting.
@@ -23,11 +17,16 @@ class Setting {
     var title: String
     
     /// Control of setting.
-    var controlType: SettingType
+    var action: () -> ()
     
-    init(imageName: String, title: String, controlType: SettingType) {
+    var control: AnyObject
+    
+    init(imageName: String, title: String, control: AnyObject, action: @escaping () -> ()) {
         self.imageName = imageName
         self.title = title
-        self.controlType = controlType
+        self.control = control
+        self.action = action
+        
+        setControlAction()
     }
 }

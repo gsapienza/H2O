@@ -11,54 +11,50 @@ import UIKit
 
 extension Setting {
     
-    func getControl() -> UIControl? {
-        let type = controlType
+    func setControlAction() {
         
-        switch type {
-        case .toggleSwitch:
-            let control = UISwitch()
-            control.addTarget(self, action: #selector(Setting.controlAction), for: .valueChanged)
-            return control
-        case .presetValueChanger:
-            let control = PresetValueChangerView()
-            control.addTarget(self, action: #selector(Setting.controlAction), for: .editingDidEnd)
-            return control
-        default:
-            break
+        guard let control = control as? SettingActionProtocol else {
+            return
         }
         
-        return nil
+        control.addTarget(target: self, action: #selector(Setting.controlAction))
     }
     
     @objc func controlAction(_ sender: AnyObject) {
-        
-        switch controlType {
-        case let .toggleSwitch(onAction, offAction):
-            switchAction(sender, onAction: onAction, offAction: offAction)
-        case let .presetValueChanger(_, doneAction):
-            presetValueChangerAction(sender, doneAction: doneAction)
-        default:
-            break
+        action()
+    }
+}
+
+protocol SettingActionProtocol {
+    var controlEvents: UIControlEvents { get }
+    
+    func addTarget(target: Any?, action: Selector)
+}
+
+extension UIControl: SettingActionProtocol {
+    var controlEvents: UIControlEvents {
+        get {
+            return []
         }
     }
     
-    func switchAction(_ sender: AnyObject, onAction: () -> Void, offAction: () -> Void) {
-        guard let toggleSwitch = sender as? UISwitch else {
-            return
-        }
-        
-        if toggleSwitch.isOn {
-            onAction()
-        } else {
-            offAction()
+    func addTarget(target: Any?, action: Selector) {
+        addTarget(target, action: action, for: controlEvents)
+    }
+}
+
+extension UISwitch {
+    override var controlEvents: UIControlEvents {
+        get {
+            return .valueChanged
         }
     }
-    
-    func presetValueChangerAction(_ sender: AnyObject, doneAction:(_ value: Float) -> Void) {
-        guard let presetValueChanger = sender as? PresetValueChangerView else {
-            return
+}
+
+extension PresetValueChangerView {
+    override var controlEvents: UIControlEvents {
+        get {
+            return .editingDidEnd
         }
-        
-        doneAction(presetValueChanger.currentValue)
     }
 }

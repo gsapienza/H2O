@@ -81,19 +81,24 @@ class AppSettingsViewController: UIViewController {
         
         var firstSectionSettings: [Setting] = []
         
-        let healthKitSetting = Setting(imageName: "healthKitCellImage", title: "Enable HealthKit", controlType: .toggleSwitch(onAction: { (Void) in
-            print("On")
-        }, offAction: { (Void) in
-            print("off")
-        }))
+    
+        let healthKitSwitch = UISwitch()
+        let healthKitSetting = Setting(imageName: "healthKitCellImage", title: "Enable HealthKit", control: healthKitSwitch) {
+            if healthKitSwitch.isOn {
+                print("ON")
+            } else {
+                print("OFF")
+            }
+        }
         
         firstSectionSettings.append(healthKitSetting)
         
         var secondSectionSettings: [Setting] = []
         
-        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
-            AppUserDefaults.setDailyGoalValue(goal: value)
-        }))
+        let goalChangerView = PresetValueChangerView()
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", control: goalChangerView) {
+            AppUserDefaults.setDailyGoalValue(goal: goalChangerView.currentValue)
+        }
         
         secondSectionSettings.append(goalSetting)
         
@@ -107,26 +112,30 @@ class AppSettingsViewController: UIViewController {
         }
         
         
-        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
+        let smallPresetChangerView = PresetValueChangerView()
+        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", control: smallPresetChangerView) {
             if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
-                presetWaterValues[0] = value
+                presetWaterValues[0] = smallPresetChangerView.currentValue
                 updatePresets(presetWaterValues: presetWaterValues)
             }
-        }))
+        }
         
-        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
+    
+        let mediumPresetChangerView = PresetValueChangerView()
+        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Small Preset", control: mediumPresetChangerView) {
             if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
-                presetWaterValues[1] = value
+                presetWaterValues[1] = mediumPresetChangerView.currentValue
                 updatePresets(presetWaterValues: presetWaterValues)
             }
-        }))
-
-        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", controlType: .presetValueChanger(labelValue: standardUnit.rawValue, doneAction: { value in
+        }
+        
+        let largePresetChangerView = PresetValueChangerView()
+        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", control: largePresetChangerView) {
             if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
-                presetWaterValues[2] = value
+                presetWaterValues[2] = largePresetChangerView.currentValue
                 updatePresets(presetWaterValues: presetWaterValues)
             }
-        }))
+        }
 
         let thirdSectionSettings = [smallPresetSetting, mediumPresetSetting, largePresetSetting]
         

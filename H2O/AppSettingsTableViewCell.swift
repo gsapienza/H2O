@@ -26,7 +26,7 @@ class AppSettingsTableViewCell: UITableViewCell {
             
             decorationView.image = UIImage(named: setting.imageName)
             
-            if let controlView = setting.getControl() {
+            if let controlView = setting.control as? UIControl {
                 self.controlView = controlView
             }
         }
