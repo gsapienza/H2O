@@ -457,6 +457,7 @@
 		374FF4E31E35B23600ED42E3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				37D13DEC1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift */,
 				371898DE1E4802AA0005E17C /* UINavigationBarExtension.swift */,
 				3741F5AF1D8F009200F7598E /* StoryBoardExtension.swift */,
 				37E0D71B1CEFE9AD004ABFAF /* DateExtension.swift */,
@@ -536,7 +537,6 @@
 			isa = PBXGroup;
 			children = (
 				37E0D7621CF22E9F004ABFAF /* InformationViewController.swift */,
-				37D13DEC1DBBF4EA00C850BA /* ViewControllerAlertExtension.swift */,
 				37D13DEA1DBA5AF400C850BA /* InformationViewControllerModel.swift */,
 				375831261DB2D48200ED136E /* InformationViewControllerState.swift */,
 				37E0D7661CF2746B004ABFAF /* DailyInformationTableViewCell.swift */,
