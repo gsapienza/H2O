@@ -8,7 +8,13 @@
 
 import Foundation
 
-class Setting {
+protocol SettingProtocol {
+    func setControlAction()
+}
+
+class Setting: SettingProtocol {
+    
+    var id: String?
     
     /// Image name for image representing setting.
     var imageName: String
@@ -16,17 +22,31 @@ class Setting {
     /// Title of setting.
     var title: String
     
+    var primaryAction: () -> ()
+    
     /// Control of setting.
-    var action: () -> ()
+    var controlAction: () -> () {
+        didSet {
+            setControlAction()
+        }
+    }
     
-    var control: AnyObject
+    var control: SettingActionProtocol?
     
-    init(imageName: String, title: String, control: AnyObject, action: @escaping () -> ()) {
+    init(id: String? = nil, imageName: String, title: String, control: SettingActionProtocol? = nil, primaryAction: @escaping () -> () = {}, controlAction: @escaping () -> () = {}) {
+        self.id = id
         self.imageName = imageName
         self.title = title
+        self.primaryAction = primaryAction
         self.control = control
-        self.action = action
+        self.controlAction = controlAction
+    }
+    
+    func setValue(value: Any) {
+        guard let control = control else {
+            return
+        }
         
-        setControlAction()
+        control.setValue(value: value)
     }
 }

@@ -34,7 +34,7 @@ class AppSettingsTableViewCell: UITableViewCell {
 
     
     /// Image view representing setting.
-    private let decorationView: UIImageView = {
+    let decorationView: UIImageView = {
         let imageView = UIImageView()
         
         imageView.contentMode = .scaleAspectFit
@@ -43,18 +43,16 @@ class AppSettingsTableViewCell: UITableViewCell {
     }()
     
     /// Label for setting
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
-    
-        label.textColor = StandardColors.primaryColor
-    
+        
         return label
     }()
     
     // MARK: - Private iVars
 
     /// Control for setting.
-    private var controlView: UIControl = UIControl() {
+    var controlView: UIControl = UIControl() {
         didSet {
             addSubview(controlView)
             setNeedsLayout()

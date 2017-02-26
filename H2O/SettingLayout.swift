@@ -34,13 +34,13 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         
         let decorationSize = rect.height / 2
         let decorationMargin: CGFloat = 10
-        let decorationFrame = CGRect(x: rect.origin.y + decorationMargin, y: rect.origin.y, width: decorationSize, height: decorationSize)
+        let decorationFrame = CGRect(x: rect.origin.y + decorationMargin, y: rect.origin.y + rect.size.height / 2 - decorationSize / 2, width: decorationSize, height: decorationSize)
         
         decoration.layout(in: decorationFrame)
         
         //---Control---//
         
-        let controlMargin: CGFloat = 15
+        let controlMargin: CGFloat = 10
         let controlWidth = rect.width / 5
         let controlFrame = CGRect(x: rect.width - controlWidth - controlMargin, y: rect.origin.y, width: controlWidth, height: rect.height)
         

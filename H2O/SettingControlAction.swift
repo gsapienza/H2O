@@ -12,49 +12,47 @@ import UIKit
 extension Setting {
     
     func setControlAction() {
-        
-        guard let control = control as? SettingActionProtocol else {
-            return
-        }
-        
-        control.addTarget(target: self, action: #selector(Setting.controlAction))
+        control?.addTarget(target: self, action: #selector(Setting.controlTargetAction))
     }
     
-    @objc func controlAction(_ sender: AnyObject) {
-        action()
+    @objc func controlTargetAction(_ sender: AnyObject) {
+        controlAction()
     }
 }
 
 protocol SettingActionProtocol {
-    var controlEvents: UIControlEvents { get }
     
     func addTarget(target: Any?, action: Selector)
+    
+    func setValue(value: Any)
 }
 
-extension UIControl: SettingActionProtocol {
-    var controlEvents: UIControlEvents {
-        get {
-            return []
+extension UISwitch: SettingActionProtocol {
+    func setValue(value: Any) {
+        guard let value = value as? Bool else {
+            print("Value must be a bool type")
+            return
         }
+        
+        setOn(value, animated: true)
     }
     
     func addTarget(target: Any?, action: Selector) {
-        addTarget(target, action: action, for: controlEvents)
+        addTarget(target, action: action, for: .valueChanged)
     }
 }
 
-extension UISwitch {
-    override var controlEvents: UIControlEvents {
-        get {
-            return .valueChanged
+extension PresetValueChangerView: SettingActionProtocol {
+    func setValue(value: Any) {
+        guard let value = value as? Float else {
+            print("Value must be a float type")
+            return
         }
+        
+        currentValue = value
     }
-}
-
-extension PresetValueChangerView {
-    override var controlEvents: UIControlEvents {
-        get {
-            return .editingDidEnd
-        }
+    
+    func addTarget(target: Any?, action: Selector) {
+        addTarget(target, action: action, for: .editingDidEnd)
     }
 }

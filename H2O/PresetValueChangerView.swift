@@ -15,7 +15,7 @@ class PresetValueChangerView: UIControl {
     /// Current value contained in text field.
     var currentValue: Float {
         set {
-            self.presetValueTextField.text = String(describing: currentValue)
+            self.presetValueTextField.text = String(describing: Int(newValue))
         }
         
         get {
