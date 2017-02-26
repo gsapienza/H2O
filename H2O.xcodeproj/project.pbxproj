@@ -204,6 +204,8 @@
 		F37A75421E58C6AA00822854 /* SettingControlAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A75401E58C6A400822854 /* SettingControlAction.swift */; };
 		F3C3F57C1E627768006A0D33 /* AppSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */; };
 		F3C3F57D1E627768006A0D33 /* AppSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */; };
+		F3C3F57F1E634745006A0D33 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57E1E634745006A0D33 /* Settings.swift */; };
+		F3C3F5801E634745006A0D33 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57E1E634745006A0D33 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,6 +372,7 @@
 		F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		F37A75401E58C6A400822854 /* SettingControlAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingControlAction.swift; sourceTree = "<group>"; };
 		F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsModel.swift; sourceTree = "<group>"; };
+		F3C3F57E1E634745006A0D33 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -696,6 +699,7 @@
 				F33F8B4E1E5137D8008E951F /* SettingLayout.swift */,
 				F33F8B5A1E515EC5008E951F /* Setting.swift */,
 				F37A75401E58C6A400822854 /* SettingControlAction.swift */,
+				F3C3F57E1E634745006A0D33 /* Settings.swift */,
 				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
 			);
 			name = Settings;
@@ -941,6 +945,7 @@
 				3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */,
 				3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */,
 				3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */,
+				F3C3F5801E634745006A0D33 /* Settings.swift in Sources */,
 				3759F0401E3E46E8002C0AFD /* UIColor+ColorWithHex.m in Sources */,
 				3759F0411E3E46E8002C0AFD /* DailyEntryDateView.swift in Sources */,
 				3759F0421E3E46E8002C0AFD /* GSFluidLayout.swift in Sources */,
@@ -1022,6 +1027,7 @@
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
+				F3C3F57F1E634745006A0D33 /* Settings.swift in Sources */,
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
 				37ADB1561CFBA33A00BE3711 /* GSFluidLayout.swift in Sources */,

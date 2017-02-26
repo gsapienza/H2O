@@ -50,3 +50,7 @@ class Setting: SettingProtocol {
         control.setValue(value: value)
     }
 }
+
+class BasicSetting: Setting {
+    
+}
