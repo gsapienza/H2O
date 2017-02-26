@@ -202,6 +202,8 @@
 		F361E8911E4F770D00E06BC0 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */; };
 		F37A75411E58C6A400822854 /* SettingControlAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A75401E58C6A400822854 /* SettingControlAction.swift */; };
 		F37A75421E58C6AA00822854 /* SettingControlAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A75401E58C6A400822854 /* SettingControlAction.swift */; };
+		F3C3F57C1E627768006A0D33 /* AppSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */; };
+		F3C3F57D1E627768006A0D33 /* AppSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -367,6 +369,7 @@
 		F33F8B5A1E515EC5008E951F /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		F37A75401E58C6A400822854 /* SettingControlAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingControlAction.swift; sourceTree = "<group>"; };
+		F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -686,6 +689,7 @@
 			isa = PBXGroup;
 			children = (
 				F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */,
+				F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */,
 				F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */,
 				F32B265F1E533BD6000AD5ED /* SettingControlProtocol.swift */,
 				F33F8B571E514606008E951F /* UIView+Layout.swift */,
@@ -906,6 +910,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3C3F57D1E627768006A0D33 /* AppSettingsModel.swift in Sources */,
 				3759F0231E3E46E8002C0AFD /* EntryButton.swift in Sources */,
 				3759F0241E3E46E8002C0AFD /* StoryBoardExtension.swift in Sources */,
 				3759F0251E3E46E8002C0AFD /* Constants.swift in Sources */,
@@ -986,6 +991,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3C3F57C1E627768006A0D33 /* AppSettingsModel.swift in Sources */,
 				3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */,
 				3741F5B01D8F009200F7598E /* StoryBoardExtension.swift in Sources */,
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
