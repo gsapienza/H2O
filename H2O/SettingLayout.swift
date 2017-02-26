@@ -12,21 +12,19 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
    // typealias Content = UIView
     
     /// Decoration representing setting.
-    var decoration: Decoration
+    var decoration: Decoration?
     
     /// Title of setting.
-    var title: Title
+    var title: Title?
     
     /// Control for setting.
-    var control: Control
+    var control: Control?
     
-    var controlSize: CGSize
     
-    init(decoration: Decoration, title: Title, control: Control, controlSize: CGSize) {
+    init(decoration: Decoration?, title: Title?, control: Control?) {
         self.decoration = decoration
         self.title = title
         self.control = control
-        self.controlSize = controlSize
     }
     
     mutating func layout(in rect: CGRect) {
@@ -36,7 +34,9 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         let decorationMargin: CGFloat = 10
         let decorationFrame = CGRect(x: rect.origin.y + decorationMargin, y: rect.origin.y + rect.size.height / 2 - decorationSize / 2, width: decorationSize, height: decorationSize)
         
-        decoration.layout(in: decorationFrame)
+        if var decoration = decoration {
+            decoration.layout(in: decorationFrame)
+        }
         
         //---Control---//
         
@@ -44,7 +44,10 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         let controlWidth = rect.width / 5
         let controlFrame = CGRect(x: rect.width - controlWidth - controlMargin, y: rect.origin.y, width: controlWidth, height: rect.height)
         
-        control.layout(in: controlFrame)
+        if var control = control {
+            control.layout(in: controlFrame)
+        }
+        
 
         //---Title---//
         
@@ -52,6 +55,9 @@ struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layou
         let titleXOrigin = decorationFrame.origin.x + decorationFrame.width
         let titleFrame = CGRect(x: titleXOrigin + titleMargin, y: rect.origin.y, width: controlFrame.origin.x - titleXOrigin, height: rect.height)
         
-        title.layout(in: titleFrame)
+        if var title = title {
+            title.layout(in: titleFrame)
+        }
+        
     }
 }

@@ -24,7 +24,9 @@ class AppSettingsTableViewCell: UITableViewCell {
             
             //---Decorator---//
             
-            decorationView.image = UIImage(named: setting.imageName)
+            if let settingImageName = setting.imageName {
+                decorationView.image = UIImage(named: settingImageName)
+            }
             
             if let controlView = setting.control as? UIControl {
                 self.controlView = controlView
@@ -52,7 +54,7 @@ class AppSettingsTableViewCell: UITableViewCell {
     // MARK: - Private iVars
 
     /// Control for setting.
-    var controlView: UIControl = UIControl() {
+    private var controlView: UIControl = UIControl() {
         didSet {
             addSubview(controlView)
             setNeedsLayout()
@@ -76,7 +78,7 @@ class AppSettingsTableViewCell: UITableViewCell {
         
         //---Layout---//
         
-        var layout = SettingLayout(decoration: decorationView, title: titleLabel, control: controlView, controlSize: controlView.bounds.size)
+        var layout = SettingLayout(decoration: decorationView, title: titleLabel, control: controlView)
         layout.layout(in: bounds)
         
         //---View---//

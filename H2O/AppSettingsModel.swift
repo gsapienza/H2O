@@ -8,17 +8,29 @@
 
 import UIKit
 
-struct AppSettingsModel {
-    static func appSettings() -> [[Setting]]? {
+protocol AppSettingsModelProtocol {
+    func reloadData()
+}
+
+class AppSettingsModel {
+    var delegate: AppSettingsModelProtocol?
+    
+    func appSettings() -> [[Setting]]? {
         var settings: [[Setting]] = []
         
         var firstSectionSettings: [Setting] = []
         
         for service in SupportedServices.allSupportedServices() {
-            let service = Setting(id: service.rawValue, imageName: "healthKitCellImage", title: "Enable \(service.rawValue)", primaryAction: {
+            let service = Setting(id: service.rawValue, imageName: "healthKitCellImage", title: "Enable \(service.rawValue)", primaryAction: { setting in
+                
                 service.model().authorize(completion: { (success: Bool, error: Error?, message: String?) in
                     if let error = error {
                         print(error.localizedDescription)
+                    } else {
+                        DispatchQueue.main.async {
+                            setting.title = "Manage HealthKit in the Health App"
+                            self.delegate?.reloadData()
+                        }
                     }
                 })
             })
@@ -34,7 +46,7 @@ struct AppSettingsModel {
         
         let goalChangerView = PresetValueChangerView()
         goalChangerView.alignment = .right
-        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", control: goalChangerView) {
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", control: goalChangerView) {_ in 
             AppUserDefaults.setDailyGoalValue(goal: goalChangerView.currentValue)
         }
         
@@ -54,7 +66,7 @@ struct AppSettingsModel {
         
         let smallPresetChangerView = PresetValueChangerView()
         smallPresetChangerView.alignment = .right
-        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", control: smallPresetChangerView) {
+        let smallPresetSetting = Setting(imageName: "darkSmallPresetImage", title: "Small Preset", control: smallPresetChangerView) {_ in 
             presetWaterValues[0] = smallPresetChangerView.currentValue
             updatePresets(presetWaterValues: presetWaterValues)
         }
@@ -62,14 +74,14 @@ struct AppSettingsModel {
         
         let mediumPresetChangerView = PresetValueChangerView()
         mediumPresetChangerView.alignment = .right
-        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", control: mediumPresetChangerView) {
+        let mediumPresetSetting = Setting(imageName: "darkMediumPresetImage", title: "Medium Preset", control: mediumPresetChangerView) {_ in 
             presetWaterValues[1] = mediumPresetChangerView.currentValue
             updatePresets(presetWaterValues: presetWaterValues)
         }
         
         let largePresetChangerView = PresetValueChangerView()
         largePresetChangerView.alignment = .right
-        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", control: largePresetChangerView) {
+        let largePresetSetting = Setting(imageName: "darkLargePresetImage", title: "Large Preset", control: largePresetChangerView) {_ in 
             presetWaterValues[2] = largePresetChangerView.currentValue
             updatePresets(presetWaterValues: presetWaterValues)
         }

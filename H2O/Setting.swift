@@ -17,15 +17,15 @@ class Setting: SettingProtocol {
     var id: String?
     
     /// Image name for image representing setting.
-    var imageName: String
+    var imageName: String?
     
     /// Title of setting.
-    var title: String
+    var title: String?
     
-    var primaryAction: () -> ()
+    var primaryAction: (Setting) -> ()
     
     /// Control of setting.
-    var controlAction: () -> () {
+    var controlAction: (Setting) -> () {
         didSet {
             setControlAction()
         }
@@ -33,7 +33,7 @@ class Setting: SettingProtocol {
     
     var control: SettingActionProtocol?
     
-    init(id: String? = nil, imageName: String, title: String, control: SettingActionProtocol? = nil, primaryAction: @escaping () -> () = {}, controlAction: @escaping () -> () = {}) {
+    init(id: String? = nil, imageName: String, title: String, control: SettingActionProtocol? = nil, primaryAction: @escaping (Setting) -> () = { _ in }, controlAction: @escaping (Setting) -> () = { _ in }) {
         self.id = id
         self.imageName = imageName
         self.title = title

@@ -40,6 +40,8 @@ class AppSettingsViewController: UIViewController {
     /// Settings backing table view. Each outer array contains a section of an inner array of settings.
     fileprivate var settings: [[Setting]]?
     
+    fileprivate var model: AppSettingsModel = AppSettingsModel()
+    
     // MARK: - Public
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -73,7 +75,8 @@ class AppSettingsViewController: UIViewController {
     // MARK: - Private
     
     private func customInit() {
-        settings = AppSettingsModel.appSettings()
+        settings = model.appSettings()
+        model.delegate = self
     }
     
     //MARK: - Actions
@@ -119,6 +122,13 @@ extension AppSettingsViewController: UITableViewDataSource {
     
         cell.setting = setting
         cell.titleLabel.textColor = StandardColors.primaryColor
+        
+        if setting.id == SupportedServices.healthkit.rawValue {
+            if SupportedServices.healthkit.model().isAuthorized() {
+                cell.titleLabel.textColor = UIColor.lightGray
+                setting.primaryAction(setting)
+            }
+        }
 
         return cell
     }
@@ -130,7 +140,7 @@ extension AppSettingsViewController: UITableViewDataSource {
         
         let setting = settings[indexPath.section][indexPath.row]
         
-        setting.primaryAction()
+        setting.primaryAction(setting)
     }
 }
 
@@ -150,5 +160,12 @@ extension AppSettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+}
+
+// MARK: - AppSettingsModelProtocol
+extension AppSettingsViewController: AppSettingsModelProtocol {
+    func reloadData() {
+        tableView.reloadData()
     }
 }

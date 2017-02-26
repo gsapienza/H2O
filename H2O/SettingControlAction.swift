@@ -16,7 +16,7 @@ extension Setting {
     }
     
     @objc func controlTargetAction(_ sender: AnyObject) {
-        controlAction()
+        controlAction(self)
     }
 }
 
