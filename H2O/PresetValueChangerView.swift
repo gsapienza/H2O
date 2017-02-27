@@ -197,6 +197,8 @@ extension PresetValueChangerView :UITextFieldDelegate {
      */
     func textFieldDidBeginEditing(_ textField: UITextField) {
         previousValue = textField.text!
+        
+        sendActions(for: .editingDidBegin)
     }
     
     /**

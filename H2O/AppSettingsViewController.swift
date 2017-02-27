@@ -139,7 +139,7 @@ extension AppSettingsViewController: UITableViewDataSource {
         if setting.id == SupportedServices.healthkit.rawValue {
             if SupportedServices.healthkit.model().isAuthorized() {
                 cell.titleLabel.textColor = UIColor.lightGray
-                setting.primaryAction(setting)
+                cell.titleLabel.text = "Manage HealthKit in the Health App"
             }
         }
 

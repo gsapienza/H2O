@@ -23,9 +23,9 @@ class Setting: SettingsProtocol {
     var primaryAction: (Setting) -> ()
     
     /// Control of setting.
-    var controlAction: (Setting) -> () {
+    var controlAction: ((Setting) -> ()) {
         didSet {
-            setControlAction() //Configure targe action when this is set.
+            setControlAction() //Configure target action when this is set.
         }
     }
     
@@ -39,6 +39,8 @@ class Setting: SettingsProtocol {
         self.primaryAction = primaryAction
         self.control = control
         self.controlAction = controlAction
+        
+        setControlAction() //Configure target action when this is set.
     }
     
     /// Configures target action for the settings control. This allows us to use closures for the action instead of the typical target action pattern. Sets the target to self.
