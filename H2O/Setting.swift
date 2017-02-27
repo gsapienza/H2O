@@ -8,12 +8,9 @@
 
 import Foundation
 
-protocol SettingProtocol {
-    func setControlAction()
-}
-
-class Setting: SettingProtocol {
+class Setting: SettingsProtocol {
     
+    /// Setting can have an Id. This allows for easy comparison to find a particular setting in a collection.
     var id: String?
     
     /// Image name for image representing setting.
@@ -22,18 +19,20 @@ class Setting: SettingProtocol {
     /// Title of setting.
     var title: String?
     
+    /// A primary action, a common use for this is to call this closure when a cell is tapped in a table view.
     var primaryAction: (Setting) -> ()
     
     /// Control of setting.
     var controlAction: (Setting) -> () {
         didSet {
-            setControlAction()
+            setControlAction() //Configure targe action when this is set.
         }
     }
     
-    var control: SettingActionProtocol?
+    /// Control to use for setting.
+    var control: SettingControlProtocol?
     
-    init(id: String? = nil, imageName: String, title: String, control: SettingActionProtocol? = nil, primaryAction: @escaping (Setting) -> () = { _ in }, controlAction: @escaping (Setting) -> () = { _ in }) {
+    init(id: String? = nil, imageName: String, title: String, control: SettingControlProtocol? = nil, primaryAction: @escaping (Setting) -> () = { _ in }, controlAction: @escaping (Setting) -> () = { _ in }) {
         self.id = id
         self.imageName = imageName
         self.title = title
@@ -42,12 +41,16 @@ class Setting: SettingProtocol {
         self.controlAction = controlAction
     }
     
-    func setValue(value: Any) {
-        guard let control = control else {
-            return
-        }
-        
-        control.setValue(value: value)
+    /// Configures target action for the settings control. This allows us to use closures for the action instead of the typical target action pattern. Sets the target to self.
+    private func setControlAction() {
+        control?.addTarget(target: self, action: #selector(Setting.controlTargetAction))
+    }
+    
+    /// The controls action. This is where the control action closure is called.
+    ///
+    /// - Parameter sender: Sender of action.
+    @objc private func controlTargetAction(_ sender: AnyObject) {
+        controlAction(self)
     }
 }
 

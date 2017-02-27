@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol AppSettingsViewControllerProtocol {
+    
+    /// Reloads data in view.
+    func reloadData()
+}
+
 class AppSettingsViewController: UIViewController {
     // MARK: - Strings
     
@@ -27,7 +33,6 @@ class AppSettingsViewController: UIViewController {
             tableView.register(AppSettingsTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
             tableView.backgroundColor = .clear
             tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: -1, width: 0, height: 1)) //Covers the bottom lines in the table view including the last cells line
-            tableView.separatorColor = StandardColors.primaryColor.withAlphaComponent(0.2)
             tableView.backgroundColor = .clear
         }
     }
@@ -38,8 +43,9 @@ class AppSettingsViewController: UIViewController {
     fileprivate let reuseIdentifier = "\(AppSettingsTableViewCell.self)"
     
     /// Settings backing table view. Each outer array contains a section of an inner array of settings.
-    fileprivate var settings: [[Setting]]?
+    fileprivate var settings: Settings<Setting>?
     
+    /// App settings model. Where settings are fetched from.
     fileprivate var model: AppSettingsModel = AppSettingsModel()
     
     // MARK: - Public
@@ -70,11 +76,17 @@ class AppSettingsViewController: UIViewController {
         closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
         
         navigationItem.leftBarButtonItem = closeButton
+        
+        //---Table View---//
+        
+        tableView.separatorColor = StandardColors.primaryColor.withAlphaComponent(0.2)
     }
     
     // MARK: - Private
     
     private func customInit() {
+        //---Model---//
+        
         settings = model.appSettings()
         model.delegate = self
     }
@@ -96,7 +108,7 @@ extension AppSettingsViewController: UITableViewDataSource {
             return 0
         }
         
-        return settings.count
+        return settings.sectionCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -106,7 +118,7 @@ extension AppSettingsViewController: UITableViewDataSource {
             return 0
         }
         
-        return settings[section].count
+        return settings.section(for: section).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,7 +126,7 @@ extension AppSettingsViewController: UITableViewDataSource {
             fatalError("Settings were not set.")
         }
         
-        let setting = settings[indexPath.section][indexPath.row]
+        let setting = settings.setting(sectionIndex: indexPath.section, settingIndex: indexPath.row) 
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? AppSettingsTableViewCell else {
             fatalError("Cell is incorrect type.")
@@ -123,6 +135,7 @@ extension AppSettingsViewController: UITableViewDataSource {
         cell.setting = setting
         cell.titleLabel.textColor = StandardColors.primaryColor
         
+        //Sets state for healthkit cell. This is something that needs more thinking to make this table more dynamic.
         if setting.id == SupportedServices.healthkit.rawValue {
             if SupportedServices.healthkit.model().isAuthorized() {
                 cell.titleLabel.textColor = UIColor.lightGray
@@ -138,7 +151,7 @@ extension AppSettingsViewController: UITableViewDataSource {
             fatalError("Settings were not set.")
         }
         
-        let setting = settings[indexPath.section][indexPath.row]
+        let setting = settings.setting(sectionIndex: indexPath.section, settingIndex: indexPath.row)
         
         setting.primaryAction(setting)
     }
@@ -163,8 +176,8 @@ extension AppSettingsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - AppSettingsModelProtocol
-extension AppSettingsViewController: AppSettingsModelProtocol {
+// MARK: - AppSettingsViewControllerProtocol
+extension AppSettingsViewController: AppSettingsViewControllerProtocol {
     func reloadData() {
         tableView.reloadData()
     }

@@ -8,20 +8,23 @@
 
 import UIKit
 
-protocol AppSettingsModelProtocol {
-    func reloadData()
-}
 
 class AppSettingsModel {
-    var delegate: AppSettingsModelProtocol?
     
-    func appSettings() -> [[Setting]]? {
-        var settings: [[Setting]] = []
+    /// Delegate to callback to view controller.
+    var delegate: AppSettingsViewControllerProtocol?
+    
+    
+    /// Gets settings to use as data source for table view.
+    ///
+    /// - Returns: Settings collection with each section representing a section in the table view.
+    func appSettings() -> Settings<Setting>? {
+        var settings = Settings<Setting>()
         
-        var firstSectionSettings: [Setting] = []
+        //---Services---//
         
-        for service in SupportedServices.allSupportedServices() {
-            let service = Setting(id: service.rawValue, imageName: "healthKitCellImage", title: "Enable \(service.rawValue)", primaryAction: { setting in
+        var firstSection: [Setting] = SupportedServices.allSupportedServices().map { (service: SupportedServices) in
+            let serviceSetting = Setting(id: service.rawValue, imageName: "healthKitCellImage", title: "Enable \(service.rawValue)", primaryAction: { setting in
                 
                 service.model().authorize(completion: { (success: Bool, error: Error?, message: String?) in
                     if let error = error {
@@ -35,10 +38,12 @@ class AppSettingsModel {
                 })
             })
             
-            firstSectionSettings.append(service)
+            return serviceSetting
         }
         
-        var secondSectionSettings: [Setting] = []
+        settings.appendSection(firstSection)
+        
+        //---Goal---//
         
         guard let goalValue = AppUserDefaults.getDailyGoalValue() else {
             return nil
@@ -46,11 +51,11 @@ class AppSettingsModel {
         
         let goalChangerView = PresetValueChangerView()
         goalChangerView.alignment = .right
-        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", control: goalChangerView) {_ in 
+        let goalSetting = Setting(imageName: "goalCellImage", title: "Goal", control: goalChangerView) {_ in
             AppUserDefaults.setDailyGoalValue(goal: goalChangerView.currentValue)
         }
         
-        secondSectionSettings.append(goalSetting)
+        settings.appendSection([goalSetting])
         
         /// What to call when a preset has been updated. Sets the user defaults, a message to the watch and changed the 3D touch shortcuts.
         ///
@@ -63,6 +68,8 @@ class AppSettingsModel {
         guard var presetWaterValues = AppUserDefaults.getPresetWaterValues() else { //Existing preset water values
             return nil
         }
+        
+        //---Presets---//
         
         let smallPresetChangerView = PresetValueChangerView()
         smallPresetChangerView.alignment = .right
@@ -86,14 +93,14 @@ class AppSettingsModel {
             updatePresets(presetWaterValues: presetWaterValues)
         }
         
-        let thirdSectionSettings = [smallPresetSetting, mediumPresetSetting, largePresetSetting]
+        settings.appendSection([smallPresetSetting, mediumPresetSetting, largePresetSetting])
         
-        settings = [firstSectionSettings, secondSectionSettings, thirdSectionSettings]
+        //---Initial Values---//
         
-        goalSetting.setValue(value: goalValue)
-        smallPresetSetting.setValue(value: presetWaterValues[0])
-        mediumPresetSetting.setValue(value: presetWaterValues[1])
-        largePresetSetting.setValue(value: presetWaterValues[2])
+        goalSetting.control?.setValue(value: goalValue)
+        smallPresetSetting.control?.setValue(value: presetWaterValues[0])
+        mediumPresetSetting.control?.setValue(value: presetWaterValues[1])
+        largePresetSetting.control?.setValue(value: presetWaterValues[2])
         
         return settings
     }

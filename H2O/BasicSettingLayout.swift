@@ -8,9 +8,7 @@
 
 import Foundation
 
-struct SettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layout {
-   // typealias Content = UIView
-    
+struct BasicSettingLayout<Decoration: Layout, Title: Layout, Control: Layout> : Layout {    
     /// Decoration representing setting.
     var decoration: Decoration?
     

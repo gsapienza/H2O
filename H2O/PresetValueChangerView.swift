@@ -55,9 +55,7 @@ class PresetValueChangerView: UIControl {
     /// Alignment of text field and label combination
     var alignment :NSTextAlignment = .center
     
-    /**
-     Permanent transparent background
-     */
+ 
     override func layoutSubviews() {
         super.layoutSubviews()
         

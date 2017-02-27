@@ -28,6 +28,8 @@ class AppSettingsTableViewCell: UITableViewCell {
                 decorationView.image = UIImage(named: settingImageName)
             }
             
+            //---Control View---//
+            
             if let controlView = setting.control as? UIControl {
                 self.controlView = controlView
             }
@@ -39,7 +41,7 @@ class AppSettingsTableViewCell: UITableViewCell {
     let decorationView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .center
         
         return imageView
     }()
@@ -78,7 +80,7 @@ class AppSettingsTableViewCell: UITableViewCell {
         
         //---Layout---//
         
-        var layout = SettingLayout(decoration: decorationView, title: titleLabel, control: controlView)
+        var layout = BasicSettingLayout(decoration: decorationView, title: titleLabel, control: controlView)
         layout.layout(in: bounds)
         
         //---View---//
