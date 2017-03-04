@@ -24,18 +24,15 @@ class ConnectViewController: UIViewController, BoardingProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //---Navigation Item---//
+        
         var navigationItem = self.navigationItem
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "done_navigation_item".localized)
         
+        //---Title Label---//
+        
         titleLabel.text = "connect".localized
-        
-        connectTableView = generateConnectTableView()
-        
-        layout()
-    }
-    
-    private func layout() {
-        //---Title Label---
+
         view.addSubview(titleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -44,8 +41,11 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
+        
+        //---Connect Table View---//
+        
+        connectTableView = generateConnectTableView()
 
-        //---Connect Table View---
         view.addSubview(connectTableView)
         
         connectTableView.translatesAutoresizingMaskIntoConstraints = false

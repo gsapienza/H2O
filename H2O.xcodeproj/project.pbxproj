@@ -184,6 +184,8 @@
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 		37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
 		37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		F32924151E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
+		F32924161E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -340,6 +342,7 @@
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 		37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayoutProtocol.swift; sourceTree = "<group>"; };
 		37FD2DF21D87767B00D8C239 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
+		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +425,7 @@
 				37487FD41DDE04D10082DC27 /* ConnectViewController.swift */,
 				375578481DFB245100BF8130 /* ConnectTableViewCell.swift */,
 				37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */,
+				F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */,
 				37263F931DEB629D0037D744 /* WaterBottleView.swift */,
 			);
 			name = Boarding;
@@ -925,6 +929,7 @@
 				3759F0571E3E46E8002C0AFD /* WeekBarGraphView.swift in Sources */,
 				3759F0581E3E46E8002C0AFD /* HealthKitService.swift in Sources */,
 				3759F0591E3E46E8002C0AFD /* InformationViewControllerState.swift in Sources */,
+				F32924161E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */,
 				3759F05A1E3E46E8002C0AFD /* WelcomeViewController.swift in Sources */,
 				3759F05B1E3E46E8002C0AFD /* Entry.swift in Sources */,
 				3759F05C1E3E46E8002C0AFD /* GSAnimatingProgressLayer.swift in Sources */,
@@ -996,6 +1001,7 @@
 				37ADB15A1CFFB27900BE3711 /* WeekBarGraphView.swift in Sources */,
 				37487B471DFF3C7E00539EA5 /* HealthKitService.swift in Sources */,
 				375831271DB2D48200ED136E /* InformationViewControllerState.swift in Sources */,
+				F32924151E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */,
 				37487FD11DDE04C00082DC27 /* WelcomeViewController.swift in Sources */,
 				37487B5B1DFF462D00539EA5 /* Entry.swift in Sources */,
 				378093211D7D1916007CF646 /* GSAnimatingProgressLayer.swift in Sources */,
