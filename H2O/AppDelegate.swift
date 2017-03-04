@@ -22,7 +22,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var primaryViewController: UIViewController = {
         
-        if !AppUserDefaults.getBoardingWasDismissed() {
+        if AppUserDefaults.getBoardingWasDismissed() {
             let viewController = WelcomeViewController()
             viewController.navigationThemeDidChangeHandler = { [weak self] theme in
                 if let navigationController = self?.navigationController {

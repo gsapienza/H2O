@@ -28,7 +28,7 @@ class NotificationsViewController: UIViewController, BoardingProtocol {
     // MARK: - Private iVars
     
     /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: self.titleString)
 
     // MARK: - Public
 
@@ -41,9 +41,7 @@ class NotificationsViewController: UIViewController, BoardingProtocol {
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: rightBarButtonString)
         
         //---Title Label---//
-        
-        titleLabel.text = titleString
-        
+                
         view.addSubview(titleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -61,10 +59,12 @@ class NotificationsViewController: UIViewController, BoardingProtocol {
     }
 
     func animateIn(completion: @escaping (Bool) -> Void) {
-        completion(true)
+        delay(delay: 0.5, closure: {
+            completion(true)
+        })
     }
     
     func animateOut(completion: @escaping (Bool) -> Void) {
-        completion(true)
+        
     }
 }

@@ -186,6 +186,8 @@
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 		37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
 		37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		F32924151E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
+		F32924161E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
 		F33F8B4C1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
 		F33F8B4D1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
 		F33F8B4F1E5137D8008E951F /* BasicSettingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4E1E5137D8008E951F /* BasicSettingLayout.swift */; };
@@ -204,8 +206,6 @@
 		F3C3F57D1E627768006A0D33 /* AppSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */; };
 		F3C3F57F1E634745006A0D33 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57E1E634745006A0D33 /* Settings.swift */; };
 		F3C3F5801E634745006A0D33 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3F57E1E634745006A0D33 /* Settings.swift */; };
-		F32924151E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
-		F32924161E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -363,6 +363,7 @@
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 		37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayoutProtocol.swift; sourceTree = "<group>"; };
 		37FD2DF21D87767B00D8C239 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
+		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		F33F8B4E1E5137D8008E951F /* BasicSettingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSettingLayout.swift; sourceTree = "<group>"; };
 		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
@@ -372,7 +373,6 @@
 		F37A75401E58C6A400822854 /* SettingControlProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingControlProtocol.swift; sourceTree = "<group>"; };
 		F3C3F57B1E627768006A0D33 /* AppSettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsModel.swift; sourceTree = "<group>"; };
 		F3C3F57E1E634745006A0D33 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,8 +454,8 @@
 				37487FD21DDE04CA0082DC27 /* DailyGoalViewController.swift */,
 				37487FD41DDE04D10082DC27 /* ConnectViewController.swift */,
 				375578481DFB245100BF8130 /* ConnectTableViewCell.swift */,
-				37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */,
 				F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */,
+				37BA747E1DFDF1D800221C40 /* CompleteBoardingViewController.swift */,
 				37263F931DEB629D0037D744 /* WaterBottleView.swift */,
 			);
 			name = Boarding;

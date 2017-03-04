@@ -31,8 +31,6 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         
         //---Title Label---//
         
-        titleLabel.text = "connect".localized
-
         view.addSubview(titleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -63,10 +61,12 @@ class ConnectViewController: UIViewController, BoardingProtocol {
     }
     
     func animateOut(completion: @escaping (Bool) -> Void) {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: { 
             self.connectTableView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             self.connectTableView.alpha = 0
-        })
+        }) { (Bool) in
+            completion(true)
+        }
     }
     
     func onRightBarButton() {
@@ -75,6 +75,7 @@ class ConnectViewController: UIViewController, BoardingProtocol {
     }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension ConnectViewController :UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SupportedServices.allSupportedServices().count

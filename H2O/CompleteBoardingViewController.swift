@@ -12,7 +12,7 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
     //MARK: - Strings
     
     /// String for title label.
-    private static let titleString = "Welcome To"
+    private static let titleString = "all_done".localized
     
     //MARK: - Public iVars
     
@@ -37,8 +37,6 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
         var navigationItem = self.navigationItem
         configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "")
         waterBottleView = generateWaterBottleView()
-        
-        titleLabel.text = "all_done".localized
         
         layout()
     }
