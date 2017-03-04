@@ -3,42 +3,59 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/17/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
 
-protocol PresetValueChangerViewProtocol {
-    /**
-     Called when value in textfield is changed by ending editing
-     
-     - parameter newValue: New preset value
-     */
-    func valueDidChange( newValue :Float)
-}
-
-class PresetValueChangerView: UIView {
-        /// Unit label at tail end of view
+class PresetValueChangerView: UIControl {
+    /// Unit label at tail end of view
     let unitLabel = UILabel()
     
-        /// Text view with preset value
-    let presetValueTextField = UITextField()
+    /// Current value contained in text field.
+    var currentValue: Float {
+        set {
+            self.presetValueTextField.text = String(describing: Int(newValue))
+        }
+        
+        get {
+            if let presetValueText = presetValueTextField.text {
+                if let presetValue = Float(presetValueText) {
+                    return presetValue
+                }
+            }
+            
+            return 0
+        }
+    }
     
-        /// Delegate to update when a new value is declared
-    var delegate :PresetValueChangerViewProtocol?
+    var placeholder: String? {
+        set {
+            self.presetValueTextField.placeholder = placeholder
+        }
+        
+        get {
+            return self.presetValueTextField.placeholder
+        }
+    }
     
-        /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
+    /// Text view with preset value
+    private let presetValueTextField = UITextField()
+    
+    
+    /// Previous value to save so that if the user makes an edit at leaves the text field blank, it will be replaced by this
     var previousValue = String()
     
+    /// Font size for label and text field.
     var fontSize :CGFloat = 17
     
+    /// Is the keyboard toolbar enabled.
     var toolbarEnabled = true
     
+    /// Alignment of text field and label combination
     var alignment :NSTextAlignment = .center
     
-    /**
-     Permanent transparent background
-     */
+ 
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -46,7 +63,8 @@ class PresetValueChangerView: UIView {
         
         backgroundColor = UIColor.clear
         
-        setupColors()
+        unitLabel.textColor = StandardColors.primaryColor
+        presetValueTextField.textColor = StandardColors.primaryColor
         
         //Keyboard toolbar
         
@@ -54,11 +72,8 @@ class PresetValueChangerView: UIView {
             let screenWidth = getAppDelegate().window?.frame.width
             
             let keyPadToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth!, height: 50))
-            if AppUserDefaults.getDarkModeEnabled() {
-                keyPadToolbar.barStyle = .blackTranslucent
-            } else {
-                keyPadToolbar.barStyle = .default
-            }
+            keyPadToolbar.barStyle = .blackTranslucent
+
             let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
             let doneBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PresetValueChangerView.onDoneEditing))
             doneBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.waterColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState())
@@ -68,6 +83,14 @@ class PresetValueChangerView: UIView {
             
             presetValueTextField.inputAccessoryView = keyPadToolbar
         }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return presetValueTextField.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        return presetValueTextField.resignFirstResponder()
     }
     
     //MARK: - View Setup
@@ -174,6 +197,8 @@ extension PresetValueChangerView :UITextFieldDelegate {
      */
     func textFieldDidBeginEditing(_ textField: UITextField) {
         previousValue = textField.text!
+        
+        sendActions(for: .editingDidBegin)
     }
     
     /**
@@ -204,20 +229,6 @@ extension PresetValueChangerView :UITextFieldDelegate {
             textField.text = previousValue //Replace it with its previous value
         }
         
-        if let delegate = self.delegate {
-            if let presetValueText = presetValueTextField.text {
-                if let presetValue = Float(presetValueText) {
-                    delegate.valueDidChange(newValue: presetValue)
-                }
-            }
-        }
-    }
-}
-
-// MARK: - NightModeProtocol
-extension PresetValueChangerView :NightModeProtocol {
-    func setupColors() {
-        unitLabel.textColor = StandardColors.primaryColor
-        presetValueTextField.textColor = StandardColors.primaryColor
+        sendActions(for: .editingDidEnd)
     }
 }

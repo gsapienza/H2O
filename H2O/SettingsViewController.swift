@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/17/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
@@ -86,7 +86,6 @@ class SettingsViewController: UITableViewController {
         
         setupNavigationBar()
         setupCells()
-        setupToggles()
     }
     
     /**
@@ -95,9 +94,9 @@ class SettingsViewController: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = StandardColors.standardSecondaryColor
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = "settings_navigation_title".localized
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
+        navigationItem.title = "settings_navigation_title".localized
         let closeButton = UIBarButtonItem(title: "close_navigation_item".localized, style: .plain, target: self, action: #selector(SettingsViewController.onCloseButton)) //Left close button
         
         closeButton.setTitleTextAttributes([NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.regularFont(size: 18)], for: UIControlState()) //Close button view properties
@@ -118,69 +117,32 @@ class SettingsViewController: UITableViewController {
         goalCell.cellTextLabel.text = "daily_goal_setting".localized
         
         if let goal = AppUserDefaults.getDailyGoalValue() {
-            goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
+          //  goalCell.presetValueChangerView.presetValueTextField.text = String(Int(goal))
             goalCell.delegate = self
         }
-        
-        var presetImages :[UIImage]! //Preset images based on light and dark modes.
-        
-        if AppUserDefaults.getDarkModeEnabled() {
-            presetImages = [UIImage(assetIdentifier: .darkSmallPresetImage), UIImage(assetIdentifier: .darkMediumPresetImage), UIImage(assetIdentifier: .darkLargePresetImage)]
-        } else {
-            presetImages = [UIImage(assetIdentifier: .lightLargePresetImage), UIImage(assetIdentifier: .lightMediumPresetImage), UIImage(assetIdentifier: .lightLargePresetImage)]
+                
+        let presetImages = [UIImage(assetIdentifier: .darkSmallPresetImage), UIImage(assetIdentifier: .darkMediumPresetImage), UIImage(assetIdentifier: .darkLargePresetImage)]
 
-        }
         
         //Preset cells config
         if let presetWaterValues = AppUserDefaults.getPresetWaterValues() {
             //Small preset
             presetCell1.cellImageView.image = presetImages[0]
             presetCell1.cellTextLabel.text = "small_preset_setting".localized
-            presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
+           // presetCell1.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[0]))
             presetCell1.delegate = self
             
             //Medium preset
             presetCell2.cellImageView.image = presetImages[1]
             presetCell2.cellTextLabel.text = "medium_preset_setting".localized
-            presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
+            //presetCell2.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[1]))
             presetCell2.delegate = self
             
             //Large preset
             presetCell3.cellImageView.image = presetImages[2]
             presetCell3.cellTextLabel.text = "large_preset_setting".localized
-            presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
+           // presetCell3.presetValueChangerView.presetValueTextField.text = String(Int(presetWaterValues[2]))
             presetCell3.delegate = self
-        }
-        
-        //Dark Mode cell config
-        themeCell.cellImageView.image = UIImage(assetIdentifier: .darkModeCellImage)
-        themeCell.cellTextLabel.text = "dark_mode_setting".localized
-        themeSwitch.onTintColor = StandardColors.waterColor
-        
-        //Automatic theme cell config
-        automaticThemeCell.cellImageView.image = UIImage(assetIdentifier: .automaticThemeChangeCellImage)
-        automaticThemeCell.cellTextLabel.text = "auto_switch_themes_setting".localized
-        automaticThemeSwitch.onTintColor = StandardColors.waterColor
-    }
-    
-    /**
-     Sets up the toggles in settings
-     */
-    private func setupToggles() {
-        if AppUserDefaults.getDarkModeEnabled() { //Configure theme switch depeding on current color
-            themeSwitch.setOn(true, animated: false)
-        } else {
-            themeSwitch.setOn(false, animated: false)
-        }
-        
-        let automaticThemeChangeEnabled = AppUserDefaults.getAutomaticThemeChangeEnabled()
-        
-        if automaticThemeChangeEnabled { //If automatic theme changer is on then disable the theme switch cell as it would intefere with the automatic changing
-            automaticThemeSwitch.setOn(true, animated: false)
-            themeCell.cellTextLabel.alpha = 0.5
-            themeSwitch.isEnabled = false
-        } else {
-            automaticThemeSwitch.setOn(false, animated: false)
         }
     }
     
@@ -249,42 +211,6 @@ class SettingsViewController: UITableViewController {
         } else { //If healthkit permissions have not been shown
             healthKitCell.cellTextLabel.text = "enable_healthkit_setting".localized //Allow user to enable healthkit through permissions
         }
-    }
-    
-    //MARK: - Theme Actions
-    
-    /**
-     Action when the theme switch is toggled
-     
-     - parameter sender: Theme switch
-     */
-    @IBAction func onThemeSwitch( sender: UISwitch) {
-        AudioToolbox.standardAudioToolbox.playAudio(ClickSound, repeatEnabled: false)
-
-        AppUserDefaults.setDarkModeEnabled(enabled: sender.isOn) //Change theme based on switch state
-        
-        view.endEditing(true) //Dismisses keyboard... Too bad this doesnt work very well
-        NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil)
-    }
-    
-    /**
-     Action when the automatic theme switch is toggled
-     
-     - parameter sender: Automatic theme changer switch
-     */
-    @IBAction func onAutomaticThemeSwitch( sender: UISwitch) {
-        AudioToolbox.standardAudioToolbox.playAudio(ClickSound, repeatEnabled: false)
-        AppUserDefaults.setAutomaticThemeChangeEnabled(enabled: sender.isOn)
-        
-        if sender.isOn { //If on then essentially disable the theme cell because it would intefere with the auto changes
-            themeCell.cellTextLabel.alpha = 0.5
-            themeSwitch.isEnabled = false
-        } else { //If its off then reenable the theme cell
-            themeCell.cellTextLabel.alpha = 1
-            themeSwitch.isEnabled = true
-        }
-        
-        getAppDelegate().checkToSwitchThemes() //Switch themes if necessary based on time of day
     }
 }
 

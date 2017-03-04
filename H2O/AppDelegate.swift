@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/16/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
@@ -15,6 +15,31 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public var window: UIWindow?
     private var _user :User?
+    
+    var navigationController: UINavigationController {
+        return window!.rootViewController as! UINavigationController
+    }
+    
+    lazy var primaryViewController: UIViewController = {
+        
+        if !AppUserDefaults.getBoardingWasDismissed() {
+            let viewController = WelcomeViewController()
+            viewController.navigationThemeDidChangeHandler = { [weak self] theme in
+                if let navigationController = self?.navigationController {
+                    navigationController.navigationBar.applyTheme(navigationTheme: theme)
+                }
+            }
+            return viewController
+        } else {
+            let viewController: MainViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+            viewController.navigationThemeDidChangeHandler = { [weak self] theme in
+                if let navigationController = self?.navigationController {
+                    navigationController.navigationBar.applyTheme(navigationTheme: theme)
+                }
+            }
+            return viewController
+        }
+    }()
     
     var user :User? {
         return _user
@@ -45,7 +70,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         if !AppUserDefaults.getWasOpenedOnce() {
             setDefaultPresets()
             setDefaultGoal()
-            setDefaultTheme()
             
             AppUserDefaults.setAppWasOpenedOnce(openedOnce: true)
         }
@@ -57,18 +81,16 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         _user = User.loadUser() //Loads user data from database
         
         checkHealthKitStatus()
-
-        checkToSwitchThemes() //Check theme status on launch if automatic theme change is enabled
-        
-        //Set a timer to check the theme status so that if the app is open when the time changes, the theme will change
-        let automaticThemeSwitcherTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(AppDelegate.checkToSwitchThemes), userInfo: nil, repeats: true)
-        RunLoop.current.add(automaticThemeSwitcherTimer, forMode: RunLoopMode.commonModes)
         
         WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
         }
         
-        if AppUserDefaults.getBoardingWasDismissed() {
-           pushBoardingViewControllerOnRoot()
+        primaryViewController.view.backgroundColor = UIColor.clear
+        
+        navigationController.setViewControllers([primaryViewController], animated: false)
+        
+        if !AppUserDefaults.getBoardingWasDismissed() {
+           //pushBoardingViewControllerOnRoot()
         } else {
             AppDelegate.createShortcuts() //Creates 3D touch shortcuts
         }
@@ -151,21 +173,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //MARK: - UI
     
-    /// Makes the boarding navigation controller the root view controller.
-    private func pushBoardingViewControllerOnRoot() {
-        let boardingViewController = UINavigationController()
-        
-        var navBar = boardingViewController.navigationBar
-        configureNavigationBar(navigationBar: &navBar)
-        
-        let rootViewController = WelcomeViewController()
-        rootViewController.view.backgroundColor = UIColor.clear
-        
-        boardingViewController.setViewControllers([rootViewController], animated: false)
-        
-        window?.rootViewController = boardingViewController
-    }
-    
     /// Configures the view controllers navigation bar.
     private func configureNavigationBar(navigationBar :inout UINavigationBar) {
         navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -185,68 +192,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Sets default goal value if none exists
     private func setDefaultGoal() {
         AppUserDefaults.setDailyGoalValue(goal: defaultDailyGoal)
-    }
-    
-    /// Sets default theme if none exists
-    private func setDefaultTheme() {
-        AppUserDefaults.setDarkModeEnabled(enabled: true)
-    }
-
-    //MARK: - Theme Management
-        
-    /**
-     Checks the time of day and changes the theme if automatic theme change is enabled and if it is not set correctly based on current time of day. 6AM - 6PM is light mode and 6PM to 6AM is dark mode
-     */
-    func checkToSwitchThemes() {
-        let automaticThemeChangeEnabled = AppUserDefaults.getAutomaticThemeChangeEnabled() //Get automatic status of automatic theme change
-        
-        if automaticThemeChangeEnabled {
-            let calendar = Calendar.current //Calendar type
-            
-            //UIApplicationProtectedDataDidBecomeAvailable
-            
-            let currentDateComponents = calendar.dateComponents([.hour], from: Date()) //Components for the current day to get hour and minutes to see if it is appropriate to change themes
-            
-            if currentDateComponents.hour! > 5 && currentDateComponents.hour! < 18 { //If between 6AM and 6PM
-                if AppUserDefaults.getDarkModeEnabled() { //If dark mode is enabled
-                    AppUserDefaults.setDarkModeEnabled(enabled: false) //Activate light mode
-                    NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil) //Update view controllers
-                }
-            } else { //If its between 6PM and 6AM
-                if !AppUserDefaults.getDarkModeEnabled() { //If light mode is enabled
-                    AppUserDefaults.setDarkModeEnabled(enabled: true)  //Activate dark mode
-                    NotificationCenter.default.post(name: DarkModeToggledNotification, object: nil) //Update viewcontrollers
-                }
-            }
-        }
-    }
-    
-    /**
-     Reloads a view controller from scratch including all views, subviews and the status bar. Used when theme changing
-     
-     - parameter viewController: View controller to reload
-     */
-    class func reloadViewController(_ viewController :UIViewController) {
-        viewController.viewDidLoad()
-        viewController.viewWillAppear(true)
-        viewController.viewDidAppear(true)
-        viewController.setNeedsStatusBarAppearanceUpdate() //Refresh status bar
-        AppDelegate.reloadSubviews(viewController.view) //Refresh views
-    }
-    
-    /**
-     Reloads all subviews and their subviews
-     
-     - parameter view: Root view in view controller
-     */
-    private class func reloadSubviews(_ view :UIView) {
-        for subview in view.subviews {
-            subview.setNeedsLayout()
-            subview.setNeedsDisplay()
-            subview.awakeFromNib()
-            
-            reloadSubviews(subview)
-        }
     }
     
     // MARK: - Class functions

@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 12/2/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import Foundation
@@ -27,9 +27,10 @@ extension BoardingProtocol where Self :UIViewController {
     /// Generates a title label.
     ///
     /// - Returns: A magic label to use for title.
-    func generateTitleLabel() -> GSMagicTextLabel {
+    func generateTitleLabel(text: String) -> GSMagicTextLabel {
         let label = GSMagicTextLabel()
         
+        label.text = text
         let fontSize = UIScreen.main.bounds.width / 9
         label.font = StandardFonts.ultraLightFont(size: fontSize) //48
         label.textAlignment = .center

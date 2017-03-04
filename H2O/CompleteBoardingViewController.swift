@@ -3,14 +3,18 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 12/11/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
 
 class CompleteBoardingViewController: UIViewController, BoardingProtocol {
-    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel()
+    //MARK: - Strings
+    
+    /// String for title label.
+    private static let titleString = "Welcome To"
+    
+    //MARK: - Public iVars
     
     /// First label.
     var titleLabel :GSMagicTextLabel {
@@ -18,7 +22,12 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
             return _titleLabel
         }
     }
+    
+    //MARK: - Private iVars
 
+    /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
+    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: titleString)
+    
     /// View displaying water bottle animation.
     private var waterBottleView :WaterBottleView!
     

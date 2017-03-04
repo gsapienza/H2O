@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/16/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
@@ -47,12 +47,22 @@ class EntryButton: UIButton {
         layer.cornerRadius = bounds.height / 2 //Without setting this, highlighting gets messed up.
         circleView.layer.cornerRadius = layer.cornerRadius
         
-        setupColors()
+        setTitleColor(StandardColors.primaryColor, for: .normal)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        customInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        customInit()
+    }
+    
+    func customInit() {
         circleView = generateCircleView()
         configureTitleLabel()
         
@@ -122,13 +132,5 @@ extension EntryButton {
         })
         
         delegate?.entryButtonTapped(amount: amount)
-    }
-}
-
-// MARK: - NightModeProtocol
-extension EntryButton :NightModeProtocol {
-    func setupColors() {
-       // circleView.layer.borderColor = UIColor(white: 1, alpha: 0.2).cgColor//StandardColors.primaryColor.cgColor
-        setTitleColor(StandardColors.primaryColor, for: .normal)
     }
 }

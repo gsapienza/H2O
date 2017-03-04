@@ -3,7 +3,7 @@
 //  H2O-Watch Extension
 //
 //  Created by Gregory Sapienza on 9/14/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import WatchKit
@@ -92,11 +92,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     /// Sets default goal value if none exists
     private func setDefaultGoal() {
         AppUserDefaults.setDailyGoalValue(goal: defaultDailyGoal)
-    }
-    
-    /// Sets default theme if none exists
-    private func setDefaultTheme() {
-        AppUserDefaults.setDarkModeEnabled(enabled: true)
     }
     
     // MARK: - Core Data stack

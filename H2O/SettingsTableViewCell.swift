@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/17/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
@@ -36,7 +36,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        setupColors()
+        cellTextLabel.textColor = StandardColors.primaryColor
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,12 +105,5 @@ private extension SettingsTableViewCell {
         imageView.contentMode = .center
         
         return imageView
-    }
-}
-
-// MARK: - NightModeProtocol
-extension SettingsTableViewCell :NightModeProtocol {
-    func setupColors() {
-        cellTextLabel.textColor = StandardColors.primaryColor
     }
 }

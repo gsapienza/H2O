@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 5/16/16.
-//  Copyright © 2016 Midnite. All rights reserved.
+//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
 //
 
 import UIKit
@@ -21,7 +21,7 @@ protocol EntryButtonProtocol {
     func customEntryButtonTapped(customButton :EntryButton)
 }
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, NavigationThemeProtocol {
 
     //MARK: - Public iVars
     
@@ -65,6 +65,8 @@ class MainViewController: UIViewController {
     /// Model for intergrating services.
     fileprivate var serviceIntergrationModel :ServiceIntergrationModel = ServiceIntergrationModel()
     
+    var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)?
+    
     //MARK: - Internal iVars
     
     /// User set water goal (readonly)
@@ -93,13 +95,7 @@ class MainViewController: UIViewController {
         configureAccessibility()
         addNotificationObservers()
     
-       // view.backgroundColor = StandardColors.backgroundColor
-        
-        if AppUserDefaults.getDarkModeEnabled() {
-            backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
-        } else {
-            backgroundImageView.image = UIImage(assetIdentifier: .lightModeBackground)
-        }
+        backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
         
         undoBarButtonItem = UndoBarButtonItem(enabled: false)
 
@@ -121,11 +117,31 @@ class MainViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateNavigationBar(navigationTheme: .hidden)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         customEntryView = generateCustomEntryView()
 
         layout()
         indicateDialToOpenInformationViewController()
+        
+        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
+        updateFluidValue(current: currentAmount!)
+        
+        if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
+            entryButton1.amount = presetWaterValues[0]
+            entryButton2.amount = presetWaterValues[1]
+            entryButton3.amount = presetWaterValues[2]
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     //MARK: - Private
@@ -294,19 +310,11 @@ private extension MainViewController {
     func configureFluidView() {
         fluidView.liquidFillColor = StandardColors.waterColor //Water fill
         fluidView.h2OFluidViewDelegate = self
-        
-        if let currentAmount = getAppDelegate().user?.amountOfWaterForToday() {
-            updateFluidValue(current: currentAmount) //Update the fluid value to get a new height
-        }
     }
     
     /// Configures blur view overlaying the in fluid view
     func configureBlurView() {
-        if AppUserDefaults.getDarkModeEnabled() {
-            fluidBlurView.effect = UIBlurEffect(style: .dark)
-        } else {
-            fluidBlurView.effect = UIBlurEffect(style: .light)
-        }
+        fluidBlurView.effect = UIBlurEffect(style: .dark)
     }
     
     /// Configures the preset buttons
@@ -370,12 +378,16 @@ extension MainViewController {
     ///
     /// - parameter sender: Settings bar button
     @IBAction func onSettingsBarButton(_ sender: AnyObject) {
-        let navigationViewController :UINavigationController = UIStoryboard(storyboard: .Main).instantiateViewController()
+        let navigationController: UINavigationController = UIStoryboard(storyboard: .Main).instantiateViewController()
         
-        let settingsViewController = navigationViewController.viewControllers.first as! SettingsViewController
-        settingsViewController.delegate = self
+        navigationController.navigationBar.barTintColor = StandardColors.standardSecondaryColor
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
-        self.present(navigationViewController, animated: true, completion: nil)
+        let settingsViewController = navigationController.viewControllers.first as! AppSettingsViewController
+        //settingsViewController.delegate = self
+        
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     ///When the cancel bar button is tapped when the custom entry view is present
