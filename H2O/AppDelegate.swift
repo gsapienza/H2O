@@ -90,7 +90,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.setViewControllers([primaryViewController], animated: false)
         
         if !AppUserDefaults.getBoardingWasDismissed() {
-           pushBoardingViewControllerOnRoot()
+           //pushBoardingViewControllerOnRoot()
         } else {
             AppDelegate.createShortcuts() //Creates 3D touch shortcuts
         }
@@ -173,13 +173,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //MARK: - UI
-    
-    /// Makes the boarding navigation controller the root view controller.
-    private func pushBoardingViewControllerOnRoot() {
-       
-        
-        //window?.rootViewController = primaryViewController
-    }
     
     /// Configures the view controllers navigation bar.
     private func configureNavigationBar(navigationBar :inout UINavigationBar) {
