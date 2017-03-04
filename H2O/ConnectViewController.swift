@@ -27,7 +27,7 @@ class ConnectViewController: UIViewController, BoardingProtocol {
         //---Navigation Item---//
         
         var navigationItem = self.navigationItem
-        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "done_navigation_item".localized)
+        configureNavigationItem(navigationItem: &navigationItem, title: "", rightBarButtonItemTitle: "next_navigation_item".localized)
         
         //---Title Label---//
         
@@ -70,8 +70,8 @@ class ConnectViewController: UIViewController, BoardingProtocol {
     }
     
     func onRightBarButton() {
-        let completeViewController = CompleteBoardingViewController()
-        navigationController?.pushViewController(completeViewController, animated: true)
+        let notificationsViewController = NotificationsViewController()
+        navigationController?.pushViewController(notificationsViewController, animated: true)
     }
 }
 

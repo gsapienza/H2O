@@ -67,7 +67,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
         }
         
-        if !AppUserDefaults.getBoardingWasDismissed() {
+        if AppUserDefaults.getBoardingWasDismissed() {
            pushBoardingViewControllerOnRoot()
         } else {
             AppDelegate.createShortcuts() //Creates 3D touch shortcuts
