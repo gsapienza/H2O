@@ -188,6 +188,10 @@
 		37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
 		F32924151E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
 		F32924161E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
+		F32924181E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */; };
+		F32924191E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */; };
+		F329241B1E6B4CAE00B9CAF3 /* LocationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */; };
+		F329241C1E6B4CAE00B9CAF3 /* LocationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */; };
 		F33F8B4C1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
 		F33F8B4D1E51363E008E951F /* AppSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */; };
 		F33F8B4F1E5137D8008E951F /* BasicSettingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B4E1E5137D8008E951F /* BasicSettingLayout.swift */; };
@@ -364,6 +368,8 @@
 		37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayoutProtocol.swift; sourceTree = "<group>"; };
 		37FD2DF21D87767B00D8C239 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
 		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
+		F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMonitor.swift; sourceTree = "<group>"; };
 		F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		F33F8B4E1E5137D8008E951F /* BasicSettingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSettingLayout.swift; sourceTree = "<group>"; };
 		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
@@ -557,6 +563,7 @@
 		3785665A1CEA93BC003418C2 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */,
 				3741F5B11D8F119200F7598E /* Localizable.strings */,
 				374C3BD41E008D3500095AD5 /* Localizable.stringsdict */,
 				371C696A1E47F1EF009BD4FF /* NavigationThemeProtocol.swift */,
@@ -714,6 +721,7 @@
 				F361E88F1E4F770D00E06BC0 /* AppSettingsViewController.swift */,
 				F33F8B4B1E51363E008E951F /* AppSettingsTableViewCell.swift */,
 				37A182691CEBF4E30055DA02 /* PresetValueChangerView.swift */,
+				F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -800,12 +808,20 @@
 				TargetAttributes = {
 					3759F0211E3E46E8002C0AFD = {
 						DevelopmentTeam = G898DU57KC;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					375F4FDA1CEA91A6009C14AE = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = G898DU57KC;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.HealthKit = {
 								enabled = 1;
 							};
@@ -970,12 +986,14 @@
 				3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */,
 				3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */,
 				F3C3F5801E634745006A0D33 /* Settings.swift in Sources */,
+				F329241C1E6B4CAE00B9CAF3 /* LocationMonitor.swift in Sources */,
 				3759F0401E3E46E8002C0AFD /* UIColor+ColorWithHex.m in Sources */,
 				3759F0411E3E46E8002C0AFD /* DailyEntryDateView.swift in Sources */,
 				3759F0421E3E46E8002C0AFD /* GSFluidLayout.swift in Sources */,
 				3759F0431E3E46E8002C0AFD /* UndoBarButtonItem.swift in Sources */,
 				3759F0441E3E46E8002C0AFD /* StandardFonts.swift in Sources */,
 				F33F8B5C1E515EC5008E951F /* Setting.swift in Sources */,
+				F32924191E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift in Sources */,
 				3759F0451E3E46E8002C0AFD /* GSFluidView.swift in Sources */,
 				3759F0461E3E46E8002C0AFD /* StandardColors.swift in Sources */,
 				3759F0471E3E46E8002C0AFD /* AppUserDefaults.swift in Sources */,
@@ -1052,12 +1070,14 @@
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
 				F3C3F57F1E634745006A0D33 /* Settings.swift in Sources */,
+				F329241B1E6B4CAE00B9CAF3 /* LocationMonitor.swift in Sources */,
 				37E0D7781CF89538004ABFAF /* UIColor+ColorWithHex.m in Sources */,
 				37E0D7691CF274E9004ABFAF /* DailyEntryDateView.swift in Sources */,
 				37ADB1561CFBA33A00BE3711 /* GSFluidLayout.swift in Sources */,
 				37D7F9DF1DB1780200C94CB6 /* UndoBarButtonItem.swift in Sources */,
 				37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */,
 				F33F8B5B1E515EC5008E951F /* Setting.swift in Sources */,
+				F32924181E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift in Sources */,
 				37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */,
 				3785665D1CEA941A003418C2 /* StandardColors.swift in Sources */,
 				3741F5AA1D8ED61D00F7598E /* AppUserDefaults.swift in Sources */,
@@ -1161,7 +1181,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/H2O/L360Confetti",
 				);
-				INFOPLIST_FILE = "H2O Dev-Info.plist";
+				INFOPLIST_FILE = H2O/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.theoven.H2O-Dev";
@@ -1190,7 +1210,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/H2O/L360Confetti",
 				);
-				INFOPLIST_FILE = "H2O Dev-Info.plist";
+				INFOPLIST_FILE = H2O/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.theoven.H2O-Dev";
