@@ -53,24 +53,6 @@ class LocationMonitor: NSObject {
             completionHandler(response, error)
         }
     }
-    
-    fileprivate func distanceFromCoordinate(fromCoordinate: CLLocationCoordinate2D, toCoordinate: CLLocationCoordinate2D) -> CLLocationDistance {
-        let earthRadius = 6371.01
-        
-        let kDegreesToRadians = M_PI / 180.0
-        
-        let latDis = (fromCoordinate.latitude - toCoordinate.latitude) * kDegreesToRadians
-        let lonDis = (fromCoordinate.longitude - toCoordinate.longitude) * kDegreesToRadians
-        
-        let fromLat = toCoordinate.latitude * kDegreesToRadians
-        let toLat = fromCoordinate.latitude * kDegreesToRadians
-        
-        let na = pow(sin(latDis / 2), 2) + cos(fromLat) * cos(toLat) * pow(sin(lonDis / 2), 2 )
-        let nc = 2 * atan2(sqrt(na), sqrt(1 - na))
-        let nd = earthRadius * nc
-        
-        return nd * 1000
-    }
 }
 
 // MARK: - CLLocationManagerDelegate
