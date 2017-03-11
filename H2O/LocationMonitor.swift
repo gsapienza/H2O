@@ -69,8 +69,8 @@ extension LocationMonitor: CLLocationManagerDelegate {
                 return
             }
             
-            var mapLocItem = MKMapItem()
-            var smallest: CLLocationDistance?
+            var localMapItem = MKMapItem()
+            var smallestDistance: CLLocationDistance?
             for mapItem in mapItems {
                 guard let mapItemLocation = mapItem.placemark.location else {
                     return
@@ -78,21 +78,28 @@ extension LocationMonitor: CLLocationManagerDelegate {
 
                 let distance = lastLocation.distance(from: mapItemLocation)
                 
-                if var smallest = smallest {
-                    if distance < smallest {
-                        smallest = distance
-                        mapLocItem = mapItem
+                if var smallestDistance = smallestDistance {
+                    if distance < smallestDistance {
+                        smallestDistance = distance
+                        localMapItem = mapItem
                     }
                 } else {
-                    smallest = distance
-                    mapLocItem = mapItem
+                    smallestDistance = distance
+                    localMapItem = mapItem
                 }
             }
             
-            print(smallest)
+           // print(smallestDistance)
 
-            smallest = 0
-            print(mapLocItem)
+            let minimumAcceptableDistanceFromLocation: CLLocationDistance = 30
+            
+            if let smallestDistance = smallestDistance {
+                if smallestDistance <= minimumAcceptableDistanceFromLocation {
+                    print(localMapItem)
+                }
+            }
+            
+            smallestDistance = 0
         }
     }
     
