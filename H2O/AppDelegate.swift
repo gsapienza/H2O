@@ -15,11 +15,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public var window: UIWindow?
     private var _user :User?
-    private lazy var locationMonitor: LocationMonitor = {
-        let locationMonitor = LocationMonitor()
-        
-        return locationMonitor
-    }()
     
     var navigationController: UINavigationController {
         return window!.rootViewController as! UINavigationController
@@ -100,7 +95,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             AppDelegate.createShortcuts() //Creates 3D touch shortcuts
         }
         
-        locationMonitor.startMonitoringLocation()
+        LocationMonitor.defaultLocationMonitor.startMonitoringLocation()
         
         return true
     }

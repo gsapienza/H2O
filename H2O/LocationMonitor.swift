@@ -11,6 +11,11 @@ import MapKit
 
 class LocationMonitor: NSObject {
     
+    //MARK: - Public iVars
+    
+    /// Singleton location monitor.
+    static let defaultLocationMonitor = LocationMonitor()
+    
     // MARK: - Private iVars
 
     private lazy var locationManager: CLLocationManager = {
@@ -85,10 +90,11 @@ extension LocationMonitor: CLLocationManagerDelegate {
             var mapLocItem = MKMapItem()
             var smallest: CLLocationDistance?
             for mapItem in mapItems {
-                let mapItemCoordinate = mapItem.placemark.coordinate
-                let currentCoordinate = lastLocation.coordinate
-                
-                let distance = self.distanceFromCoordinate(fromCoordinate: currentCoordinate, toCoordinate: mapItemCoordinate)
+                guard let mapItemLocation = mapItem.placemark.location else {
+                    return
+                }
+
+                let distance = lastLocation.distance(from: mapItemLocation)
                 
                 if var smallest = smallest {
                     if distance < smallest {
@@ -101,6 +107,8 @@ extension LocationMonitor: CLLocationManagerDelegate {
                 }
             }
             
+            print(smallest)
+
             smallest = 0
             print(mapLocItem)
         }
