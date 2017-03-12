@@ -9,12 +9,14 @@
 import UIKit
 import CoreData
 import AVFoundation
+import UserNotifications
 
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public var window: UIWindow?
     private var _user :User?
+    private let notificationDelegate = NotificationDelegate()
     
     var navigationController: UINavigationController {
         return window!.rootViewController as! UINavigationController
@@ -97,6 +99,17 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         LocationMonitor.defaultLocationMonitor.startMonitoringLocation()
         
+        
+        let center = UNUserNotificationCenter.current()
+        center.delegate = notificationDelegate
+        let options: UNAuthorizationOptions = [.alert]
+        
+        center.requestAuthorization(options: options) { (success: Bool, error: Error?) in
+            if let error = error {
+                print(error)
+            }
+        }
+        
         return true
     }
     
@@ -136,6 +149,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        print("BACKGROUND")
     }
 
     public func applicationWillEnterForeground(_ application: UIApplication) {

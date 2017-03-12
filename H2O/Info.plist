@@ -26,6 +26,8 @@
 	<string>To restore water date from the Health app.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>To add and delete water entries.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To remind you to drink water when in locations such as restaurants.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bariol_Regular.otf</string>
@@ -33,6 +35,8 @@
 		<string>Bariol_Light.otf</string>
 		<string>Bariol_Bold.otf</string>
 	</array>
+	<key>UIApplicationExitsOnSuspend</key>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -54,7 +58,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>To remind you to drink water when in locations such as restaurants.</string>
 </dict>
 </plist>

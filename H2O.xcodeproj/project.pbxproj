@@ -186,6 +186,8 @@
 		37EA8E621CEB738300E2B332 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
 		37FD2DF11D87723000D8C239 /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
 		37FD2DF31D87767B00D8C239 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		F31D43F11E746DAA00A3871E /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */; };
+		F31D43F21E746DAA00A3871E /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */; };
 		F32924151E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
 		F32924161E6B2A8A00B9CAF3 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */; };
 		F32924181E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */; };
@@ -367,6 +369,7 @@
 		37EA8E611CEB738300E2B332 /* StandardFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardFonts.swift; sourceTree = "<group>"; };
 		37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidLayoutProtocol.swift; sourceTree = "<group>"; };
 		37FD2DF21D87767B00D8C239 /* GSFluidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSFluidView.swift; sourceTree = "<group>"; };
+		F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
 		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
 		F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMonitor.swift; sourceTree = "<group>"; };
@@ -563,6 +566,7 @@
 		3785665A1CEA93BC003418C2 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */,
 				F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */,
 				3741F5B11D8F119200F7598E /* Localizable.strings */,
 				374C3BD41E008D3500095AD5 /* Localizable.stringsdict */,
@@ -961,6 +965,7 @@
 				3759F0261E3E46E8002C0AFD /* WobbleAnimation.swift in Sources */,
 				3759F0271E3E46E8002C0AFD /* User.swift in Sources */,
 				3759F0281E3E46E8002C0AFD /* AppDelegate.swift in Sources */,
+				F31D43F21E746DAA00A3871E /* NotificationDelegate.swift in Sources */,
 				3759F0291E3E46E8002C0AFD /* ServiceIntergrationProtocol.swift in Sources */,
 				3759F02A1E3E46E8002C0AFD /* Service+CoreDataProperties.swift in Sources */,
 				3759F02B1E3E46E8002C0AFD /* ConnectTableViewCell.swift in Sources */,
@@ -1045,6 +1050,7 @@
 				37D13DE91DB7B2B200C850BA /* WobbleAnimation.swift in Sources */,
 				37487B571DFF462100539EA5 /* User.swift in Sources */,
 				37C81B2B1D9189C100B6DA9F /* AppDelegate.swift in Sources */,
+				F31D43F11E746DAA00A3871E /* NotificationDelegate.swift in Sources */,
 				37487B451DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift in Sources */,
 				37487B4C1DFF454E00539EA5 /* Service+CoreDataProperties.swift in Sources */,
 				375578491DFB245100BF8130 /* ConnectTableViewCell.swift in Sources */,
