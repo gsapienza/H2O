@@ -28,7 +28,7 @@ class LocationMonitor: NSObject {
         locationManager.pausesLocationUpdatesAutomatically = false
         //locationManager.startMonitoringSignificantLocationChanges()
         locationManager.requestAlwaysAuthorization()
-        locationManager.startMonitoringVisits()
+      //   locationManager.startMonitoringVisits()
         
         return locationManager
     }()
@@ -44,6 +44,8 @@ class LocationMonitor: NSObject {
     // MARK: - Public
 
     func startMonitoringLocation() {
+        locationManager.startMonitoringVisits()
+
         locationManager.startUpdatingLocation()
     }
     
@@ -52,8 +54,7 @@ class LocationMonitor: NSObject {
     fileprivate func searchForPlace(query: String, in coordinate: CLLocationCoordinate2D, completionHandler: @escaping (_ response: MKLocalSearchResponse?, _ error: Error?) -> Void) {
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = query
-        var region = MKCoordinateRegion()
-        region.center = coordinate
+        let region = MKCoordinateRegionMakeWithDistance(coordinate, 7, 7)//MKCoordinateRegion(center: coordinate, span: MKCoordinateSpanMake(0.0001, 0.0001))
         request.region = region
         let search = MKLocalSearch(request: request)
         
@@ -93,14 +94,45 @@ class LocationMonitor: NSObject {
 extension LocationMonitor: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         
+        manager.startUpdatingLocation()
+        
+        let testContent = UNMutableNotificationContent()
+        testContent.title = "TEST"
+        testContent.body = "TEST"
+        let testRequest = UNNotificationRequest(identifier: UUID().uuidString, content: testContent, trigger: nil)
+        
+        UNUserNotificationCenter.current().add(testRequest, withCompletionHandler: { (error: Error?) in
+        })
+        
+        let geocoder = CLGeocoder()
+        
+        let location = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
+        
+        var street = ""
+        geocoder.reverseGeocodeLocation(location) { (placemarks: [CLPlacemark]?, error: Error?) in
+            if let placemark = placemarks?.last {
+                if let thoroughfare = placemark.thoroughfare {
+                    street = thoroughfare
+                }
+            } else {
+                street = "FAIL"
+            }
+        }
+        
         let content = UNMutableNotificationContent()
         content.title = "New Visit"
-        content.body = "New Visit"
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
-        let request = UNNotificationRequest(identifier: "TEST", content: content, trigger: trigger)
+        content.body = street
+        let request = UNNotificationRequest(identifier: "NEWVISITTEST", content: content, trigger: nil)
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error: Error?) in
         })
+        
+        
+        
+        
+        
+        
+        
         
         searchForPlace(query: "restaurant", in: visit.coordinate) { (response: MKLocalSearchResponse?, error: Error?) in
             
@@ -115,7 +147,9 @@ extension LocationMonitor: CLLocationManagerDelegate {
                     return
                 }
                 
-                let distance = self.distanceFromCoordinate(fromCoordinate: visit.coordinate, toCoordinate: mapItemLocation.coordinate)
+                let visitLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
+
+                let distance = visitLocation.distance(from: mapItemLocation)
                 
                 if distance < smallestDistance || smallestDistance == -1 {
                     smallestDistance = distance
@@ -131,9 +165,8 @@ extension LocationMonitor: CLLocationManagerDelegate {
                 if let locationName = localMapItem.placemark.name {
                     let content = UNMutableNotificationContent()
                     content.title = "Eating Out?"
-                    content.body = "Enjoy you meal at \(locationName), remember to drink some water while you are there."
-                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
-                    let request = UNNotificationRequest(identifier: "Location", content: content, trigger: trigger)
+                    content.body = "Enjoy your meal at \(locationName), remember to drink some water while you are there."
+                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
                     
                     UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error: Error?) in
                         if let error = error {
@@ -154,58 +187,61 @@ extension LocationMonitor: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let lastLocation = locations.last else {
-//            return
-//        }
-//        
-//        searchForPlace(query: "restaurant", in: lastLocation.coordinate) { (response: MKLocalSearchResponse?, error: Error?) in
-//            
-//            guard let mapItems = response?.mapItems else {
-//                return
-//            }
-//            
-//            var localMapItem = MKMapItem()
-//            var smallestDistance: CLLocationDistance = -1
-//            for mapItem in mapItems {
-//                guard let mapItemLocation = mapItem.placemark.location else {
-//                    return
-//                }
-//                
-//                let distance = self.distanceFromCoordinate(fromCoordinate: lastLocation.coordinate, toCoordinate: mapItemLocation.coordinate)
-//                
-//                if distance < smallestDistance || smallestDistance == -1 {
-//                    smallestDistance = distance
-//                    localMapItem = mapItem
-//                }
-//            }
-//            
-//             print(smallestDistance)
-//            
-//            let minimumAcceptableDistanceFromLocation: CLLocationDistance = 30
-//            
-//            if smallestDistance <= minimumAcceptableDistanceFromLocation && !self.coordinatesEqual(coor1: self.lastLocationCoordinatedNotified, coor2: localMapItem.placemark.coordinate) {
-//                if let locationName = localMapItem.placemark.name {
-//                    let content = UNMutableNotificationContent()
-//                    content.title = "Eating Out?"
-//                    content.body = "Enjoy you meal at \(locationName), remember to drink some water while you are there."
-//                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
-//                    let request = UNNotificationRequest(identifier: "Location", content: content, trigger: trigger)
-//                    
-//                    UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error: Error?) in
-//                        if let error = error {
-//                            print(error)
-//                        } else {
-//                            self.lastLocationCoordinatedNotified = localMapItem.placemark.coordinate
-//                        }
-//                        
-//                        print("Notification sent")
-//                    })
-//                    
-//                    // print(localMapItem)
-//                }
-//            }
-//            
-//            smallestDistance = -1
-//        }
+        guard let coordinate = locations.last?.coordinate else {
+            return
+        }
+        
+        searchForPlace(query: "restaurant", in: coordinate) { (response: MKLocalSearchResponse?, error: Error?) in
+            
+            guard let mapItems = response?.mapItems else {
+                return
+            }
+            
+            var localMapItem = MKMapItem()
+            var smallestDistance: CLLocationDistance = -1
+            for mapItem in mapItems {
+                guard let mapItemLocation = mapItem.placemark.location else {
+                    return
+                }
+                
+                let visitLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                
+                let distance = visitLocation.distance(from: mapItemLocation)
+                
+                if distance < smallestDistance || smallestDistance == -1 {
+                    smallestDistance = distance
+                    localMapItem = mapItem
+                }
+            }
+            
+            print(smallestDistance)
+            
+            let minimumAcceptableDistanceFromLocation: CLLocationDistance = 30
+            
+            if smallestDistance <= minimumAcceptableDistanceFromLocation && !self.coordinatesEqual(coor1: self.lastLocationCoordinatedNotified, coor2: localMapItem.placemark.coordinate) {
+                if let locationName = localMapItem.placemark.name {
+                    let content = UNMutableNotificationContent()
+                    content.title = "Eating Out?"
+                    content.body = "Enjoy your meal at \(locationName), remember to drink some water while you are there."
+                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+                    
+                    UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error: Error?) in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            self.lastLocationCoordinatedNotified = localMapItem.placemark.coordinate
+                        }
+                        
+                        print("Notification sent")
+                    })
+                    
+                    // print(localMapItem)
+                }
+            }
+            
+            smallestDistance = -1
+        }
+        
+        manager.stopUpdatingLocation()
     }
 }

@@ -1,0 +1,26 @@
+{
+  "name": "SettingsKit",
+  "version": "0.1.0",
+  "summary": "SettingsKit is Swift library for creating declarative 'In App Setting' table views for iOS.",
+  "description": "\"SettingsKit is Swift library for creating declarative 'In App Setting' table views for iOS.\"",
+  "homepage": "https://github.com/gsapienza/SettingsKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Gregory Sapienza": "gsapienza@icloud.com"
+  },
+  "social_media_url": "https://twitter.com/gsapienza",
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source": {
+    "git": "https://github.com/gsapienza/SettingsKit.git",
+    "tag": "0.1.0"
+  },
+  "source_files": "SettingsKit/**/*.{swift}",
+  "exclude_files": "Classes/Exclude",
+  "frameworks": "UIKit",
+  "requires_arc": true
+}

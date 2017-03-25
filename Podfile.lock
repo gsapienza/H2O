@@ -1,0 +1,16 @@
+PODS:
+  - SettingsKit (0.1.0)
+
+DEPENDENCIES:
+  - SettingsKit (from `~/Developer/City Pixels/SettingsKit`)
+
+EXTERNAL SOURCES:
+  SettingsKit:
+    :path: ~/Developer/City Pixels/SettingsKit
+
+SPEC CHECKSUMS:
+  SettingsKit: e4102eba9b2d63386e3bcc39f45f52f7790351f6
+
+PODFILE CHECKSUM: 0fc94e2813c2930cd11926b0394b8c551161d562
+
+COCOAPODS: 1.1.1

@@ -70,7 +70,7 @@ class WelcomeViewController: UIViewController, BoardingProtocol, NavigationTheme
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //---Navigation Item---//
         
         var navigationItem = self.navigationItem
