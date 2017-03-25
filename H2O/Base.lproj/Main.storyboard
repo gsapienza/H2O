@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E154a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8ra-hb-0eu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E191a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8ra-hb-0eu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,7 +20,7 @@
         <scene sceneID="ze1-4B-q4Z">
             <objects>
                 <navigationController id="8ra-hb-0eu" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mnv-Mr-Nbg">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mnv-Mr-Nbg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -469,7 +469,7 @@
         <scene sceneID="6sn-tx-Gp4">
             <objects>
                 <navigationController storyboardIdentifier="UINavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zBE-q2-6Kx" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Qbc-Hf-Md0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qbc-Hf-Md0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -481,10 +481,10 @@
             </objects>
             <point key="canvasLocation" x="1703" y="387"/>
         </scene>
-        <!--App Settings View Controller-->
+        <!--In App Settings View Controller-->
         <scene sceneID="RmC-Nh-gGW">
             <objects>
-                <viewController id="7ck-bi-Gbz" customClass="AppSettingsViewController" customModule="H2O" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7ck-bi-Gbz" customClass="InAppSettingsViewController" customModule="H2O" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="guv-Am-U9k"/>
                         <viewControllerLayoutGuide type="bottom" id="upP-xG-N6V"/>
@@ -492,34 +492,9 @@
                     <view key="view" contentMode="scaleToFill" id="gq2-2o-M1G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wXn-Nq-e7W">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="SfG-Wb-dxM">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SfG-Wb-dxM" id="OPH-1l-gru">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="wXn-Nq-e7W" firstAttribute="leading" secondItem="gq2-2o-M1G" secondAttribute="leading" id="0ef-bJ-WOM"/>
-                            <constraint firstItem="wXn-Nq-e7W" firstAttribute="top" secondItem="guv-Am-U9k" secondAttribute="bottom" id="bt0-8S-M2Q"/>
-                            <constraint firstItem="upP-xG-N6V" firstAttribute="top" secondItem="wXn-Nq-e7W" secondAttribute="bottom" id="ks5-Ia-KiH"/>
-                            <constraint firstAttribute="trailing" secondItem="wXn-Nq-e7W" secondAttribute="trailing" id="oop-ZL-nCI"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kB6-HK-tJX"/>
-                    <connections>
-                        <outlet property="tableView" destination="wXn-Nq-e7W" id="YGG-D7-zcQ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SXE-Wp-d3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
