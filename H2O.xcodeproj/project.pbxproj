@@ -202,6 +202,7 @@
 		F363BD431E87879400B95860 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
 		F363BD441E87879400B95860 /* H2OFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093231D7D254B007CF646 /* H2OFluidView.swift */; };
 		F363BD451E8787F700B95860 /* GSAnimatingProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */; };
+		F363BD471E884A5500B95860 /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741F5A91D8ED61D00F7598E /* AppUserDefaults.swift */; };
 		F37C86F71E7F4AF500DD37C2 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F37C86F61E7F4AF400DD37C2 /* default.gpx */; };
 		F37C86F81E7F4AF500DD37C2 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F37C86F61E7F4AF400DD37C2 /* default.gpx */; };
 		F39E8CA01E86F43500CD9A0B /* InAppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E8C9F1E86F43500CD9A0B /* InAppSettingsViewController.swift */; };
@@ -397,6 +398,7 @@
 		F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
 		F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMonitor.swift; sourceTree = "<group>"; };
 		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		F363BD461E88435C00B95860 /* NotificationContent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationContent.entitlements; sourceTree = "<group>"; };
 		F37C86F61E7F4AF400DD37C2 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		F39E8C9F1E86F43500CD9A0B /* InAppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppSettingsViewController.swift; sourceTree = "<group>"; };
 		F39E8CA61E8755FF00CD9A0B /* NotificationContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -746,6 +748,7 @@
 		F39E8CAB1E8755FF00CD9A0B /* NotificationContent */ = {
 			isa = PBXGroup;
 			children = (
+				F363BD461E88435C00B95860 /* NotificationContent.entitlements */,
 				F39E8CAC1E8755FF00CD9A0B /* NotificationViewController.swift */,
 				F39E8CAE1E8755FF00CD9A0B /* MainInterface.storyboard */,
 				F39E8CB11E8755FF00CD9A0B /* Info.plist */,
@@ -876,6 +879,9 @@
 						DevelopmentTeam = G898DU57KC;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -893,6 +899,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = G898DU57KC;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1330,6 +1341,7 @@
 				F363BD451E8787F700B95860 /* GSAnimatingProgressLayer.swift in Sources */,
 				F363BD441E87879400B95860 /* H2OFluidView.swift in Sources */,
 				F39E8CAD1E8755FF00CD9A0B /* NotificationViewController.swift in Sources */,
+				F363BD471E884A5500B95860 /* AppUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1623,6 +1635,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = NotificationContent/NotificationContent.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = G898DU57KC;
@@ -1641,6 +1654,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = NotificationContent/NotificationContent.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = G898DU57KC;

@@ -44,7 +44,7 @@ class DailyEntryDial: UIControl {
         
         label.font = StandardFonts.boldFont(size: 70)
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        label.minimumScaleFactor = 0.3
         label.textAlignment = .center
         label.baselineAdjustment = .alignCenters
         
@@ -101,7 +101,7 @@ class DailyEntryDial: UIControl {
         
         addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
+        addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.4, constant: 0))
         addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .height, relatedBy: .equal, toItem: currentAmountOfWaterDrankTodayLabel, attribute: .width, multiplier: 1, constant: 0))
     }
     

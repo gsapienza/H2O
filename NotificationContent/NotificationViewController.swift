@@ -26,12 +26,18 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         view.innerCircleColor = StandardColors.primaryColor
         view.outerCircleColor = UIColor(red: 27/255, green: 119/255, blue: 135/255, alpha: 0.3)
         
+        if let goal = AppUserDefaults.getDailyGoalValue() {
+            view.total = Double(goal)
+        }
+        
         return view
     }()
  
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        preferredContentSize = CGSize(width: 0, height: 280)
+
         //---Fluid View---//
         
         view.addSubview(fluidView)
@@ -56,8 +62,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             NSLayoutConstraint(item: dailyEntryDial, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: dailyEntryDial, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.7, constant: 0),
             NSLayoutConstraint(item: dailyEntryDial, attribute: .width, relatedBy: .equal, toItem: dailyEntryDial, attribute: .height, multiplier: 1, constant: 0)
-            ])
-
+            ])        
     }
     
     func didReceive(_ notification: UNNotification) {
