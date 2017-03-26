@@ -102,7 +102,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let center = UNUserNotificationCenter.current()
         center.delegate = notificationDelegate
-        let options: UNAuthorizationOptions = [.alert]
+        let options: UNAuthorizationOptions = [.alert, .sound]
         
         center.requestAuthorization(options: options) { (success: Bool, error: Error?) in
             if let error = error {

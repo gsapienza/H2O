@@ -56,7 +56,6 @@ extension InAppSettingsViewController: SettingsViewControllerDataSource {
                         print(error.localizedDescription)
                     } else {
                         DispatchQueue.main.async {
-                            setting.title = "Manage HealthKit in the Health App"
                             self.tableView.reloadData()
                         }
                     }
@@ -65,6 +64,7 @@ extension InAppSettingsViewController: SettingsViewControllerDataSource {
             
             serviceSetting.style = { (cell: SettingsTableViewCell) in
                 if service.model().isAuthorized() {
+                    cell.titleLabel.text = "Manage HealthKit in the Health App"
                     cell.titleLabel.textColor = UIColor.gray
                 } else {
                     cell.titleLabel.textColor = UIColor.white
