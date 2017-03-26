@@ -3,7 +3,7 @@
 //  BakingKit
 //
 //  Created by Gregory Sapienza on 5/3/16.
-//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
+//  Copyright © 2016 City Pixels. All rights reserved.
 //
 
 import UIKit

@@ -3,7 +3,7 @@
 //  H2O
 //
 //  Created by Gregory Sapienza on 10/21/16.
-//  Copyright © 2016 Skyscrapers.IO. All rights reserved.
+//  Copyright © 2016 City Pixels. All rights reserved.
 //
 
 import Foundation

@@ -1,6 +1,6 @@
 //
 //  UIViewCollectionViewCellExtension.swift
-//  Skyscrapers.IO
+//  City Pixels
 //
 //  Created by Gregory Sapienza on 4/5/16.
 //  Copyright © 2016 Gregory Sapienza. All rights reserved.
