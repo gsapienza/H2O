@@ -193,10 +193,24 @@
 		F329241C1E6B4CAE00B9CAF3 /* LocationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F329241A1E6B4CAE00B9CAF3 /* LocationMonitor.swift */; };
 		F33F8B521E5138C1008E951F /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B511E5138C1008E951F /* Layout.swift */; };
 		F33F8B531E5138C1008E951F /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33F8B511E5138C1008E951F /* Layout.swift */; };
+		F363BD3D1E87863F00B95860 /* DailyEntryDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785666F1CEAA190003418C2 /* DailyEntryDial.swift */; };
+		F363BD3E1E87869300B95860 /* StandardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3785665C1CEA941A003418C2 /* StandardColors.swift */; };
+		F363BD3F1E87869300B95860 /* StandardFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA8E611CEB738300E2B332 /* StandardFonts.swift */; };
+		F363BD401E87869300B95860 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0D6EE1CED2D95004ABFAF /* Constants.swift */; };
+		F363BD411E87879400B95860 /* GSFluidLayoutProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */; };
+		F363BD421E87879400B95860 /* GSFluidLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB1551CFBA33A00BE3711 /* GSFluidLayout.swift */; };
+		F363BD431E87879400B95860 /* GSFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD2DF21D87767B00D8C239 /* GSFluidView.swift */; };
+		F363BD441E87879400B95860 /* H2OFluidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093231D7D254B007CF646 /* H2OFluidView.swift */; };
+		F363BD451E8787F700B95860 /* GSAnimatingProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378093201D7D1916007CF646 /* GSAnimatingProgressLayer.swift */; };
 		F37C86F71E7F4AF500DD37C2 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F37C86F61E7F4AF400DD37C2 /* default.gpx */; };
 		F37C86F81E7F4AF500DD37C2 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F37C86F61E7F4AF400DD37C2 /* default.gpx */; };
 		F39E8CA01E86F43500CD9A0B /* InAppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E8C9F1E86F43500CD9A0B /* InAppSettingsViewController.swift */; };
 		F39E8CA11E86F43500CD9A0B /* InAppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E8C9F1E86F43500CD9A0B /* InAppSettingsViewController.swift */; };
+		F39E8CA81E8755FF00CD9A0B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F39E8CA71E8755FF00CD9A0B /* UserNotifications.framework */; };
+		F39E8CAA1E8755FF00CD9A0B /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F39E8CA91E8755FF00CD9A0B /* UserNotificationsUI.framework */; };
+		F39E8CAD1E8755FF00CD9A0B /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E8CAC1E8755FF00CD9A0B /* NotificationViewController.swift */; };
+		F39E8CB01E8755FF00CD9A0B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F39E8CAE1E8755FF00CD9A0B /* MainInterface.storyboard */; };
+		F39E8CB41E8755FF00CD9A0B /* NotificationContent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F39E8CA61E8755FF00CD9A0B /* NotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +220,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 375F4FDA1CEA91A6009C14AE;
 			remoteInfo = H2O;
+		};
+		F39E8CB21E8755FF00CD9A0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 375F4FD31CEA91A6009C14AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F39E8CA51E8755FF00CD9A0B;
+			remoteInfo = NotificationContent;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -230,6 +251,17 @@
 				37C9683E1D5414DE000DE5C0 /* CRToast.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F39E8CB81E8755FF00CD9A0B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F39E8CB41E8755FF00CD9A0B /* NotificationContent.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -367,6 +399,12 @@
 		F33F8B511E5138C1008E951F /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		F37C86F61E7F4AF400DD37C2 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		F39E8C9F1E86F43500CD9A0B /* InAppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppSettingsViewController.swift; sourceTree = "<group>"; };
+		F39E8CA61E8755FF00CD9A0B /* NotificationContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F39E8CA71E8755FF00CD9A0B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		F39E8CA91E8755FF00CD9A0B /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		F39E8CAC1E8755FF00CD9A0B /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		F39E8CAF1E8755FF00CD9A0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		F39E8CB11E8755FF00CD9A0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +437,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				5385CA2096E0914DBCE366A1 /* Pods_H2OTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F39E8CA31E8755FF00CD9A0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F39E8CAA1E8755FF00CD9A0B /* UserNotificationsUI.framework in Frameworks */,
+				F39E8CA81E8755FF00CD9A0B /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +487,8 @@
 				A72B557C348442158927AC22 /* Pods_H2O.framework */,
 				30C5774757716A6004924CC6 /* Pods_H2O_Dev.framework */,
 				6EFD5AB9F548DCC5975DD51E /* Pods_H2OTests.framework */,
+				F39E8CA71E8755FF00CD9A0B /* UserNotifications.framework */,
+				F39E8CA91E8755FF00CD9A0B /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -504,6 +553,7 @@
 				37E0D6FC1CEF66A7004ABFAF /* H2OTests */,
 				372B3E2D1D895AF900730E4F /* H2O-Watch */,
 				372B3E3C1D895AF900730E4F /* H2O-Watch Extension */,
+				F39E8CAB1E8755FF00CD9A0B /* NotificationContent */,
 				375F4FDC1CEA91A6009C14AE /* Products */,
 				372B3E511D895BFE00730E4F /* Frameworks */,
 				FD1A441690F92751C979F3D7 /* Pods */,
@@ -516,6 +566,7 @@
 				375F4FDB1CEA91A6009C14AE /* H2O.app */,
 				37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */,
 				3759F0821E3E46E8002C0AFD /* H2O-Dev.app */,
+				F39E8CA61E8755FF00CD9A0B /* NotificationContent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -692,6 +743,16 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		F39E8CAB1E8755FF00CD9A0B /* NotificationContent */ = {
+			isa = PBXGroup;
+			children = (
+				F39E8CAC1E8755FF00CD9A0B /* NotificationViewController.swift */,
+				F39E8CAE1E8755FF00CD9A0B /* MainInterface.storyboard */,
+				F39E8CB11E8755FF00CD9A0B /* Info.plist */,
+			);
+			path = NotificationContent;
+			sourceTree = "<group>";
+		};
 		FD1A441690F92751C979F3D7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -742,10 +803,12 @@
 				371D5A781DA022420036C369 /* Carthage */,
 				55AFEC69BEB93CB40AE00E66 /* [CP] Embed Pods Frameworks */,
 				CCE5094646783117F8783908 /* [CP] Copy Pods Resources */,
+				F39E8CB81E8755FF00CD9A0B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F39E8CB31E8755FF00CD9A0B /* PBXTargetDependency */,
 			);
 			name = H2O;
 			productName = H2O;
@@ -773,13 +836,30 @@
 			productReference = 37E0D6FB1CEF66A7004ABFAF /* H2OTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F39E8CA51E8755FF00CD9A0B /* NotificationContent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F39E8CB51E8755FF00CD9A0B /* Build configuration list for PBXNativeTarget "NotificationContent" */;
+			buildPhases = (
+				F39E8CA21E8755FF00CD9A0B /* Sources */,
+				F39E8CA31E8755FF00CD9A0B /* Frameworks */,
+				F39E8CA41E8755FF00CD9A0B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationContent;
+			productName = NotificationContent;
+			productReference = F39E8CA61E8755FF00CD9A0B /* NotificationContent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		375F4FD31CEA91A6009C14AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Skyscrapers.IO;
 				TargetAttributes = {
@@ -809,6 +889,11 @@
 						LastSwiftMigration = 0800;
 						TestTargetID = 375F4FDA1CEA91A6009C14AE;
 					};
+					F39E8CA51E8755FF00CD9A0B = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = G898DU57KC;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 375F4FD61CEA91A6009C14AE /* Build configuration list for PBXProject "H2O" */;
@@ -827,6 +912,7 @@
 				375F4FDA1CEA91A6009C14AE /* H2O */,
 				3759F0211E3E46E8002C0AFD /* H2O-Dev */,
 				37E0D6FA1CEF66A7004ABFAF /* H2OTests */,
+				F39E8CA51E8755FF00CD9A0B /* NotificationContent */,
 			);
 		};
 /* End PBXProject section */
@@ -890,6 +976,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F39E8CA41E8755FF00CD9A0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F39E8CB01E8755FF00CD9A0B /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1222,6 +1316,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F39E8CA21E8755FF00CD9A0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F363BD421E87879400B95860 /* GSFluidLayout.swift in Sources */,
+				F363BD401E87869300B95860 /* Constants.swift in Sources */,
+				F363BD3D1E87863F00B95860 /* DailyEntryDial.swift in Sources */,
+				F363BD3F1E87869300B95860 /* StandardFonts.swift in Sources */,
+				F363BD3E1E87869300B95860 /* StandardColors.swift in Sources */,
+				F363BD431E87879400B95860 /* GSFluidView.swift in Sources */,
+				F363BD411E87879400B95860 /* GSFluidLayoutProtocol.swift in Sources */,
+				F363BD451E8787F700B95860 /* GSAnimatingProgressLayer.swift in Sources */,
+				F363BD441E87879400B95860 /* H2OFluidView.swift in Sources */,
+				F39E8CAD1E8755FF00CD9A0B /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1229,6 +1340,11 @@
 			isa = PBXTargetDependency;
 			target = 375F4FDA1CEA91A6009C14AE /* H2O */;
 			targetProxy = 37E0D7001CEF66A7004ABFAF /* PBXContainerItemProxy */;
+		};
+		F39E8CB31E8755FF00CD9A0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F39E8CA51E8755FF00CD9A0B /* NotificationContent */;
+			targetProxy = F39E8CB21E8755FF00CD9A0B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1256,6 +1372,14 @@
 				37C81B381D918C4600B6DA9F /* en */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F39E8CAE1E8755FF00CD9A0B /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F39E8CAF1E8755FF00CD9A0B /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1412,6 +1536,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A7FC7B8C0337E376BE2135E8 /* Pods-H2O.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
@@ -1440,6 +1565,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A3C7E657F3CFD98ABB378424 /* Pods-H2O.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = H2O/H2O.entitlements;
@@ -1493,6 +1619,42 @@
 			};
 			name = Release;
 		};
+		F39E8CB61E8755FF00CD9A0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = G898DU57KC;
+				INFOPLIST_FILE = NotificationContent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O.NotificationContent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F39E8CB71E8755FF00CD9A0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = G898DU57KC;
+				INFOPLIST_FILE = NotificationContent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.theoven.H2O.NotificationContent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1528,6 +1690,15 @@
 			buildConfigurations = (
 				37E0D7031CEF66A7004ABFAF /* Debug */,
 				37E0D7041CEF66A7004ABFAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F39E8CB51E8755FF00CD9A0B /* Build configuration list for PBXNativeTarget "NotificationContent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F39E8CB61E8755FF00CD9A0B /* Debug */,
+				F39E8CB71E8755FF00CD9A0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

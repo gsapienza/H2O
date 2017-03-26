@@ -24,7 +24,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var primaryViewController: UIViewController = {
         
-        if AppUserDefaults.getBoardingWasDismissed() {
+        if !AppUserDefaults.getBoardingWasDismissed() {
             let viewController = WelcomeViewController()
             viewController.navigationThemeDidChangeHandler = { [weak self] theme in
                 if let navigationController = self?.navigationController {
@@ -105,8 +105,24 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         let options: UNAuthorizationOptions = [.alert, .sound]
         
         center.requestAuthorization(options: options) { (success: Bool, error: Error?) in
-            if let error = error {
-                print(error)
+            if success {
+                let categoryId = "com.theoven.H2O.notification"
+                let category = UNNotificationCategory(identifier: categoryId, actions: [], intentIdentifiers: [], options: [])
+                center.setNotificationCategories([category])
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                let content = UNMutableNotificationContent()
+                content.categoryIdentifier = categoryId
+                content.title = "Notification Title"
+                content.subtitle = "Notification Subtitle"
+                content.body = "Notification body text"
+                content.userInfo = ["customNumber": 100]
+                
+                let request = UNNotificationRequest(identifier: "exampleNotification", content: content, trigger: trigger)
+                center.add(request, withCompletionHandler: nil)
+
+            } else {
+                print(error ?? 0)
             }
         }
         

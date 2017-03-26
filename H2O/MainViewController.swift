@@ -339,7 +339,9 @@ private extension MainViewController {
     
     /// Configures the daily entry of water dial
     func configureDailyEntryDial() {
-        dailyEntryDial.delegate = self
+        dailyEntryDial.addTarget(self, action: #selector(onDailyEntryDialControl), for: .touchUpInside)
+        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
+        dailyEntryDial.total = Double(goal)
         dailyEntryDial.innerCircleColor = StandardColors.primaryColor
         dailyEntryDial.outerCircleColor = UIColor(red: 27/255, green: 119/255, blue: 135/255, alpha: 0.3)
     }
@@ -361,6 +363,7 @@ extension MainViewController {
         
         getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
 
+        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
         updateFluidValue(current: beforeAmount! + amount)
         
@@ -392,7 +395,7 @@ extension MainViewController {
     
     ///When the cancel bar button is tapped when the custom entry view is present
     func onCancelCustomEntryBarButton() {
-        var newFillValue :Float = Float((dialEntryCurrentValue() / goal) * 1.0) //New ratio
+        var newFillValue :Float = Float((Float(dailyEntryDial.current) / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
         
         configureBarButtonItems() //Restore bar buttons
@@ -442,6 +445,7 @@ extension MainViewController {
             serviceIntergrationModel.deleteEntryFromAuthorizedServices(date: latestEntryDate)
         }
         getAppDelegate().user?.deleteLatestEntry()
+        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
@@ -455,6 +459,20 @@ extension MainViewController {
     ///When undo button becomes disabled.
     func onUndoDisabledTimer() {
         undoBarButtonItem.disable()
+    }
+    
+    func onDailyEntryDialControl() {
+        AppUserDefaults.setInformationViewControllerWasOpenedOnce(openedOnce: true) //Set the information view controller opened user default value so that the dial will not animate to indicate that the user should tap the dial.
+        
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+        
+        let informationViewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController() //Get the view controller
+        
+        informationViewController.informationViewControllerDelegate = self //Delegate to listen for events like deletion
+        informationViewController.setupPopsicle() //Push the view controller up like a modal controller
+
     }
 }
 
@@ -523,33 +541,10 @@ extension MainViewController :EntryButtonProtocol {
     }
 }*/
 
-// MARK: - DailyEntryDialProtocol
-extension MainViewController :DailyEntryDialProtocol {
-    func dialEntryCurrentValue() -> Float {
-        return (getAppDelegate().user?.amountOfWaterForToday())!
-    }
-    
-    func dailyEntryDialGoal() -> Float {
-        return goal
-    }
-    
-    func dailyEntryDialButtonTapped() {
-        AppUserDefaults.setInformationViewControllerWasOpenedOnce(openedOnce: true) //Set the information view controller opened user default value so that the dial will not animate to indicate that the user should tap the dial.
-        
-        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-        feedbackGenerator.prepare()
-        feedbackGenerator.impactOccurred()
-        
-        let informationViewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController() //Get the view controller
-        
-        informationViewController.informationViewControllerDelegate = self //Delegate to listen for events like deletion
-        informationViewController.setupPopsicle() //Push the view controller up like a modal controller
-    }
-}
-
 // MARK: - InformationViewControllerProtocol
 extension MainViewController :InformationViewControllerProtocol {
     func entryWasDeleted() {
+        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)

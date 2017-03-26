@@ -8,101 +8,92 @@
 
 import UIKit
 
-protocol DailyEntryDialProtocol {
-    
-    /// Determines the amount of water drank today
-    ///
-    /// - returns: Float value of water drank today
-    func dialEntryCurrentValue() -> Float
-    
-    /// Determines the user set goal
-
-    ///
-    /// - returns: Goal float value set by user
-    func dailyEntryDialGoal() -> Float
-    
-    ///Called when the user has tapped this view like a button
-    func dailyEntryDialButtonTapped()
-}
-
-class DailyEntryDial: UIView {
+class DailyEntryDial: UIControl {
     //MARK: - Public iVars
     
-    /// Goal read from delegate (readonly)
-    private var goal :Float {
-        set{}
-        get {
-            return delegate!.dailyEntryDialGoal()
+    /// Current value in dial.
+    var current: Double = 0
+    
+    /// Total value to fill dial.
+    var total: Double = 0
+    
+    /// Color of unfilled progress circle path.
+    var outerCircleColor = UIColor.black {
+        didSet {
+            outerCircleShapeLayer.strokeColor = outerCircleColor.cgColor
         }
     }
     
-    /// Current amount in the dial towards the goal (readonly)
-    private var currentValue :Float {
-        set{}
-        get {
-            return (delegate?.dialEntryCurrentValue())!
+    /// Color of filled progress circle path.
+    var innerCircleColor = UIColor.white {
+        didSet {
+            innerCircleShapeLayer.strokeColor = innerCircleColor.cgColor
         }
     }
-    
-    ///DailyEntryDialProtocol Delegate
-    var delegate :DailyEntryDialProtocol?
-    
-    //MARK: - Internal iVars
+
+    // MARK: - Private iVars
     
     /// Line width for the 2 overlapping circles in the gauge
-    var circleLineWidth :CGFloat {
+    private var circleLineWidth: CGFloat {
         return frame.width / 8
     }
     
-    /// Color of unfilled progress circle path.
-    var outerCircleColor = UIColor.black
-    
-    /// Color of filled progress circle path.
-    var innerCircleColor = UIColor.white
-
     /// Center label displaying the amount of water that the user drank
-    var currentAmountOfWaterDrankTodayLabel :UILabel!
+    private lazy var currentAmountOfWaterDrankTodayLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = StandardFonts.boldFont(size: 70)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        label.textAlignment = .center
+        label.baselineAdjustment = .alignCenters
+        
+        return label
+    }()
     
     /// Shape layer that displays in a circle form how much water the user drank
-    var outerCircleShapeLayer :CAShapeLayer!
+    private lazy var outerCircleShapeLayer: CAShapeLayer = {
+        let shapeLayer = CAShapeLayer()
+        
+        shapeLayer.strokeColor = self.outerCircleColor.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        
+        return shapeLayer
+    }()
     
     /// Shape layer that displays in a circle form how much water the user drank
-    var innerCircleShapeLayer :CAShapeLayer!
-    
-    /// Button in middle that displays how much water was drank
-    var dialButton :UIButton!
+    private lazy var innerCircleShapeLayer: CAShapeLayer = {
+        let shapeLayer = CAShapeLayer()
+        
+        shapeLayer.lineCap = kCALineCapRound
+        shapeLayer.strokeColor = self.innerCircleColor.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.transform = CATransform3DMakeRotation(self.degreesToRadians(degrees: 270), 0, 0, 1.0) //Rotation used to get the starting point at the top center and turn clockwise
+        
+        return shapeLayer
+    }()
     
     //MARK: - Setup
     
-    ///Makes the background always transparent and sets up circle layer. Initial amount is also calculated here
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        backgroundColor = UIColor.clear
-        
-        outerCircleShapeLayer = generateOuterCircleShapeLayer(color :outerCircleColor)
-        innerCircleShapeLayer = generateInnerCircleShapeLayer(color: innerCircleColor)
-        currentAmountOfWaterDrankTodayLabel = generateAmountLabel()
-        dialButton = generateDialButton()
-        
-        updateAmountOfWaterDrankToday(animated: false)
-        currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
-        
-        layout()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        customInit()
     }
     
-    /// Layout for all subviews within view
-    private func layout() {
-        //---Outer Circle Layer---
-        outerCircleShapeLayer.frame = bounds
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        customInit()
+    }
+    
+    func customInit() {
+        backgroundColor = UIColor.clear
+        
+        currentAmountOfWaterDrankTodayLabel.textColor = StandardColors.primaryColor
+        
         layer.addSublayer(outerCircleShapeLayer)
-        
-        //---Inner Circle Layer---
-        
-        innerCircleShapeLayer.frame = bounds
         layer.addSublayer(innerCircleShapeLayer)
         
-        //---Current Amount of Water Drank Today Label---
+        //---Current Amount of Water Drank Today Label---//
         
         addSubview(currentAmountOfWaterDrankTodayLabel)
         
@@ -112,28 +103,26 @@ class DailyEntryDial: UIView {
         addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0))
         addConstraint(NSLayoutConstraint(item: currentAmountOfWaterDrankTodayLabel, attribute: .height, relatedBy: .equal, toItem: currentAmountOfWaterDrankTodayLabel, attribute: .width, multiplier: 1, constant: 0))
-        
-        //---Dial Button---
-        
-        addSubview(dialButton)
-        
-        dialButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        addConstraint(NSLayoutConstraint(item: dialButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: dialButton, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: dialButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: dialButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
     }
     
-    //MARK: - Internal
-    
-    /// Helper function to convert degrees to radians
-    ///
-    /// - parameter degrees: Degrees value to convert
-    ///
-    /// - returns: Radian value converted from degrees
-    func degreesToRadians( degrees :CGFloat) -> CGFloat {
-        return degrees * CGFloat(Float.pi) / 180
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        //---Outer Circle Layer---//
+        
+        outerCircleShapeLayer.frame = bounds
+        outerCircleShapeLayer.path = UIBezierPath(ovalIn: bounds.insetBy(dx: circleLineWidth / 2, dy: circleLineWidth / 2)).cgPath //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
+        outerCircleShapeLayer.lineWidth = circleLineWidth
+        
+        //---Inner Circle Layer---//
+        
+        innerCircleShapeLayer.frame = bounds
+        innerCircleShapeLayer.path = outerCircleShapeLayer.path
+        innerCircleShapeLayer.lineWidth = outerCircleShapeLayer.lineWidth
+        
+        //---Title Label---//
+        
+        updateAmountOfWaterDrankToday(animated: false)
     }
     
     //MARK: - Public
@@ -141,10 +130,11 @@ class DailyEntryDial: UIView {
     /// Changes the value for the amount of water drank
     ///
     /// - parameter animated: Should the dial gauge animate on change
-    func updateAmountOfWaterDrankToday( animated :Bool) {
-        currentAmountOfWaterDrankTodayLabel.text = String(Int(currentValue)) + standardUnit.rawValue
+    func updateAmountOfWaterDrankToday(animated: Bool) {
         
-        let newStrokeEnd = currentValue / goal
+        currentAmountOfWaterDrankTodayLabel.text = String(Int(current)) + standardUnit.rawValue
+        
+        let newStrokeEnd = current / total
         
         if animated {
             let animationTime = 0.5
@@ -171,7 +161,7 @@ class DailyEntryDial: UIView {
     /// Toggle repeating beat animation for dial.
     ///
     /// - parameter toggle: Toggle determining if animation should be active or not.
-    func beatAnimation(toggle :Bool) {
+    func beatAnimation(toggle: Bool) {
         let animationTime = 0.3
         
         if toggle {
@@ -185,87 +175,22 @@ class DailyEntryDial: UIView {
             })
         }
     }
-}
+    
+    //MARK: - Private
+    
+    /// Helper function to convert degrees to radians
+    ///
+    /// - parameter degrees: Degrees value to convert
+    ///
+    /// - returns: Radian value converted from degrees
+    private func degreesToRadians(degrees: CGFloat) -> CGFloat {
+        return degrees * CGFloat(Float.pi) / 180
+    }
+    
+    // MARK: - Actions
 
-// MARK: - Private Generators
-private extension DailyEntryDial {
-    
-    /// Generates an outer circle to use to display full unfilled progress.
-    ///
-    /// - Parameter color: Color of the path.
-    /// - Returns: Layer containing circle path.
-    func generateOuterCircleShapeLayer(color :UIColor) -> CAShapeLayer {
-        let shapeLayer = CAShapeLayer()
-        
-        let rect = bounds.insetBy(dx: circleLineWidth / 2, dy: circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
-        
-        let circlePath = UIBezierPath(ovalIn: rect) //Circle path
-        shapeLayer.path = circlePath.cgPath
-        shapeLayer.lineWidth = circleLineWidth //Size of the border width
-        shapeLayer.strokeColor = color.cgColor //Color of border
-        shapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
-        
-        return shapeLayer
-    }
-    
-    
-    
-    func generateInnerCircleShapeLayer(color :UIColor) -> CAShapeLayer {
-        let shapeLayer = CAShapeLayer()
-        
-        let rect = bounds.insetBy(dx: circleLineWidth / 2, dy: circleLineWidth / 2) //Rect is a CGRect that accounts for the fact that the inner circle line width will display partially outside of the view. This rect brings it in to match with the outer circle
-        
-        let innerCirclePath = UIBezierPath(ovalIn: rect) //Circle path
-        
-        shapeLayer.path = innerCirclePath.cgPath
-        
-        shapeLayer.lineWidth = circleLineWidth //Size of the border width
-        shapeLayer.lineCap = kCALineCapRound //Rounds out the edges
-        
-        shapeLayer.strokeColor = color.cgColor //Color of border
-        shapeLayer.fillColor = UIColor.clear.cgColor //Color of fill
-        
-        shapeLayer.transform = CATransform3DMakeRotation(degreesToRadians(degrees: 270), 0, 0, 1.0) //Rotation used to get the starting point at the top center and turn clockwise
-        
-        return shapeLayer
-    }
-    
-    /// Generates amount label in center of dial
-    ///
-    /// - returns: Label to display water amount
-    func generateAmountLabel() -> UILabel {
-        let label = UILabel()
-        
-        label.font = StandardFonts.boldFont(size: 70)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.textAlignment = .center
-        label.baselineAdjustment = .alignCenters
-        
-        return label
-    }
-    
-    /// Generates button which will contain all contenrs of the dial and calls a delegate function when tapped
-    ///
-    /// - returns: Button that will represent the dial
-    func generateDialButton() -> UIButton {
-        let dialButton = UIButton()
-        
-        dialButton.backgroundColor = UIColor.clear
-        dialButton.titleLabel?.text = ""
-        dialButton.addTarget(self, action: #selector(DailyEntryDial.onDialButton), for: .touchUpInside)
-        
-        return dialButton
-    }
-}
-
-// MARK: - Target Actions
-extension DailyEntryDial {
-    
     /// Action that happens when dial button is tapped. Calls the implemented delegate function
     func onDialButton() {
-        self.delegate?.dailyEntryDialButtonTapped()
-
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
             self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }) { (Bool) in
@@ -273,7 +198,7 @@ extension DailyEntryDial {
         
         UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: .curveEaseOut, animations: {
             self.transform = CGAffineTransform.identity
-            }, completion: { (Bool) in
+        }, completion: { (Bool) in
         })
     }
 }
