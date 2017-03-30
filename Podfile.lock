@@ -1,7 +1,20 @@
 PODS:
+  - GoogleMaps (2.2.0):
+    - GoogleMaps/Maps (= 2.2.0)
+  - GoogleMaps/Base (2.2.0)
+  - GoogleMaps/Maps (2.2.0):
+    - GoogleMaps/Base
+  - GooglePlacePicker (2.2.0):
+    - GoogleMaps (= 2.2.0)
+    - GooglePlaces (= 2.2.0)
+  - GooglePlaces (2.2.0):
+    - GoogleMaps/Base (= 2.2.0)
   - SettingsKit (0.1.0)
 
 DEPENDENCIES:
+  - GoogleMaps
+  - GooglePlacePicker
+  - GooglePlaces
   - SettingsKit (from `~/Developer/City Pixels/SettingsKit`)
 
 EXTERNAL SOURCES:
@@ -9,8 +22,11 @@ EXTERNAL SOURCES:
     :path: ~/Developer/City Pixels/SettingsKit
 
 SPEC CHECKSUMS:
+  GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
+  GooglePlacePicker: 345b1aabd42c9d6d9bf2369c1bae1234d903e764
+  GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   SettingsKit: e4102eba9b2d63386e3bcc39f45f52f7790351f6
 
-PODFILE CHECKSUM: 0fc94e2813c2930cd11926b0394b8c551161d562
+PODFILE CHECKSUM: 93c73d94236fddab43bf6af9acd7f8405c261726
 
 COCOAPODS: 1.1.1

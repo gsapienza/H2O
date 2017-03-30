@@ -235,7 +235,8 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     
     ///Called via timer to check if the day has changed while the app is opened and UI elements need updating
     func updateTimeRelatedItems() {
-        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
+        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
     }

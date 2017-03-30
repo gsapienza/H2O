@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import AVFoundation
 import UserNotifications
+import GooglePlaces
 
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -68,6 +69,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
             print("Documents Directory: " + documentsPath)
         }
+        
+        GMSPlacesClient.provideAPIKey("AIzaSyAcAkMN3LN2OFfju2NNuZ_8Lzw3U49xKvc")
         
         if !AppUserDefaults.getWasOpenedOnce() {
             setDefaultPresets()
@@ -215,7 +218,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //MARK: - Default Settings
-    
     
     /// Sets default preset values if none exist
     private func setDefaultPresets() {

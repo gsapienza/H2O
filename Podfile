@@ -10,6 +10,10 @@ target 'H2O' do
 
   pod 'SettingsKit', :path => '~/Developer/City Pixels/SettingsKit'
 
+  pod 'GooglePlaces'
+  pod 'GooglePlacePicker'
+  pod 'GoogleMaps'
+  
   target 'H2OTests' do
     inherit! :search_paths
     # Pods for testing
