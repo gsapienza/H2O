@@ -212,6 +212,9 @@
 		F39E8CAD1E8755FF00CD9A0B /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E8CAC1E8755FF00CD9A0B /* NotificationViewController.swift */; };
 		F39E8CB01E8755FF00CD9A0B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F39E8CAE1E8755FF00CD9A0B /* MainInterface.storyboard */; };
 		F39E8CB41E8755FF00CD9A0B /* NotificationContent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F39E8CA61E8755FF00CD9A0B /* NotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F3E0AF801E8FF74000CDB5FE /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E0AF7F1E8FF74000CDB5FE /* CoreDataStack.swift */; };
+		F3E0AF811E8FF74000CDB5FE /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E0AF7F1E8FF74000CDB5FE /* CoreDataStack.swift */; };
+		F3E0AF821E8FF74000CDB5FE /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E0AF7F1E8FF74000CDB5FE /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,6 +224,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 375F4FDA1CEA91A6009C14AE;
 			remoteInfo = H2O;
+		};
+		F32B36461E8D693C003EEA1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 375F4FD31CEA91A6009C14AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F39E8CA51E8755FF00CD9A0B;
+			remoteInfo = NotificationContent;
 		};
 		F39E8CB21E8755FF00CD9A0B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -407,6 +417,7 @@
 		F39E8CAC1E8755FF00CD9A0B /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		F39E8CAF1E8755FF00CD9A0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		F39E8CB11E8755FF00CD9A0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3E0AF7F1E8FF74000CDB5FE /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,6 +589,7 @@
 			children = (
 				37C81B351D918C3B00B6DA9F /* Main.storyboard */,
 				37C81B2A1D9189C100B6DA9F /* AppDelegate.swift */,
+				F3E0AF7F1E8FF74000CDB5FE /* CoreDataStack.swift */,
 				37C81B221D902FBA00B6DA9F /* WatchConnection.swift */,
 				37C81B3A1D91C81700B6DA9F /* WatchSyncEngine.swift */,
 				F33F8B511E5138C1008E951F /* Layout.swift */,
@@ -788,6 +800,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F32B36471E8D693C003EEA1B /* PBXTargetDependency */,
 			);
 			name = "H2O-Dev";
 			productName = H2O;
@@ -1197,6 +1210,7 @@
 				3759F0391E3E46E8002C0AFD /* H2O.xcdatamodeld in Sources */,
 				3759F03A1E3E46E8002C0AFD /* User+CoreDataProperties.swift in Sources */,
 				3759F03B1E3E46E8002C0AFD /* DailyInformationTableViewCell.swift in Sources */,
+				F3E0AF811E8FF74000CDB5FE /* CoreDataStack.swift in Sources */,
 				3759F03C1E3E46E8002C0AFD /* L360ConfettiObject.m in Sources */,
 				3759F03E1E3E46E8002C0AFD /* L360ConfettiArea.m in Sources */,
 				3759F03F1E3E46E8002C0AFD /* L360ConfettiView.m in Sources */,
@@ -1272,6 +1286,7 @@
 				375F4FE71CEA91A6009C14AE /* H2O.xcdatamodeld in Sources */,
 				37487B5E1DFF466000539EA5 /* User+CoreDataProperties.swift in Sources */,
 				37E0D7671CF2746B004ABFAF /* DailyInformationTableViewCell.swift in Sources */,
+				F3E0AF801E8FF74000CDB5FE /* CoreDataStack.swift in Sources */,
 				37E0D75D1CF11561004ABFAF /* L360ConfettiObject.m in Sources */,
 				37E0D75C1CF11561004ABFAF /* L360ConfettiArea.m in Sources */,
 				37E0D75E1CF11561004ABFAF /* L360ConfettiView.m in Sources */,
@@ -1334,6 +1349,7 @@
 				F363BD421E87879400B95860 /* GSFluidLayout.swift in Sources */,
 				F363BD401E87869300B95860 /* Constants.swift in Sources */,
 				F363BD3D1E87863F00B95860 /* DailyEntryDial.swift in Sources */,
+				F3E0AF821E8FF74000CDB5FE /* CoreDataStack.swift in Sources */,
 				F363BD3F1E87869300B95860 /* StandardFonts.swift in Sources */,
 				F363BD3E1E87869300B95860 /* StandardColors.swift in Sources */,
 				F363BD431E87879400B95860 /* GSFluidView.swift in Sources */,
@@ -1352,6 +1368,11 @@
 			isa = PBXTargetDependency;
 			target = 375F4FDA1CEA91A6009C14AE /* H2O */;
 			targetProxy = 37E0D7001CEF66A7004ABFAF /* PBXContainerItemProxy */;
+		};
+		F32B36471E8D693C003EEA1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F39E8CA51E8755FF00CD9A0B /* NotificationContent */;
+			targetProxy = F32B36461E8D693C003EEA1B /* PBXContainerItemProxy */;
 		};
 		F39E8CB31E8755FF00CD9A0B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

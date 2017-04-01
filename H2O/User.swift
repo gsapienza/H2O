@@ -15,7 +15,7 @@ public class User: NSManagedObject {
     
     class func managedContext() -> NSManagedObjectContext {
         #if os(iOS)
-            return getAppDelegate().managedObjectContext
+            return getAppDelegate().coreDataStack.managedObjectContext
         #endif
         
         #if os(watchOS)

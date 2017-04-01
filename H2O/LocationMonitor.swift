@@ -50,7 +50,7 @@ extension LocationMonitor: CLLocationManagerDelegate {
         
         let testContent = UNMutableNotificationContent()
         testContent.title = "TEST"
-        testContent.body = "TEST"
+        testContent.body = "\(visit)"
         let testRequest = UNNotificationRequest(identifier: UUID().uuidString, content: testContent, trigger: nil)
         
         UNUserNotificationCenter.current().add(testRequest, withCompletionHandler: { (error: Error?) in
@@ -62,8 +62,11 @@ extension LocationMonitor: CLLocationManagerDelegate {
                     if likelihood.likelihood > 0.1 {
                         let place = likelihood.place
                         
+                        let categoryId = "com.theoven.H2O.notification"
+                        
                         if place.types.contains("restaurant") {
                             let content = UNMutableNotificationContent()
+                            content.categoryIdentifier = categoryId
                             content.title = "Eating Out?"
                             content.body = "Enjoy your meal at \(place.name), remember to drink some water while you are there."
                             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
