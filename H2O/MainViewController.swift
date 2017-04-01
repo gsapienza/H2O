@@ -388,9 +388,6 @@ extension MainViewController {
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: StandardColors.primaryColor, NSFontAttributeName: StandardFonts.boldFont(size: 20)] //Navigation bar view properties
         
-        let settingsViewController = navigationController.viewControllers.first as! InAppSettingsViewController
-        //settingsViewController.delegate = self
-        
         self.present(navigationController, animated: true, completion: nil)
     }
     

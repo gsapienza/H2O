@@ -152,7 +152,7 @@ class WatchSyncEngine: NSObject {
     func contextSaved() {
         if !syncing {
             print("LAST WATCH SYNC")
-            print(user?.lastWatchSyncDate)
+            //print(user?.lastWatchSyncDate)
             delegate?.syncCompleted()
             
             NotificationCenter.default.post(name: SyncCompletedNotification, object: nil)

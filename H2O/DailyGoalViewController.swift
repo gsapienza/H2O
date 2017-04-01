@@ -45,7 +45,7 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
         
         titleLabel.text = DailyGoalViewController.titleString
         
-        presetChangerView.becomeFirstResponder()
+        let _ = presetChangerView.becomeFirstResponder()
         
         //---Title Label---//
         

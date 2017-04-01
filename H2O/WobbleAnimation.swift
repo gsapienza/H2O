@@ -24,10 +24,10 @@ public class WobbleAnimation {
             startingWobbleVar = -startingWobbleVar
         }
         
-        view.transform = CGAffineTransform.identity.rotated(by: (CGFloat(-startingWobbleVar * M_PI) / 180.0))
+        view.transform = CGAffineTransform.identity.rotated(by: (CGFloat(-startingWobbleVar * Double.pi) / 180.0))
         
         UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse, .repeat, .allowUserInteraction, .curveLinear], animations: { () -> Void in
-            view.transform = CGAffineTransform.identity.rotated(by: (CGFloat(startingWobbleVar * M_PI) / 180.0))
+            view.transform = CGAffineTransform.identity.rotated(by: (CGFloat(startingWobbleVar * Double.pi) / 180.0))
         }) { (Bool) -> Void in
         }
     }
