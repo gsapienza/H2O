@@ -877,7 +877,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = Skyscrapers.IO;
+				ORGANIZATIONNAME = "City Pixels";
 				TargetAttributes = {
 					3759F0211E3E46E8002C0AFD = {
 						DevelopmentTeam = G898DU57KC;
