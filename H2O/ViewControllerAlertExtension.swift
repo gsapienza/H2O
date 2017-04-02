@@ -15,7 +15,7 @@ extension UIViewController {
     /// - parameter title:        Title of alert.
     /// - parameter message:      Message of alert.
     /// - parameter deleteAction: What to run when delete button is tapped.
-    func displayDeleteAlert(title :String, message :String, deleteAction: @escaping () -> Void) {
+    func displayDeleteAlert(title: String, message: String, deleteAction: @escaping () -> Void) {
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.prepare()
         feedbackGenerator.notificationOccurred(.warning)

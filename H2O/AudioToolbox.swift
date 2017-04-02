@@ -25,11 +25,11 @@ public class AudioToolbox: NSObject {
     ///
     /// - parameter fileName:      Name of audio file with extension
     /// - parameter repeatEnabled: Option to repeat audio
-    public func playAudio(_ fileName :String, repeatEnabled :Bool) {
+    public func playAudio(_ fileName: String, repeatEnabled: Bool) {
         let backgroundQueue = DispatchQueue.global(qos: DispatchQoS.background.qosClass)
         backgroundQueue.async(execute: {
             let fileNameSeperated = fileName.components(separatedBy: ".")
-            let url :URL = Bundle.main.url(forResource: fileNameSeperated.first, withExtension: fileNameSeperated.last)!
+            let url: URL = Bundle.main.url(forResource: fileNameSeperated.first, withExtension: fileNameSeperated.last)!
             do {
                 self.audioPlayer = try AVAudioPlayer(contentsOf: url)
                 self.audioPlayer.volume = 0.4

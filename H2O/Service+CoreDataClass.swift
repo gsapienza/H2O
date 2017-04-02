@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 public class Service: NSManagedObject {
-    class func create(name :String, token :String?, isAuthorized :Bool) -> Service? {
+    class func create(name: String, token: String?, isAuthorized: Bool) -> Service? {
         guard let entity = NSEntityDescription.entity(forEntityName: "Service", in: User.managedContext()) else {
             print("Entity not set.")
             return nil
@@ -28,7 +28,7 @@ public class Service: NSManagedObject {
         return service
     }
     
-    class func serviceForName(managedObjectContext :NSManagedObjectContext, serviceName :String) -> Service? {
+    class func serviceForName(managedObjectContext: NSManagedObjectContext, serviceName: String) -> Service? {
         let request: NSFetchRequest = Service.fetchRequest()
         request.entity = NSEntityDescription.entity(forEntityName: "Service", in: User.managedContext())
         

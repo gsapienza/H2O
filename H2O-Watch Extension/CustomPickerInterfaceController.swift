@@ -17,7 +17,7 @@ class CustomPickerInterfaceController: WKInterfaceController {
     //MARK: - Private iVars
     
     /// Holds a link to the previous view controller that initialized this interface controller.
-    fileprivate var previousViewController :MainInterfaceController?
+    fileprivate var previousViewController: MainInterfaceController?
     
     /// Default value selected from number picker.
     fileprivate var selectedNumberPickerSelection = 1
@@ -38,7 +38,7 @@ private extension CustomPickerInterfaceController {
     
     /// Configures the number picker for custom entry.
     func configureNumberPicker() {
-        var pickerNumberList :[WKPickerItem] = []
+        var pickerNumberList: [WKPickerItem] = []
 
         for i in 1 ... 100 { //Can go up to 100unit to add.
             let pickerItem = WKPickerItem()

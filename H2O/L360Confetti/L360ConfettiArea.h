@@ -21,7 +21,7 @@
 
 @end
 
-@interface L360ConfettiArea : UIView
+@interface L360ConfettiArea:  UIView
 
 @property (weak, nonatomic) id <L360ConfettiAreaDelegate> delegate;
 

@@ -10,15 +10,15 @@ import UIKit
 
 class ConnectViewController: UIViewController, BoardingProtocol {
     /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: "connect".localized)
+    private lazy var _titleLabel: GSMagicTextLabel = self.generateTitleLabel(text: "connect".localized)
     
     /// First label.
-    var titleLabel :GSMagicTextLabel {
+    var titleLabel: GSMagicTextLabel {
         get {
             return _titleLabel
         }
     }
-    var connectTableView :UITableView!
+    var connectTableView: UITableView!
     fileprivate let serviceIntergrationModel = ServiceIntergrationModel()
 
     override func viewDidLoad() {
@@ -76,7 +76,7 @@ class ConnectViewController: UIViewController, BoardingProtocol {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension ConnectViewController :UITableViewDataSource, UITableViewDelegate {
+extension ConnectViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SupportedServices.allSupportedServices().count
     }
@@ -135,7 +135,7 @@ extension ConnectViewController :UITableViewDataSource, UITableViewDelegate {
         let service = SupportedServices.allSupportedServices()[indexPath.row]
 
         if !service.model().isAuthorized() {
-            service.model().authorize { (success :Bool, error :Error?, token :String?) in
+            service.model().authorize { (success: Bool, error: Error?, token: String?) in
                 if success {
                     cell.setSelected(true, animated: true)
                     cell.titleLabel.text = service.rawValue + " Enabled"

@@ -9,12 +9,12 @@
 import UIKit
 import CoreText
 
-class GSMagicTextLabel :UIView, CAAnimationDelegate {
+class GSMagicTextLabel: UIView, CAAnimationDelegate {
     
     //MARK: - Public iVars
     
     /// Text to display with label.
-    var text :String? {
+    var text: String? {
         set {
             if text != newValue {
                 _text = newValue
@@ -58,10 +58,10 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     private var _text: String?
     
     /// Array of CAShapeLayers to store glyph path layers that are displayed as sublayers.
-    private var glyphLayers :[CAShapeLayer] = []
+    private var glyphLayers: [CAShapeLayer] = []
     
     /// Array of rects to use for glyph layers displayed as sublayers.
-    private var glyphRects :[CGRect] = []
+    private var glyphRects: [CGRect] = []
     
     /// Does a call to layoutSubviews need to reset the text displayed in view.
     private var needsTextRender = true
@@ -120,7 +120,7 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///
     /// - Parameter newString: String to show after animation.
     /// - Parameter completion: Animation completion block.
-    func animate(to newString: String, completion :(Bool) -> Void) {
+    func animate(to newString: String, completion: (Bool) -> Void) {
         guard let text = self.text else {
             print("Text is empty.")
             return
@@ -194,10 +194,10 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///
     /// - Parameter text: String to get glyph rects for.
     /// - Returns: An optional array of CGRects, one for each glyph to display.
-    private func getGlyphRects(text :String) -> [CGRect]? {
-        var glyphRects :[CGRect] = [] //Array of glyph positions to return.
+    private func getGlyphRects(text: String) -> [CGRect]? {
+        var glyphRects: [CGRect] = [] //Array of glyph positions to return.
 
-        guard let attributedString = getTextAttributes(text :text) else { //Create attributed string from label text.
+        guard let attributedString = getTextAttributes(text: text) else { //Create attributed string from label text.
             print("Attributed String is nil.")
             return nil
         }
@@ -207,12 +207,12 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
         for index in 0..<CFArrayGetCount(linesInFrame.lines) {
             let line = unsafeBitCast(CFArrayGetValueAtIndex(linesInFrame.lines, index), to: CTLine.self) //Line for index
             
-            var lineOrigin :CGPoint = CGPoint()
+            var lineOrigin: CGPoint = CGPoint()
             CTFrameGetLineOrigins(linesInFrame.frame, CFRangeMake(index, 1), &lineOrigin) //Get the origin of the line.
             
-            var ascent :CGFloat = CGFloat()
-            var descent :CGFloat = CGFloat()
-            var leading :CGFloat = CGFloat()
+            var ascent: CGFloat = CGFloat()
+            var descent: CGFloat = CGFloat()
+            var leading: CGFloat = CGFloat()
             
             CTLineGetTypographicBounds(line, &ascent, &descent, &leading) //Get the ascent, descent and leading values for the line.
             
@@ -239,7 +239,7 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
                 
                 for glyphIndex in 0..<glyphs.count { //For each glyph in run.
                     let position = positions[glyphIndex] //Position of glyph for index.
-                    let glyphBounds :CGRect = glyphBoundingRects[glyphIndex] //Bounding box of glyph for index.
+                    let glyphBounds: CGRect = glyphBoundingRects[glyphIndex] //Bounding box of glyph for index.
                     
                     let x = lineOrigin.x + position.x + glyphBounds.minX + glyphBounds.width / 2 //Sets the x origin to the line origin (text alignment) + the x position of the glyph + the glyphBounds x origin (addresses minor offsets) + half the width of the bounds since the anchor point is set in the middle of the layer.
                     
@@ -263,10 +263,10 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///   - text: String to create layers from.
     ///   - color: Color of glyphs.
     /// - Returns:  An optional array of CAShapeLayers, one for each glyph to display.
-    private func getGlyphLayers(text :String, color :UIColor) -> [CAShapeLayer]? {
-        var glyphLayers :[CAShapeLayer] = [] //Array of glyph layers to return.
+    private func getGlyphLayers(text: String, color: UIColor) -> [CAShapeLayer]? {
+        var glyphLayers: [CAShapeLayer] = [] //Array of glyph layers to return.
         
-        guard let attributedString = getTextAttributes(text :text) else { //Create attributed string from label text.
+        guard let attributedString = getTextAttributes(text: text) else { //Create attributed string from label text.
             print("Attributed String is nil.")
             return nil
         }
@@ -330,7 +330,7 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///   - matchingCharacterAction: Callback containing an index for first and second string when a match is found.
     ///   - nonMatchingSecondStringCharacterAction: Callback containing an index in the second string when a match is not found.
     ///   - nonMatchingFirstStringCharacterAction:  Callback containing an index in the first string when a match is not found.
-    private func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction :(_ firstStringIndex :Int, _ secondStringIndex :Int) -> Void, nonMatchingSecondStringCharacterAction :(Int) -> Void, nonMatchingFirstStringCharacterAction :(Int) -> Void) {
+    private func getMatchingCharacters(firstString: String, secondString: String, matchingCharacterAction: (_ firstStringIndex: Int, _ secondStringIndex: Int) -> Void, nonMatchingSecondStringCharacterAction: (Int) -> Void, nonMatchingFirstStringCharacterAction: (Int) -> Void) {
         var charactersFromFirstString = getCharacters(from: firstString) //Dictionary of characters and how many times they appear within the first string.
         
         for (i, character) in secondString.characters.enumerated() { //Look through each character of the second string to compare.
@@ -362,7 +362,7 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///
     /// - Parameter text: The returned attributed strings text.
     /// - Returns: Attributed string matching the UILabel text.
-    private func getTextAttributes(text :String) -> CFAttributedString? {
+    private func getTextAttributes(text: String) -> CFAttributedString? {
         let attributedString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0)
         
         //Text.
@@ -388,7 +388,7 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///
     /// - Parameter attributedString: Attributed string to create lines for.
     /// - Returns: An array of lines and the frame around them.
-    private func getLinesForAttributedString(attributedString :CFAttributedString) -> (lines :CFArray, frame :CTFrame) {
+    private func getLinesForAttributedString(attributedString: CFAttributedString) -> (lines: CFArray, frame: CTFrame) {
         let framesetter = CTFramesetterCreateWithAttributedString(attributedString)
         
         let textSuggestedHeight = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), nil, CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude), nil).height //Height required to render this text with attributes provided.
@@ -406,8 +406,8 @@ class GSMagicTextLabel :UIView, CAAnimationDelegate {
     ///
     /// - Parameter text: String to find characters.
     /// - Returns: Dicionary whose keys are each character in the string and value containing how many times the character appears.
-    private func getCharacters(from text: String) -> [Character : [Int]] {
-        var characters :[Character : [Int]] = [:]
+    private func getCharacters(from text: String) -> [Character:  [Int]] {
+        var characters: [Character:  [Int]] = [:]
         
         for (i, character) in text.characters.enumerated() {
             if characters[character] == nil {

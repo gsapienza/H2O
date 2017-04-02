@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, L360ConfettiFlutterType) {
     L360ConfettiFlutterTypeCount
 };
 
-@interface L360ConfettiView : UIView
+@interface L360ConfettiView:  UIView
 
 /**
  *  Initialization method

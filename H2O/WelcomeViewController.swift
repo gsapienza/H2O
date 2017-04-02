@@ -24,7 +24,7 @@ class WelcomeViewController: UIViewController, BoardingProtocol, NavigationTheme
     //MARK: - Public iVars
     
     /// First label.
-    var titleLabel :GSMagicTextLabel {
+    var titleLabel: GSMagicTextLabel {
         get {
             return _titleLabel
         }
@@ -35,10 +35,10 @@ class WelcomeViewController: UIViewController, BoardingProtocol, NavigationTheme
     //MARK: - Private iVars
     
     /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: WelcomeViewController.titleString)
+    private lazy var _titleLabel: GSMagicTextLabel = self.generateTitleLabel(text: WelcomeViewController.titleString)
     
     /// Second label.
-    private lazy var h2OLabel :UILabel = {
+    private lazy var h2OLabel: UILabel = {
         let label = UILabel()
 
         label.text = secondaryTitleString
@@ -50,7 +50,7 @@ class WelcomeViewController: UIViewController, BoardingProtocol, NavigationTheme
     }()
     
     /// View displaying water bottle animation.
-    private lazy var waterBottleView :WaterBottleView = {
+    private lazy var waterBottleView: WaterBottleView = {
         let view = WaterBottleView()
         
         return view

@@ -11,15 +11,15 @@ import Foundation
 struct DayEntry {
     
     /// Month, day and year date of entries.
-    private var date :Date?
+    private var date: Date?
     
     /// Entries added on date.
-    private var entries :[Entry]?
+    private var entries: [Entry]?
     
     /// Model for intergrating services.
-    fileprivate var serviceIntergrationModel :ServiceIntergrationModel = ServiceIntergrationModel()
+    fileprivate var serviceIntergrationModel: ServiceIntergrationModel = ServiceIntergrationModel()
     
-    init(date :Date?, entries :[Entry]?) {
+    init(date: Date?, entries: [Entry]?) {
         self.date = date
         self.entries = entries
     }
@@ -27,7 +27,7 @@ struct DayEntry {
     /// Append a new entry value.
     ///
     /// - parameter entry: Entry to append.
-    mutating func append(entry :Entry) {
+    mutating func append(entry: Entry) {
         if var entries = self.entries {
             entries.append(entry)
         } else {
@@ -65,7 +65,7 @@ struct DayEntry {
     /// - parameter at: Index of entry.
     ///
     /// - returns: Entry at index.
-    func entry(at :Int) -> Entry? {
+    func entry(at: Int) -> Entry? {
         guard let entries = self.entries else {
             return nil
         }
@@ -87,7 +87,7 @@ struct DayEntry {
     /// Remove entry at indexes.
     ///
     /// - parameter indexes: Indexes to remove from entries array and backing database.
-    mutating func removeEntries(at indexes :[Int]) {
+    mutating func removeEntries(at indexes: [Int]) {
         guard var entries = self.entries else {
             return
         }

@@ -11,10 +11,10 @@ import UIKit
 class UndoBarButtonItem: UIBarButtonItem {
     
     /// View that will be contained in the custom view. This will contain all subviews because it is easier to animate because its lifecycle is more predictable than custom view.
-    private var button :UndoButton!
+    private var button: UndoButton!
     
     /// Leading constraint for view contained in custom view.
-    private var viewLeadingConstraint :NSLayoutConstraint!
+    private var viewLeadingConstraint: NSLayoutConstraint!
     
     override init() {
         super.init()
@@ -29,7 +29,7 @@ class UndoBarButtonItem: UIBarButtonItem {
     /// Init an enabled or disabled bar button.
     ///
     /// - parameter enabled: If enabled the bar button will display and be active otherwise it will be hidden.
-    init(enabled :Bool) {
+    init(enabled: Bool) {
         super.init()
         initialize()
         
@@ -46,7 +46,7 @@ class UndoBarButtonItem: UIBarButtonItem {
     
     //MARK: - Public
     
-    func addTarget(target :Any?, action :Selector) {
+    func addTarget(target: Any?, action: Selector) {
         button.addTarget(target, action: action, for: .touchUpInside)
     }
     
@@ -115,12 +115,12 @@ class UndoBarButtonItem: UIBarButtonItem {
     }
 }
 
-class UndoButton :UIButton {
+class UndoButton: UIButton {
     /// Image view to display undo icon.
-    private var undoImageView :UIImageView!
+    private var undoImageView: UIImageView!
     
     /// Text label to display undo text.
-    private var undoTextLabel :UILabel!
+    private var undoTextLabel: UILabel!
     
     /// Value determining if layout subviews has already been called once.
     private var layoutSubviewsCalledOnce = false
@@ -153,9 +153,9 @@ class UndoButton :UIButton {
     private func layout() {
         //Undo Image View
         
-        let undoImageViewWidth :CGFloat = 22
-        let undoImageViewHeight :CGFloat = 25
-        let undoImageViewToTextLabelSpacing :CGFloat = 5
+        let undoImageViewWidth: CGFloat = 22
+        let undoImageViewHeight: CGFloat = 25
+        let undoImageViewToTextLabelSpacing: CGFloat = 5
         
         undoImageView.frame = CGRect(x: 0, y: bounds.height / 2 - undoImageViewHeight / 2, width: undoImageViewWidth, height: undoImageViewHeight)
         addSubview(undoImageView!)

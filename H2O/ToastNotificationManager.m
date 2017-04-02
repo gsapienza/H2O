@@ -13,29 +13,29 @@
 
 + (void)postToastNotification:(NSString *)text color:(UIColor *)color image:(UIImage *)image completionBlock:(void (^)())completionBlock {
     NSDictionary *options = @{
-                              kCRToastTextKey : text,
-                              kCRToastBackgroundColorKey : color,
-                              kCRToastFontKey : [StandardFonts regularFontWithSize:20],
-                              kCRToastAnimationInTypeKey : @(CRToastAnimationTypeLinear),
-                              kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeLinear),
-                              kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionTop),
-                              kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionTop),
-                              kCRToastAnimationInTypeKey :@(CRToastAnimationTypeGravity),
-                              kCRToastAnimationOutTypeKey :@(CRToastAnimationTypeGravity),
-                              kCRToastNotificationTypeKey : @(CRToastTypeNavigationBar),
-                              kCRToastAnimationInTimeIntervalKey : @0.2,
-                              kCRToastAnimationOutTimeIntervalKey : @0.2,
-                              kCRToastTextAlignmentKey :@(NSTextAlignmentCenter),
-                              kCRToastTimeIntervalKey : @1.0,
+                              kCRToastTextKey:  text,
+                              kCRToastBackgroundColorKey:  color,
+                              kCRToastFontKey:  [StandardFonts regularFontWithSize:20],
+                              kCRToastAnimationInTypeKey:  @(CRToastAnimationTypeLinear),
+                              kCRToastAnimationOutTypeKey:  @(CRToastAnimationTypeLinear),
+                              kCRToastAnimationInDirectionKey:  @(CRToastAnimationDirectionTop),
+                              kCRToastAnimationOutDirectionKey:  @(CRToastAnimationDirectionTop),
+                              kCRToastAnimationInTypeKey: @(CRToastAnimationTypeGravity),
+                              kCRToastAnimationOutTypeKey: @(CRToastAnimationTypeGravity),
+                              kCRToastNotificationTypeKey:  @(CRToastTypeNavigationBar),
+                              kCRToastAnimationInTimeIntervalKey:  @0.2,
+                              kCRToastAnimationOutTimeIntervalKey:  @0.2,
+                              kCRToastTextAlignmentKey: @(NSTextAlignmentCenter),
+                              kCRToastTimeIntervalKey:  @1.0,
                               };
     
     NSMutableDictionary *mutableOptions = options.mutableCopy;
     if (image != nil) {
         [mutableOptions addEntriesFromDictionary:@{
-                                                   kCRToastTextAlignmentKey : @(NSTextAlignmentLeft),
-                                                   kCRToastImageKey :image,
-                                                   kCRToastImageContentModeKey :@(UIViewContentModeCenter),
-                                                   kCRToastImageAlignmentKey :@(CRToastAccessoryViewAlignmentLeft)
+                                                   kCRToastTextAlignmentKey:  @(NSTextAlignmentLeft),
+                                                   kCRToastImageKey: image,
+                                                   kCRToastImageContentModeKey: @(UIViewContentModeCenter),
+                                                   kCRToastImageAlignmentKey: @(CRToastAccessoryViewAlignmentLeft)
                                                    
                                                    }];
     }

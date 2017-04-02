@@ -9,22 +9,22 @@
 import Foundation
 import HealthKit
 
-class HealthKitService :ServiceIntergrationProtocol {
+class HealthKitService: ServiceIntergrationProtocol {
     /// Place to save and manage objects
-    private let healthKitStore :HKHealthStore = HKHealthStore()
+    private let healthKitStore: HKHealthStore = HKHealthStore()
     
-    func authorize(completion: @escaping ((_ success :Bool, _ error :Error?, _ token :String?) -> Void)) {
-        let healthKitTypesToWrite :Set = [HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!] //Write to water type (read is not available)
+    func authorize(completion: @escaping ((_ success: Bool, _ error: Error?, _ token: String?) -> Void)) {
+        let healthKitTypesToWrite: Set = [HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!] //Write to water type (read is not available)
         
         if !HKHealthStore.isHealthDataAvailable() { //If health data is not available say on an iPad
-            let error = NSError(domain: "com.theoven.H2O", code: 2, userInfo: [NSLocalizedDescriptionKey : "HealthKit is not available on this Device"])
+            let error = NSError(domain: "com.theoven.H2O", code: 2, userInfo: [NSLocalizedDescriptionKey:  "HealthKit is not available on this Device"])
             
             completion(false, error, nil)
             // completion(success: false, error: error) //Return false
         }
         
         //Request authorization
-        healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite, read: nil) { (success :Bool, error :Error?) in
+        healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite, read: nil) { (success: Bool, error: Error?) in
             if success {
                 self.addPreviousHealthKitData() //If authorized see if any previous data was entered in health from previous installs and add it to the apps database
             }
@@ -38,7 +38,7 @@ class HealthKitService :ServiceIntergrationProtocol {
         let waterQuantity = HKQuantity(unit: HKUnit.fluidOunceUS(), doubleValue: Double(amount)) //Quantity of water with the unit of measurement
         let waterSample = HKQuantitySample(type: waterType!, quantity: waterQuantity, start: date, end: date) //HKObject with appropriate water data and date so it can now be saved
         
-        healthKitStore.save(waterSample) { (success :Bool, error :Error?) in //Save the object to the health app
+        healthKitStore.save(waterSample) { (success: Bool, error: Error?) in //Save the object to the health app
             if success {
                 print("Health Data Saved Successfully")
             } else {
@@ -58,14 +58,14 @@ class HealthKitService :ServiceIntergrationProtocol {
             let entryDateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: date) //Components up to the second for the entry date. Milliseconds is too strict on the comparison
             
             //Query the health database
-            let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query :HKSampleQuery, samples :[HKSample]?, error :Error?) in
+            let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query: HKSampleQuery, samples: [HKSample]?, error: Error?) in
                 for sample in samples! { //For each entry created by app
                     let sampleDateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: sample.startDate) //Components of sample entry up to the second
                     
                     if calendar.date(from: entryDateComponents)?.compare(calendar.date(from: sampleDateComponents)!) == .orderedSame { //Compare dates without the milliseconds
                         
                         //If found delete the item from Health Kit
-                        self.healthKitStore.delete(sample, withCompletion: { (success :Bool, error :Error?) in
+                        self.healthKitStore.delete(sample, withCompletion: { (success: Bool, error: Error?) in
                             if success {
                                 print("Health Data Deleted Successfully")
                             } else {
@@ -102,7 +102,7 @@ class HealthKitService :ServiceIntergrationProtocol {
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true) //Sort descriptor by start date
         
         //Query the health database
-        let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query :HKSampleQuery, samples :[HKSample]?, error :Error?) in
+        let healthSampleQuery = HKSampleQuery(sampleType: waterType!, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query: HKSampleQuery, samples: [HKSample]?, error: Error?) in
             
             for sample in samples! { //For each entry created by app
                 let category = sample as! HKQuantitySample //Get the water entry

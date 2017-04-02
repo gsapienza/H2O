@@ -14,7 +14,7 @@ class GSAnimations {
     /// - parameter degrees: Degrees value to convert
     ///
     /// - returns: Radian value converted from degrees
-    class func degreesToRadians( degrees :CGFloat) -> CGFloat {
+    class func degreesToRadians( degrees: CGFloat) -> CGFloat {
         return degrees * CGFloat(Float.pi) / 180
     }
     
@@ -23,9 +23,9 @@ class GSAnimations {
     /// - Parameters:
     ///   - layer: Layer to perform animation on.
     ///   - completion: Animation completion.
-    class func invalid(layer :CALayer, completion :@escaping (Bool) -> Void) {
-        let animationDuration :TimeInterval = 0.8
-        let moveValue :CGFloat = 20 //initial X translation to shake
+    class func invalid(layer: CALayer, completion: @escaping (Bool) -> Void) {
+        let animationDuration: TimeInterval = 0.8
+        let moveValue: CGFloat = 20 //initial X translation to shake
         let shakeDuration = 0.2
         
         ///Shake keyframe animation
@@ -59,9 +59,9 @@ class GSAnimations {
     /// - Parameters:
     ///   - layer: Layer to perform animation on.
     ///   - completion: Animation completion.
-    class func rotationShake(layer :CALayer, completion :@escaping (Bool) -> Void) {
-        let animationDuration :TimeInterval = 1
-        let rotateValue :CGFloat = 10 //initial X translation to shake
+    class func rotationShake(layer: CALayer, completion: @escaping (Bool) -> Void) {
+        let animationDuration: TimeInterval = 1
+        let rotateValue: CGFloat = 10 //initial X translation to shake
         let shakeDuration = 0.2
         
         ///Shake keyframe animation

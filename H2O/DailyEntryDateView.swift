@@ -12,16 +12,16 @@ class DailyEntryDateView: UIView {
     //MARK: - Public iVars
     
     /// Container view containing the calendar image, day and month
-    var calendarContainerView :UIView!
+    var calendarContainerView: UIView!
     
     /// Calendar image
-    var calendarBackgroundImageView :UIImageView!
+    var calendarBackgroundImageView: UIImageView!
     
     /// Day label on calendar
-    var dayLabel :UILabel!
+    var dayLabel: UILabel!
     
     /// Month label on calendar
-    var monthLabel :UILabel!
+    var monthLabel: UILabel!
     
     //MARK: - View Layout
     
@@ -49,8 +49,8 @@ class DailyEntryDateView: UIView {
         
         calendarContainerView.translatesAutoresizingMaskIntoConstraints = false
         
-        let calendarContainerLeadingContraint :CGFloat = 10 //Leading constraint
-        let calendarContainerSizePercentageToSuperview :CGFloat = 0.7 //Size of view compared to this view
+        let calendarContainerLeadingContraint: CGFloat = 10 //Leading constraint
+        let calendarContainerSizePercentageToSuperview: CGFloat = 0.7 //Size of view compared to this view
         
         addConstraint(NSLayoutConstraint(item: calendarContainerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: calendarContainerView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: calendarContainerLeadingContraint))
@@ -72,9 +72,9 @@ class DailyEntryDateView: UIView {
         
         dayLabel.text = "" //Empty text to get the size of the label. Mainly the height
         
-        let sizeOfDay = dayLabel.text!.size(attributes: [NSFontAttributeName : dayLabel.font]) //Size of the label with font
+        let sizeOfDay = dayLabel.text!.size(attributes: [NSFontAttributeName:  dayLabel.font]) //Size of the label with font
         
-        let calendarLabelCenterSpacingMargin :CGFloat = 5 //Amount of margin from the center point of the calendar container view
+        let calendarLabelCenterSpacingMargin: CGFloat = 5 //Amount of margin from the center point of the calendar container view
         
         calendarContainerView.addSubview(dayLabel)
         
@@ -87,13 +87,13 @@ class DailyEntryDateView: UIView {
         
         //---Month Label---
         
-        let sizeOfMonth = dayLabel.text!.size(attributes: [NSFontAttributeName : monthLabel.font]) //Month label is the same font and size as the day label so just get the size of month label from the day label properties
+        let sizeOfMonth = dayLabel.text!.size(attributes: [NSFontAttributeName:  monthLabel.font]) //Month label is the same font and size as the day label so just get the size of month label from the day label properties
         
         calendarContainerView.addSubview(monthLabel)
         
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let monthLabelSideMargin :CGFloat = 5 //Side margins for month label
+        let monthLabelSideMargin: CGFloat = 5 //Side margins for month label
         
         calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .centerY, relatedBy: .equal, toItem: calendarContainerView, attribute: .centerY, multiplier: 1, constant: sizeOfMonth.height / 2 + calendarLabelCenterSpacingMargin)) //Y position of day label is below center point by half the label height and the center margin
         calendarContainerView.addConstraint(NSLayoutConstraint(item: monthLabel, attribute: .leading, relatedBy: .equal, toItem: calendarContainerView, attribute: .leading, multiplier: 1, constant: monthLabelSideMargin))

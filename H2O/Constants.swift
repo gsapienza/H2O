@@ -11,7 +11,7 @@ import SpriteKit
 import WatchKit
 import UIKit
 
-enum ShortcutItemValue :String {
+enum ShortcutItemValue: String {
     case smallEntry = "com.theoven.H2O.smallPresetEntry"
     case mediumEntry = "com.theoven.H2O.mediumPresetEntry"
     case largeEntry = "com.theoven.H2O.largePresetEntry"
@@ -20,13 +20,13 @@ enum ShortcutItemValue :String {
 
 //MARK: - Units
 
-enum Unit :String {
+enum Unit: String {
     case oz
     case ml
 }
 
 /// Standard unit of measurement
-let standardUnit :Unit = .oz
+let standardUnit: Unit = .oz
 
 //MARK: - Notification Constants
 
@@ -80,8 +80,8 @@ let LastRevisionSyncToWatchMessageContent = "LAST_REVISION_SYNC_TO_WATCH_MESSAGE
 
 //MARK: - Defaults
 
-let defaultPresets :[Float] = [8.0, 17.0, 23.0]
-let defaultDailyGoal :Float = 64
+let defaultPresets: [Float] = [8.0, 17.0, 23.0]
+let defaultDailyGoal: Float = 64
 
 //MARK: - Audio Files
 
@@ -98,7 +98,7 @@ let BubbleSound = "b4.wav"
 
 // MARK: - UIImage Extenstion
 extension UIImage {
-    enum AssetIdentifier :String {
+    enum AssetIdentifier: String {
         case calendarBackground, check, darkModeBackground, graphBackground, lightModeBackground, automaticThemeChangeCellImage, darkLargePresetImage, darkMediumPresetImage, darkSmallPresetImage, darkModeCellImage, goalCellImage, healthKitCellImage, lightLargePresetImage, lightMediumPresetImage, lightSmallPresetImage, settingsBarButtonItem, undoButtonItem
     }
     
@@ -109,11 +109,11 @@ extension UIImage {
 
 // MARK: - SKTexture Extension
 extension SKTexture {
-    enum AssetIdentifier :String {
+    enum AssetIdentifier: String {
         case entryButton, highlightedEntryButton
     }
     
-    convenience init!(assetIdentifier :AssetIdentifier) {
+    convenience init!(assetIdentifier: AssetIdentifier) {
         self.init(imageNamed: assetIdentifier.rawValue)
     }
 }

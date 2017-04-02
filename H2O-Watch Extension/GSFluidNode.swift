@@ -13,22 +13,22 @@ class GSFluidNode: SKSpriteNode, GSFluidLayoutProtocol {
     typealias Liquid = SKShapeNode
     typealias WaveMovementAnimation = SKAction
     
-    var liquidLayer :Liquid! = Liquid()
-    var waveMovementAnimation :WaveMovementAnimation!
-    var fluidLayout :GSFluidLayout!
+    var liquidLayer: Liquid! = Liquid()
+    var waveMovementAnimation: WaveMovementAnimation!
+    var fluidLayout: GSFluidLayout!
     var liquidFillColor = UIColor() {
         didSet {
             liquidLayer.fillColor = liquidFillColor
         }
     }
-    var phaseShiftDuration :Double = 1.2 {
+    var phaseShiftDuration: Double = 1.2 {
         didSet {
             startWaveAnimation()
         }
     }
     
     /// Paths that will contain all of the animatable CGPaths for the liquid to animate through.
-    var paths :CFMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 0, [kCFTypeArrayCallBacks])
+    var paths: CFMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 0, [kCFTypeArrayCallBacks])
     
     func layout() {
         yScale = -1 //Flip the coordinates otherwise the paths will render upside down due to SpriteKit rendering coordinates reverse of UIKit.
@@ -92,7 +92,7 @@ class GSFluidNode: SKSpriteNode, GSFluidLayoutProtocol {
         let range = CFRange(location: 0, length: newPaths.count) //Range to add new array to old one.
         CFArrayAppendArray(paths, newPathsCFArray, range) //Add new array of paths to the instance paths array.
         
-        let array :[AnyObject] = self.paths as [AnyObject] //Cast the CFArray to a collection array (I don't know why but it crashes on the next line if we use a CFArray.
+        let array: [AnyObject] = self.paths as [AnyObject] //Cast the CFArray to a collection array (I don't know why but it crashes on the next line if we use a CFArray.
         self.liquidLayer.path = (array[0] as! CGPath)//CFArrayGetValueAtIndex(self.paths, 0) as! CGPath?
         CFArrayRemoveValueAtIndex(self.paths, 0) //Remove the first value in the array once we've used it.
     }

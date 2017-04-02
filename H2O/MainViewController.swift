@@ -13,12 +13,12 @@ protocol EntryButtonProtocol {
     /// When an entry is made by tapping one of the preset buttons
     ///
     /// - parameter amount: Amount set in the preset
-    func entryButtonTapped(amount :Float)
+    func entryButtonTapped(amount: Float)
     
     ///  When the custom entry button is tapped
     ///
     /// - parameter customButton: Button that was tapped
-    func customEntryButtonTapped(customButton :EntryButton)
+    func customEntryButtonTapped(customButton: EntryButton)
 }
 
 class MainViewController: UIViewController, NavigationThemeProtocol {
@@ -54,23 +54,23 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     private let motionManager = CMMotionManager()
     
     /// Undo bar button item.
-    fileprivate var undoBarButtonItem :UndoBarButtonItem!
+    fileprivate var undoBarButtonItem: UndoBarButtonItem!
     
     /// View for confetti to burst at when the user hit their goal
-    fileprivate var confettiArea :L360ConfettiArea!
+    fileprivate var confettiArea: L360ConfettiArea!
     
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
-    fileprivate var customEntryView :CustomEntryView!
+    fileprivate var customEntryView: CustomEntryView!
     
     /// Model for intergrating services.
-    fileprivate var serviceIntergrationModel :ServiceIntergrationModel = ServiceIntergrationModel()
+    fileprivate var serviceIntergrationModel: ServiceIntergrationModel = ServiceIntergrationModel()
     
     var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)?
     
     //MARK: - Internal iVars
     
     /// User set water goal (readonly)
-    var goal :Float {
+    var goal: Float {
         if let _goal = AppUserDefaults.getDailyGoalValue() {
             return _goal
         } else {
@@ -79,10 +79,10 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     }
     
     /// Last frame set for the fluid view presentation layer. Set by its delegate when animating its position
-    var lastFluidViewPresentationLayerFrame :CGRect?
+    var lastFluidViewPresentationLayerFrame: CGRect?
     
     /// Last frame set for the custom view droplet presentation layer. Set by its delegate when animating its position
-    var lastCustomViewDropletPresentationLayerFrame :CGRect?
+    var lastCustomViewDropletPresentationLayerFrame: CGRect?
     
     /// Determines whether we want something to happen when the custom view water droplet meets the water liquid view when it drops
     var monitoringCustomViewDropletMovements = false
@@ -199,10 +199,10 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     /// Toggles all views on screen with a fancy animation. If false the subviews scale in otherwise they scale out
     ///
     /// - parameter hide: Should the views be hiddden
-    fileprivate func toggleViewControllerViews(hide :Bool, completion :@escaping (Bool) -> Void) {
+    fileprivate func toggleViewControllerViews(hide: Bool, completion: @escaping (Bool) -> Void) {
         //Original values
         var scale = CGAffineTransform(scaleX: 1, y: 1)
-        var alpha :CGFloat = 1
+        var alpha: CGFloat = 1
         
         if hide { //If you want to hide them instead
             scale = CGAffineTransform(scaleX: 0.00001, y: 0.00001)
@@ -226,7 +226,7 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
             self.dailyEntryDial.transform = scale
             self.dailyEntryDial.alpha = alpha
             
-        }) { (complete :Bool) in
+        }) { (complete: Bool) in
             completion(complete)
         }
     }
@@ -245,8 +245,8 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     /// Updates the height of the fluid value by getting the ratio of amount of water drank and goal.
     ///
     /// - parameter currentValue: Current amount of water drank.
-    func updateFluidValue(current :Float) {
-        var newFillValue :Float = Float((current / goal) * 1.0) //New ratio
+    func updateFluidValue(current: Float) {
+        var newFillValue: Float = Float((current / goal) * 1.0) //New ratio
         
         delay(delay: 0.2) { //Aesthetic delay
             self.fluidView.fillTo(&newFillValue) //New fill value 0-1
@@ -353,7 +353,7 @@ extension MainViewController {
     /// Adds water to user by using presets, custom amount or other means
     ///
     /// - parameter amount: Amount of water in fl oz
-    func addWaterToToday( amount :Float) {
+    func addWaterToToday( amount: Float) {
         let beforeAmount = getAppDelegate().user?.amountOfWaterForToday() //Water drank before entering this latest entry
         
         //Celebration if the user hit their goal. Determines if the the user wasnt at their goal before the entry but now is with the new amount about to be added.
@@ -370,7 +370,7 @@ extension MainViewController {
         
         serviceIntergrationModel.addEntryToAuthorizedServices(amount: amount, date: Date())
         
-        WatchConnection.standardWatchConnection.beginSync { ( replyHandler :[String : Any]) in
+        WatchConnection.standardWatchConnection.beginSync { ( replyHandler: [String:  Any]) in
         }
 
         indicateDialToOpenInformationViewController()
@@ -393,7 +393,7 @@ extension MainViewController {
     
     ///When the cancel bar button is tapped when the custom entry view is present
     func onCancelCustomEntryBarButton() {
-        var newFillValue :Float = Float((Float(dailyEntryDial.current) / goal) * 1.0) //New ratio
+        var newFillValue: Float = Float((Float(dailyEntryDial.current) / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
         
         configureBarButtonItems() //Restore bar buttons
@@ -404,7 +404,7 @@ extension MainViewController {
         }
         
         //Show all views on screen
-        toggleViewControllerViews(hide: false) { (complete :Bool) in
+        toggleViewControllerViews(hide: false) { (complete: Bool) in
             self.indicateDialToOpenInformationViewController()
         }
     }
@@ -422,7 +422,7 @@ extension MainViewController {
             customEntryView.animateToDropletPathAndDrop(completionHandler: { (Bool) in
                 delay(delay: 0.5, closure: {
                     //Show all views on screen
-                    self.toggleViewControllerViews(hide: false) { (complete :Bool) in
+                    self.toggleViewControllerViews(hide: false) { (complete: Bool) in
                         self.indicateDialToOpenInformationViewController()
                     }
                 })
@@ -466,7 +466,7 @@ extension MainViewController {
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
         
-        let informationViewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController() //Get the view controller
+        let informationViewController: InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController() //Get the view controller
         
         informationViewController.informationViewControllerDelegate = self //Delegate to listen for events like deletion
         informationViewController.setupPopsicle() //Push the view controller up like a modal controller
@@ -475,7 +475,7 @@ extension MainViewController {
 }
 
 // MARK: - EntryButtonDelegate
-extension MainViewController :EntryButtonProtocol {
+extension MainViewController: EntryButtonProtocol {
     /// When an entry button is tapped and a new amount of water is added to today
     ///
     /// - parameter amount: Amount to add in fl oz
@@ -486,15 +486,15 @@ extension MainViewController :EntryButtonProtocol {
     /// When the custom entry button is tapped. Creates a new entry view
     ///
     /// - parameter customButton: Button that was tapped
-    func customEntryButtonTapped( customButton :EntryButton) {
-        var fillPercentage :Float = 0
+    func customEntryButtonTapped( customButton: EntryButton) {
+        var fillPercentage: Float = 0
         fluidView.fillTo(&fillPercentage) //Make the fill value 0 to better show the custom entry circle. When cancel or done is tapped, the fill will go back to current value of water that was drank
         
         customEntryView.animateFromCustomButtonPathToCirclePath { (Bool) in
         }
         
         //Hide all other views on screen.
-        toggleViewControllerViews(hide: true) { (complete :Bool) in
+        toggleViewControllerViews(hide: true) { (complete: Bool) in
         }
         
         //Navigation bar setup for controlling custom entry
@@ -513,7 +513,7 @@ extension MainViewController :EntryButtonProtocol {
 }
 
 // MARK: - SettingsViewControllerProtocol
-/*extension MainViewController :SettingsViewControllerProtocol {
+/*extension MainViewController: SettingsViewControllerProtocol {
     /// Called when the goal value has been updated
     ///
     /// - parameter newValue: New goal set
@@ -540,14 +540,14 @@ extension MainViewController :EntryButtonProtocol {
 }*/
 
 // MARK: - InformationViewControllerProtocol
-extension MainViewController :InformationViewControllerProtocol {
+extension MainViewController: InformationViewControllerProtocol {
     func entryWasDeleted() {
         dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
         dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
                 
-        WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
+        WatchConnection.standardWatchConnection.beginSync { (replyHandler: [String:  Any]) in
         }
     }
     
@@ -557,14 +557,14 @@ extension MainViewController :InformationViewControllerProtocol {
 }
 
 // MARK: - H2OFluidViewProtocol
-extension MainViewController :H2OFluidViewProtocol {
+extension MainViewController: H2OFluidViewProtocol {
     func fluidViewLayerDidUpdate(fluidView: GSAnimatingProgressLayer) {
         lastFluidViewPresentationLayerFrame = self.fluidView.liquidLayer.presentation()?.frame
     }
 }
 
 // MARK: - CustomEntryViewProtocol
-extension MainViewController :CustomEntryViewProtocol {
+extension MainViewController: CustomEntryViewProtocol {
     func dropletLayerDidUpdate(layer: GSAnimatingProgressLayer) {
         
         lastCustomViewDropletPresentationLayerFrame = customEntryView.dropletShapeLayer.presentation()!.path?.boundingBoxOfPath
@@ -588,7 +588,7 @@ extension MainViewController :CustomEntryViewProtocol {
 // MARK: - UIViewControllerPreviewingDelegate
 extension MainViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        let viewController :InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+        let viewController: InformationViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
         viewController.informationViewControllerDelegate = self //Delegate to listen for events like deletion
 
         viewController.preferredContentSize = CGSize(width: 0, height: 0)
@@ -602,7 +602,7 @@ extension MainViewController: UIViewControllerPreviewingDelegate {
 }
 
 // MARK: - BoardingProtocol
-extension MainViewController :BoardingProtocol {
+extension MainViewController: BoardingProtocol {
     func animateIn(completion: @escaping (Bool) -> Void) {
         view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         view.alpha = 0

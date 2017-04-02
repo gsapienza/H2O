@@ -39,18 +39,18 @@ class InformationViewController: Popsicle {
     @IBOutlet weak var noDataLabel: UILabel!
     
     /// Delegate to inform the presenting view controller changes to entries
-    var informationViewControllerDelegate :InformationViewControllerProtocol?
+    var informationViewControllerDelegate: InformationViewControllerProtocol?
     
     /// User set goal
-    var goal :Float!
+    var goal: Float!
     
     //MARK: - Internal iVars
 
     //Array of data for entries. Contains date and entries.
-    var dayEntries :[DayEntry]?
+    var dayEntries: [DayEntry]?
     
     /// Weekly graph view in the header of the water data table view
-    var weeklyBarGraphView :WeekBarGraphView!
+    var weeklyBarGraphView: WeekBarGraphView!
         
     /// State of the information table view.
     var state = State.viewing
@@ -77,8 +77,8 @@ class InformationViewController: Popsicle {
     }
     
     /// When the user confirms a delete is allowed this will delete the entry from the database and table view
-    func delete(entries :[DayEntryIndexPath]) {
-        var indexPathsToRemoveFromCell :[Int : [Int]] = [:]
+    func delete(entries: [DayEntryIndexPath]) {
+        var indexPathsToRemoveFromCell: [Int:  [Int]] = [:]
         
         let _ = entries.map { (dayEntryIndex: (dayIndex: Int, entryIndex: Int)) in //Takes all day entry index paths and creates a dictionary where the key is the index of the day and the values are the selected entries.
             if indexPathsToRemoveFromCell[dayEntryIndex.dayIndex] != nil { //If there is no array for the key.
@@ -88,12 +88,12 @@ class InformationViewController: Popsicle {
             }
         }
         
-        var dayIndexesToDelete :[Int] = [] //Day indexes that will be deleted for empty days left after entries are deleted.
+        var dayIndexesToDelete: [Int] = [] //Day indexes that will be deleted for empty days left after entries are deleted.
         var cellsCompletedTheirDeletions = 0 //A count that will be increased by one after an entry is successfully deleted. Essentially this is here to ensure all entries are deleted before removing an entire day row.
         
         func deleteDayRows() {
             if entries.count == cellsCompletedTheirDeletions { //If each entry has been deleted.
-                let dayIndexPathsToDelete :[IndexPath] = dayIndexesToDelete.map({ (index :Int) -> IndexPath in //Create a map of index paths to remove from days.
+                let dayIndexPathsToDelete: [IndexPath] = dayIndexesToDelete.map({ (index: Int) -> IndexPath in //Create a map of index paths to remove from days.
                     return IndexPath(row: index, section: 0)
                 })
 
@@ -108,7 +108,7 @@ class InformationViewController: Popsicle {
             }
             
             
-            var entryIndexesToDelete :[Int] = [] //Will be used as arg to delete entry indexes from the day entry backing a cell collection view in the day cell.
+            var entryIndexesToDelete: [Int] = [] //Will be used as arg to delete entry indexes from the day entry backing a cell collection view in the day cell.
             for index in dayPath.value { //For each entry
                 entryIndexesToDelete.append(index) //Append the index path to the array of deletions so we can delete them from the UI.
             }
@@ -118,7 +118,7 @@ class InformationViewController: Popsicle {
                     dayEntry.removeEntries(at: entryIndexesToDelete) //Remove it from the table view backing.
                     self.dayEntries?[dayPath.key] = dayEntry //Set the value of the day manipulated in array to new value since it is not a reference type.
                     
-                    let indexPathsToDelete :[IndexPath] = entryIndexesToDelete.map({ (index :Int) -> IndexPath in //Will be used as the arg to use to delete index paths from the collection view in the day cell.
+                    let indexPathsToDelete: [IndexPath] = entryIndexesToDelete.map({ (index: Int) -> IndexPath in //Will be used as the arg to use to delete index paths from the collection view in the day cell.
                         return IndexPath(row: index, section: 0)
                     })
 
@@ -160,15 +160,15 @@ class InformationViewController: Popsicle {
         
         //---Weekly Bar Graph View---
         
-        let barGraphMargin :CGFloat = 10 //Margin around the bar graph
+        let barGraphMargin: CGFloat = 10 //Margin around the bar graph
         
         weeklyBarGraphView.frame = CGRect(x: barGraphMargin, y: barGraphMargin, width: view.bounds.width - barGraphMargin * 2, height: tableHeaderView.bounds.height - barGraphMargin * 2)
         
         tableHeaderView.addSubview(weeklyBarGraphView)
     }
     
-    private func populateEntriesForDates(collection :[[String : AnyObject]]) -> [DayEntry]? {
-         return collection.map { (dateEntries :[String : AnyObject]) in
+    private func populateEntriesForDates(collection: [[String:  AnyObject]]) -> [DayEntry]? {
+         return collection.map { (dateEntries: [String:  AnyObject]) in
             guard
                 let date = dateEntries["date"] as? Date,
                 let entries = dateEntries["entries"] as? [Entry]
@@ -280,10 +280,10 @@ extension InformationViewController {
             //Localized for singlular and plural text.
             
             let localizedAlertTitleFormat = NSLocalizedString("delete_water_entry_alert_title", comment: "")
-            var localizedAlertTitle :String!
+            var localizedAlertTitle: String!
             
             let localizedAlertMessageFormat = NSLocalizedString("delete_water_entry_alert_message", comment: "")
-            var localizedAlertMessage :String!
+            var localizedAlertMessage: String!
             
             if selectedEntries.count == 1 {
                 localizedAlertTitle = String.localizedStringWithFormat(localizedAlertTitleFormat, 1)
@@ -308,7 +308,7 @@ extension InformationViewController {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension InformationViewController :UITableViewDataSource, UITableViewDelegate {
+extension InformationViewController: UITableViewDataSource, UITableViewDelegate {
     
     /// Shows the no data label if not entries are present otherwise returns the amount of days of which entries were made
     func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -361,7 +361,7 @@ extension InformationViewController :UITableViewDataSource, UITableViewDelegate 
 }
 
 // MARK: - DailyInformationTableViewCellProtocol
-extension InformationViewController :DailyInformationTableViewCellProtocol {
+extension InformationViewController: DailyInformationTableViewCellProtocol {
     func getEntriesForDay(dayIndex: Int) -> [Entry]? {
         guard let dayEntry = dayEntries?[dayIndex] else {
             fatalError("Day entry not found for index path")
@@ -375,7 +375,7 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
     }
     
     func entrySelected(dayIndex: Int, entryIndex: Int) {
-        let dayEntryIndexPath = (dayIndex :dayIndex, entryIndex :entryIndex)
+        let dayEntryIndexPath = (dayIndex: dayIndex, entryIndex: entryIndex)
         switch self.state {
         case .viewing:
             fatalError("Shouldn't get in this state.")
@@ -394,7 +394,7 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
     }
     
     func entryDeselected(dayIndex: Int, entryIndex: Int) {
-        let dayEntryIndexPath = (dayIndex :dayIndex, entryIndex :entryIndex)
+        let dayEntryIndexPath = (dayIndex: dayIndex, entryIndex: entryIndex)
         switch self.state {
         case .viewing:
             fatalError("Shouldn't get in this state.")
@@ -417,7 +417,7 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
     }
     
     func isEntrySelected(dayIndex: Int, entryIndex: Int) -> Bool {
-        let dayEntryIndexPath = (dayIndex :dayIndex, entryIndex :entryIndex)
+        let dayEntryIndexPath = (dayIndex: dayIndex, entryIndex: entryIndex)
         switch self.state {
         case let .selecting(selectedEntries):
             for entry in selectedEntries {
@@ -433,7 +433,7 @@ extension InformationViewController :DailyInformationTableViewCellProtocol {
 }
 
 // MARK: - WeekBarGraphViewProtocol
-extension InformationViewController :WeekBarGraphViewProtocol {
+extension InformationViewController: WeekBarGraphViewProtocol {
     func weekBarGraphViewGoal() -> Float {
         return informationViewControllerDelegate!.informationViewControllerGoal()
     }

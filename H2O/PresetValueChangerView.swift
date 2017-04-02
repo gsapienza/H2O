@@ -47,13 +47,13 @@ class PresetValueChangerView: UIControl {
     var previousValue = String()
     
     /// Font size for label and text field.
-    var fontSize :CGFloat = 17
+    var fontSize: CGFloat = 17
     
     /// Is the keyboard toolbar enabled.
     var toolbarEnabled = true
     
     /// Alignment of text field and label combination
-    var alignment :NSTextAlignment = .center
+    var alignment: NSTextAlignment = .center
     
  
     override func layoutSubviews() {
@@ -116,7 +116,7 @@ class PresetValueChangerView: UIControl {
         presetValueTextField.delegate = self
     }
     
-    init(fontSize :CGFloat) {
+    init(fontSize: CGFloat) {
         super.init(frame: CGRect.zero)
         self.fontSize = fontSize
         
@@ -145,15 +145,15 @@ class PresetValueChangerView: UIControl {
         
         unitLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let unit :NSString = standardUnit.rawValue as NSString
+        let unit: NSString = standardUnit.rawValue as NSString
         let font = StandardFonts.regularFont(size: fontSize)
-        let textSize = unit.size(attributes: [NSFontAttributeName : font]) //Gets size of text based on font and string
+        let textSize = unit.size(attributes: [NSFontAttributeName:  font]) //Gets size of text based on font and string
         
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: unitLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
         
-        var widthConstraint :NSLayoutConstraint!
+        var widthConstraint: NSLayoutConstraint!
         
         if alignment == .center {
             widthConstraint = NSLayoutConstraint(item: unitLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 1) //Add a +1 because it is too small without it ¯\(ツ)/¯
@@ -191,7 +191,7 @@ class PresetValueChangerView: UIControl {
 }
 
 // MARK: - UITextFieldDelegate
-extension PresetValueChangerView :UITextFieldDelegate {
+extension PresetValueChangerView: UITextFieldDelegate {
     /**
      When the text field begins editing this saves its value so that if the user leaves it empty, the text field text will be replaced by its old value
      */

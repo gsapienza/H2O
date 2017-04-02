@@ -12,7 +12,7 @@ protocol NavigationThemeProtocol {
     var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)? { get set }
 }
 
-extension NavigationThemeProtocol where Self : UIViewController {
+extension NavigationThemeProtocol where Self:  UIViewController {
     func updateNavigationBar(navigationTheme: NavigationTheme) {
         navigationThemeDidChangeHandler?(navigationTheme)
     }

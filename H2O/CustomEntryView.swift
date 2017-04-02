@@ -13,84 +13,84 @@ protocol CustomEntryViewProtocol {
     /// Gets drop view as its animating
     ///
     /// - parameter layer: Layer animating
-    func dropletLayerDidUpdate(layer :GSAnimatingProgressLayer)
+    func dropletLayerDidUpdate(layer: GSAnimatingProgressLayer)
 }
 
 class CustomEntryView: UIView {
     //MARK: - Public iVars
     
     /// Text field where the user can enter how much water they drank
-    var amountTextField :UITextField!
+    var amountTextField: UITextField!
     
     /// Frame for custom button that should be used in custom button path
-    var customButtonFrame :CGRect!
+    var customButtonFrame: CGRect!
     
     /// Corner radius of custom button that should be used in custom button path
-    var customButtonCornerRadius :CGFloat!
+    var customButtonCornerRadius: CGFloat!
     
     /// Frame for circle dial that should be used in circle dial path
-    var circleDialFrame :CGRect!
+    var circleDialFrame: CGRect!
     
     /// Corner radius of circle dial that should be used in circle path
-    var circleDialCornerRadius :CGFloat!
+    var circleDialCornerRadius: CGFloat!
     
     /// Frame for droplet that should be used when sending it to the bottom of the screen
-    var dropletAtBottomFrame :CGRect!
+    var dropletAtBottomFrame: CGRect!
     
     /// Delegate to send messages containing updates to layer
-    var delegate :CustomEntryViewProtocol?
+    var delegate: CustomEntryViewProtocol?
     
     //MARK: - Private iVars
     
     /// View that contains the amount text field and unit label. Combined to make positioning everything easier
-    private var viewContainer :UIView!
+    private var viewContainer: UIView!
     
     /// Shape of outlining circle that will be morphed
-    private var customButtonToDialCircleShapeLayer :CAShapeLayer!
+    private var customButtonToDialCircleShapeLayer: CAShapeLayer!
     
     /// Layer for the blue droplet that appears after the circle path transforms into the droplet path
-    var dropletShapeLayer :GSAnimatingProgressLayer!
+    var dropletShapeLayer: GSAnimatingProgressLayer!
     
     
     /// Path for custom button
-    private var customButtonPath :CGPath {
+    private var customButtonPath: CGPath {
         return generateCustomButtonShapePath(frame: customButtonFrame, cornerRadius: customButtonCornerRadius).cgPath
     }
     
     /// Path for circle dial
-    private var circleDialPath :CGPath {
+    private var circleDialPath: CGPath {
         return generateCircleShapePath(frame: circleDialFrame, cornerRadius: circleDialCornerRadius).cgPath
     }
     
     /// Path for the droplet resembling a circle before transforming to a droplet
-    private var circleDropletPath :CGPath {
+    private var circleDropletPath: CGPath {
         return generateCircleDropletShapePath(frame: circleDialFrame).cgPath
     }
     
     /// Path for droplet when at middle of screen
-    private var dropletAtMiddlePath :CGPath {
+    private var dropletAtMiddlePath: CGPath {
         return generateMiddleOfViewDropletShapePath(frame: circleDialFrame).cgPath
     }
     
     /// Path for droplet when at bottom of screen
-    private var dropletAtBottomPath :CGPath {
+    private var dropletAtBottomPath: CGPath {
         return generateBottomOfViewDropletMorphingShapePath(frame: dropletAtBottomFrame).cgPath
     }
     
     /// Center point of custom button
-    private var customButtonCenterPoint :CGPoint {
+    private var customButtonCenterPoint: CGPoint {
         return CGPoint(x: customButtonFrame.origin.x + (customButtonFrame.width / 2), y: customButtonFrame.origin.y + (customButtonFrame.height / 2))
     }
     
     /// Center point of the circle dial
-    private var circleDialCenterPoint :CGPoint {
+    private var circleDialCenterPoint: CGPoint {
         return CGPoint(x: circleDialFrame.origin.x + (circleDialFrame.width / 2), y: circleDialFrame.origin.y + (circleDialFrame.height / 2))
     }
     
     //MARK: - Internal iVars
     
     /// Unit of measurement label next to the amount text field
-    var unitLabel :UILabel!
+    var unitLabel: UILabel!
     
     /// Standard animation time for all animations in this view
     let animationDuration = 0.25
@@ -260,7 +260,7 @@ class CustomEntryView: UIView {
      
      - parameter completionHandler: When the animation is complete
      */
-    private func animateViewContainer(toCenter: CGPoint, transform :CGAffineTransform, completionHandler: @escaping (Bool) -> Void) {
+    private func animateViewContainer(toCenter: CGPoint, transform: CGAffineTransform, completionHandler: @escaping (Bool) -> Void) {
         UIView.animate(withDuration: animationDuration * 1.5, animations: {
             self.viewContainer.center = toCenter
             self.viewContainer.transform = transform
@@ -317,7 +317,7 @@ extension CustomEntryView {
         textField.keyboardAppearance = StandardColors.standardKeyboardAppearance
         textField.delegate = self
         textField.tintColor = StandardColors.waterColor
-        textField.attributedPlaceholder = NSAttributedString(string: "12", attributes: [NSForegroundColorAttributeName : UIColor(white: 1, alpha: 0.2)])
+        textField.attributedPlaceholder = NSAttributedString(string: "12", attributes: [NSForegroundColorAttributeName:  UIColor(white: 1, alpha: 0.2)])
         textField.adjustsFontSizeToFitWidth = true
         textField.minimumFontSize = 30
         
@@ -355,7 +355,7 @@ extension CustomEntryView {
     /// - parameter cornerRadius: Corner radius of the custom button
     ///
     /// - returns: Path resembling custom button
-    func generateCustomButtonShapePath(frame :CGRect, cornerRadius :CGFloat) -> UIBezierPath {
+    func generateCustomButtonShapePath(frame: CGRect, cornerRadius: CGFloat) -> UIBezierPath {
         let path = UIBezierPath(roundedRect: CGRect(x: frame.origin.x, y: frame.origin.y, width: floor(frame.width * 1.00000 + 0.5) - floor(frame.width * 0.00000 + 0.5), height: floor(frame.height * 1.00000 + 0.5) - floor(frame.height * 0.00000 + 0.5)), cornerRadius: cornerRadius)
         
         return path
@@ -367,7 +367,7 @@ extension CustomEntryView {
     /// - parameter cornerRadius: Corner radius of the circle dial
     ///
     /// - returns: Path resembling the outer circle dial
-    func generateCircleShapePath(frame :CGRect, cornerRadius :CGFloat) -> UIBezierPath {
+    func generateCircleShapePath(frame: CGRect, cornerRadius: CGFloat) -> UIBezierPath {
         let path = UIBezierPath(roundedRect: CGRect(x: frame.origin.x, y: frame.origin.y, width: floor(frame.width * 1.00000 + 0.5) - floor(frame.width * 0.00000 + 0.5), height: floor(frame.height * 1.00000 + 0.5) - floor(frame.height * 0.00000 + 0.5)), cornerRadius: cornerRadius)
         
         return path
@@ -378,7 +378,7 @@ extension CustomEntryView {
     /// - parameter frame: Frame of the circle dial
     ///
     /// - returns: Path resembling the outer circle dial
-    func generateCircleDropletShapePath(frame :CGRect) -> UIBezierPath {
+    func generateCircleDropletShapePath(frame: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: frame.minX + 0.00000 * frame.width, y: frame.minY + 0.51044 * frame.height))
         path.addCurve(to: CGPoint(x: frame.minX + 0.50000 * frame.width, y: frame.minY + 1.00000 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.00000 * frame.width, y: frame.minY + 0.78114 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.22484 * frame.width, y: frame.minY + 1.00000 * frame.height))
@@ -396,7 +396,7 @@ extension CustomEntryView {
     /// - parameter frame: Frame of the circle dial where the drop will appear
     ///
     /// - returns: Path of liquid drop
-    func generateMiddleOfViewDropletShapePath(frame :CGRect) -> UIBezierPath {
+    func generateMiddleOfViewDropletShapePath(frame: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: frame.minX + 0.29583 * frame.width, y: frame.minY + 0.62993 * frame.height))
         path.addCurve(to: CGPoint(x: frame.minX + 0.50000 * frame.width, y: frame.minY + 0.81667 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.29583 * frame.width, y: frame.minY + 0.73319 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.38764 * frame.width, y: frame.minY + 0.81667 * frame.height))
@@ -414,7 +414,7 @@ extension CustomEntryView {
     /// - parameter frame: Frame of the droplet at the bottom of the screen
     ///
     /// - returns: Path of liquid drop located at bottom of screen
-    func generateBottomOfViewDropletMorphingShapePath(frame :CGRect) -> UIBezierPath {
+    func generateBottomOfViewDropletMorphingShapePath(frame: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: frame.minX + 0.29583 * frame.width, y: frame.minY + 0.62993 * frame.height))
         path.addCurve(to: CGPoint(x: frame.minX + 0.50000 * frame.width, y: frame.minY + 0.81667 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.29583 * frame.width, y: frame.minY + 0.73319 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.38764 * frame.width, y: frame.minY + 0.81667 * frame.height))
@@ -429,7 +429,7 @@ extension CustomEntryView {
 }
 
 // MARK: - UITextFieldDelegate
-extension CustomEntryView :UITextFieldDelegate {
+extension CustomEntryView: UITextFieldDelegate {
     /**
      Determines whether editing should be allowed. Limitations are that only digits may be entered with a max of 3 digits
      
@@ -438,14 +438,14 @@ extension CustomEntryView :UITextFieldDelegate {
     func textField( _ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
-        let backSpaceUnicodeValue :Int32 = -92
+        let backSpaceUnicodeValue: Int32 = -92
         
         if Int(string) != nil || isBackSpace == backSpaceUnicodeValue { //Is it a number or a backspace value
             if textField.text!.characters.count + 1 > 3 && isBackSpace != backSpaceUnicodeValue  { //Is there less than 3 characters or is this not a backspace
                 return false
             } else {
                 let character = Array(arrayLiteral: standardUnit.rawValue).first!
-                let sizeOfCharacter = character.size(attributes: [NSFontAttributeName : unitLabel.font!]) //Gets size of text based on font and string
+                let sizeOfCharacter = character.size(attributes: [NSFontAttributeName:  unitLabel.font!]) //Gets size of text based on font and string
                 
                 let amountToMoveCharacters = sizeOfCharacter.width / 2 //Amount to move text field and unit label
                 
@@ -474,7 +474,7 @@ extension CustomEntryView :UITextFieldDelegate {
 }
 
 // MARK: - GSAnimatingProgressLayerProtocol
-extension CustomEntryView :GSAnimatingProgressLayerProtocol {
+extension CustomEntryView: GSAnimatingProgressLayerProtocol {
     func layerDidUpdate(key: String) {
        // print(dropletShapeLayer.presentation()!.path?.boundingBoxOfPath)
         delegate?.dropletLayerDidUpdate(layer: dropletShapeLayer)

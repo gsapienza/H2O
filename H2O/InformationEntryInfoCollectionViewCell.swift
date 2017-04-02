@@ -12,15 +12,15 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     //MARK: - Public iVars
     
     /// Label displaying the amound of water logged in entry contained in the entryAmountView
-    var entryAmountLabel :UILabel!
+    var entryAmountLabel: UILabel!
     
     /// Time that the entry was added
-    var timeLabel :UILabel!
+    var timeLabel: UILabel!
     
     //MARK: - Private iVars
     
     /// Circle view displaying the entry and the amount within
-    private var entryAmountView :UIView!
+    private var entryAmountView: UIView!
     
     
     //MARK: - Setup
@@ -60,9 +60,9 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         
         timeLabel.text = "" //Empty text to measure the text label with the font set
         
-        let sizeOfTime = timeLabel.text!.size(attributes: [NSFontAttributeName : timeLabel.font!]) //Size of label with the font considered
+        let sizeOfTime = timeLabel.text!.size(attributes: [NSFontAttributeName:  timeLabel.font!]) //Size of label with the font considered
         
-        let spaceBetweenEntryAmountAndTimeLabel :CGFloat = 8 //Space between entry amount circle view and the time added label
+        let spaceBetweenEntryAmountAndTimeLabel: CGFloat = 8 //Space between entry amount circle view and the time added label
         
         addConstraint(NSLayoutConstraint(item: timeLabel, attribute: .top, relatedBy: .equal, toItem: entryAmountView, attribute: .bottom, multiplier: 1, constant: spaceBetweenEntryAmountAndTimeLabel))
         addConstraint(NSLayoutConstraint(item: timeLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
@@ -77,7 +77,7 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
         
         entryAmountLabel.text = "" //Empty text to measure the text label with the font set
         
-        let sizeOfEntry = entryAmountLabel.text!.size(attributes: [NSFontAttributeName : entryAmountLabel.font!]) //Size of label with the font considered
+        let sizeOfEntry = entryAmountLabel.text!.size(attributes: [NSFontAttributeName:  entryAmountLabel.font!]) //Size of label with the font considered
         
         entryAmountView.addConstraint(NSLayoutConstraint(item: entryAmountLabel, attribute: .centerY, relatedBy: .equal, toItem: entryAmountView, attribute: .centerY, multiplier: 1, constant: 0))
         entryAmountView.addConstraint(NSLayoutConstraint(item: entryAmountLabel, attribute: .leading, relatedBy: .equal, toItem: entryAmountView, attribute: .leading, multiplier: 1, constant: 0))
@@ -91,14 +91,14 @@ class InformationEntryInfoCollectionViewCell: UICollectionViewCell {
     ///
     /// - parameter hidden: Should the border be shown or hidden.
     /// - parameter animated: Should the border be animated.
-    func animateBorder(hidden :Bool, animated :Bool) {
-        let borderWidth :CGFloat = hidden ? 0 : 30
+    func animateBorder(hidden: Bool, animated: Bool) {
+        let borderWidth: CGFloat = hidden ? 0:  30
        
         if let presentationLayer = entryAmountView.layer.presentation() {
             if animated {
                 let animationKeyValue = "borderWidth"
                 
-                let borderAnimation :CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
+                let borderAnimation: CABasicAnimation = CABasicAnimation(keyPath: animationKeyValue)
                 borderAnimation.fromValue = (presentationLayer.value(forKeyPath: animationKeyValue) as AnyObject).floatValue
                 borderAnimation.toValue = borderWidth
                 borderAnimation.duration = 0.3                

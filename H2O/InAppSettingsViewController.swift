@@ -102,7 +102,7 @@ extension InAppSettingsViewController: SettingsViewControllerDataSource {
         /// What to call when a preset has been updated. Sets the user defaults, a message to the watch and changed the 3D touch shortcuts.
         ///
         /// - parameter presetWaterValues: Preset values to replace the ones in User Defaults
-        func updatePresets(presetWaterValues :[Float]) {
+        func updatePresets(presetWaterValues: [Float]) {
             AppUserDefaults.setPresetWaterValues(presets: presetWaterValues)
             AppDelegate.createShortcuts() //Updates 3D touch shortcuts based on new presets
         }

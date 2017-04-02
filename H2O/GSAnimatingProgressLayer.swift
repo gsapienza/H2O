@@ -16,26 +16,26 @@ protocol GSAnimatingProgressLayerProtocol {
     /// When the progress layer has had an animation update for one of the monitored key paths
     ///
     /// - parameter key: Key that was updated
-    func layerDidUpdate(key :String)
+    func layerDidUpdate(key: String)
 }
 
-class GSAnimatingProgressLayer :CAShapeLayer {
+class GSAnimatingProgressLayer: CAShapeLayer {
     
     //MARK: - Public iVars
     
     /// Animation key paths to monitor progress when adding an animation
-    var keyValuesToMonitor :[String]?
+    var keyValuesToMonitor: [String]?
     
     /// Delegate to call back when modifications happen
-    var progressDelegate :GSAnimatingProgressLayerProtocol?
+    var progressDelegate: GSAnimatingProgressLayerProtocol?
     
     //MARK: - Private iVars
     
     /// Animations in progress on layer
-    var animationsInProgress :[CAAnimation] = []
+    var animationsInProgress: [CAAnimation] = []
     
     /// Display timer to update with screen refreshes
-    var displayLink :CADisplayLink?
+    var displayLink: CADisplayLink?
     
     //MARK: - Public
     
@@ -61,7 +61,7 @@ class GSAnimatingProgressLayer :CAShapeLayer {
         if let animations = animationsContainedForKeys() { //If there are animations for a key to monitor
             for animation in animations {
                 if let valueForKey = getValueForKey(anim: animation) {
-                    progressDelegate?.layerDidUpdate(key :valueForKey)
+                    progressDelegate?.layerDidUpdate(key: valueForKey)
                 }
             }
         } else { //If there are no animations for keys to monitor
@@ -73,7 +73,7 @@ class GSAnimatingProgressLayer :CAShapeLayer {
     ///
     /// - returns: Array of animations that should be monitored
     func animationsContainedForKeys() -> [CAAnimation]? {
-        var animations :[CAAnimation]?
+        var animations: [CAAnimation]?
         for animation in animationsInProgress {
             if let valueForKey = getValueForKey(anim: animation) { //Value for animation in array
                 if (keyValuesToMonitor?.contains(valueForKey))! { //If the value for the animationID is equal to the animations key value
@@ -94,7 +94,7 @@ class GSAnimatingProgressLayer :CAShapeLayer {
     /// - parameter anim: Animation to get value for
     ///
     /// - returns: Value of animationID from anumation values
-    func getValueForKey(anim :CAAnimation) -> String? {
+    func getValueForKey(anim: CAAnimation) -> String? {
         if let value = anim.value(forKey: gSAnimationID) as? String {
             return value
         } else {
@@ -104,7 +104,7 @@ class GSAnimatingProgressLayer :CAShapeLayer {
 }
 
 // MARK: - CAAnimationDelegate
-extension GSAnimatingProgressLayer :CAAnimationDelegate {
+extension GSAnimatingProgressLayer: CAAnimationDelegate {
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if let animations = animationsContainedForKeys() { //If there are animations for a key to monitor

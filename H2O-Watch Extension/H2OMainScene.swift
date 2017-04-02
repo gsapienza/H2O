@@ -22,25 +22,25 @@ class H2OMainScene: SKScene {
     //MARK: - Public iVars
     
     /// Fluid node for the water background.
-    var fluidNode :GSFluidNode!
+    var fluidNode: GSFluidNode!
     
     /// Amount label displaying how much water was drank today.
-    var totalAmountLabel :SKLabelNode!
+    var totalAmountLabel: SKLabelNode!
     
     /// Container holding all entry buttons.
-    var entryButtonContainer :SKSpriteNode!
+    var entryButtonContainer: SKSpriteNode!
     
     /// First entry preset button.
-    var entryButton1 :EntryButtonNode!
+    var entryButton1: EntryButtonNode!
     
     /// Second entry preset button.
-    var entryButton2 :EntryButtonNode!
+    var entryButton2: EntryButtonNode!
     
     /// Third entry preset button.
-    var entryButton3 :EntryButtonNode!
+    var entryButton3: EntryButtonNode!
     
     /// Custom entry button.
-    var customEntryButton :EntryButtonNode!
+    var customEntryButton: EntryButtonNode!
 
     //MARK: - Public
     
@@ -66,7 +66,7 @@ class H2OMainScene: SKScene {
         totalAmountLabel.text = "0oz"
     }
     
-    func switchSceneStyle(style :H2OMainSceneStyle) {
+    func switchSceneStyle(style: H2OMainSceneStyle) {
         let animationDuration = 0.3
         
         func normalStyle() {
@@ -84,7 +84,7 @@ class H2OMainScene: SKScene {
             let totalAmountLabelPositionAction = SKAction.moveTo(y: size.height / 2, duration: animationDuration)
             totalAmountLabel.run(totalAmountLabelPositionAction)
             
-            let scaleToValue :CGFloat = 1.3 //Scale value of the total amount label.
+            let scaleToValue: CGFloat = 1.3 //Scale value of the total amount label.
             
             let totalAmountLabelScaleAction = SKAction.scale(to: scaleToValue, duration: animationDuration)
             totalAmountLabel.run(totalAmountLabelScaleAction)
@@ -118,8 +118,8 @@ class H2OMainScene: SKScene {
     private func layout() {
         let centerPoint = CGPoint(x: size.width / 2, y: size.height / 2) //Center point of scene.
         let entryButtonSize = CGSize(width: 65, height: 40) //Size of each entry button.
-        let verticalDistanceBetweenTotalAndEntryButtons :CGFloat = 45 //Distance between the total amount label and the entry buttons.
-        let distanceBetweenEntryButtons :CGFloat = 6 //Horizontal and vertical distance between enrtry buttons.
+        let verticalDistanceBetweenTotalAndEntryButtons: CGFloat = 45 //Distance between the total amount label and the entry buttons.
+        let distanceBetweenEntryButtons: CGFloat = 6 //Horizontal and vertical distance between enrtry buttons.
         
         //---Fluid Node---
         fluidNode.position = CGPoint(x: 0, y: 0)

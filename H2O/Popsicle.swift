@@ -9,13 +9,13 @@
 import UIKit
 
 protocol PopsicleProtocol {
-    func popsicleDismissed( popsicle :Popsicle) //Called when popsicle is dismissed
+    func popsicleDismissed( popsicle: Popsicle) //Called when popsicle is dismissed
 }
 
 /// Autolayout supported modal view that overlays root view controller
 class Popsicle: UIViewController {
     /// PopsicleProtocol Delegate
-    var delegate :PopsicleProtocol!
+    var delegate: PopsicleProtocol!
     
     /// Top constraint of popsicle view
     var topConstraint = NSLayoutConstraint()

@@ -13,7 +13,7 @@ protocol H2OFluidViewProtocol {
     /// Gets fluid view as its animating
     ///
     /// - parameter fluidView: Layer animating
-    func fluidViewLayerDidUpdate(fluidView :GSAnimatingProgressLayer)
+    func fluidViewLayerDidUpdate(fluidView: GSAnimatingProgressLayer)
 }
 
 class H2OFluidView: GSFluidView {
@@ -28,7 +28,7 @@ class H2OFluidView: GSFluidView {
     }
     
     /// Delegate to send messages containing updates to layer
-    var h2OFluidViewDelegate :H2OFluidViewProtocol?
+    var h2OFluidViewDelegate: H2OFluidViewProtocol?
     
     //MARK: - Private iVars
     
@@ -53,7 +53,7 @@ class H2OFluidView: GSFluidView {
         
         fluidLayout.fillLevel = fillPercentage
         
-        let bottomLiquidMargin :CGFloat = 40
+        let bottomLiquidMargin: CGFloat = 40
         
         let finalRatioYPosition = CGFloat((1.02 - fillPercentage)) * (liquidLayer.frame.height - bottomLiquidMargin) //Final Y value to fill to based on percentage. 1.02 is chosen instead of 1 to make it so that the waves can be seen even if the fill percentage is 1 and full. I subtract from the bottomLiquidMargin to show the liquid even if the value is at zero.
         
@@ -73,7 +73,7 @@ class H2OFluidView: GSFluidView {
 }
 
 // MARK: - GSAnimatingProgressLayerProtocol
-extension H2OFluidView :GSAnimatingProgressLayerProtocol {
+extension H2OFluidView: GSAnimatingProgressLayerProtocol {
     func layerDidUpdate(key: String) {
        // print(liquidLayer.presentation()!.position)
         h2OFluidViewDelegate?.fluidViewLayerDidUpdate(fluidView: liquidLayer as! GSAnimatingProgressLayer)

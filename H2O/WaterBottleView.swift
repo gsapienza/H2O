@@ -11,13 +11,13 @@ import UIKit
 class WaterBottleView: UIView {
     
     /// White bottle used as background where it looks as if water is displayed in.
-    private lazy var bottleLayer :CAShapeLayer = self.generateWaterBottleLayer(fillColor: UIColor.white)
+    private lazy var bottleLayer: CAShapeLayer = self.generateWaterBottleLayer(fillColor: UIColor.white)
     
     /// Mask layer of bottle to use for water view.
-    private lazy var bottleMaskLayer :CAShapeLayer = self.generateWaterBottleLayer(fillColor: UIColor.white)
+    private lazy var bottleMaskLayer: CAShapeLayer = self.generateWaterBottleLayer(fillColor: UIColor.white)
     
     /// Water view inside of bottle.
-    private lazy var waterView :GSFluidView = self.generateLiquidView(color: StandardColors.waterColor)
+    private lazy var waterView: GSFluidView = self.generateLiquidView(color: StandardColors.waterColor)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,7 +54,7 @@ class WaterBottleView: UIView {
         waterView.fluidLayout = GSFluidLayout(frame: frame, fluidWidth: bounds.width * 2.5, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 8, minAmplitude: 2, numberOfWaves: 2)
         waterView.layer.mask = bottleMaskLayer
         
-        var fillValue :Float = 0.4
+        var fillValue: Float = 0.4
         waterView.fillTo(&fillValue)
     }
     
@@ -71,7 +71,7 @@ private extension WaterBottleView {
     ///
     /// - Parameter color: Color of liquid.
     /// - Returns: Liquid view with a fill value of 0.
-    func generateLiquidView(color :UIColor) -> GSFluidView {
+    func generateLiquidView(color: UIColor) -> GSFluidView {
         let liquidView = GSFluidView()
         liquidView.liquidFillColor = color
         liquidView.clipsToBounds = true
@@ -84,7 +84,7 @@ private extension WaterBottleView {
     /// - Parameters:
     ///   - fillColor: Color of the bottle.
     /// - Returns: Water bottle layer.
-    func generateWaterBottleLayer(fillColor :UIColor) -> CAShapeLayer {
+    func generateWaterBottleLayer(fillColor: UIColor) -> CAShapeLayer {
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.fillColor = fillColor.cgColor
@@ -97,7 +97,7 @@ private extension WaterBottleView {
     /// - Parameters:
     ///   - frame: Frame where path will be contained.
     /// - Returns: Water bottle shaped bezier path.
-    func generateBottlePath(frame :CGRect) -> UIBezierPath {
+    func generateBottlePath(frame: CGRect) -> UIBezierPath {
         //// WaterBottleLayer
         //// Bottle Drawing
         let bottlePath = UIBezierPath()

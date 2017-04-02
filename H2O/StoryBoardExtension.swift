@@ -17,7 +17,7 @@ class StoryBoardExtension: NSObject {
 }
 
 extension UIStoryboard {
-    enum Storyboard :String {
+    enum Storyboard: String {
         case Main
     }
     
@@ -43,4 +43,4 @@ extension StoryboardIdentifiable where Self: UIViewController {
     }
 }
 
-extension UIViewController : StoryboardIdentifiable { }
+extension UIViewController:  StoryboardIdentifiable { }

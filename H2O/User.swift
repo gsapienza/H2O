@@ -11,7 +11,7 @@ import CoreData
 
 
 public class User: NSManagedObject {
-    private var latestEntry :Entry?
+    private var latestEntry: Entry?
     
     class func managedContext() -> NSManagedObjectContext {
         #if os(iOS)
@@ -41,7 +41,7 @@ public class User: NSManagedObject {
     }
     
     class func loadUser() -> User? {
-        let fetchRequest :NSFetchRequest<User> = NSFetchRequest(entityName: "User")
+        let fetchRequest: NSFetchRequest<User> = NSFetchRequest(entityName: "User")
         
         do {
             let results =
@@ -80,12 +80,12 @@ public class User: NSManagedObject {
         return user
     }
     
-    func addNewEntryToUser(_ amount :Float, date :Date?) {
-        let entry = Entry.createNewEntry(amount, date :date)
+    func addNewEntryToUser(_ amount: Float, date: Date?) {
+        let entry = Entry.createNewEntry(amount, date: date)
         addEntry(entry: entry)
     }
     
-    func addEntry(entry :Entry) {
+    func addEntry(entry: Entry) {
         let mutableEntries = self.entries!.mutableCopy() as! NSMutableOrderedSet
         mutableEntries.add(entry)
         entries = mutableEntries.copy() as? NSOrderedSet
@@ -98,7 +98,7 @@ public class User: NSManagedObject {
         }
     }
     
-    func addService(service :Service) {
+    func addService(service: Service) {
         let mutableServices = self.services!.mutableCopy() as! NSMutableSet
         mutableServices.add(service)
         services = mutableServices.copy() as? NSSet
@@ -130,7 +130,7 @@ public class User: NSManagedObject {
     }
         
     func amountOfWaterForToday() -> Float {
-        var todaysWaterAmount :Float = 0.0
+        var todaysWaterAmount: Float = 0.0
         
         for entry in entries! {
             guard let entry = entry as? Entry else {
@@ -155,10 +155,10 @@ public class User: NSManagedObject {
         return todaysWaterAmount
     }
     
-    func entriesForDates() -> [[String :AnyObject]] {
-        var dateCollections :[[String :AnyObject]]  = [] //Array of dict of collections by date
+    func entriesForDates() -> [[String: AnyObject]] {
+        var dateCollections: [[String: AnyObject]]  = [] //Array of dict of collections by date
         
-        var lastCollection :[String :AnyObject]?
+        var lastCollection: [String: AnyObject]?
         
         for (i, entry) in entries!.enumerated() {
             guard let entry = entry as? Entry else {
@@ -166,7 +166,7 @@ public class User: NSManagedObject {
             }
             
             if lastCollection == nil {
-                lastCollection = ["date" : entry.date as AnyObject, "entries" : [Entry]() as AnyObject]
+                lastCollection = ["date":  entry.date as AnyObject, "entries":  [Entry]() as AnyObject]
             }
             
             let entriesArray = lastCollection!["entries"] as! [Entry]
@@ -206,7 +206,7 @@ public class User: NSManagedObject {
     /// - parameter id: Id for entry to find.
     ///
     /// - returns: Entry to represent Id from database.
-    func getEntryFor(id :String) -> Entry? {
+    func getEntryFor(id: String) -> Entry? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entry")
         let resultPredicate = NSPredicate(format: "id = %@", id)
         fetchRequest.predicate = resultPredicate
@@ -225,7 +225,7 @@ public class User: NSManagedObject {
     func waterValuesThisWeek() -> [Float] {
         let dateEntries = entriesForDates()
         
-        var lastWeekValues :[Float] = [0, 0, 0, 0, 0, 0, 0] //Initial week. Everything is 0
+        var lastWeekValues: [Float] = [0, 0, 0, 0, 0, 0, 0] //Initial week. Everything is 0
         
         return getWaterValueForNextDayInWeek(lastWeekValues: &lastWeekValues, dateEntries: dateEntries, entryIndex: 0) //Get week values starting with the last date of entries
     }
@@ -237,7 +237,7 @@ public class User: NSManagedObject {
     /// - parameter entryIndex:     Index within date entries to check if in the current week
     ///
     /// - returns: Array of values representing this weeks values
-    private func getWaterValueForNextDayInWeek(lastWeekValues :inout [Float], dateEntries :[[String :AnyObject]], entryIndex :Int) -> [Float] {
+    private func getWaterValueForNextDayInWeek(lastWeekValues: inout [Float], dateEntries: [[String: AnyObject]], entryIndex: Int) -> [Float] {
         guard dateEntries.count != entryIndex else { //Is the entryIndex out of bounds
             return lastWeekValues
         }
@@ -252,7 +252,7 @@ public class User: NSManagedObject {
         if lastDateComponents.weekOfYear == todaysDateComponents.weekOfYear { //If it is the same week in the year
         
             //Add up all entries for date
-            var totalDateEntryValue :Float = 0
+            var totalDateEntryValue: Float = 0
             for entry in entries["entries"] as! [Entry] {
                 if entry.wasDeleted == false {
                     totalDateEntryValue += entry.amount.floatValue
@@ -267,7 +267,7 @@ public class User: NSManagedObject {
         }
     }
 
-    class func nextDay(_ fromDate :Date) -> Date {
+    class func nextDay(_ fromDate: Date) -> Date {
         var dayComponent = DateComponents()
         
         dayComponent.day = 1 //Only 1 day ahead

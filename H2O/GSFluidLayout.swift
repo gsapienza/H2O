@@ -13,40 +13,40 @@ struct GSFluidLayout {
     //MARK: - Public iVars
     
     /// Frame where fluid resides in
-    let frame :CGRect!
+    let frame: CGRect!
     
     /// Width of the fluid
-    let fluidWidth :CGFloat!
+    let fluidWidth: CGFloat!
     
     /// Duration of fill of fluid
-    let fillDuration :Double!
+    let fillDuration: Double!
         
     /// Random interval between max and min
-    let amplitudeIncrement :Int!
+    let amplitudeIncrement: Int!
     
     /// Maximum wave height
-    let maxAmplitude :Int!
+    let maxAmplitude: Int!
 
     /// Minimum wave height
-    let minAmplitude :Int!
+    let minAmplitude: Int!
     
     /// Number of amplitude wave paths that can be creates when getting new amplitude values
-    let numberOfWaves :Int!
+    let numberOfWaves: Int!
     
     /// The initial amplitude set. When the amplitude values change for the liquid view during animation the startingAmplitude becomes the last value set so that the next time it animates it can once again be the initial amplitude
-    private var startingAmplitude :Int = 0
+    private var startingAmplitude: Int = 0
     
     /// Lavel of vertical fill from 0 to 1
-    var fillLevel :Float = 0
+    var fillLevel: Float = 0
     
     //MARK: - Private iVars
     
     /// Array of possible amplitude values
-    private var amplitudeArray :[Int] = []
+    private var amplitudeArray: [Int] = []
     
     //MARK: - Setup
     
-    init(frame :CGRect, fluidWidth :CGFloat, fillDuration :Double, amplitudeIncrement :Int, maxAmplitude :Int, minAmplitude :Int, numberOfWaves :Int) {
+    init(frame: CGRect, fluidWidth: CGFloat, fillDuration: Double, amplitudeIncrement: Int, maxAmplitude: Int, minAmplitude: Int, numberOfWaves: Int) {
         self.frame = frame
         self.fluidWidth = fluidWidth
         self.fillDuration = fillDuration
@@ -86,24 +86,24 @@ struct GSFluidLayout {
          
          - returns: Array of paths that meet the starting amplitude to the random amplitude value
          */
-        func getPaths(_ randomAmplitudeValue :Int, amplitudeIncrement :Int) -> [CGPath] {
+        func getPaths(_ randomAmplitudeValue: Int, amplitudeIncrement: Int) -> [CGPath] {
             let startPoint = CGPoint(x: 0, y: 0) //Start point for the liquid path. Top left
             
-            var paths :[CGPath] = [] //Paths to return
+            var paths: [CGPath] = [] //Paths to return
             
             /**
              Computes the correct for loop depending if the amplitudeIncrement is positive or negative
              
              - parameter pathComputation: Computation of path to go in for loop
              */
-            func strideToRandomAmplitudeValue(_ pathComputation : (_ j :Int) -> Void) {
+            func strideToRandomAmplitudeValue(_ pathComputation:  (_ j: Int) -> Void) {
                 //For loops create incremental paths based on how far the last amplitudeValue was from the new one. For example, a previous amplitude of 5 and a random value of 20 will give us 4 new paths
                 if amplitudeIncrement < 0 { //If increment is negative
                     for j in stride(from: startingAmplitude, through: randomAmplitudeValue, by: amplitudeIncrement) { //Move backwards
                         pathComputation(j) //Get a single path
                     }
                 } else { //If increment is positive
-                    for j in stride(from :startingAmplitude, to: randomAmplitudeValue, by: amplitudeIncrement) { //Move forwards
+                    for j in stride(from: startingAmplitude, to: randomAmplitudeValue, by: amplitudeIncrement) { //Move forwards
                         pathComputation(j) //Get a single path
                     }
                 }
@@ -148,9 +148,9 @@ struct GSFluidLayout {
         let randomIndex = arc4random_uniform(unsignedAmplitudeCount) //Random index from amplitude array
         let randomAmplitudeValue = amplitudeArray[Int(randomIndex)] //Random amplitude value from index
         
-        var newAmplitudeValues :[CGPath] = [] //Array of amplitude values to return
+        var newAmplitudeValues: [CGPath] = [] //Array of amplitude values to return
         
-        var paths :[CGPath] = [] //Empty array of paths to return
+        var paths: [CGPath] = [] //Empty array of paths to return
         if startingAmplitude >= randomAmplitudeValue { //If the new value is smaller or equal to the last one
             paths = getPaths(randomAmplitudeValue, amplitudeIncrement: -amplitudeIncrement) //Get paths with random amplitude being less than the last amplitude (startingAmplitude) therefore having to go backwards to meet it
         } else {

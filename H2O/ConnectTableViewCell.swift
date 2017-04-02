@@ -9,11 +9,11 @@
 import UIKit
 
 class ConnectTableViewCell: UITableViewCell {
-    var iconImageView :UIImageView!
+    var iconImageView: UIImageView!
     
-    var titleLabel :UILabel!
+    var titleLabel: UILabel!
     
-    private var buttonBackgroundView :UIView!
+    private var buttonBackgroundView: UIView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,8 +52,8 @@ class ConnectTableViewCell: UITableViewCell {
     }
 
     private func layout() {
-        let iconImageViewWidth :CGFloat = 35
-        guard let textSize = titleLabel.text?.size(attributes: [NSFontAttributeName : titleLabel.font]) else { //Gets size of text based on font and string
+        let iconImageViewWidth: CGFloat = 35
+        guard let textSize = titleLabel.text?.size(attributes: [NSFontAttributeName:  titleLabel.font]) else { //Gets size of text based on font and string
             fatalError("Text size is nil.")
         }
         

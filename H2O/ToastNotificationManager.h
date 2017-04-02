@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <CRToast/CRToast.h>
 
-@interface ToastNotificationManager : NSObject
+@interface ToastNotificationManager:  NSObject
 
 /**
  *  Posts Standard Toast Notification to Top of Screen

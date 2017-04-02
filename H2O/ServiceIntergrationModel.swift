@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SupportedServices :String {
+enum SupportedServices: String {
     case healthkit = "HealthKit"
     
     func image() -> UIImage {
@@ -31,7 +31,7 @@ enum SupportedServices :String {
 }
 
 class ServiceIntergrationModel {
-    func addEntryToAuthorizedServices(amount :Float, date :Date) {
+    func addEntryToAuthorizedServices(amount: Float, date: Date) {
         guard let services = getAppDelegate().user?.services else {
             print("No services.")
             return
@@ -50,7 +50,7 @@ class ServiceIntergrationModel {
         }
     }
     
-    func deleteEntryFromAuthorizedServices(date :Date) {
+    func deleteEntryFromAuthorizedServices(date: Date) {
         guard let services = getAppDelegate().user?.services else {
             print("No services.")
             return

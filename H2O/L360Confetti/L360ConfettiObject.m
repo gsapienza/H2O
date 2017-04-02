@@ -90,7 +90,7 @@ fallingBehavior = _fallingBehavior;
     switch (_swayType) {
         case L360ConfettiObjectSwayTypeNone:
             _swayFocalPointX = self.confettiView.center.x;
-            _swayType = [self flipCoinIsHeads] ? L360ConfettiObjectSwayTypeLeft : L360ConfettiObjectSwayTypeRight;
+            _swayType = [self flipCoinIsHeads] ? L360ConfettiObjectSwayTypeLeft:  L360ConfettiObjectSwayTypeRight;
             
             break;
             

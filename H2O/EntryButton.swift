@@ -12,13 +12,13 @@ class EntryButton: UIButton {
     //MARK: - Public iVars
     
     /// Amount that entry button will add to goal, sets the titleLabel to this value plus the unit following.
-    var amount :Float = 0 {
+    var amount: Float = 0 {
         didSet {
             setTitle(String(Int(amount)) + standardUnit.rawValue, for: UIControlState())
         }
     }
     /// EntryButtonDelegate Protocol delegate
-    var delegate :EntryButtonProtocol?
+    var delegate: EntryButtonProtocol?
     
     /// What to do when the button is highlighted. Simply changes the button background color.
     override var isHighlighted: Bool {

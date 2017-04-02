@@ -17,7 +17,7 @@
 
 @end
 
-@interface L360ConfettiObject : NSObject
+@interface L360ConfettiObject:  NSObject
 
 /**
  *  Initializer

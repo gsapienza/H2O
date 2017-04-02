@@ -12,15 +12,15 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
     typealias Liquid = CAShapeLayer
     typealias WaveMovementAnimation = CAKeyframeAnimation
     
-    var liquidLayer :Liquid! = Liquid()
-    var waveMovementAnimation :WaveMovementAnimation!
-    var fluidLayout :GSFluidLayout!
+    var liquidLayer: Liquid! = Liquid()
+    var waveMovementAnimation: WaveMovementAnimation!
+    var fluidLayout: GSFluidLayout!
     var liquidFillColor = UIColor() {
         didSet {
             liquidLayer.fillColor = liquidFillColor.cgColor
         }
     }
-    var phaseShiftDuration :Double = 0.9 {
+    var phaseShiftDuration: Double = 0.9 {
         didSet {
             startWaveAnimation()
         }
@@ -52,7 +52,7 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
         layer.addSublayer(liquidLayer)
     }
     
-    func fillTo(_ fillPercentage :inout Float) {
+    func fillTo(_ fillPercentage: inout Float) {
         if fillPercentage > 1.0 { //Ensures a max of 1 is used as the value
             fillPercentage = 1.0
         }
@@ -67,7 +67,7 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
         
         let finalRatioYPosition = CGFloat((1.02 - fillPercentage)) * frame.height //Final Y value to fill to based on percentage. 1.02 is chosen instead of 1 to make it so that the waves can be seen even if the fill percentage is 1 and full
         
-        var values :[CGFloat] = []
+        var values: [CGFloat] = []
         
         if let liquidPresentationLayer = liquidLayer.presentation() { //Liquid presentation layer. Presentation layer will give more accurate value to the current state of the liquid layer so we will animate this
             values = [liquidPresentationLayer.position.y, finalRatioYPosition]

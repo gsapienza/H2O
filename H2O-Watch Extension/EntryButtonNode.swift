@@ -13,17 +13,17 @@ class EntryButtonNode: SKSpriteNode {
     //MARK: - Public iVars
     
     /// Label describing the amount of water that the button will add.
-    var titleLabel :SKLabelNode!
+    var titleLabel: SKLabelNode!
     
     /// Amount that button will add to goal, sets the titleLabel to this value plus the unit following.
-    var amount :Float = 0 {
+    var amount: Float = 0 {
         didSet {
             titleLabel.text = String(Int(amount)) + standardUnit.rawValue
         }
     }
     
     /// Set to whether the button should be highlighted or not. Changes the button background and text color.
-    var highlighted :Bool = false {
+    var highlighted: Bool = false {
         didSet {
             if highlighted {
                 titleLabel.fontColor = StandardColors.waterColor

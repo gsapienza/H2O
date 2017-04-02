@@ -11,9 +11,9 @@ import CoreData
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
-    private var _user :User?
+    private var _user: User?
     
-    var user :User? {
+    var user: User? {
         return _user
     }
     
@@ -37,15 +37,15 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
     func applicationDidBecomeActive() {
         //Get defaults when the app has entered the foreground in case anything changed.
-        WatchConnection.standardWatchConnection.getDefaults { (reply :[String : Any]) in
+        WatchConnection.standardWatchConnection.getDefaults { (reply: [String:  Any]) in
             let presets = reply[PresetValuesFromWatchMessage] as! [Float]
             let goal = reply[GoalValueFromWatchMessage] as! Float
             
-            NotificationCenter.default.post(name: PresetsUpdatedNotification, object: nil, userInfo: [PresetValuesNotificationInfo : presets])
-            NotificationCenter.default.post(name: GoalUpdatedNotification, object: nil, userInfo: [GoalValueNotificationInfo : goal])
+            NotificationCenter.default.post(name: PresetsUpdatedNotification, object: nil, userInfo: [PresetValuesNotificationInfo:  presets])
+            NotificationCenter.default.post(name: GoalUpdatedNotification, object: nil, userInfo: [GoalValueNotificationInfo:  goal])
         }
         
-        WatchConnection.standardWatchConnection.requestSync(reply: { (replyHandler :[String : Any]) in
+        WatchConnection.standardWatchConnection.requestSync(reply: { (replyHandler: [String:  Any]) in
         })
         
         NotificationCenter.default.post(name: WatchAppSwitchedToForegroundNotification, object: nil)

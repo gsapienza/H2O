@@ -18,9 +18,9 @@ class WatchConnection: NSObject {
     
     //MARK: - Private iVars
     
-    private var session :WCSession?
+    private var session: WCSession?
     
-    fileprivate var syncEngine :WatchSyncEngine?
+    fileprivate var syncEngine: WatchSyncEngine?
     
     fileprivate var needsSync = false
     
@@ -41,20 +41,20 @@ class WatchConnection: NSObject {
         }
     }
     
-    func sendPresetsUpdatedMessage(presets :[Float]) {
-        sendMessage([PresetsUpdatedWatchMessage : presets], replyHandler: { (replyHandler : [String : Any]) in
+    func sendPresetsUpdatedMessage(presets: [Float]) {
+        sendMessage([PresetsUpdatedWatchMessage:  presets], replyHandler: { (replyHandler:  [String:  Any]) in
             }) { (Error) in
         }
     }
     
-    func sendGoalUpdatedMessage(goal :Float) {
-        sendMessage([GoalUpdatedWatchMessage : goal], replyHandler: { (replyHandler : [String : Any]) in
+    func sendGoalUpdatedMessage(goal: Float) {
+        sendMessage([GoalUpdatedWatchMessage:  goal], replyHandler: { (replyHandler:  [String:  Any]) in
         }) { (Error) in
         }
     }
     
-    func getDefaults(reply: (([String : Any]) -> Void)?) {
-        sendMessage([GetDefaultsWatchMessage : 0], replyHandler: { (replyHandler :[String : Any]) in
+    func getDefaults(reply: (([String:  Any]) -> Void)?) {
+        sendMessage([GetDefaultsWatchMessage:  0], replyHandler: { (replyHandler: [String:  Any]) in
             guard
                 let presets = replyHandler[PresetValuesFromWatchMessage] as? [Float],
                 let goal = replyHandler[GoalValueFromWatchMessage] as? Float
@@ -76,30 +76,30 @@ class WatchConnection: NSObject {
         }
     }
     
-    func beginSync(reply: (([String : Any]) -> Void)?) {
-        sendMessage([StartSyncWatchMessage : 0], replyHandler: { (replyHandler : [String : Any]) in
+    func beginSync(reply: (([String:  Any]) -> Void)?) {
+        sendMessage([StartSyncWatchMessage:  0], replyHandler: { (replyHandler:  [String:  Any]) in
         }) { (Error) in
             print("Error starting sync.")
         }
     }
     
-    func requestSync(reply: (([String : Any]) -> Void)?) {
+    func requestSync(reply: (([String:  Any]) -> Void)?) {
         guard let syncEngine = syncEngine else {
             print("Sync engine not set up.")
             return
         }
         
-        syncEngine.prepareSync { (dataToSync :[String : Any]?) in
+        syncEngine.prepareSync { (dataToSync: [String:  Any]?) in
             guard let dataToSync = dataToSync else {
                 self.needsSync = true
                 NSLog("Data to sync is nil.")
                 return
             }
             
-            self.sendMessage([RequestSyncWatchMessage : 0, SyncDataWatchMessage : dataToSync], replyHandler: { (replyHandler :[String : Any]) in
+            self.sendMessage([RequestSyncWatchMessage:  0, SyncDataWatchMessage:  dataToSync], replyHandler: { (replyHandler: [String:  Any]) in
                 guard
-                    let entriesToInsert = replyHandler[EntriesToInsertFromWatchMessage] as? [[String : Any]],
-                    let entriesToModify = replyHandler[EntriesToModifyFromWatchMessage] as? [[String : Any]]
+                    let entriesToInsert = replyHandler[EntriesToInsertFromWatchMessage] as? [[String:  Any]],
+                    let entriesToModify = replyHandler[EntriesToModifyFromWatchMessage] as? [[String:  Any]]
                     else {
                         print("No Entries to insert or modify")
                         return
@@ -120,7 +120,7 @@ class WatchConnection: NSObject {
                 }
                 
                 reply(replyHandler)
-                }, errorHandler: { (error :Error) in
+                }, errorHandler: { (error: Error) in
                     syncEngine.syncFailed()
                     NSLog("Error requesting sync.")
             })
@@ -129,7 +129,7 @@ class WatchConnection: NSObject {
 
     //MARK: - Private
     
-    private func sendMessage(_ message: [String : Any], replyHandler: (([String : Any]) -> Void)?, errorHandler: ((Error) -> Void)? = nil) {
+    private func sendMessage(_ message: [String:  Any], replyHandler: (([String:  Any]) -> Void)?, errorHandler: ((Error) -> Void)? = nil) {
         
         guard let session = self.session else {
             NSLog("Watch session is not active.")
@@ -137,28 +137,28 @@ class WatchConnection: NSObject {
         }
         
         if session.activationState == .activated && session.isReachable == true {
-            session.sendMessage(message, replyHandler: { (reply :[String : Any]) in
+            session.sendMessage(message, replyHandler: { (reply: [String:  Any]) in
                 if let replyHandler = replyHandler {
                     replyHandler(reply)
                 }
                 
                 NSLog("Message \(message) sent.")
 
-                }, errorHandler: { (error :Error) in
+                }, errorHandler: { (error: Error) in
                     NSLog("Message \(message) was not sent. \(error)")
                     errorHandler!(error)
                     return
             })
         } else {
             NSLog("SESSION COULD NOT BE ESTABLISHED TO SEND MESSAGE")
-            let error :Error = WatchConnectionError.sessionFailed("1")
+            let error: Error = WatchConnectionError.sessionFailed("1")
             errorHandler!(error)
         }
     }
 }
 
 // MARK: - WCSessionDelegate
-extension WatchConnection :WCSessionDelegate {
+extension WatchConnection: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print("Watch Session is Activated")        
     }
@@ -166,10 +166,10 @@ extension WatchConnection :WCSessionDelegate {
     func sessionReachabilityDidChange(_ session: WCSession) {
         if session.isReachable {
             #if os(watchOS)
-                requestSync(reply: { (replyHandler :[String : Any]) in
+                requestSync(reply: { (replyHandler: [String:  Any]) in
                 })
                 
-                getDefaults { (reply :[String : Any]) in
+                getDefaults { (reply: [String:  Any]) in
                 }
             
             #endif
@@ -187,20 +187,20 @@ extension WatchConnection :WCSessionDelegate {
     #endif
     
     
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+    func session(_ session: WCSession, didReceiveMessage message: [String:  Any], replyHandler: @escaping ([String:  Any]) -> Void) {
         if session.activationState == .activated && session.isReachable == true {
             for item in message {
                 switch item.key {
                 case PresetsUpdatedWatchMessage:
                     if let presets = item.value as? [Float] {
-                        NotificationCenter.default.post(name: PresetsUpdatedNotification, object: nil, userInfo: [PresetValuesNotificationInfo : presets])
+                        NotificationCenter.default.post(name: PresetsUpdatedNotification, object: nil, userInfo: [PresetValuesNotificationInfo:  presets])
                         AppUserDefaults.setPresetWaterValues(presets: presets)
                     }
                     
                     break
                 case GoalUpdatedWatchMessage:
                     if let goal = item.value as? Float {
-                        NotificationCenter.default.post(name: GoalUpdatedNotification, object: nil, userInfo: [GoalValueNotificationInfo : goal])
+                        NotificationCenter.default.post(name: GoalUpdatedNotification, object: nil, userInfo: [GoalValueNotificationInfo:  goal])
                         AppUserDefaults.setDailyGoalValue(goal: goal)
                     }
                     
@@ -208,15 +208,15 @@ extension WatchConnection :WCSessionDelegate {
                 case GetDefaultsWatchMessage:
                     if let presets = AppUserDefaults.getPresetWaterValues() , let goal = AppUserDefaults.getDailyGoalValue() {
                         
-                        let reply = [PresetValuesFromWatchMessage : presets, GoalValueFromWatchMessage : goal] as [String : Any]
+                        let reply = [PresetValuesFromWatchMessage:  presets, GoalValueFromWatchMessage:  goal] as [String:  Any]
                         replyHandler(reply)
                     }
                     break
                 case RequestSyncWatchMessage:
-                    guard let syncData = message[SyncDataWatchMessage] as? [String : Any],
+                    guard let syncData = message[SyncDataWatchMessage] as? [String:  Any],
                         let lastWatchSyncDate = syncData[WatchDataLastWatchSyncDate] as? Date,
-                        let insertedItemsFromDevice = syncData[WatchDateInsertedItems] as? [[String : Any]],
-                        let modifiedItemsFromDevice = syncData[WatchDateModifiedItems] as? [[String : Any]]
+                        let insertedItemsFromDevice = syncData[WatchDateInsertedItems] as? [[String:  Any]],
+                        let modifiedItemsFromDevice = syncData[WatchDateModifiedItems] as? [[String:  Any]]
                     else {
                         print("Sync date properties not set.")
                         return
@@ -227,15 +227,15 @@ extension WatchConnection :WCSessionDelegate {
                         return
                     }
                     
-                    syncEngine.performSync(lastWatchSyncDate: lastWatchSyncDate, itemsInserted: insertedItemsFromDevice, itemsModified: modifiedItemsFromDevice, itemsToSyncFromThisDevice: { (itemsToSyncFromThisDevice :[String : [[String : Any]]]) in
-                        let reply = itemsToSyncFromThisDevice as [String : Any]
+                    syncEngine.performSync(lastWatchSyncDate: lastWatchSyncDate, itemsInserted: insertedItemsFromDevice, itemsModified: modifiedItemsFromDevice, itemsToSyncFromThisDevice: { (itemsToSyncFromThisDevice: [String:  [[String:  Any]]]) in
+                        let reply = itemsToSyncFromThisDevice as [String:  Any]
                         
                         replyHandler(reply)
                     })
                     
                     break
                 case StartSyncWatchMessage:
-                    requestSync(reply: { (replyHandler :[String : Any]) in
+                    requestSync(reply: { (replyHandler: [String:  Any]) in
                     })
                     break
                 default:
@@ -249,10 +249,10 @@ extension WatchConnection :WCSessionDelegate {
 }
 
 // MARK: - WatchSyncEngineProtocol
-extension WatchConnection :WatchSyncEngineProtocol {
+extension WatchConnection: WatchSyncEngineProtocol {
     func syncCompleted() {
         if needsSync {
-            requestSync { (_: [String : Any]) in
+            requestSync { (_: [String:  Any]) in
                 self.needsSync = false
             }
         }

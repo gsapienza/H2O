@@ -10,20 +10,20 @@ import UIKit
 
 //MARK: - WeekValues Struct
 struct WeekValues {
-    var sunday :CGFloat
-    var monday :CGFloat
-    var tuesday :CGFloat
-    var wednesday :CGFloat
-    var thursday :CGFloat
-    var friday :CGFloat
-    var saturday :CGFloat
+    var sunday: CGFloat
+    var monday: CGFloat
+    var tuesday: CGFloat
+    var wednesday: CGFloat
+    var thursday: CGFloat
+    var friday: CGFloat
+    var saturday: CGFloat
     
     /// Get a day of the week from using a raw value
     ///
     /// - parameter index: Index of day of the week
     ///
     /// - returns: Day of the week value
-    func valueForIndex(index :Int) -> CGFloat {
+    func valueForIndex(index: Int) -> CGFloat {
         switch index {
         case 0: return sunday
         case 1: return monday
@@ -55,15 +55,15 @@ class WeekBarGraphView: UIView {
     /// Range of values to use on the yAxis. Start is drawn starting at the bottom while the end is at the top
     var yAxisRange = (start: 0.0, end: 10.0)
     
-    var delegate :WeekBarGraphViewProtocol?
+    var delegate: WeekBarGraphViewProtocol?
     
     //MARK: - Private iVars
     
     ///Gradient layer to use as background
-    private var gradientLayer :CAGradientLayer!
+    private var gradientLayer: CAGradientLayer!
     
     /// Drawing view to place on top of gradient view
-    private var drawingView :WeekBarGraphDrawingView!
+    private var drawingView: WeekBarGraphDrawingView!
     
     //MARK: - View Setup
 
@@ -93,7 +93,7 @@ class WeekBarGraphView: UIView {
         
         drawingView.translatesAutoresizingMaskIntoConstraints = false
         
-        let margin :CGFloat = 20 //Margins on all sides of graph drawing view
+        let margin: CGFloat = 20 //Margins on all sides of graph drawing view
         
         addConstraint(NSLayoutConstraint(item: drawingView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: margin))
         addConstraint(NSLayoutConstraint(item: drawingView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: margin))
@@ -138,8 +138,8 @@ extension WeekBarGraphView {
 }
 
 // MARK: - WeekBarGraphDrawingViewProtocol
-extension WeekBarGraphView :WeekBarGraphDrawingViewProtocol {
-    func getYAxisRangeValues() -> (start :Double, end :Double) {
+extension WeekBarGraphView: WeekBarGraphDrawingViewProtocol {
+    func getYAxisRangeValues() -> (start: Double, end: Double) {
         return yAxisRange
     }
     
@@ -159,7 +159,7 @@ protocol WeekBarGraphDrawingViewProtocol {
     /// Get the yAxisRangeFromGraph
     ///
     /// - returns: Starting and ending ranges to draw on y axis of graph
-    func getYAxisRangeValues() -> (start :Double, end :Double)
+    func getYAxisRangeValues() -> (start: Double, end: Double)
     
     
     /// Gets the goal value to display dotted goal line
@@ -173,11 +173,11 @@ protocol WeekBarGraphDrawingViewProtocol {
     func getWeekValues() -> WeekValues
 }
 
-class WeekBarGraphDrawingView :UIView {
+class WeekBarGraphDrawingView: UIView {
     //MARK: - Public iVars
     
     /// Delegate to communicate with WeeklyBarGraphView
-    var delegate :WeekBarGraphDrawingViewProtocol?
+    var delegate: WeekBarGraphDrawingViewProtocol?
     
     /// How many values are allowed to go on the Y Axis. Will scale accordingly
     var numberOfValuesToFitOnYAxis = 5
@@ -258,13 +258,13 @@ class WeekBarGraphDrawingView :UIView {
 
             xLabel.font = StandardFonts.boldFont(size: (sizeOfXAxis / CGFloat(xAxisValues.count) / 3.5)) //Dynamically come up with a new font size based on the labels width.
 
-            let sizeOfValue = xLabel.text!.size(attributes: [NSFontAttributeName : xLabel.font]) //Gets size of text based on font and string
+            let sizeOfValue = xLabel.text!.size(attributes: [NSFontAttributeName:  xLabel.font]) //Gets size of text based on font and string
 
-            let xPosition : CGFloat = (xyStartingPoint.x + ((sizeOfXAxis / CGFloat(xAxisValues.count - 1)) * CGFloat(i))) - ((xyStartingPoint.x / CGFloat(xAxisValues.count - 1) * CGFloat(i))) //X position must ensure that the first and last item are both fully within the scope of the x axis. So the first item must have an x origin that is the same as the x line origin. And the last item must have a origin.x plus width that is equal to the line x origin plus the line width
+            let xPosition:  CGFloat = (xyStartingPoint.x + ((sizeOfXAxis / CGFloat(xAxisValues.count - 1)) * CGFloat(i))) - ((xyStartingPoint.x / CGFloat(xAxisValues.count - 1) * CGFloat(i))) //X position must ensure that the first and last item are both fully within the scope of the x axis. So the first item must have an x origin that is the same as the x line origin. And the last item must have a origin.x plus width that is equal to the line x origin plus the line width
             
             let yPosition = bounds.height - sizeOfValue.height //Y position is just the height of superview and subtracts the height of the label to meet with the x line
             
-            let xLabelWidth :CGFloat = sizeOfXAxis / CGFloat(xAxisValues.count) //Width of xValue label
+            let xLabelWidth: CGFloat = sizeOfXAxis / CGFloat(xAxisValues.count) //Width of xValue label
             
             xLabel.frame = CGRect(x: xPosition, y: yPosition, width: xLabelWidth, height: sizeOfValue.height) //Sets up frame and leaves the y value 0 so that we can center it
             
@@ -278,7 +278,7 @@ class WeekBarGraphDrawingView :UIView {
     
     ///Places y axis values vertically on the left side of the y axis. Values come from the yAxisRangeValues in the delegate
     private func setupYAxisValues() {
-        let labelWidth :CGFloat = 40 //Width of each number label
+        let labelWidth: CGFloat = 40 //Width of each number label
         
         for i in 0 ... numberOfValuesToFitOnYAxis { //Iterates through the number of values you want placed on y axis and then places them
             let numberLabel = UILabel() //Label to place
@@ -290,16 +290,16 @@ class WeekBarGraphDrawingView :UIView {
             numberLabel.textAlignment = .right
             numberLabel.textColor = drawingColor
             
-            let bottomMargin :CGFloat = 10
+            let bottomMargin: CGFloat = 10
             
             let sizeOfYAxis = bounds.height - xyStartingPoint.y - bottomMargin
             
-            let xPosition :CGFloat = 0 //X Position to place label
+            let xPosition: CGFloat = 0 //X Position to place label
             let yPosition = sizeOfYAxis - ((sizeOfYAxis / CGFloat(numberOfValuesToFitOnYAxis)) * CGFloat(i)) //Y position to place each label. First in goes at bottom. Last is on top. Later it will be set so this value is used for the labels y center
             
             //Number label positioning
             
-            let sizeOfNumber = numberLabel.text!.size(attributes: [NSFontAttributeName : numberLabel.font]) //Gets size of text based on font and string
+            let sizeOfNumber = numberLabel.text!.size(attributes: [NSFontAttributeName:  numberLabel.font]) //Gets size of text based on font and string
             
             numberLabel.frame = CGRect(x: xPosition, y: 0, width: labelWidth, height: sizeOfNumber.height) //Sets up frame and leaves the y value 0 so that we can center it
             numberLabel.center = CGPoint(x: numberLabel.center.x, y: yPosition) //Places the y value determined above as the center of the number label
@@ -330,9 +330,9 @@ class WeekBarGraphDrawingView :UIView {
     ///
     /// - parameter xPosition: Position where the day of the weeks rests on the x axis
     /// - parameter value:     Value representing that day of the week
-    private func addBarForDayOfWeek(xPosition :CGFloat, value :CGFloat) {
-        let bottomMargin :CGFloat = 12 //Margin between the bottom of the bar and the x axis for aesthetic effect
-        let yMarginNumberLabelHeight :CGFloat = 14
+    private func addBarForDayOfWeek(xPosition: CGFloat, value: CGFloat) {
+        let bottomMargin: CGFloat = 12 //Margin between the bottom of the bar and the x axis for aesthetic effect
+        let yMarginNumberLabelHeight: CGFloat = 14
         
         let yLineHeight = bounds.height - xyStartingPoint.y - bottomMargin //Height of the y axis line taking into account the margin between the bottom of the bar and the x axis and the rounded line cap which adds some height
         

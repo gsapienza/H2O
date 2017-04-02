@@ -17,7 +17,7 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
     //MARK: - Public iVars
     
     /// First label.
-    var titleLabel :GSMagicTextLabel {
+    var titleLabel: GSMagicTextLabel {
         get {
             return _titleLabel
         }
@@ -26,10 +26,10 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
     //MARK: - Private iVars
 
     /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: titleString)
+    private lazy var _titleLabel: GSMagicTextLabel = self.generateTitleLabel(text: titleString)
     
     /// View displaying water bottle animation.
-    private var waterBottleView :WaterBottleView!
+    private var waterBottleView: WaterBottleView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,7 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
                     self.waterBottleView.transform = CGAffineTransform(scaleX: 7, y: 7)
                     self.waterBottleView.alpha = 0
                 }, completion: { complete in
-                    let mainViewController :MainViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+                    let mainViewController: MainViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
                     self.navigationController?.pushViewController(mainViewController, animated: true)
                 })
             })

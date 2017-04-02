@@ -8,7 +8,7 @@
 
 import Foundation
 
-fileprivate enum EntryKeys :String {
+fileprivate enum EntryKeys: String {
     case id
     case amount
     case date
@@ -25,7 +25,7 @@ class WatchSyncEngine: NSObject {
     
     //MARK: - Private iVars
     
-    private var user :User? {
+    private var user: User? {
         #if os(iOS)
         guard let _user = getAppDelegate().user else {
             return nil
@@ -41,13 +41,13 @@ class WatchSyncEngine: NSObject {
         return _user
     }
     
-    var delegate :WatchSyncEngineProtocol?
+    var delegate: WatchSyncEngineProtocol?
     
     private var syncing = false
     
     //MARK: - Public
 
-    func prepareSync(dataToSync: @escaping (([String : Any]?) -> Void)) {
+    func prepareSync(dataToSync: @escaping (([String:  Any]?) -> Void)) {
         DispatchQueue.main.async {
             guard let user = self.user else {
                 print("No user found.")
@@ -55,9 +55,9 @@ class WatchSyncEngine: NSObject {
             }
             
             if !self.syncing {
-                let itemsInserted = self.getEntriesForInsertion(lastWatchSyncDate :user.lastWatchSyncDate)
+                let itemsInserted = self.getEntriesForInsertion(lastWatchSyncDate: user.lastWatchSyncDate)
                 let itemsModified = self.getModifiedEntries(lastWatchSyncDate: user.lastWatchSyncDate)
-                let data = [WatchDataSyncBeganDate : Date(), WatchDataLastWatchSyncDate : user.lastWatchSyncDate, WatchDateInsertedItems : itemsInserted, WatchDateModifiedItems : itemsModified] as [String : Any]
+                let data = [WatchDataSyncBeganDate:  Date(), WatchDataLastWatchSyncDate:  user.lastWatchSyncDate, WatchDateInsertedItems:  itemsInserted, WatchDateModifiedItems:  itemsModified] as [String:  Any]
                 self.syncing = true
                 dataToSync(data)
             } else {
@@ -70,17 +70,17 @@ class WatchSyncEngine: NSObject {
         syncing = false
     }
     
-    func performSync(lastWatchSyncDate :Date, itemsInserted :[[String : Any]], itemsModified :[[String : Any]], itemsToSyncFromThisDevice: @escaping (([String : [[String : Any]]]) -> Void)) {
+    func performSync(lastWatchSyncDate: Date, itemsInserted: [[String:  Any]], itemsModified: [[String:  Any]], itemsToSyncFromThisDevice: @escaping (([String:  [[String:  Any]]]) -> Void)) {
         DispatchQueue.main.async {
-            let entriesForInsertion = self.getEntriesForInsertion(lastWatchSyncDate :lastWatchSyncDate) as [[String : Any]]
-            let entriesModified = self.getModifiedEntries(lastWatchSyncDate: lastWatchSyncDate) as [[String : Any]]
+            let entriesForInsertion = self.getEntriesForInsertion(lastWatchSyncDate: lastWatchSyncDate) as [[String:  Any]]
+            let entriesModified = self.getModifiedEntries(lastWatchSyncDate: lastWatchSyncDate) as [[String:  Any]]
             self.addItemsFromSync(entriesToInsert: itemsInserted)
             self.modifyItemsFromSync(entriesToModify: itemsModified)
-            itemsToSyncFromThisDevice([EntriesToInsertFromWatchMessage : entriesForInsertion, EntriesToModifyFromWatchMessage : entriesModified])
+            itemsToSyncFromThisDevice([EntriesToInsertFromWatchMessage:  entriesForInsertion, EntriesToModifyFromWatchMessage:  entriesModified])
         }
     }
     
-    func addItemsFromSync(entriesToInsert :[[String : Any]]) {
+    func addItemsFromSync(entriesToInsert: [[String:  Any]]) {
         DispatchQueue.main.async {
             for entry in entriesToInsert {
                 guard
@@ -95,14 +95,14 @@ class WatchSyncEngine: NSObject {
                         return
                 }
                 
-                let entry = Entry.createNewEntry(id: id, amount: amount, date: date, creationDate :creationDate, modificationDate :modificationDate, wasDeleted :wasDeleted)
+                let entry = Entry.createNewEntry(id: id, amount: amount, date: date, creationDate: creationDate, modificationDate: modificationDate, wasDeleted: wasDeleted)
 
                 self.user?.addEntry(entry: entry)
             }
         }
     }
     
-    func modifyItemsFromSync(entriesToModify :[[String : Any]]) {
+    func modifyItemsFromSync(entriesToModify: [[String:  Any]]) {
         DispatchQueue.main.async {
             guard let user = self.user else {
                 print("No user found.")
@@ -131,7 +131,7 @@ class WatchSyncEngine: NSObject {
         }
     }
     
-    func cleanup(newLastWatchSyncDate :Date) {
+    func cleanup(newLastWatchSyncDate: Date) {
         DispatchQueue.main.async {
             guard let user = self.user else {
                 print("No user found.")
@@ -162,7 +162,7 @@ class WatchSyncEngine: NSObject {
     
     //MARK: - Private
     
-    private func getEntriesForInsertion(lastWatchSyncDate :Date) -> [[String : Any]] {
+    private func getEntriesForInsertion(lastWatchSyncDate: Date) -> [[String:  Any]] {
         guard let user = self.user else {
             print("No user found.")
             return []
@@ -175,7 +175,7 @@ class WatchSyncEngine: NSObject {
                 return []
         }
         
-        var entriesForInsertion :[[String : Any]] = []
+        var entriesForInsertion: [[String:  Any]] = []
         
         for entry in entries {
             guard let entry = entry as? Entry else {
@@ -183,7 +183,7 @@ class WatchSyncEngine: NSObject {
             }
             
             if entry.creationDate.compare(lastWatchSyncDate) == .orderedDescending {
-                let entryDict :[String : Any] = [EntryKeys.id.rawValue : entry.id, EntryKeys.amount.rawValue : entry.amount, EntryKeys.date.rawValue : entry.date, EntryKeys.creationDate.rawValue : entry.creationDate, EntryKeys.modificationDate.rawValue : entry.modificationDate, EntryKeys.wasDeleted.rawValue : entry.wasDeleted]
+                let entryDict: [String:  Any] = [EntryKeys.id.rawValue:  entry.id, EntryKeys.amount.rawValue:  entry.amount, EntryKeys.date.rawValue:  entry.date, EntryKeys.creationDate.rawValue:  entry.creationDate, EntryKeys.modificationDate.rawValue:  entry.modificationDate, EntryKeys.wasDeleted.rawValue:  entry.wasDeleted]
                 
                 
                     entriesForInsertion.append(entryDict)
@@ -194,7 +194,7 @@ class WatchSyncEngine: NSObject {
     }
     
     
-    private func getModifiedEntries(lastWatchSyncDate :Date) -> [[String : Any]] {
+    private func getModifiedEntries(lastWatchSyncDate: Date) -> [[String:  Any]] {
         guard let user = self.user else {
             print("No user found.")
             return []
@@ -207,7 +207,7 @@ class WatchSyncEngine: NSObject {
                 return []
         }
         
-        var entriesModified :[[String : Any]] = []
+        var entriesModified: [[String:  Any]] = []
         
         for entry in entries {
             guard let entryObject = entry as? Entry else {
@@ -215,7 +215,7 @@ class WatchSyncEngine: NSObject {
             }
             
             if entryObject.modificationDate.compare(lastWatchSyncDate) == .orderedDescending && entryObject.creationDate.compare(lastWatchSyncDate) == .orderedAscending {
-                let entryDict :[String : Any] = [EntryKeys.id.rawValue : entryObject.id, EntryKeys.amount.rawValue : entryObject.amount, EntryKeys.date.rawValue : entryObject.date, EntryKeys.creationDate.rawValue : entryObject.creationDate, EntryKeys.modificationDate.rawValue : entryObject.modificationDate, EntryKeys.wasDeleted.rawValue : entryObject.wasDeleted]
+                let entryDict: [String:  Any] = [EntryKeys.id.rawValue:  entryObject.id, EntryKeys.amount.rawValue:  entryObject.amount, EntryKeys.date.rawValue:  entryObject.date, EntryKeys.creationDate.rawValue:  entryObject.creationDate, EntryKeys.modificationDate.rawValue:  entryObject.modificationDate, EntryKeys.wasDeleted.rawValue:  entryObject.wasDeleted]
                 entriesModified.append(entryDict)
             }
         }

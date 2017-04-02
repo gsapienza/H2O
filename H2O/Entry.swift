@@ -17,14 +17,14 @@ class Entry: NSManagedObject {
        // creationDate = Date()
     }
     
-    class func createNewEntry(_ amount :Float, date :Date?) -> Entry {
+    class func createNewEntry(_ amount: Float, date: Date?) -> Entry {
         let id = UUID().uuidString
-        let entry = createNewEntry(id: id, amount: amount, date: date, creationDate :Date(), modificationDate :Date(), wasDeleted :false)
+        let entry = createNewEntry(id: id, amount: amount, date: date, creationDate: Date(), modificationDate: Date(), wasDeleted: false)
         
         return entry
     }
     
-    class func createNewEntry(id :String, amount :Float, date :Date?, creationDate :Date, modificationDate :Date, wasDeleted :NSNumber) -> Entry {
+    class func createNewEntry(id: String, amount: Float, date: Date?, creationDate: Date, modificationDate: Date, wasDeleted: NSNumber) -> Entry {
         let entity = NSEntityDescription.entity(forEntityName: "Entry", in:User.managedContext())
         
         let entry = NSManagedObject(entity: entity!, insertInto: User.managedContext()) as! Entry

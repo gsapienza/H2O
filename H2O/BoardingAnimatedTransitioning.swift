@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BoardingAnimatingTransitioning :NSObject, UIViewControllerAnimatedTransitioning {
+class BoardingAnimatingTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
@@ -35,12 +35,12 @@ class BoardingAnimatingTransitioning :NSObject, UIViewControllerAnimatedTransiti
             print("To View Controller title text is nil.")
         }
         
-        fromViewController.animateOut { (complete :Bool) in
+        fromViewController.animateOut { (complete: Bool) in
             toViewController.titleLabel?.isHidden = false
             fromViewController.view.removeFromSuperview()
         }
         
-        toViewController.animateIn { (complete :Bool) in
+        toViewController.animateIn { (complete: Bool) in
             transitionContext.completeTransition(true)
         }
     }

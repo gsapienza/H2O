@@ -21,7 +21,7 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
     //MARK: - Public iVars
     
     /// First label.
-    var titleLabel :GSMagicTextLabel {
+    var titleLabel: GSMagicTextLabel {
         get {
             return _titleLabel
         }
@@ -30,10 +30,10 @@ class DailyGoalViewController: UIViewController, BoardingProtocol {
     //MARK: - Private iVars
     
     /// Backing label to title label so we can use lazy loading. Lazy loading a var declared in a protocol leads to a Seg Fault 11. Bug filed here: https://bugs.swift.org/browse/SR-1825
-    private lazy var _titleLabel :GSMagicTextLabel = self.generateTitleLabel(text: titleString)
+    private lazy var _titleLabel: GSMagicTextLabel = self.generateTitleLabel(text: titleString)
     
     /// View for preset changer text field.
-    private lazy var presetChangerView :PresetValueChangerView = self.generateGoalPresetChangerView()
+    private lazy var presetChangerView: PresetValueChangerView = self.generateGoalPresetChangerView()
     
     //MARK: - Public
     

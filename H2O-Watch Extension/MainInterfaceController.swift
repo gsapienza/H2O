@@ -17,7 +17,7 @@ class MainInterfaceController: WKInterfaceController {
     @IBOutlet weak var mainScene: WKInterfaceSKScene!
     
     /// Main scene for all interface elements on the main screen
-    var h2Oscene :H2OMainScene!
+    var h2Oscene: H2OMainScene!
     
     //MARK: - Public
     
@@ -38,7 +38,7 @@ class MainInterfaceController: WKInterfaceController {
     /// Adds water to user in database by using presets, custom amount or other means and then updates the UI to reflect the changes.
     ///
     /// - parameter amount: Amount of water in fl oz.
-    func addWaterToToday(amount :Float) {
+    func addWaterToToday(amount: Float) {
         let beforeAmount = getWKExtensionDelegate().user?.amountOfWaterForToday() //Water drank before entering this latest entry
        
         getWKExtensionDelegate().user!.addNewEntryToUser(amount, date: nil) //Add entry to database.
@@ -50,9 +50,9 @@ class MainInterfaceController: WKInterfaceController {
             return
         }
         
-        updateFluidValue(current: newAmount, goal :goal)
+        updateFluidValue(current: newAmount, goal: goal)
 
-        WatchConnection.standardWatchConnection.requestSync(reply: { (replyHandler :[String : Any]) in
+        WatchConnection.standardWatchConnection.requestSync(reply: { (replyHandler: [String:  Any]) in
         })
     }
     
@@ -79,7 +79,7 @@ class MainInterfaceController: WKInterfaceController {
     /// - parameter sizeOfContainer: Size of coordinate system.
     ///
     /// - returns: Returns the original point converted to reflect the top left coordinate system.
-    fileprivate func convertPointToReversedYCoordinate(point :CGPoint, sizeOfContainer :CGSize) -> CGPoint {
+    fileprivate func convertPointToReversedYCoordinate(point: CGPoint, sizeOfContainer: CGSize) -> CGPoint {
         let y = sizeOfContainer.height - point.y
         return CGPoint(x: point.x, y: y)
     }
@@ -89,8 +89,8 @@ class MainInterfaceController: WKInterfaceController {
     ///
     /// - parameter currentValue: Current amount of water drank.
     /// - parameter goal: Goal of water to be drank.
-    fileprivate func updateFluidValue(current :Float, goal :Float) {
-        var newFillValue :Float = Float((current / goal) * 1.0) //New ratio
+    fileprivate func updateFluidValue(current: Float, goal: Float) {
+        var newFillValue: Float = Float((current / goal) * 1.0) //New ratio
         
         delay(delay: 0.2) { //Aesthetic delay
             self.h2Oscene.fluidNode.fillTo(&newFillValue) //New fill value 0-1
@@ -106,7 +106,7 @@ class MainInterfaceController: WKInterfaceController {
             return
         }
         
-        updateFluidValue(current: amount!, goal :goal)
+        updateFluidValue(current: amount!, goal: goal)
     }
 }
 
@@ -192,8 +192,8 @@ fileprivate extension MainInterfaceController {
     /// When preset values have been changed, updates the UI to reflect the change.
     ///
     /// - parameter notification: Notification sent with user info containing preset values.
-    @objc func presetValuesUpdated(notification :Notification) {
-        let userInfo = notification.userInfo as! [String : [Float]]
+    @objc func presetValuesUpdated(notification: Notification) {
+        let userInfo = notification.userInfo as! [String:  [Float]]
         
         if let presets = userInfo[PresetValuesNotificationInfo] {
             h2Oscene.entryButton1.amount = presets[0]
@@ -205,11 +205,11 @@ fileprivate extension MainInterfaceController {
     /// When goal value has been changed, updates the UI to reflect the change
     ///
     /// - parameter notification: Notification sent with user info containing goal value.
-    @objc func goalValueUpdated(notification :Notification) {
+    @objc func goalValueUpdated(notification: Notification) {
         let amount = getWKExtensionDelegate().user?.amountOfWaterForToday()
-        let userInfo = notification.userInfo as! [String : Float]
+        let userInfo = notification.userInfo as! [String:  Float]
         if let goal = userInfo[GoalValueNotificationInfo] {
-            updateFluidValue(current: amount!, goal :goal)
+            updateFluidValue(current: amount!, goal: goal)
         }
     }
     
@@ -223,7 +223,7 @@ fileprivate extension MainInterfaceController {
                 return
             }
             
-            self.updateFluidValue(current: amount!, goal :goal)
+            self.updateFluidValue(current: amount!, goal: goal)
         }
     }
 }

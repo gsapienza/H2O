@@ -16,7 +16,7 @@ class AppUserDefaults {
     /// Write to User Defaults if the app has been opened at least once.
     ///
     /// - parameter openedOnce: True if the app has been opened one time, false if it has not.
-    class func setAppWasOpenedOnce(openedOnce :Bool) {
+    class func setAppWasOpenedOnce(openedOnce: Bool) {
         groupDefaults.set(openedOnce, forKey: AppOpenedForFirstTimeDefault)
     }
     
@@ -37,7 +37,7 @@ class AppUserDefaults {
     /// Write to User Defaults if initial boarding was dismissed.
     ///
     /// - parameter dismissed: True if boarding was dismissed, false if it has not.
-    class func setBoardingWasDismissed(dismissed :Bool) {
+    class func setBoardingWasDismissed(dismissed: Bool) {
         groupDefaults.set(dismissed, forKey: BoardingWasDismissedDefault)
     }
     
@@ -58,7 +58,7 @@ class AppUserDefaults {
     /// Write to user defaults if the information view controller was opened at least once.
     ///
     /// - parameter openedOnce: True if the information view controller was opened by a user once, false if they have not.
-    class func setInformationViewControllerWasOpenedOnce(openedOnce :Bool) {
+    class func setInformationViewControllerWasOpenedOnce(openedOnce: Bool) {
         groupDefaults.set(openedOnce, forKey: InformationViewControllerOpenedBeforeDefault)
     }
     
@@ -79,7 +79,7 @@ class AppUserDefaults {
     /// Write the water preset values to User Defaults.
     ///
     /// - parameter presets: An array of presets in the order of which to display.
-    class func setPresetWaterValues(presets :[Float]) {
+    class func setPresetWaterValues(presets: [Float]) {
         groupDefaults.set(presets, forKey: PresetWaterValuesDefault)
     }
     
@@ -108,7 +108,7 @@ class AppUserDefaults {
     /// Write the daily goal value to User Defaults.
     ///
     /// - parameter goal: Value of daily goal.
-    class func setDailyGoalValue(goal :Float) {
+    class func setDailyGoalValue(goal: Float) {
         groupDefaults.set(goal, forKey: DailyGoalValueDefault)
     }
     
