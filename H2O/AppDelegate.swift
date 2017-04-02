@@ -70,7 +70,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
             print("Documents Directory: " + documentsPath)
         }
-        
+                
         GMSPlacesClient.provideAPIKey("AIzaSyAcAkMN3LN2OFfju2NNuZ_8Lzw3U49xKvc")
         
         if !AppUserDefaults.getWasOpenedOnce() {

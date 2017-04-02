@@ -20,10 +20,11 @@ class LocationMonitor: NSObject {
     
     // MARK: - Private iVars
 
-    private lazy var locationManager: CLLocationManager = {
+    fileprivate lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.startMonitoringSignificantLocationChanges() //https://badootech.badoo.com/ios-location-tracking-aac4e2323629 says this helps with the CLVisit monitoring.
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
@@ -44,6 +45,8 @@ class LocationMonitor: NSObject {
 // MARK: - CLLocationManagerDelegate
 extension LocationMonitor: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        locationManager.startMonitoringVisits() //In visit documentation to reset the location manager.
+
         guard visit.departureDate != Date.distantFuture else {
             return
         }

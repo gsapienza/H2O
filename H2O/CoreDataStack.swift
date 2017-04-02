@@ -15,8 +15,12 @@ class CoreDataStack {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.theoven.H2O" in the application's documents Application Support directory.
         
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        //let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count-1]
+        //let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        
+        let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.H2O.ExtensionSharing")
+        
+        return url!
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -29,6 +33,10 @@ class CoreDataStack {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        
+        self.migrateCoreDataDatabaseToAppGroup(coordinator: coordinator)
+        
+        
         let url = self.applicationDocumentsDirectory.appendingPathComponent("H2O.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
@@ -57,6 +65,29 @@ class CoreDataStack {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
+    
+    func migrateCoreDataDatabaseToAppGroup(coordinator: NSPersistentStoreCoordinator) {
+        guard let newURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.H2O.ExtensionSharing") else {
+            print("NewURL is nil")
+            return
+        }
+        
+        guard let oldUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("H2O.sqlite") else {
+            print("OldURL is nil")
+            return
+        }
+        
+        guard let store = coordinator.persistentStore(for: oldUrl) else {
+            print("Store is nil")
+            return
+        }
+        
+        do {
+            try coordinator.migratePersistentStore(store, to: newURL, options: nil, withType: NSSQLiteStoreType)
+        } catch {
+            print(error)
+        }
+    }
     
     // MARK: - Core Data Saving support
     
