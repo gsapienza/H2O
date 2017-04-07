@@ -102,44 +102,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         LocationMonitor.defaultLocationMonitor.startMonitoringLocation()
-        
-        
-        let center = UNUserNotificationCenter.current()
-        center.delegate = notificationDelegate
-        let options: UNAuthorizationOptions = [.alert, .sound]
-        
-        center.requestAuthorization(options: options) { (success: Bool, error: Error?) in
-            if success {
-                let categoryId = "com.theoven.H2O.notification"
-                
-                if let presets = AppUserDefaults.getPresetWaterValues() {
-                    var actions: [UNNotificationAction] = presets.map({ (value: Float) -> UNNotificationAction in
-                        let action = UNNotificationAction(identifier: "\(Int(value))", title: "\(Int(value))\(standardUnit.rawValue)", options: [])
-                        return action
-                    })
-                    
-                    let customAction = UNNotificationAction(identifier: "custom", title: "Custom", options: [])
-                    actions.append(customAction)
-                    
-                    let category = UNNotificationCategory(identifier: categoryId, actions: actions, intentIdentifiers: [], options: [])
-                    center.setNotificationCategories([category])
-                }
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-                let content = UNMutableNotificationContent()
-                content.categoryIdentifier = categoryId
-                content.title = "Notification Title"
-                content.subtitle = "Notification Subtitle"
-                content.body = "Notification body text"
-                content.userInfo = ["customNumber": 100]
-                
-                let request = UNNotificationRequest(identifier: "exampleNotification", content: content, trigger: trigger)
-                center.add(request, withCompletionHandler: nil)
-
-            } else {
-                print(error ?? 0)
-            }
-        }
+        configureNotifications()
         
         return true
     }
@@ -196,6 +159,46 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         coreDataStack.saveContext()
+    }
+    
+    /// Configures notifications with categories and actions.
+    private func configureNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.delegate = notificationDelegate
+        let options: UNAuthorizationOptions = [.alert, .sound]
+        
+        center.requestAuthorization(options: options) { (success: Bool, error: Error?) in
+            if success {
+                let categoryId = "com.theoven.H2O.notification"
+                
+                if let presets = AppUserDefaults.getPresetWaterValues() {
+                    var actions: [UNNotificationAction] = presets.map({ (value: Float) -> UNNotificationAction in
+                        let action = UNNotificationAction(identifier: "\(Int(value))", title: "\(Int(value))\(standardUnit.rawValue)", options: [])
+                        return action
+                    })
+                    
+                    let customAction = UNNotificationAction(identifier: "custom", title: "Custom", options: [])
+                    actions.append(customAction)
+                    
+                    let category = UNNotificationCategory(identifier: categoryId, actions: actions, intentIdentifiers: [], options: [])
+                    center.setNotificationCategories([category])
+                }
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                let content = UNMutableNotificationContent()
+                content.categoryIdentifier = categoryId
+                content.title = "Notification Title"
+                content.subtitle = "Notification Subtitle"
+                content.body = "Notification body text"
+                content.userInfo = ["customNumber": 100]
+                
+                let request = UNNotificationRequest(identifier: "exampleNotification", content: content, trigger: trigger)
+                center.add(request, withCompletionHandler: nil)
+                
+            } else {
+                print(error ?? 0)
+            }
+        }
     }
     
     private func checkHealthKitStatus() {

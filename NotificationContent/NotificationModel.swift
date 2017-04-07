@@ -10,8 +10,12 @@ import CoreData
 
 struct NotificationModel {
     
+    // MARK: - Public iVars
+    
     /// Core data stack.
     let coreDataStack = CoreDataStack()
+    
+    // MARK: - Public
     
     /// Fetches total amount of water consumed for the current date.
     ///
@@ -45,6 +49,50 @@ struct NotificationModel {
         return 0
     }
     
+    func fetchUser() -> User? {
+        let fetchRequest = User.fetchRequest()
+        
+        do {
+            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
+            if let users = results as? [User] {
+                return users.first
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        return nil
+    }
+    
+    func createNewEntry(_ amount: Float, date: Date?) -> Entry {
+        let id = UUID().uuidString
+        let entry = createNewEntry(id: id, amount: amount, date: date, creationDate: Date(), modificationDate: Date(), wasDeleted: false, in: coreDataStack.managedObjectContext)
+        
+        return entry
+    }
+    
+    func createNewEntry(id: String, amount: Float, date: Date?, creationDate: Date, modificationDate: Date, wasDeleted: NSNumber, in context: NSManagedObjectContext) -> Entry {
+        let entity = NSEntityDescription.entity(forEntityName: "Entry", in: context)
+        
+        let entry = NSManagedObject(entity: entity!, insertInto: context) as! Entry
+        
+        if date != nil {
+            entry.date = date!
+        } else {
+            entry.date = Date()
+        }
+        
+        entry.id = id
+        entry.amount = NSNumber(value: amount)
+        entry.creationDate = creationDate
+        entry.modificationDate = modificationDate
+        entry.wasDeleted = wasDeleted
+        
+        return entry
+    }
+    
+    // MARK: - Private
+
     /// Creates a predicate to filter entities to a particular date.
     ///
     /// - Parameter date: Date to fetch entities for.

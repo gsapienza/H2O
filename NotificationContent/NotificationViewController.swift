@@ -57,19 +57,12 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         dailyEntryDial.center = CGPoint(x: view.center.x, y: preferredContentSize.height / 2)
         view.addSubview(dailyEntryDial)
         
-       // dailyEntryDial.translatesAutoresizingMaskIntoConstraints = false
-        
-        /*view.addConstraints([
-            NSLayoutConstraint(item: dailyEntryDial, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: dailyEntryDial, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: dailyEntryDial, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.7, constant: 0),
-            NSLayoutConstraint(item: dailyEntryDial, attribute: .width, relatedBy: .equal, toItem: dailyEntryDial, attribute: .height, multiplier: 1, constant: 0)
-            ])*/
-        
         setCurrentValue()
-
-        
-        //Move this to set current value once it is written better.
+        setCurrentWaterValue()
+    }
+    
+    //Move this to set current value once it is written better.
+    private func setCurrentWaterValue() {
         delay(delay: 0.1) {
             guard let goal = AppUserDefaults.getDailyGoalValue() else {
                 print("Goal is nil")
@@ -77,7 +70,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             }
             
             let current = self.model.fetchTodaysTotal()
-
+            
             var fillValue = Float(1 / (Double(goal) / current))
             self.fluidView.fillTo(&fillValue)
         }
@@ -95,7 +88,26 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     }
     
     func didReceive(_ notification: UNNotification) {
-
+        
+    }
+    
+    func didReceive(_ response: UNNotificationResponse, completionHandler completion: @escaping (UNNotificationContentExtensionResponseOption) -> Void) {
+        if response.actionIdentifier != "custom" {
+            let entry = model.createNewEntry(Float(response.actionIdentifier)!, date: Date())
+            if let user = model.fetchUser() {
+                user.addEntry(entry: entry)
+                model.coreDataStack.saveContext()
+            }
+            
+            setCurrentValue()
+            setCurrentWaterValue()
+            
+            dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+            
+            delay(delay: 2, closure: {
+                completion(.dismiss)
+            })
+        }
     }
 
     /// Delays block of code from running by a specified amount of time
