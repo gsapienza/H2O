@@ -59,6 +59,12 @@ extension LocationMonitor: CLLocationManagerDelegate {
         UNUserNotificationCenter.current().add(testRequest, withCompletionHandler: { (error: Error?) in
         })
         
+        var backgroundIndentifier = UIBackgroundTaskInvalid
+        
+        backgroundIndentifier = UIApplication.shared.beginBackgroundTask {
+            UIApplication.shared.endBackgroundTask(backgroundIndentifier)
+        }
+        
         placesClient.currentPlace { (list: GMSPlaceLikelihoodList?, error: Error?) in
             if let placeLikelihoodList = list {
                 for likelihood in placeLikelihoodList.likelihoods {
@@ -72,6 +78,7 @@ extension LocationMonitor: CLLocationManagerDelegate {
                             content.categoryIdentifier = categoryId
                             content.title = "Eating Out?"
                             content.body = "Enjoy your meal at \(place.name), remember to drink some water while you are there."
+                            
                             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
                             
                             UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error: Error?) in
@@ -85,11 +92,6 @@ extension LocationMonitor: CLLocationManagerDelegate {
                             break
                         }
                     }
-                    //                    let place = likelihood.place
-                    //                    print("Current Place name \(place.name) at likelihood \(likelihood.likelihood)")
-                    //                    print("Current Place address \(place.formattedAddress)")
-                    //                    print("Current Place attributions \(place.attributions)")
-                    //                    print("Current PlaceID \(place.placeID)")
                 }
             }
         }

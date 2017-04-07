@@ -40,7 +40,7 @@ class CoreDataStack {
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         } catch {
-            var dict = [String: AnyObject]()
+            var dict = [String : AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
             dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
             

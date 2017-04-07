@@ -14,7 +14,10 @@ class GSFluidView: UIView, GSFluidLayoutProtocol {
     
     var liquidLayer: Liquid! = Liquid()
     var waveMovementAnimation: WaveMovementAnimation!
-    var fluidLayout: GSFluidLayout!
+    lazy var fluidLayout: GSFluidLayout = {
+        return GSFluidLayout(frame: self.frame, fluidWidth: self.liquidLayer.bounds.width, fillDuration: 3, amplitudeIncrement: 1, maxAmplitude: 40, minAmplitude: 5, numberOfWaves: 2)
+
+    }()
     var liquidFillColor = UIColor() {
         didSet {
             liquidLayer.fillColor = liquidFillColor.cgColor

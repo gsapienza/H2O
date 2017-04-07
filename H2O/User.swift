@@ -14,13 +14,20 @@ public class User: NSManagedObject {
     private var latestEntry: Entry?
     
     class func managedContext() -> NSManagedObjectContext {
-        #if os(iOS)
+        #if NOTIFICATION
+            return NSManagedObjectContext()
+        #else
             return getAppDelegate().coreDataStack.managedObjectContext
         #endif
         
-        #if os(watchOS)
-            return getWKExtensionDelegate().managedObjectContext
-        #endif
+        
+//        #if os(iOS)
+//            return getAppDelegate().coreDataStack.managedObjectContext
+//        #endif
+//        
+//        #if os(watchOS)
+//            return getWKExtensionDelegate().managedObjectContext
+//        #endif
     }
     
     func setDatabaseRevisionsToInitialState() {

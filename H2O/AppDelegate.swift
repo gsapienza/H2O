@@ -17,7 +17,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public var window: UIWindow?
     let coreDataStack = CoreDataStack()
-    private var _user :User?
+    private var _user: User?
     private let notificationDelegate = NotificationDelegate()
     
     var navigationController: UINavigationController {
@@ -45,7 +45,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }()
     
-    var user :User? {
+    var user: User? {
         return _user
     }
     
@@ -66,7 +66,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey:  Any]? = nil) -> Bool {
         if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
             print("Documents Directory: " + documentsPath)
         }
@@ -88,7 +88,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         checkHealthKitStatus()
         
-        WatchConnection.standardWatchConnection.beginSync { (replyHandler :[String : Any]) in
+        WatchConnection.standardWatchConnection.beginSync { (replyHandler: [String:  Any]) in
         }
         
         primaryViewController.view.backgroundColor = UIColor.clear
@@ -111,8 +111,19 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         center.requestAuthorization(options: options) { (success: Bool, error: Error?) in
             if success {
                 let categoryId = "com.theoven.H2O.notification"
-                let category = UNNotificationCategory(identifier: categoryId, actions: [], intentIdentifiers: [], options: [])
-                center.setNotificationCategories([category])
+                
+                if let presets = AppUserDefaults.getPresetWaterValues() {
+                    var actions: [UNNotificationAction] = presets.map({ (value: Float) -> UNNotificationAction in
+                        let action = UNNotificationAction(identifier: "\(Int(value))", title: "\(Int(value))\(standardUnit.rawValue)", options: [])
+                        return action
+                    })
+                    
+                    let customAction = UNNotificationAction(identifier: "custom", title: "Custom", options: [])
+                    actions.append(customAction)
+                    
+                    let category = UNNotificationCategory(identifier: categoryId, actions: actions, intentIdentifiers: [], options: [])
+                    center.setNotificationCategories([category])
+                }
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                 let content = UNMutableNotificationContent()
@@ -211,7 +222,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK: - UI
     
     /// Configures the view controllers navigation bar.
-    private func configureNavigationBar(navigationBar :inout UINavigationBar) {
+    private func configureNavigationBar(navigationBar: inout UINavigationBar) {
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = true

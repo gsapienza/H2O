@@ -460,6 +460,16 @@ extension MainViewController {
     }
     
     func onDailyEntryDialControl() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
+            self.dailyEntryDial.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }) { (Bool) in
+        }
+        
+        UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: .curveEaseOut, animations: {
+            self.dailyEntryDial.transform = CGAffineTransform.identity
+        }, completion: { (Bool) in
+        })
+        
         AppUserDefaults.setInformationViewControllerWasOpenedOnce(openedOnce: true) //Set the information view controller opened user default value so that the dial will not animate to indicate that the user should tap the dial.
         
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
