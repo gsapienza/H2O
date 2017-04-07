@@ -9,13 +9,7 @@
 import UIKit
 
 class DailyEntryDial: UIControl {
-    //MARK: - Public iVars
-    
-    /// Current value in dial.
-    var current: Double = 0
-    
-    /// Total value to fill dial.
-    var total: Double = 0
+    // MARK: - Public iVars
     
     /// Color of unfilled progress circle path.
     var outerCircleColor = UIColor.black {
@@ -32,6 +26,12 @@ class DailyEntryDial: UIControl {
     }
 
     // MARK: - Private iVars
+    
+    /// Current value in dial.
+    private var current: Double = 0
+    
+    /// Total value to fill dial.
+    private var total: Double = 0
     
     /// Line width for the 2 overlapping circles in the gauge
     private var circleLineWidth: CGFloat {
@@ -122,40 +122,29 @@ class DailyEntryDial: UIControl {
         
         //---Title Label---//
         
-        updateAmountOfWaterDrankToday(animated: false)
+       // updateAmountOfWaterDrankToday(animated: false)
     }
     
     //MARK: - Public
-    
-    /// Changes the value for the amount of water drank
+ 
+    /// Sets the current value represented in the dial.
     ///
-    /// - parameter animated: Should the dial gauge animate on change
-    func updateAmountOfWaterDrankToday(animated: Bool) {
-        
-        currentAmountOfWaterDrankTodayLabel.text = String(Int(current)) + standardUnit.rawValue
-        
-        let newStrokeEnd = current / total
-        
-        if animated {
-            let animationTime = 0.5
-            
-            //Animation of the gauge circle
-            let previousStrokeEnd = innerCircleShapeLayer.strokeEnd
-            innerCircleShapeLayer.strokeEnd = CGFloat(newStrokeEnd)
-            
-            let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
-            strokeAnimation.fromValue = previousStrokeEnd
-            strokeAnimation.toValue = newStrokeEnd
-            strokeAnimation.duration = animationTime
-            strokeAnimation.isRemovedOnCompletion = false
-            
-            innerCircleShapeLayer.add(strokeAnimation, forKey: "strokeEnd")
-        } else {
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            innerCircleShapeLayer.strokeEnd = CGFloat(newStrokeEnd)
-            CATransaction.commit()
-        }
+    /// - Parameters:
+    ///   - value: New current value.
+    ///   - animated: True if the change should be animated.
+    func setCurrent(_ value: Double, animated: Bool) {
+        current = value
+        updateDial(animated: animated)
+    }
+    
+    /// Sets the total value represented in the dial.
+    ///
+    /// - Parameters:
+    ///   - value: New total value.
+    ///   - animated: True if the change should be animated.
+    func setTotal(_ value: Double, animated: Bool) {
+        total = value
+        updateDial(animated: animated)
     }
     
     /// Toggle repeating beat animation for dial.
@@ -185,6 +174,37 @@ class DailyEntryDial: UIControl {
     /// - returns: Radian value converted from degrees
     private func degreesToRadians(degrees: CGFloat) -> CGFloat {
         return degrees * CGFloat(Float.pi) / 180
+    }
+    
+    
+    /// Updates dial value based on goal and current values.
+    ///
+    /// - Parameter animated: Should the change be animated.
+    private func updateDial(animated: Bool) {
+        currentAmountOfWaterDrankTodayLabel.text = String(Int(current)) + standardUnit.rawValue
+        
+        let newStrokeEnd = current / total
+        
+        if animated {
+            let animationTime = 0.5
+            
+            //Animation of the gauge circle
+            let previousStrokeEnd = innerCircleShapeLayer.strokeEnd
+            innerCircleShapeLayer.strokeEnd = CGFloat(newStrokeEnd)
+            
+            let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
+            strokeAnimation.fromValue = previousStrokeEnd
+            strokeAnimation.toValue = newStrokeEnd
+            strokeAnimation.duration = animationTime
+            strokeAnimation.isRemovedOnCompletion = false
+            
+            innerCircleShapeLayer.add(strokeAnimation, forKey: "strokeEnd")
+        } else {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            innerCircleShapeLayer.strokeEnd = CGFloat(newStrokeEnd)
+            CATransaction.commit()
+        }
     }
     
     // MARK: - Actions

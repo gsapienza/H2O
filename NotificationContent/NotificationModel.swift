@@ -64,26 +64,21 @@ struct NotificationModel {
         return nil
     }
     
-    func createNewEntry(_ amount: Float, date: Date?) -> Entry {
+    func createNewEntry(_ amount: Float, date: Date) -> Entry {
         let id = UUID().uuidString
         let entry = createNewEntry(id: id, amount: amount, date: date, creationDate: Date(), modificationDate: Date(), wasDeleted: false, in: coreDataStack.managedObjectContext)
         
         return entry
     }
     
-    func createNewEntry(id: String, amount: Float, date: Date?, creationDate: Date, modificationDate: Date, wasDeleted: NSNumber, in context: NSManagedObjectContext) -> Entry {
+    func createNewEntry(id: String, amount: Float, date: Date = Date(), creationDate: Date, modificationDate: Date, wasDeleted: NSNumber, in context: NSManagedObjectContext) -> Entry {
         let entity = NSEntityDescription.entity(forEntityName: "Entry", in: context)
         
         let entry = NSManagedObject(entity: entity!, insertInto: context) as! Entry
         
-        if date != nil {
-            entry.date = date!
-        } else {
-            entry.date = Date()
-        }
-        
         entry.id = id
         entry.amount = NSNumber(value: amount)
+        entry.date = date
         entry.creationDate = creationDate
         entry.modificationDate = modificationDate
         entry.wasDeleted = wasDeleted

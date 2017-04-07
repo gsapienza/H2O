@@ -129,10 +129,11 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
         layout()
         indicateDialToOpenInformationViewController()
         
-        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
-        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
-        updateFluidValue(current: currentAmount!)
-        
+        if let currentAmount = getAppDelegate().user?.amountOfWaterForToday() {
+            dailyEntryDial.setCurrent(Double(currentAmount), animated: true)
+            updateFluidValue(current: currentAmount)
+        }
+      
         if var presetWaterValues = AppUserDefaults.getPresetWaterValues() { //Existing preset water values
             entryButton1.amount = presetWaterValues[0]
             entryButton2.amount = presetWaterValues[1]
@@ -183,7 +184,6 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     /// Refreshed view controller when a sync has been completed.
     @objc private func syncCompleted() {
         DispatchQueue.main.async {
-            self.dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
             let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
             self.updateFluidValue(current: currentAmount!)
         }
@@ -235,10 +235,10 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     
     ///Called via timer to check if the day has changed while the app is opened and UI elements need updating
     func updateTimeRelatedItems() {
-        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
-        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
-        let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
-        updateFluidValue(current: currentAmount!)
+        if let currentAmount = getAppDelegate().user?.amountOfWaterForToday() {
+            dailyEntryDial.setCurrent(Double(currentAmount), animated: true)
+            updateFluidValue(current: currentAmount)
+        }
     }
     
     
@@ -341,8 +341,8 @@ private extension MainViewController {
     /// Configures the daily entry of water dial
     func configureDailyEntryDial() {
         dailyEntryDial.addTarget(self, action: #selector(onDailyEntryDialControl), for: .touchUpInside)
-        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
-        dailyEntryDial.total = Double(goal)
+        dailyEntryDial.setCurrent(Double((getAppDelegate().user?.amountOfWaterForToday())!), animated: false)
+        dailyEntryDial.setTotal(Double(goal), animated: true)
         dailyEntryDial.innerCircleColor = StandardColors.primaryColor
         dailyEntryDial.outerCircleColor = UIColor(red: 27/255, green: 119/255, blue: 135/255, alpha: 0.3)
     }
@@ -364,8 +364,7 @@ extension MainViewController {
         
         getAppDelegate().user!.addNewEntryToUser(amount, date: nil)
 
-        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
-        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true) //Updates the daily dial
+        dailyEntryDial.setCurrent(Double((getAppDelegate().user?.amountOfWaterForToday())!), animated: true)
         updateFluidValue(current: beforeAmount! + amount)
         
         serviceIntergrationModel.addEntryToAuthorizedServices(amount: amount, date: Date())
@@ -393,7 +392,7 @@ extension MainViewController {
     
     ///When the cancel bar button is tapped when the custom entry view is present
     func onCancelCustomEntryBarButton() {
-        var newFillValue: Float = Float((Float(dailyEntryDial.current) / goal) * 1.0) //New ratio
+        var newFillValue: Float = Float(((getAppDelegate().user?.amountOfWaterForToday())! / goal) * 1.0) //New ratio
         fluidView.fillTo(&newFillValue) //Refill water up after tapping the custom button makes the fill value 0
         
         configureBarButtonItems() //Restore bar buttons
@@ -443,8 +442,8 @@ extension MainViewController {
             serviceIntergrationModel.deleteEntryFromAuthorizedServices(date: latestEntryDate)
         }
         getAppDelegate().user?.deleteLatestEntry()
-        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
-        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        dailyEntryDial.setCurrent(Double((getAppDelegate().user?.amountOfWaterForToday())!), animated: true)
+        
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
         
@@ -552,8 +551,7 @@ extension MainViewController: EntryButtonProtocol {
 // MARK: - InformationViewControllerProtocol
 extension MainViewController: InformationViewControllerProtocol {
     func entryWasDeleted() {
-        dailyEntryDial.current = Double((getAppDelegate().user?.amountOfWaterForToday())!)
-        dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
+        dailyEntryDial.setCurrent(Double((getAppDelegate().user?.amountOfWaterForToday())!), animated: true)
         let currentAmount = getAppDelegate().user?.amountOfWaterForToday()
         updateFluidValue(current: currentAmount!)
                 

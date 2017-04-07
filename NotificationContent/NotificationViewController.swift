@@ -83,8 +83,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         }
         
         let current = self.model.fetchTodaysTotal()
-        dailyEntryDial.current = current
-        dailyEntryDial.total = Double(goal)
+        dailyEntryDial.setCurrent(current, animated: true)
+        dailyEntryDial.setTotal(Double(goal), animated: true)
     }
     
     func didReceive(_ notification: UNNotification) {
@@ -101,8 +101,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             
             setCurrentValue()
             setCurrentWaterValue()
-            
-            dailyEntryDial.updateAmountOfWaterDrankToday(animated: true)
             
             delay(delay: 2, closure: {
                 completion(.dismiss)
