@@ -185,6 +185,10 @@
 		8374206998C0F8FC800BEF1B /* Pods_H2O_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30C5774757716A6004924CC6 /* Pods_H2O_Dev.framework */; };
 		F31D43F11E746DAA00A3871E /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */; };
 		F31D43F21E746DAA00A3871E /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */; };
+		F320D5771E982D9A00217A77 /* WaterEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */; };
+		F320D5781E982D9A00217A77 /* WaterEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */; };
+		F320D57A1E99329B00217A77 /* WaterEntryViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5791E99329B00217A77 /* WaterEntryViewState.swift */; };
+		F320D57B1E99329B00217A77 /* WaterEntryViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5791E99329B00217A77 /* WaterEntryViewState.swift */; };
 		F327C53C1E93E0FD00D1CBB6 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F327C53B1E93E0FD00D1CBB6 /* NotificationModel.swift */; };
 		F327C53D1E93E12800D1CBB6 /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
 		F327C54B1E93E50300D1CBB6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B551DFF462100539EA5 /* User.swift */; };
@@ -412,6 +416,8 @@
 		EDF56C02E54F1A670FD72C90 /* Pods-H2O-Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-H2O-Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-H2O-Dev/Pods-H2O-Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		F2A6C28701C91135B6497818 /* Pods-H2OTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-H2OTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-H2OTests/Pods-H2OTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterEntryViewController.swift; sourceTree = "<group>"; };
+		F320D5791E99329B00217A77 /* WaterEntryViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterEntryViewState.swift; sourceTree = "<group>"; };
 		F327C53B1E93E0FD00D1CBB6 /* NotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -658,6 +664,8 @@
 			isa = PBXGroup;
 			children = (
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
+				F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */,
+				F320D5791E99329B00217A77 /* WaterEntryViewState.swift */,
 				37D7F9DE1DB1780200C94CB6 /* UndoBarButtonItem.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
 				37FD2DF01D87723000D8C239 /* GSFluidLayoutProtocol.swift */,
@@ -1205,6 +1213,7 @@
 				F31D43F21E746DAA00A3871E /* NotificationDelegate.swift in Sources */,
 				3759F0291E3E46E8002C0AFD /* ServiceIntergrationProtocol.swift in Sources */,
 				3759F02A1E3E46E8002C0AFD /* Service+CoreDataProperties.swift in Sources */,
+				F320D5781E982D9A00217A77 /* WaterEntryViewController.swift in Sources */,
 				3759F02B1E3E46E8002C0AFD /* ConnectTableViewCell.swift in Sources */,
 				3759F02C1E3E46E8002C0AFD /* ToastNotificationManager.m in Sources */,
 				3759F02D1E3E46E8002C0AFD /* WaterBottleView.swift in Sources */,
@@ -1262,6 +1271,7 @@
 				3759F05C1E3E46E8002C0AFD /* GSAnimatingProgressLayer.swift in Sources */,
 				3759F05E1E3E46E8002C0AFD /* DailyGoalViewController.swift in Sources */,
 				3759F05F1E3E46E8002C0AFD /* PresetValueChangerView.swift in Sources */,
+				F320D57B1E99329B00217A77 /* WaterEntryViewState.swift in Sources */,
 				3759F0601E3E46E8002C0AFD /* CustomEntryButton.swift in Sources */,
 				3759F0611E3E46E8002C0AFD /* AudioToolbox.swift in Sources */,
 				3759F0621E3E46E8002C0AFD /* WatchConnection.swift in Sources */,
@@ -1281,6 +1291,7 @@
 				F31D43F11E746DAA00A3871E /* NotificationDelegate.swift in Sources */,
 				37487B451DFF3B5800539EA5 /* ServiceIntergrationProtocol.swift in Sources */,
 				37487B4C1DFF454E00539EA5 /* Service+CoreDataProperties.swift in Sources */,
+				F320D5771E982D9A00217A77 /* WaterEntryViewController.swift in Sources */,
 				375578491DFB245100BF8130 /* ConnectTableViewCell.swift in Sources */,
 				37E0D7281CF0C181004ABFAF /* ToastNotificationManager.m in Sources */,
 				37263F941DEB629D0037D744 /* WaterBottleView.swift in Sources */,
@@ -1338,6 +1349,7 @@
 				378093211D7D1916007CF646 /* GSAnimatingProgressLayer.swift in Sources */,
 				37487FD31DDE04CA0082DC27 /* DailyGoalViewController.swift in Sources */,
 				37A1826A1CEBF4E30055DA02 /* PresetValueChangerView.swift in Sources */,
+				F320D57A1E99329B00217A77 /* WaterEntryViewState.swift in Sources */,
 				3785666E1CEAA16C003418C2 /* CustomEntryButton.swift in Sources */,
 				37A182601CEB942E0055DA02 /* AudioToolbox.swift in Sources */,
 				37C81B231D902FBA00B6DA9F /* WatchConnection.swift in Sources */,

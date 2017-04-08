@@ -38,10 +38,22 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     @IBOutlet weak var customEntryButton: CustomEntryButton!
     
     /// Daily entry amount with dial to represent progress towards goal
-    @IBOutlet weak var dailyEntryDial: DailyEntryDial!
+    @IBOutlet weak var dailyEntryDial: DailyEntryDial! {
+        didSet {
+            dailyEntryDial.addTarget(self, action: #selector(onDailyEntryDialControl), for: .touchUpInside)
+            dailyEntryDial.setCurrent(Double((getAppDelegate().user?.amountOfWaterForToday())!), animated: false)
+            dailyEntryDial.setTotal(Double(goal), animated: true)
+            dailyEntryDial.innerCircleColor = StandardColors.primaryColor
+            dailyEntryDial.outerCircleColor = UIColor(red: 27/255, green: 119/255, blue: 135/255, alpha: 0.3)
+        }
+    }
     
     /// Image view for background gradient
-    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var backgroundImageView: UIImageView! {
+        didSet {
+            backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
+        }
+    }
     
     /// Fluid view that can animate to indicate amount of water drank today
     @IBOutlet weak var fluidView: H2OFluidView!
@@ -51,16 +63,28 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
     
     //MARK: - Private iVars
     
-    private let motionManager = CMMotionManager()
-    
     /// Undo bar button item.
-    fileprivate var undoBarButtonItem: UndoBarButtonItem!
+    fileprivate lazy var undoBarButtonItem: UndoBarButtonItem = {
+        return UndoBarButtonItem(enabled: false)
+    }()
     
     /// View for confetti to burst at when the user hit their goal
-    fileprivate var confettiArea: L360ConfettiArea!
+    fileprivate lazy var confettiArea: L360ConfettiArea = {
+        let view = L360ConfettiArea()
+        
+        view.isUserInteractionEnabled = false
+        
+        return view
+    }()
     
     /// View that must be added as a subview when the custom button is tapped. Controls the entry of a custom value as well as the paths that animate the custom button to a new shape
-    fileprivate var customEntryView: CustomEntryView!
+    fileprivate lazy var customEntryView: CustomEntryView = {
+        let view = CustomEntryView()
+        
+        view.delegate = self
+        
+        return view
+    }()
     
     /// Model for intergrating services.
     fileprivate var serviceIntergrationModel: ServiceIntergrationModel = ServiceIntergrationModel()
@@ -95,26 +119,30 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
         configureAccessibility()
         addNotificationObservers()
     
-        backgroundImageView.image = UIImage(assetIdentifier: .darkModeBackground)
         
-        undoBarButtonItem = UndoBarButtonItem(enabled: false)
-
-        configureNavigationBar()
         configureBarButtonItems()
         configureFluidView()
         configurePresetEntryCircles()
         configureBlurView()
-        configureDailyEntryDial()
-        
-        confettiArea = generateConfettiView()
         
         //If the date changes while the app is open this timer will update the UI to reflect daily changes
         let newDateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(MainViewController.updateTimeRelatedItems), userInfo: nil, repeats: true)
         RunLoop.current.add(newDateTimer, forMode: RunLoopMode.commonModes)
         
-        if traitCollection.forceTouchCapability == .available {
-           // self.registerForPreviewing(with: self, sourceView: dailyEntryDial)
-        }
+        //---Navigation Bar---//
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = UIColor.clear
+        
+        //---Custom Entry View---//
+        
+        customEntryView.customButtonFrame = customEntryButton.frame
+        customEntryView.customButtonCornerRadius = customEntryButton.layer.cornerRadius
+        customEntryView.circleDialFrame = dailyEntryDial.frame
+        customEntryView.circleDialCornerRadius = dailyEntryDial.bounds.width / 2
+        customEntryView.dropletAtBottomFrame = CGRect(x: dailyEntryDial.frame.origin.x, y: self.view.frame.height, width: dailyEntryDial.frame.width, height: dailyEntryDial.frame.height)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -257,17 +285,7 @@ class MainViewController: UIViewController, NavigationThemeProtocol {
 
 // MARK: - Private Generators
 private extension MainViewController {
-    /// Generates a confetti view
-    ///
-    /// - returns: Confetti view
-    func generateConfettiView() -> L360ConfettiArea {
-        let view = L360ConfettiArea()
-        
-        view.isUserInteractionEnabled = false
-        
-        return view
-    }
-    
+
     /// Generates a custom entry view for path animations
     ///
     /// - returns: Custom entry view to overlay this view and perform path animations
@@ -287,14 +305,6 @@ private extension MainViewController {
 
 // MARK: - Private View Configurations
 private extension MainViewController {
-    /// Configures the view controllers navigation bar
-    func configureNavigationBar() {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.backgroundColor = UIColor.clear
-    }
-    
     /// Configures the bar button items for the navigation bar
     func configureBarButtonItems() {
         let settingsBarButtonItem = UIBarButtonItem(image: UIImage(assetIdentifier: .settingsBarButtonItem), style: .plain, target: self, action: #selector(self.onSettingsBarButton(_:)))
@@ -338,14 +348,6 @@ private extension MainViewController {
         }
     }
     
-    /// Configures the daily entry of water dial
-    func configureDailyEntryDial() {
-        dailyEntryDial.addTarget(self, action: #selector(onDailyEntryDialControl), for: .touchUpInside)
-        dailyEntryDial.setCurrent(Double((getAppDelegate().user?.amountOfWaterForToday())!), animated: false)
-        dailyEntryDial.setTotal(Double(goal), animated: true)
-        dailyEntryDial.innerCircleColor = StandardColors.primaryColor
-        dailyEntryDial.outerCircleColor = UIColor(red: 27/255, green: 119/255, blue: 135/255, alpha: 0.3)
-    }
 }
 
 // MARK: - Target Actions

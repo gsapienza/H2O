@@ -12,13 +12,11 @@ class EntryButton: UIButton {
     //MARK: - Public iVars
     
     /// Amount that entry button will add to goal, sets the titleLabel to this value plus the unit following.
-    var amount: Float = 0 {
+    var amount: Double = 0 {
         didSet {
             setTitle(String(Int(amount)) + standardUnit.rawValue, for: UIControlState())
         }
     }
-    /// EntryButtonDelegate Protocol delegate
-    var delegate: EntryButtonProtocol?
     
     /// What to do when the button is highlighted. Simply changes the button background color.
     override var isHighlighted: Bool {
@@ -31,74 +29,10 @@ class EntryButton: UIButton {
         }
     }
     
-    //MARK: - Internal iVars
+    //MARK: - Private iVars
     
     /// Circle view outline surrounding the button
-    var circleView = UIView()
-    
-    //MARK: - Setup
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        backgroundColor = UIColor.clear
-        
-        //Circular corner radius
-        layer.cornerRadius = bounds.height / 2 //Without setting this, highlighting gets messed up.
-        circleView.layer.cornerRadius = layer.cornerRadius
-        
-        setTitleColor(StandardColors.primaryColor, for: .normal)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        customInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        customInit()
-    }
-    
-    func customInit() {
-        circleView = generateCircleView()
-        configureTitleLabel()
-        
-        layout()
-        addTarget(self, action: #selector(EntryButton.onTap), for: .touchUpInside)
-    }
-    
-    ///View layout
-    private func layout() {
-        //---Circle View---
-        addSubview(circleView)
-        sendSubview(toBack: circleView)
-        circleView.translatesAutoresizingMaskIntoConstraints = false
-        
-        addConstraint(NSLayoutConstraint(item: circleView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: circleView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: circleView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: circleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-    }
-}
-
-//MARK: - Private View Configurations
-private extension EntryButton {
-    /// Configures the button title label
-    func configureTitleLabel() {
-        titleLabel!.font = StandardFonts.regularFont(size: 20)
-    }
-}
-
-//MARK: - Private Generators
-private extension EntryButton {
-    
-    /// Generates a view for a circle border
-    ///
-    /// - returns: View for circle border
-    func generateCircleView() -> UIView {
+    private lazy var circleView: UIView = {
         let view = UIView()
         
         view.backgroundColor = StandardColors.primaryColor.withAlphaComponent(0.1)
@@ -109,13 +43,36 @@ private extension EntryButton {
         view.layer.shadowOffset = CGSize(width: 0, height: 0.5)
         
         return view
+    }()
+    
+    //MARK: - Public
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        customInit()
     }
-}
-
-//MARK: - Target Action
-extension EntryButton {
-    ///Action on tap. Plays audio and animates the button tapped. Calls a delegate method to inform the delegate that the button was tapped
-    func onTap() {
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        customInit()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        //---View---//
+        
+        backgroundColor = UIColor.clear
+        layer.cornerRadius = bounds.height / 2 //Without setting this, highlighting gets messed up.
+        
+        //---Circle View---//
+        
+        circleView.layer.cornerRadius = layer.cornerRadius
+    }
+    
+    override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
+        super.sendAction(action, to: target, for: event)
+        
         AudioToolbox.standardAudioToolbox.playAudio(WaterDrop1Sound, repeatEnabled: false)
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.prepare()
@@ -130,7 +87,27 @@ extension EntryButton {
             self.transform = CGAffineTransform.identity
         }, completion: { (Bool) in
         })
+    }
+    
+    // MARK: - Private
+
+    private func customInit() {
         
-        delegate?.entryButtonTapped(amount: amount)
+        //---Title Label---//
+        
+        titleLabel?.font = StandardFonts.regularFont(size: 20)
+        setTitleColor(StandardColors.primaryColor, for: .normal)
+        
+        //---Circle View---//
+        
+        addSubview(circleView)
+        sendSubview(toBack: circleView)
+        
+        circleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
     }
 }
