@@ -35,7 +35,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             return viewController
         } else {
-            let viewController: MainViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+            let viewController: WaterEntryViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+            if let user = self.fetchUser() {
+                let waterEntryController = WaterEntryController(coreDataStack: self.coreDataStack, user: user)
+                viewController.model = waterEntryController
+            }
+            
             viewController.navigationThemeDidChangeHandler = { [weak self] theme in
                 if let navigationController = self?.navigationController {
                     navigationController.navigationBar.applyTheme(navigationTheme: theme)
@@ -118,20 +123,20 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let presets = AppUserDefaults.getPresetWaterValues() {
-            delay(delay: 0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
-                switch shortcutItem.type {
-                case ShortcutItemValue.smallEntry.rawValue: //First preset
-                    mainViewController.addWaterToToday(amount: presets[0])
-                case ShortcutItemValue.mediumEntry.rawValue: //Second preset
-                    mainViewController.addWaterToToday(amount: presets[1])
-                case ShortcutItemValue.largeEntry.rawValue: //Third preset
-                    mainViewController.addWaterToToday(amount: presets[2])
-                case ShortcutItemValue.customEntry.rawValue: //Custom entry
-                    mainViewController.customEntryButtonTapped(customButton: mainViewController.customEntryButton)
-                default:
-                    return
-                }
-            }
+//            delay(delay: 0.2) { //Delay is for aesthetic purposes although required for the custom entry to get the view loaded first before drawing its paths
+//                switch shortcutItem.type {
+//                case ShortcutItemValue.smallEntry.rawValue: //First preset
+//                    mainViewController.addWaterToToday(amount: presets[0])
+//                case ShortcutItemValue.mediumEntry.rawValue: //Second preset
+//                    mainViewController.addWaterToToday(amount: presets[1])
+//                case ShortcutItemValue.largeEntry.rawValue: //Third preset
+//                    mainViewController.addWaterToToday(amount: presets[2])
+//                case ShortcutItemValue.customEntry.rawValue: //Custom entry
+//                    mainViewController.customEntryButtonTapped(customButton: mainViewController.customEntryButton)
+//                default:
+//                    return
+//                }
+//            }
         }
     }
     
@@ -261,6 +266,25 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             
             UIApplication.shared.shortcutItems = [smallPresetShortcut, mediumPresetShortcut, largePresetShortcut, customShortcut]
         }
+    }
+    
+    
+    /// Fetches primary user.
+    ///
+    /// - Returns: User entity object.
+    private func fetchUser() -> User? {
+        let fetchRequest = User.fetchRequest()
+        
+        do {
+            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
+            if let users = results as? [User] {
+                return users.first
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        return nil
     }
 }
 

@@ -19,6 +19,13 @@ class InAppSettingsViewController: SettingsViewController {
     /// Title for close button in navigation bar.
     private static let closeBarButtonTitle = "close_navigation_item".localized
     
+    // MARK: - Public iVars
+
+    /// Action to call with Close button.
+    var dismissAction: (() -> Void)?
+    
+    // MARK: - Public
+
     override func viewDidLoad() {
         dataSource = self
         super.viewDidLoad()
@@ -158,9 +165,11 @@ extension InAppSettingsViewController: SettingsViewControllerDataSource {
     
     //MARK: - Actions
     
-    /// Action for close bar button. Dismisses setting view/
-    func onCloseButton() {
-        dismiss(animated: true) { }
+    /// Action for close bar button. Dismisses setting view.
+    @objc fileprivate func onCloseButton() {
+        if let dismissAction = dismissAction {
+            dismissAction()
+        }
     }
 }
 

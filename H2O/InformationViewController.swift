@@ -8,21 +8,7 @@
 
 import UIKit
 
-protocol InformationViewControllerProtocol {
-    /**
-     Called when a water entry was deleted for any day     
-     */
-    func entryWasDeleted()
-    
-    /**
-     Determines the user set goal from NSUserDefaults
-     
-     - returns: Goal float value set by user
-     */
-    func informationViewControllerGoal() -> Float
-}
-
-class InformationViewController: Popsicle {
+class InformationViewController: UIViewController {
     
     //MARK: - Public iVars
     
@@ -38,9 +24,6 @@ class InformationViewController: Popsicle {
     /// Label in the middle of the screen if no data was entered yet. Table is not present when this is displayed
     @IBOutlet weak var noDataLabel: UILabel!
     
-    /// Delegate to inform the presenting view controller changes to entries
-    var informationViewControllerDelegate: InformationViewControllerProtocol?
-    
     /// User set goal
     var goal: Float!
     
@@ -54,6 +37,9 @@ class InformationViewController: Popsicle {
         
     /// State of the information table view.
     var state = State.viewing
+    
+    /// Action to call with Close button.
+    var dismissAction: (() -> Void)?
     
     //MARK: - Public
     
@@ -143,8 +129,6 @@ class InformationViewController: Popsicle {
                 
                 deleteDayRows() //Delete day rows if possible.
             }
-            
-            informationViewControllerDelegate?.entryWasDeleted() //Inform the delegate that an entry was deleted.
         }
 
         weeklyBarGraphView.refreshBarGraph()
@@ -197,7 +181,7 @@ private extension InformationViewController {
         
         let lastWeekValues = getAppDelegate().user!.waterValuesThisWeek()
         
-        guard var highestWeekValue = informationViewControllerDelegate?.informationViewControllerGoal() else {
+        guard var highestWeekValue = AppUserDefaults.getDailyGoalValue() else {
             fatalError("No goal value started.")
         }
         
@@ -255,7 +239,9 @@ private extension InformationViewController {
 extension InformationViewController {
     /// When the close bar button is tapped
     func onCloseButton() {
-        dismissPopsicle()
+        if let dismissAction = dismissAction {
+            dismissAction()
+        }
     }
     
     /// When edit button button is tapped in viewing state.
@@ -435,7 +421,7 @@ extension InformationViewController: DailyInformationTableViewCellProtocol {
 // MARK: - WeekBarGraphViewProtocol
 extension InformationViewController: WeekBarGraphViewProtocol {
     func weekBarGraphViewGoal() -> Float {
-        return informationViewControllerDelegate!.informationViewControllerGoal()
+        return AppUserDefaults.getDailyGoalValue() ?? 0
     }
     
     func weekBarGraphViewWeekValues() -> WeekValues {

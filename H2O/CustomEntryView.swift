@@ -177,7 +177,7 @@ class CustomEntryView: UIView {
      - parameter completionHandler: Completion of animation of the view container. Not necassarily the morph
      */
     func animateFromDialCirclePathToCustomButtonPath(completionHandler: @escaping (Bool) -> Void) {
-        amountTextField.resignFirstResponder()
+        //amountTextField.resignFirstResponder()
 
         animateViewContainer(toCenter: customButtonCenterPoint, transform: CGAffineTransform(scaleX: 0.0001, y: 0.0001)) { (Bool) in //Animates the view container to be visble to the user
             completionHandler(true) //Informs the caller that this animation is complete

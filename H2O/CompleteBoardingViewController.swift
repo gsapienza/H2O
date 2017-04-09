@@ -74,7 +74,7 @@ class CompleteBoardingViewController: UIViewController, BoardingProtocol {
                     self.waterBottleView.transform = CGAffineTransform(scaleX: 7, y: 7)
                     self.waterBottleView.alpha = 0
                 }, completion: { complete in
-                    let mainViewController: MainViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+                    let mainViewController: WaterEntryViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
                     self.navigationController?.pushViewController(mainViewController, animated: true)
                 })
             })

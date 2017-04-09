@@ -9,6 +9,7 @@
 import UIKit
 import CoreMotion
 
+
 protocol EntryButtonProtocol {
     /// When an entry is made by tapping one of the preset buttons
     ///
@@ -21,9 +22,9 @@ protocol EntryButtonProtocol {
     func customEntryButtonTapped(customButton: EntryButton)
 }
 
-class MainViewController: UIViewController, NavigationThemeProtocol {
+class MainViewController: UIViewController {
 
-    //MARK: - Public iVars
+    /*//MARK: - Public iVars
     
     /// First Entry Button
     @IBOutlet weak var entryButton1: EntryButton!
@@ -627,5 +628,5 @@ extension MainViewController: BoardingProtocol {
     
     func animateOut(completion: @escaping (Bool) -> Void) {
         
-    }
+    }*/
 }

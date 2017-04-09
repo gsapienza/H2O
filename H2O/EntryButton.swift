@@ -70,25 +70,6 @@ class EntryButton: UIButton {
         circleView.layer.cornerRadius = layer.cornerRadius
     }
     
-    override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
-        super.sendAction(action, to: target, for: event)
-        
-        AudioToolbox.standardAudioToolbox.playAudio(WaterDrop1Sound, repeatEnabled: false)
-        let feedbackGenerator = UINotificationFeedbackGenerator()
-        feedbackGenerator.prepare()
-        feedbackGenerator.notificationOccurred(.success)
-        
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
-            self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-        }) { (Bool) in
-        }
-        
-        UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: .curveEaseOut, animations: {
-            self.transform = CGAffineTransform.identity
-        }, completion: { (Bool) in
-        })
-    }
-    
     // MARK: - Private
 
     private func customInit() {

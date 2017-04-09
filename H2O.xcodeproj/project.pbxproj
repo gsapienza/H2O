@@ -189,6 +189,8 @@
 		F320D5781E982D9A00217A77 /* WaterEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */; };
 		F320D57A1E99329B00217A77 /* WaterEntryViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5791E99329B00217A77 /* WaterEntryViewState.swift */; };
 		F320D57B1E99329B00217A77 /* WaterEntryViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D5791E99329B00217A77 /* WaterEntryViewState.swift */; };
+		F320D57D1E99C5B100217A77 /* WaterEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D57C1E99C5B100217A77 /* WaterEntryController.swift */; };
+		F320D57E1E99C5B100217A77 /* WaterEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320D57C1E99C5B100217A77 /* WaterEntryController.swift */; };
 		F327C53C1E93E0FD00D1CBB6 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F327C53B1E93E0FD00D1CBB6 /* NotificationModel.swift */; };
 		F327C53D1E93E12800D1CBB6 /* H2O.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375F4FE51CEA91A6009C14AE /* H2O.xcdatamodeld */; };
 		F327C54B1E93E50300D1CBB6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37487B551DFF462100539EA5 /* User.swift */; };
@@ -418,6 +420,7 @@
 		F31D43F01E746DAA00A3871E /* NotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
 		F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterEntryViewController.swift; sourceTree = "<group>"; };
 		F320D5791E99329B00217A77 /* WaterEntryViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterEntryViewState.swift; sourceTree = "<group>"; };
+		F320D57C1E99C5B100217A77 /* WaterEntryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterEntryController.swift; sourceTree = "<group>"; };
 		F327C53B1E93E0FD00D1CBB6 /* NotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		F32924141E6B2A8A00B9CAF3 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		F32924171E6B4A2800B9CAF3 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -665,6 +668,7 @@
 			children = (
 				375F4FE01CEA91A6009C14AE /* MainViewController.swift */,
 				F320D5761E982D9A00217A77 /* WaterEntryViewController.swift */,
+				F320D57C1E99C5B100217A77 /* WaterEntryController.swift */,
 				F320D5791E99329B00217A77 /* WaterEntryViewState.swift */,
 				37D7F9DE1DB1780200C94CB6 /* UndoBarButtonItem.swift */,
 				3785666F1CEAA190003418C2 /* DailyEntryDial.swift */,
@@ -1207,6 +1211,7 @@
 				3759F0231E3E46E8002C0AFD /* EntryButton.swift in Sources */,
 				3759F0241E3E46E8002C0AFD /* StoryBoardExtension.swift in Sources */,
 				3759F0251E3E46E8002C0AFD /* Constants.swift in Sources */,
+				F320D57E1E99C5B100217A77 /* WaterEntryController.swift in Sources */,
 				3759F0261E3E46E8002C0AFD /* WobbleAnimation.swift in Sources */,
 				3759F0271E3E46E8002C0AFD /* User.swift in Sources */,
 				3759F0281E3E46E8002C0AFD /* AppDelegate.swift in Sources */,
@@ -1285,6 +1290,7 @@
 				3785666C1CEAA161003418C2 /* EntryButton.swift in Sources */,
 				3741F5B01D8F009200F7598E /* StoryBoardExtension.swift in Sources */,
 				37E0D6EF1CED2D95004ABFAF /* Constants.swift in Sources */,
+				F320D57D1E99C5B100217A77 /* WaterEntryController.swift in Sources */,
 				37D13DE91DB7B2B200C850BA /* WobbleAnimation.swift in Sources */,
 				37487B571DFF462100539EA5 /* User.swift in Sources */,
 				37C81B2B1D9189C100B6DA9F /* AppDelegate.swift in Sources */,
